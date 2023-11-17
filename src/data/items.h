@@ -7060,7 +7060,7 @@ const struct Item gItems[] =
     {
         .name = _("Enigma Berry"),
         .price = 20,
-        .holdEffect = HOLD_EFFECT_ENIGMA_BERRY,
+        // .holdEffect = HOLD_EFFECT_ENIGMA_BERRY,
         .description = sEnigmaBerryDesc,
         .pocket = POCKET_BERRIES,
         .type = ITEM_USE_BAG_MENU,

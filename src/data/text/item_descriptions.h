@@ -2991,9 +2991,9 @@ static const u8 sStarfBerryDesc[] = _(
     "stat in a pinch.");
 
 static const u8 sEnigmaBerryDesc[] = _(
-    "A hold item that\n"
-    "heals from super\n"
-    "effective moves.");
+    "{POKEBLOCK} ingredient.\n"
+    "Plant in loamy soil\n"
+    "to grow a mystery.");
 
 static const u8 sMicleBerryDesc[] = _(
     "When held, it ups\n"
