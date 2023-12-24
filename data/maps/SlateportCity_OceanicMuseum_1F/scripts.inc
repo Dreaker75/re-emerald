@@ -377,4 +377,3 @@ SlateportCity_OceanicMuseum_1F_Text_DepthMeasuringMachine:
 	.string "a glass dome.\p"
 	.string "Maybe it's for measuring the depth\n"
 	.string "of something…$"
-

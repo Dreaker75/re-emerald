@@ -10,4 +10,3 @@ AbandonedShip_Rooms2_B1F_Text_PerfectPlaceToGoExploring:
 	.string "It's exciting here!\p"
 	.string "I bet there're amazing treasures on\n"
 	.string "board.$"
-

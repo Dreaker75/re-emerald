@@ -40,4 +40,3 @@ SootopolisCity_House1_Text_ExplainBrickBreak:
 
 SootopolisCity_House1_Text_Kecleon:
 	.string "KECLEON: Puu puhyaah.$"
-

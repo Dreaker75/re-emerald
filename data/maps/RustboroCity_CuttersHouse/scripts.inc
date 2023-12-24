@@ -49,4 +49,3 @@ RustboroCity_CuttersHouse_Text_DadHelpedClearLandOfTrees:
 	.string "RUSTBORO, my dad helped out.\p"
 	.string "He made his POKéMON use CUT to clear\n"
 	.string "the land of trees.$"
-

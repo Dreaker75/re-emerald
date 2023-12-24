@@ -63,4 +63,3 @@ LavaridgeTown_HerbShop_Text_HerbalMedicineWorksButMonWillDislike:
 	.string "Herbal medicine works impressively well.\n"
 	.string "But your POKéMON will dislike you for it.\l"
 	.string "It must be horribly bitter!$"
-

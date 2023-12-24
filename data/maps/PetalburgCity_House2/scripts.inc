@@ -21,4 +21,3 @@ PetalburgCity_House2_Text_BattledNormanOnce:
 	.string "How would I put it?\p"
 	.string "I just got the feeling that he\n"
 	.string "lives for POKéMON.$"
-

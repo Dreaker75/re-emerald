@@ -27,4 +27,3 @@ BattleFrontier_Lounge4_Text_NeedBreatherAfterBattles:
 	.string "some intense battles…\p"
 	.string "But even now, I never take a break\n"
 	.string "from plotting strategy and combos.$"
-

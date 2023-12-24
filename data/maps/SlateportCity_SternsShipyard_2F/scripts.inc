@@ -19,4 +19,3 @@ SlateportCity_SternsShipyard_2F_Text_FloatsBecauseBuoyancy:
 	.string "a ship made of heavy iron floats?\p"
 	.string "It floats because of a principle\n"
 	.string "called buoyancy.$"
-

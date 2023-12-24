@@ -45,4 +45,3 @@ FarawayIsland_Entrance_EventScript_AsYouLike::
 FarawayIsland_Entrance_EventScript_Sign::
 	msgbox FarawayIsland_Entrance_Text_Sign, MSGBOX_SIGN
 	end
-

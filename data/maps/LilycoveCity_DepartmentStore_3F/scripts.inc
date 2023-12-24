@@ -73,4 +73,3 @@ LilycoveCity_DepartmentStore_3F_Text_WantMoreEndurance:
 LilycoveCity_DepartmentStore_3F_Text_GaveCarbosToSpeedUpMon:
 	.string "I gave a CARBOS to my POKéMON,\n"
 	.string "and its SPEED went up.$"
-

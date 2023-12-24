@@ -24,4 +24,3 @@ Route119_House_Text_RumorAboutCaveOfOrigin:
 
 Route119_House_Text_Wingull:
 	.string "WINGULL: Pihyoh!$"
-

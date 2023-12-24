@@ -29,4 +29,3 @@ ShoalCave_LowTideStairsRoom_EventScript_ReceivedShoalSalt::
 	msgbox ShoalCave_Text_WasShoalSaltNowNothing, MSGBOX_DEFAULT
 	releaseall
 	end
-

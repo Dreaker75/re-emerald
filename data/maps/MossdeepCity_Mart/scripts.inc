@@ -57,4 +57,3 @@ MossdeepCity_Mart_Text_NetAndDiveBallsRare:
 	.string "BUG-type and WATER-type POKéMON.\p"
 	.string "A DIVE BALL works best on POKéMON\n"
 	.string "at the bottom of the sea.$"
-

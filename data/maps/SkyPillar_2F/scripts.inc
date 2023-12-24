@@ -17,4 +17,3 @@ SkyPillar_2F_SetHoleWarp:
 	setstepcallback STEP_CB_CRACKED_FLOOR
 	setholewarp MAP_SKY_PILLAR_1F
 	end
-

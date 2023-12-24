@@ -32,4 +32,3 @@ FortreeCity_House5_Text_AdaptedToNature:
 
 FortreeCity_House5_Text_Zigzagoon:
 	.string "ZIGZAGOON: Bufuu!$"
-

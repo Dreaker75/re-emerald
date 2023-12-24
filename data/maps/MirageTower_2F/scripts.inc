@@ -8,4 +8,3 @@ MirageTower_2F_SetHoleWarp:
 	setstepcallback STEP_CB_CRACKED_FLOOR
 	setholewarp MAP_MIRAGE_TOWER_1F
 	end
-

@@ -176,4 +176,3 @@ VerdanturfTown_BattleTentBattleRoom_Movement_OpponentExit:
 	walk_up
 	walk_up
 	step_end
-

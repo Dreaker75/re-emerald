@@ -21,4 +21,3 @@ Underwater_SealedChamber_EventScript_Braille::
 	braillemsgbox Underwater_SealedChamber_Braille_GoUpHere
 	releaseall
 	end
-

@@ -78,4 +78,3 @@ FortreeCity_House2_Text_ExplainHiddenPower:
 FortreeCity_House2_Text_YouGuessedWrong:
 	.string "No, too bad.\n"
 	.string "You guessed wrong.$"
-

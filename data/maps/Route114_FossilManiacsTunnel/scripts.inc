@@ -90,4 +90,3 @@ Route114_FossilManiacsTunnel_Text_NotSafeThatWay:
 	.string "underneath now…\p"
 	.string "But I've left it alone because I don't\n"
 	.string "think there are any FOSSILS there…$"
-

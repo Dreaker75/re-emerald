@@ -175,4 +175,3 @@ RustboroCity_Flat1_2F_Text_ThankYouIllGiveYouWallpaper:
 
 RustboroCity_Flat1_2F_Text_ItsAPokemonPlushDoll:
 	.string "It's a POKéMON plush DOLL!$"
-

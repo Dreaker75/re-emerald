@@ -22,4 +22,3 @@ VerdanturfTown_House_Text_DefeatEliteFourInARow:
 	.string "If you lose to any of them, you have\n"
 	.string "to begin your challenge again from the\l"
 	.string "first one.$"
-

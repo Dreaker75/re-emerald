@@ -227,4 +227,3 @@ SootopolisCity_MysteryEventsHouse_1F_Text_TooBadForYou:
 	.string "Ah, too bad for you!\p"
 	.string "But it was a good match.\n"
 	.string "I hope you can win next time.$"
-

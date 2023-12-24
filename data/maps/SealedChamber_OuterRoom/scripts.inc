@@ -103,4 +103,3 @@ SealedChamber_OuterRoom_EventScript_BrailleDigHere::
 	braillemsgbox SealedChamber_OuterRoom_Braille_DigHere
 	releaseall
 	end
-

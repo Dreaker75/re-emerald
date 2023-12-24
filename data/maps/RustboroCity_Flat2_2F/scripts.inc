@@ -34,4 +34,3 @@ RustboroCity_Flat2_2F_Text_GoingToWorkAtDevonToo:
 	.string "My daddy's working at the CORPORATION.\p"
 	.string "When I grow up, I'm going to work for\n"
 	.string "DEVON, too.$"
-

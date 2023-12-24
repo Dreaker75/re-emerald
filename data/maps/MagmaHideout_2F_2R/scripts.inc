@@ -75,4 +75,3 @@ MagmaHideout_2F_2R_Text_Grunt8Defeat:
 MagmaHideout_2F_2R_Text_Grunt8PostBattle:
 	.string "I'm getting this feeling that our plan\n"
 	.string "is going to end in failure…$"
-

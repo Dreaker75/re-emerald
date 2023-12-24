@@ -23,4 +23,3 @@ SootopolisCity_House7_Text_CaveMadeToKeepSomething:
 	.string "It seems as if the cave was made to\n"
 	.string "keep something from getting out.\p"
 	.string "Or am I just imagining things?$"
-

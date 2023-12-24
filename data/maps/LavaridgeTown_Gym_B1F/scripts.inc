@@ -46,4 +46,3 @@ LavaridgeTown_Gym_B1F_EventScript_CheckBuryEli::
 	setobjectmovementtype LOCALID_ELI, MOVEMENT_TYPE_BURIED
 LavaridgeTown_Gym_B1F_EventScript_EndCheckBuryTrainers::
 	return
-

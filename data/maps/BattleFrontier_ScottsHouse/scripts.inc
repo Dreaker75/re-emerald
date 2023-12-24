@@ -346,4 +346,3 @@ BattleFrontier_ScottsHouse_Text_ExpectingToHearEvenGreaterThings:
 BattleFrontier_ScottsHouse_Text_ComeBackForThisLater:
 	.string "Oops, well, if you have too much\n"
 	.string "stuff, come back for this later.$"
-

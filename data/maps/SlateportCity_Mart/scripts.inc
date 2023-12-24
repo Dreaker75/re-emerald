@@ -45,4 +45,3 @@ SlateportCity_Mart_Text_GreatBallIsBetter:
 	.string "at catching POKéMON.\p"
 	.string "With this, I should be able to get that\n"
 	.string "elusive POKéMON…$"
-

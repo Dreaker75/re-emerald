@@ -66,4 +66,3 @@ MtPyre_6F_Text_CedricPostBattle:
 	.string "I had this feeling that a lost TRAINER\n"
 	.string "would be panicked and easy to beat.\p"
 	.string "It's dirty and I won't try it again…$"
-

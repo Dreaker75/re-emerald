@@ -74,4 +74,3 @@ AbandonedShip_Rooms_1F_Text_DemetriusDefeat:
 AbandonedShip_Rooms_1F_Text_DemetriusPostBattle:
 	.string "I'm in trouble with my mom, so I ran.\n"
 	.string "Keep it a secret where I am!$"
-

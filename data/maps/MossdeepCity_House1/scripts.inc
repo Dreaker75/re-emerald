@@ -38,4 +38,3 @@ MossdeepCity_House1_Text_DoesntLikeOrDislikePokeblocks:
 MossdeepCity_House1_Text_HusbandCanTellPokeblockMonLikes:
 	.string "My husband can tell what kind of\n"
 	.string "{POKEBLOCK}S a POKéMON likes at a glance.$"
-

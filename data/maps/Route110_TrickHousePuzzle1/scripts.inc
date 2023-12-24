@@ -74,4 +74,3 @@ Route110_TrickHousePuzzle1_Text_RobinDefeat:
 Route110_TrickHousePuzzle1_Text_RobinPostBattle:
 	.string "You're strong!\n"
 	.string "Just who are you?$"
-

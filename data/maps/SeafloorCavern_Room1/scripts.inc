@@ -33,4 +33,3 @@ SeafloorCavern_Room1_Text_Grunt2PostBattle:
 	.string "That submarine we jacked, man,\n"
 	.string "it's brutal as a ride.\l"
 	.string "It's way too tight in there!$"
-

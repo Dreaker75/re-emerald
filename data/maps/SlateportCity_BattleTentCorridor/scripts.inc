@@ -274,4 +274,3 @@ SlateportCity_ContestHall_Text_GetUrgeToMoveWithMon:
 SlateportCity_ContestHall_Text_HyperRankStage:
 	.string "POKéMON CONTESTS\n"
 	.string "HYPER RANK STAGE!$"
-

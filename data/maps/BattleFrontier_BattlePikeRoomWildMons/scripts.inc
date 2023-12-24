@@ -39,4 +39,3 @@ BattleFrontier_BattlePikeRoomWildMons_OnResume:
 BattleFrontier_BattlePikeRoomWildMons_EventScript_SetLost::
 	setvar VAR_TEMP_1, 1
 	end
-

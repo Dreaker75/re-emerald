@@ -144,4 +144,3 @@ PacifidlogTown_House2_Text_Rururi:
 PacifidlogTown_House2_Text_DoesntLikeTrainerVeryMuch:
 	.string "It doesn't appear to like the TRAINER\n"
 	.string "very much.$"
-
