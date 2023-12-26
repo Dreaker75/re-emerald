@@ -63,7 +63,7 @@
 #define MULTI_SSTIDAL_SLATEPORT_WITH_BF    52
 #define MULTI_SSTIDAL_BATTLE_FRONTIER      53
 #define MULTI_RIGHTLEFT                    54
-#define MULTI_GAME_CORNER_TMS              55
+#define MULTI_GAME_CORNER_ITEMS            55
 #define MULTI_SSTIDAL_SLATEPORT_NO_BF      56
 #define MULTI_FLOORS                       57
 #define MULTI_SHARDS_R                     58
