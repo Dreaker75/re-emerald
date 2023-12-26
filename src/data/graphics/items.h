@@ -794,10 +794,12 @@ const u32 gItemIconPalette_RustedWeapons[] = INCBIN_U32("graphics/items/icon_pal
 
 // Colored Orbs
 
-const u32 gItemIcon_RedOrb[] = INCBIN_U32("graphics/items/icons/red_orb.4bpp.lz");
+const u32 gItemIcon_RedOrb[] = INCBIN_U32("graphics/items/icons/orb.4bpp.lz");
+// const u32 gItemIcon_RedOrb[] = INCBIN_U32("graphics/items/icons/red_orb.4bpp.lz");
 const u32 gItemIconPalette_RedOrb[] = INCBIN_U32("graphics/items/icon_palettes/red_orb.gbapal.lz");
 
-const u32 gItemIcon_BlueOrb[] = INCBIN_U32("graphics/items/icons/blue_orb.4bpp.lz");
+const u32 gItemIcon_BlueOrb[] = INCBIN_U32("graphics/items/icons/orb.4bpp.lz");
+// const u32 gItemIcon_BlueOrb[] = INCBIN_U32("graphics/items/icons/blue_orb.4bpp.lz");
 const u32 gItemIconPalette_BlueOrb[] = INCBIN_U32("graphics/items/icon_palettes/blue_orb.gbapal.lz");
 
 // Mega Stones
