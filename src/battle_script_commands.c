@@ -1090,11 +1090,11 @@ static const u16 sRarePickupItems[] =
     ITEM_FULL_RESTORE,
     ITEM_ETHER,
     ITEM_WHITE_HERB,
-    ITEM_TM_REST,
+    ITEM_UPGRADE,
     ITEM_ELIXIR,
-    ITEM_TM_FOCUS_PUNCH,
+    ITEM_BRIGHT_POWDER,
     ITEM_LEFTOVERS,
-    ITEM_TM_EARTHQUAKE,
+    ITEM_SACRED_ASH,
 };
 
 static const u8 sPickupProbabilities[] =
