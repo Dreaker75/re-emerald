@@ -4134,9 +4134,9 @@ static const union AnimCmd sAnim_Aggron_1[] =
 static const union AnimCmd sAnim_Castform_1[] =
 {
     ANIMCMD_FRAME(0, 12),
-    ANIMCMD_FRAME(1, 24),
     ANIMCMD_FRAME(0, 24),
-    ANIMCMD_FRAME(1, 24),
+    ANIMCMD_FRAME(0, 24),
+    ANIMCMD_FRAME(0, 24),
     ANIMCMD_FRAME(0, 24),
     ANIMCMD_END,
 };
@@ -4144,11 +4144,11 @@ static const union AnimCmd sAnim_Castform_1[] =
 static const union AnimCmd sAnim_CastformSunny_1[] =
 {
     ANIMCMD_FRAME(0, 12),
-    ANIMCMD_FRAME(1, 12),
     ANIMCMD_FRAME(0, 12),
-    ANIMCMD_FRAME(1, 12),
     ANIMCMD_FRAME(0, 12),
-    ANIMCMD_FRAME(1, 12),
+    ANIMCMD_FRAME(0, 12),
+    ANIMCMD_FRAME(0, 12),
+    ANIMCMD_FRAME(0, 12),
     ANIMCMD_FRAME(0, 12),
     ANIMCMD_END,
 };
@@ -4156,9 +4156,9 @@ static const union AnimCmd sAnim_CastformSunny_1[] =
 static const union AnimCmd sAnim_CastformRainy_1[] =
 {
     ANIMCMD_FRAME(0, 22),
-    ANIMCMD_FRAME(1, 22),
     ANIMCMD_FRAME(0, 22),
-    ANIMCMD_FRAME(1, 22),
+    ANIMCMD_FRAME(0, 22),
+    ANIMCMD_FRAME(0, 22),
     ANIMCMD_FRAME(0, 11),
     ANIMCMD_END,
 };
@@ -4166,9 +4166,9 @@ static const union AnimCmd sAnim_CastformRainy_1[] =
 static const union AnimCmd sAnim_CastformSnowy_1[] =
 {
     ANIMCMD_FRAME(0, 5),
-    ANIMCMD_FRAME(1, 12),
     ANIMCMD_FRAME(0, 12),
-    ANIMCMD_FRAME(1, 29),
+    ANIMCMD_FRAME(0, 12),
+    ANIMCMD_FRAME(0, 29),
     ANIMCMD_FRAME(0, 12),
     ANIMCMD_END,
 };

@@ -101,9 +101,7 @@ void LoadSpecialPokePic(void *dest, s32 species, u32 personality, bool8 isFrontP
     }
     else
     {
-        if (gMonBackPicTableFemale[species].data != NULL && IsPersonalityFemale(species, personality))
-            LZ77UnCompWram(gMonBackPicTableFemale[species].data, dest);
-        else if (gMonBackPicTable[species].data != NULL)
+        if (gMonBackPicTable[species].data != NULL)
             LZ77UnCompWram(gMonBackPicTable[species].data, dest);
         else
             LZ77UnCompWram(gMonBackPicTable[SPECIES_NONE].data, dest);
