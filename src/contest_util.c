@@ -657,7 +657,43 @@ static void Task_ShowContestResults(u8 taskId)
         {
             IncrementGameStat(GAME_STAT_ENTERED_CONTEST);
             if (gContestFinalStandings[gContestPlayerMonIndex] == 0)
+            {
                 IncrementGameStat(GAME_STAT_WON_CONTEST);
+
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+                // ADDED: We increment the variables for the highest contest rank unlocked for the current category if it's higher than the current one
+
+                // There is no rank above Master, so we skip this if the player won the Master Rank
+                if (gSpecialVar_ContestRank < CONTEST_RANK_MASTER)
+                {
+                    switch (gSpecialVar_ContestCategory)
+                    {
+                    case CONTEST_CATEGORY_COOL:
+                        if (VarGet(VAR_COOL_CONTEST_HIGHEST_RANK_UNLOCKED) == gSpecialVar_ContestRank)
+                            VarSet(VAR_COOL_CONTEST_HIGHEST_RANK_UNLOCKED, gSpecialVar_ContestRank + 1);
+                        break;
+                    case CONTEST_CATEGORY_BEAUTY:
+                        if (VarGet(VAR_BEAUTY_CONTEST_HIGHEST_RANK_UNLOCKED) == gSpecialVar_ContestRank)
+                            VarSet(VAR_BEAUTY_CONTEST_HIGHEST_RANK_UNLOCKED, gSpecialVar_ContestRank + 1);
+                        break;
+                    case CONTEST_CATEGORY_CUTE:
+                        if (VarGet(VAR_CUTE_CONTEST_HIGHEST_RANK_UNLOCKED) == gSpecialVar_ContestRank)
+                            VarSet(VAR_CUTE_CONTEST_HIGHEST_RANK_UNLOCKED, gSpecialVar_ContestRank + 1);
+                        break;
+                    case CONTEST_CATEGORY_SMART:
+                        if (VarGet(VAR_SMART_CONTEST_HIGHEST_RANK_UNLOCKED) == gSpecialVar_ContestRank)
+                            VarSet(VAR_SMART_CONTEST_HIGHEST_RANK_UNLOCKED, gSpecialVar_ContestRank + 1);
+                        break;
+                    case CONTEST_CATEGORY_TOUGH:
+                        if (VarGet(VAR_TOUGH_CONTEST_HIGHEST_RANK_UNLOCKED) == gSpecialVar_ContestRank)
+                            VarSet(VAR_TOUGH_CONTEST_HIGHEST_RANK_UNLOCKED, gSpecialVar_ContestRank + 1);
+                        break;
+                    }
+                }
+
+                // END OF ADDED --
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            }
 
             SaveContestWinner(gSpecialVar_ContestRank); // Save for lobby painting
             SaveContestWinner(CONTEST_SAVE_FOR_ARTIST);
@@ -1952,6 +1988,27 @@ void TryEnterContestMon(void)
     gSpecialVar_Result = eligibility;
 }
 
+// ADDED: Function to know how many Luxury Balls the player will receive after winning a contest
+u16 GetAmountOfLuxuryBalls(void)
+{
+    u16 numberOfLuxuryBalls = 1;
+
+    switch (gSpecialVar_ContestRank)
+    {
+    case CONTEST_RANK_SUPER:
+        numberOfLuxuryBalls = 2;
+        break;
+    case CONTEST_RANK_HYPER:
+        numberOfLuxuryBalls = 3;
+        break;
+    case CONTEST_RANK_MASTER:
+        numberOfLuxuryBalls = 5;
+        break;
+    }
+
+    return numberOfLuxuryBalls;
+}
+
 u16 HasMonWonThisContestBefore(void)
 {
     u16 hasRankRibbon = FALSE;
@@ -1994,7 +2051,7 @@ void GiveMonContestRibbon(void)
     {
     case CONTEST_CATEGORY_COOL:
         ribbonData = GetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_COOL_RIBBON);
-        if (ribbonData <= gSpecialVar_ContestRank && ribbonData <= CONTEST_RANK_MASTER)
+        while (ribbonData <= gSpecialVar_ContestRank && ribbonData <= CONTEST_RANK_MASTER)
         {
             ribbonData++;
             SetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_COOL_RIBBON, &ribbonData);
@@ -2004,7 +2061,7 @@ void GiveMonContestRibbon(void)
         break;
     case CONTEST_CATEGORY_BEAUTY:
         ribbonData = GetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_BEAUTY_RIBBON);
-        if (ribbonData <= gSpecialVar_ContestRank && ribbonData <= CONTEST_RANK_MASTER)
+        while (ribbonData <= gSpecialVar_ContestRank && ribbonData <= CONTEST_RANK_MASTER)
         {
             ribbonData++;
             SetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_BEAUTY_RIBBON, &ribbonData);
@@ -2014,7 +2071,7 @@ void GiveMonContestRibbon(void)
         break;
     case CONTEST_CATEGORY_CUTE:
         ribbonData = GetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_CUTE_RIBBON);
-        if (ribbonData <= gSpecialVar_ContestRank && ribbonData <= CONTEST_RANK_MASTER)
+        while (ribbonData <= gSpecialVar_ContestRank && ribbonData <= CONTEST_RANK_MASTER)
         {
             ribbonData++;
             SetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_CUTE_RIBBON, &ribbonData);
@@ -2024,7 +2081,7 @@ void GiveMonContestRibbon(void)
         break;
     case CONTEST_CATEGORY_SMART:
         ribbonData = GetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_SMART_RIBBON);
-        if (ribbonData <= gSpecialVar_ContestRank && ribbonData <= CONTEST_RANK_MASTER)
+        while (ribbonData <= gSpecialVar_ContestRank && ribbonData <= CONTEST_RANK_MASTER)
         {
             ribbonData++;
             SetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_SMART_RIBBON, &ribbonData);
@@ -2034,7 +2091,7 @@ void GiveMonContestRibbon(void)
         break;
     case CONTEST_CATEGORY_TOUGH:
         ribbonData = GetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_TOUGH_RIBBON);
-        if (ribbonData <= gSpecialVar_ContestRank && ribbonData <= CONTEST_RANK_MASTER)
+        while (ribbonData <= gSpecialVar_ContestRank && ribbonData <= CONTEST_RANK_MASTER)
         {
             ribbonData++;
             SetMonData(&gPlayerParty[gContestMonPartyIndex], MON_DATA_TOUGH_RIBBON, &ribbonData);

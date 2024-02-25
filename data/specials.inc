@@ -99,6 +99,7 @@ gSpecials::
 	def_special GetContestantNamesAtRank
 	def_special SetLinkContestPlayerGfx
 	def_special GetContestMonCondition
+	def_special GetAmountOfLuxuryBalls
 	def_special HasMonWonThisContestBefore
 	def_special GiveMonContestRibbon
 	def_special IsContestDebugActive

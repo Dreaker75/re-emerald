@@ -2990,6 +2990,19 @@ u8 GetContestEntryEligibility(struct Pokemon *pkmn)
         eligibility = CAN_ENTER_CONTEST_EQUAL_RANK;
     else
         eligibility = CANT_ENTER_CONTEST;
+
+    if (eligibility == CANT_ENTER_CONTEST)
+    {
+        if ((gSpecialVar_ContestCategory == CONTEST_CATEGORY_COOL && gSpecialVar_ContestRank <= VarGet(VAR_COOL_CONTEST_HIGHEST_RANK_UNLOCKED)) ||
+            (gSpecialVar_ContestCategory == CONTEST_CATEGORY_BEAUTY && gSpecialVar_ContestRank <= VarGet(VAR_BEAUTY_CONTEST_HIGHEST_RANK_UNLOCKED)) ||
+            (gSpecialVar_ContestCategory == CONTEST_CATEGORY_CUTE && gSpecialVar_ContestRank <= VarGet(VAR_CUTE_CONTEST_HIGHEST_RANK_UNLOCKED)) ||
+            (gSpecialVar_ContestCategory == CONTEST_CATEGORY_SMART && gSpecialVar_ContestRank <= VarGet(VAR_SMART_CONTEST_HIGHEST_RANK_UNLOCKED)) ||
+            (gSpecialVar_ContestCategory == CONTEST_CATEGORY_TOUGH && gSpecialVar_ContestRank <= VarGet(VAR_TOUGH_CONTEST_HIGHEST_RANK_UNLOCKED)))
+        {
+            eligibility = CAN_ENTER_CONTEST_EQUAL_RANK;
+        }
+    }
+
     return eligibility;
 }
 

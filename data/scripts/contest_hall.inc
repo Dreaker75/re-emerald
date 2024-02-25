@@ -32,6 +32,11 @@ LilycoveCity_ContestLobby_EventScript_GivePokeblockCase::
 	msgbox LilycoveCity_ContestLobby_Text_ReceptionDontHavePokeblockCase, MSGBOX_DEFAULT
 	giveitem ITEM_POKEBLOCK_CASE
 	setflag FLAG_RECEIVED_POKEBLOCK_CASE
+	setvar VAR_COOL_CONTEST_HIGHEST_RANK_UNLOCKED, 0
+	setvar VAR_BEAUTY_CONTEST_HIGHEST_RANK_UNLOCKED, 0
+	setvar VAR_CUTE_CONTEST_HIGHEST_RANK_UNLOCKED, 0
+	setvar VAR_SMART_CONTEST_HIGHEST_RANK_UNLOCKED, 0
+	setvar VAR_TOUGH_CONTEST_HIGHEST_RANK_UNLOCKED, 0
 	msgbox LilycoveCity_ContestLobby_Text_NowThatWeveClearedThatUp, MSGBOX_DEFAULT
 	return
 
@@ -42,7 +47,8 @@ LilycoveCity_ContestLobby_EventScript_PickUpPrize::
 	end
 
 LilycoveCity_ContestLobby_EventScript_GiveLuxuryBallAtCounter::
-	giveitem ITEM_LUXURY_BALL
+	specialvar VAR_RESULT, GetAmountOfLuxuryBalls
+	giveitem ITEM_LUXURY_BALL, VAR_RESULT
 	goto_if_eq VAR_RESULT, FALSE, LilycoveCity_ContestLobby_EventScript_NoRoomForLuxuryBallAtCounter
 	setvar VAR_CONTEST_PRIZE_PICKUP, 0
 	closemessage
@@ -1017,8 +1023,6 @@ ContestHall_EventScript_VObjectAudienceLookAround::
 
 ContestHall_EventScript_GiveWinnerPrize::
 	goto_if_eq VAR_CONTEST_TYPE, CONTEST_TYPE_LINK, ContestHall_EventScript_EndLinkContest
-	call ContestHall_EventScript_CheckShouldSkipPrize
-	goto_if_set FLAG_TEMP_2, ContestHall_EventScript_SkipPrize
 	lockall
 	msgbox ContestHall_Text_AcceptYourPrize, MSGBOX_DEFAULT
 	releaseall
@@ -1030,33 +1034,6 @@ ContestHall_EventScript_GiveWinnerPrize::
 	delay 30
 	special ShouldReadyContestArtist
 	goto_if_eq VAR_0x8004, TRUE, ContestHall_EventScript_SetReadyForContestArtist
-	return
-
-ContestHall_EventScript_SkipPrize::
-	lockall
-	msgbox ContestHall_Text_CongratsPleaseCompeteAgain, MSGBOX_DEFAULT
-	releaseall
-	delay 90
-	special ShouldReadyContestArtist
-	goto_if_eq VAR_0x8004, TRUE, ContestHall_EventScript_SetReadyForContestArtist
-	return
-
-ContestHall_EventScript_CheckShouldSkipPrize::
-	specialvar VAR_RESULT, HasMonWonThisContestBefore
-	goto_if_eq VAR_RESULT, TRUE, ContestHall_EventScript_CheckPlayerWon
-	return
-
-ContestHall_EventScript_CheckPlayerWon::
-	special GetContestWinnerId
-	goto_if_eq VAR_0x8005, 3, ContestHall_EventScript_CheckRankIsMaster
-	return
-
-ContestHall_EventScript_CheckRankIsMaster::
-	goto_if_eq VAR_CONTEST_RANK, CONTEST_RANK_MASTER, ContestHall_EventScript_DontSkipPrize
-	setflag FLAG_TEMP_2
-	return
-
-ContestHall_EventScript_DontSkipPrize::
 	return
 
 @ This flag is never read
@@ -1134,7 +1111,7 @@ ContestHall_EventScript_GiveContestPrizes::
 	call_if_eq VAR_CONTEST_TYPE, CONTEST_TYPE_NPC_SUPER, ContestHall_EventScript_SetSketchFlag
 	specialvar VAR_RESULT, HasMonWonThisContestBefore
 	goto_if_eq VAR_RESULT, FALSE, ContestHall_EventScript_ReceiveContestRibbon
-	goto_if_eq VAR_CONTEST_RANK, CONTEST_RANK_MASTER, ContestHall_EventScript_GiveLuxuryBall
+	call ContestHall_EventScript_GiveLuxuryBall
 	lockall
 	msgbox ContestHall_Text_CongratsPleaseCompeteAgain, MSGBOX_DEFAULT
 	releaseall
@@ -1149,11 +1126,9 @@ ContestHall_EventScript_NoRoomForLuxuryBall::
 	return
 
 ContestHall_EventScript_GiveLuxuryBall::
-	giveitem ITEM_LUXURY_BALL
+	specialvar VAR_RESULT, GetAmountOfLuxuryBalls
+	giveitem ITEM_LUXURY_BALL, VAR_RESULT
 	goto_if_eq VAR_RESULT, FALSE, ContestHall_EventScript_NoRoomForLuxuryBall
-	lockall
-	msgbox ContestHall_Text_CongratsPleaseCompeteAgain, MSGBOX_DEFAULT
-	releaseall
 	return
 
 ContestHall_EventScript_ReceiveContestRibbon::
@@ -1586,8 +1561,7 @@ ContestHall_Text_PutRibbonOnMon:
 
 ContestHall_Text_PickUpPrizeAtCounterLater:
 	.string "Please pick up your prize at\n"
-	.string "the reception counter later.\l"
-	.string "Please do compete again!$"
+	.string "the reception counter later.$"
 
 @ Unused
 ContestHall_Text_OnlyRegister4Players:

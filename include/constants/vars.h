@@ -117,11 +117,11 @@
 #define VAR_ROUTE102_STATE                               0x4061 // Unused Var
 #define VAR_ROUTE103_STATE                               0x4062 // Unused Var
 #define VAR_ROUTE104_STATE                               0x4063
-#define VAR_ROUTE105_STATE                               0x4064 // Unused Var
-#define VAR_ROUTE106_STATE                               0x4065 // Unused Var
-#define VAR_ROUTE107_STATE                               0x4066 // Unused Var
-#define VAR_ROUTE108_STATE                               0x4067 // Unused Var
-#define VAR_ROUTE109_STATE                               0x4068 // Unused Var
+#define VAR_COOL_CONTEST_HIGHEST_RANK_UNLOCKED           0x4064 // ADDED: Variable to know what rank of the Cool contests the player can enter
+#define VAR_BEAUTY_CONTEST_HIGHEST_RANK_UNLOCKED         0x4065 // ADDED: Variable to know what rank of the Beauty contests the player can enter
+#define VAR_CUTE_CONTEST_HIGHEST_RANK_UNLOCKED           0x4066 // ADDED: Variable to know what rank of the Cute contests the player can enter
+#define VAR_SMART_CONTEST_HIGHEST_RANK_UNLOCKED          0x4067 // ADDED: Variable to know what rank of the Smart contests the player can enter
+#define VAR_TOUGH_CONTEST_HIGHEST_RANK_UNLOCKED          0x4068 // ADDED: Variable to know what rank of the Tough contests the player can enter
 #define VAR_ROUTE110_STATE                               0x4069
 #define VAR_ROUTE111_STATE                               0x406A // Unused Var
 #define VAR_ROUTE112_STATE                               0x406B // Unused Var
