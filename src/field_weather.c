@@ -47,9 +47,9 @@ static bool8 LightenSpritePaletteInFog(u8);
 static void BuildColorMaps(void);
 static void UpdateWeatherColorMap(void);
 static void ApplyColorMap(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex);
-static void ApplyColorMapWithBlend(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex, u8 blendCoeff, u16 blendColor);
-static void ApplyDroughtColorMapWithBlend(s8 colorMapIndex, u8 blendCoeff, u16 blendColor);
-static void ApplyFogBlend(u8 blendCoeff, u16 blendColor);
+static void ApplyColorMapWithBlend(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex, u8 blendCoeff, u32 blendColor);
+static void ApplyDroughtColorMapWithBlend(s8 colorMapIndex, u8 blendCoeff, u32 blendColor);
+static void ApplyFogBlend(u8 blendCoeff, u32 blendColor);
 static bool8 FadeInScreen_RainShowShade(void);
 static bool8 FadeInScreen_Drought(void);
 static bool8 FadeInScreen_FogHorizontal(void);
@@ -279,7 +279,6 @@ static void BuildColorMaps(void)
     u16 brightnessDelta;
     u16 colorMapIndex;
     u16 baseBrightness;
-    u32 remainingBrightness;
     s16 diff;
 
     sPaletteColorMapTypes = sBasePaletteColorMapTypes;
@@ -307,11 +306,7 @@ static void BuildColorMaps(void)
             }
 
             baseBrightness = curBrightness;
-            remainingBrightness = 0x1f00 - curBrightness;
-            if ((0x1f00 - curBrightness) < 0)
-                remainingBrightness += 0xf;
-
-            brightnessDelta = remainingBrightness / (NUM_WEATHER_COLOR_MAPS - 3);
+            brightnessDelta = (0x1f00 - curBrightness) / (NUM_WEATHER_COLOR_MAPS - 3);
             if (colorVal < 12)
             {
                 // For shadows (color values < 12), the remaining color mappings are
@@ -544,7 +539,7 @@ static void ApplyColorMap(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex)
     }
 }
 
-static void ApplyColorMapWithBlend(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex, u8 blendCoeff, u16 blendColor)
+static void ApplyColorMapWithBlend(u8 startPalIndex, u8 numPalettes, s8 colorMapIndex, u8 blendCoeff, u32 blendColor)
 {
     u16 palOffset;
     u16 curPalIndex;
@@ -595,7 +590,7 @@ static void ApplyColorMapWithBlend(u8 startPalIndex, u8 numPalettes, s8 colorMap
     }
 }
 
-static void ApplyDroughtColorMapWithBlend(s8 colorMapIndex, u8 blendCoeff, u16 blendColor)
+static void ApplyDroughtColorMapWithBlend(s8 colorMapIndex, u8 blendCoeff, u32 blendColor)
 {
     struct RGBColor color;
     u8 rBlend;
@@ -650,7 +645,7 @@ static void ApplyDroughtColorMapWithBlend(s8 colorMapIndex, u8 blendCoeff, u16 b
     }
 }
 
-static void ApplyFogBlend(u8 blendCoeff, u16 blendColor)
+static void ApplyFogBlend(u8 blendCoeff, u32 blendColor)
 {
     struct RGBColor color;
     u8 rBlend;
@@ -856,8 +851,7 @@ void ApplyWeatherColorMapToPal(u8 paletteIndex)
     ApplyColorMap(paletteIndex, 1, gWeatherPtr->colorMapIndex);
 }
 
-// Unused
-static bool8 IsFirstFrameOfWeatherFadeIn(void)
+static bool8 UNUSED IsFirstFrameOfWeatherFadeIn(void)
 {
     if (gWeatherPtr->palProcessingState == WEATHER_PAL_STATE_SCREEN_FADING_IN)
         return gWeatherPtr->fadeInFirstFrame;
@@ -998,8 +992,8 @@ bool8 Weather_UpdateBlend(void)
     return FALSE;
 }
 
-// Unused. Uses the same numbering scheme as the coord events
-static void SetFieldWeather(u8 weather)
+// Uses the same numbering scheme as the coord events
+static void UNUSED SetFieldWeather(u8 weather)
 {
     switch (weather)
     {

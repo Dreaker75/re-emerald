@@ -1,11 +1,6 @@
 #include "global.h"
 #include "test/battle.h"
 
-ASSUMPTIONS
-{
-    ASSUME(P_GEN_7_POKEMON == TRUE); // Because only Necrozma can have this ability.
-}
-
 SINGLE_BATTLE_TEST("Neuroforce increases the strength of super-effective moves by 25%", s16 damage)
 {
     u32 move;
@@ -15,8 +10,8 @@ SINGLE_BATTLE_TEST("Neuroforce increases the strength of super-effective moves b
     PARAMETRIZE { ability = ABILITY_NEUROFORCE; move = MOVE_TACKLE; }
     PARAMETRIZE { ability = ABILITY_KLUTZ; move = MOVE_TACKLE; }
     GIVEN {
-        ASSUME(gBattleMoves[MOVE_SHADOW_BALL].type == TYPE_GHOST);
-        ASSUME(gBattleMoves[MOVE_TACKLE].type == TYPE_NORMAL);
+        ASSUME(gMovesInfo[MOVE_SHADOW_BALL].type == TYPE_GHOST);
+        ASSUME(gMovesInfo[MOVE_TACKLE].type == TYPE_NORMAL);
         PLAYER(SPECIES_NECROZMA_ULTRA) { Ability(ability); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {

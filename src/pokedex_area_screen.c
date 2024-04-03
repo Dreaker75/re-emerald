@@ -8,6 +8,7 @@
 #include "menu.h"
 #include "overworld.h"
 #include "palette.h"
+#include "pokedex.h"
 #include "pokedex_area_screen.h"
 #include "region_map.h"
 #include "roamer.h"
@@ -106,9 +107,11 @@ static void CreateAreaUnknownSprites(void);
 static void Task_HandlePokedexAreaScreenInput(u8);
 static void ResetPokedexAreaMapBg(void);
 static void DestroyAreaScreenSprites(void);
+static void LoadHGSSScreenSelectBarSubmenu(void);
 
 static const u32 sAreaGlow_Pal[] = INCBIN_U32("graphics/pokedex/area_glow.gbapal");
 static const u32 sAreaGlow_Gfx[] = INCBIN_U32("graphics/pokedex/area_glow.4bpp.lz");
+static const u32 sPokedexPlusHGSS_ScreenSelectBarSubmenu_Tilemap[] = INCBIN_U32("graphics/pokedex/hgss/SelectBar.bin.lz");
 
 static const u16 sSpeciesHiddenFromAreaScreen[] = { SPECIES_WYNAUT };
 
@@ -638,6 +641,9 @@ static void Task_ShowPokedexAreaScreen(u8 taskId)
         BeginNormalPaletteFade(PALETTES_ALL & ~(0x14), 0, 16, 0, RGB_BLACK);
         break;
     case 10:
+        if (POKEDEX_PLUS_HGSS)
+            LoadHGSSScreenSelectBarSubmenu();
+
         SetGpuReg(REG_OFFSET_BLDCNT, BLDCNT_TGT1_BG0 | BLDCNT_EFFECT_BLEND | BLDCNT_TGT2_BG0 | BLDCNT_TGT2_ALL);
         StartAreaGlow();
         ShowBg(2);
@@ -669,10 +675,20 @@ static void Task_HandlePokedexAreaScreenInput(u8 taskId)
         if (JOY_NEW(B_BUTTON))
         {
             gTasks[taskId].data[1] = 1;
-            PlaySE(SE_PC_OFF);
+            PlaySE(SE_DEX_PAGE);
+        }
+        else if (JOY_NEW(DPAD_LEFT) || (JOY_NEW(L_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
+        {
+            gTasks[taskId].data[1] = 1;
+            PlaySE(SE_DEX_PAGE);
         }
         else if (JOY_NEW(DPAD_RIGHT) || (JOY_NEW(R_BUTTON) && gSaveBlock2Ptr->optionsButtonMode == OPTIONS_BUTTON_MODE_LR))
         {
+            if (!GetSetPokedexFlag(SpeciesToNationalPokedexNum(sPokedexAreaScreen->species), FLAG_GET_CAUGHT))
+            {
+                PlaySE(SE_FAILURE);
+                return;
+            }
             gTasks[taskId].data[1] = 2;
             PlaySE(SE_DEX_PAGE);
         }
@@ -794,4 +810,10 @@ static void CreateAreaUnknownSprites(void)
             }
         }
     }
+}
+
+static void LoadHGSSScreenSelectBarSubmenu(void)
+{
+    CopyToBgTilemapBuffer(1, sPokedexPlusHGSS_ScreenSelectBarSubmenu_Tilemap, 0, 0);
+    CopyBgTilemapBufferToVram(1);
 }

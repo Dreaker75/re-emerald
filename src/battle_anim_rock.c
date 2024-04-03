@@ -351,8 +351,7 @@ const struct SpriteTemplate gSeedFlareGreenWavesTemplate =
 
 static void AnimStealthRock(struct Sprite *sprite)
 {
-    u16 x;
-    u16 y;
+    s16 x, y;
 
     InitSpritePosToAnimAttacker(sprite, TRUE);
     SetAverageBattlerPositions(gBattleAnimTarget, FALSE, &x, &y);
@@ -457,11 +456,7 @@ void AnimRockFragment(struct Sprite *sprite)
 // Swirls particle in vortex. Used for moves like Fire Spin or Sand Tomb
 void AnimParticleInVortex(struct Sprite *sprite)
 {
-    if (gBattleAnimArgs[6] == ANIM_ATTACKER)
-        InitSpritePosToAnimAttacker(sprite, FALSE);
-    else
-        InitSpritePosToAnimTarget(sprite, FALSE);
-
+    InitSpritePosToAnimBattler(gBattleAnimArgs[6], sprite, FALSE);
     sprite->data[0] = gBattleAnimArgs[3];
     sprite->data[1] = gBattleAnimArgs[2];
     sprite->data[2] = gBattleAnimArgs[4];
@@ -653,7 +648,6 @@ void AnimTask_Rollout(u8 taskId)
 {
     u16 var0, var1, var2, var3;
     u8 rolloutCounter;
-    int var5;
     s16 pan1, pan2;
     struct Task *task;
 
@@ -677,13 +671,7 @@ void AnimTask_Rollout(u8 taskId)
     task->data[11] = 0;
     task->data[9] = 0;
     task->data[12] = 1;
-
-    var5 = task->data[8];
-    if (var5 < 0)
-        var5 += 7;
-
-    task->data[10] = (var5 >> 3) - 1;
-
+    task->data[10] = (task->data[8] / 8) - 1;
     task->data[2] = var0 * 8;
     task->data[3] = var1 * 8;
     task->data[4] = ((var2 - var0) * 8) / task->data[8];

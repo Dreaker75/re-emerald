@@ -46,6 +46,8 @@ static void AnimTask_Hail2(u8);
 static bool8 GenerateHailParticle(u8 hailStructId, u8 affineAnimNum, u8 taskId, u8 c);
 static void AvalancheAnim_Step(struct Sprite *sprite);
 static void AvalancheAnim_Step2(struct Sprite *sprite);
+static void AnimSnowflakes(struct Sprite *sprite);
+static void AnimSnowflakes_Step(struct Sprite *sprite);
 
 static const union AnimCmd sAnim_Unused[] =
 {
@@ -170,6 +172,17 @@ const struct SpriteTemplate gIceCrystalSpiralInwardSmall =
     .images = NULL,
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = AnimIcePunchSwirlingParticle,
+};
+
+const struct SpriteTemplate gIceCrystalSpinSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_ICE_CRYSTALS,
+    .paletteTag = ANIM_TAG_ICE_CRYSTALS,
+    .oam = &gOamData_AffineDouble_ObjBlend_8x16,
+    .anims = gAnims_IceCrystalLarge,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimParticleInVortex,
 };
 
 static const union AffineAnimCmd sAffineAnim_IceBeamInnerCrystal[] =
@@ -1290,7 +1303,7 @@ static void InitPoisonGasCloudAnim(struct Sprite *sprite)
     sprite->x = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_X_2);
     sprite->y = GetBattlerSpriteCoord(gBattleAnimAttacker, BATTLER_COORD_Y_PIC_OFFSET);
 
-#if B_UPDATED_MOVE_DATA >= GEN_5
+    if (B_UPDATED_MOVE_DATA >= GEN_5)
     {
         s16 x, y;
         SetAverageBattlerPositions(gBattleAnimTarget, gBattleAnimArgs[7], &x, &y);
@@ -1300,8 +1313,7 @@ static void InitPoisonGasCloudAnim(struct Sprite *sprite)
         sprite->data[4] = y + gBattleAnimArgs[4];
         sprite->data[7] |= GetBattlerSpriteBGPriority(gBattleAnimTarget) << 8;
     }
-#else
-    if (gBattleAnimArgs[7])
+    else if (gBattleAnimArgs[7])
     {
         sprite->data[1] = sprite->x + gBattleAnimArgs[1];
         sprite->data[2] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_X_2) + gBattleAnimArgs[3];
@@ -1317,7 +1329,6 @@ static void InitPoisonGasCloudAnim(struct Sprite *sprite)
         sprite->data[4] = GetBattlerSpriteCoord(gBattleAnimTarget, BATTLER_COORD_Y) + gBattleAnimArgs[4];
         sprite->data[7] |= GetBattlerSpriteBGPriority(gBattleAnimTarget) << 8;
     }
-#endif
 
     if (IsContest())
     {
@@ -1672,4 +1683,70 @@ void AnimTask_GetIceBallCounter(u8 taskId)
 
     gBattleAnimArgs[arg] = gAnimDisableStructPtr->rolloutTimerStartValue - gAnimDisableStructPtr->rolloutTimer - 1;
     DestroyAnimVisualTask(taskId);
+}
+
+static const union AnimCmd sAnim_Snowflakes[] =
+{
+    ANIMCMD_FRAME(0, 2),
+    ANIMCMD_FRAME(8, 2),
+    ANIMCMD_FRAME(16, 2),
+    ANIMCMD_FRAME(24, 6),
+    ANIMCMD_FRAME(32, 2),
+    ANIMCMD_FRAME(40, 2),
+    ANIMCMD_FRAME(48, 2),
+    ANIMCMD_END,
+};
+
+static const union AnimCmd *const sAnims_Snowflakes[] =
+{
+    sAnim_Snowflakes,
+};
+
+const struct SpriteTemplate gSnowFlakesSpriteTemplate =
+{
+    .tileTag = ANIM_TAG_SNOWFLAKES,
+    .paletteTag = ANIM_TAG_SNOWFLAKES,
+    .oam = &gOamData_AffineOff_ObjNormal_16x32,
+    .anims = sAnims_Snowflakes,
+    .images = NULL,
+    .affineAnims = gDummySpriteAffineAnimTable,
+    .callback = AnimSnowflakes,
+};
+
+void AnimTask_CreateSnowflakes(u8 taskId)
+{
+    u8 x, y;
+
+    if (gTasks[taskId].data[0] == 0)
+    {
+        gTasks[taskId].data[1] = gBattleAnimArgs[0];
+        gTasks[taskId].data[2] = gBattleAnimArgs[1];
+        gTasks[taskId].data[3] = gBattleAnimArgs[2];
+    }
+    gTasks[taskId].data[0]++;
+    if (gTasks[taskId].data[0] % gTasks[taskId].data[2] == 1)
+    {
+        x = Random2() % DISPLAY_WIDTH;
+        y = Random2() % (DISPLAY_HEIGHT / 2);
+        CreateSprite(&gSnowFlakesSpriteTemplate, x, y, 4);
+    }
+    if (gTasks[taskId].data[0] == gTasks[taskId].data[3])
+        DestroyAnimVisualTask(taskId);
+}
+
+static void AnimSnowflakes(struct Sprite *sprite)
+{
+    sprite->callback = AnimSnowflakes_Step;
+}
+
+static void AnimSnowflakes_Step(struct Sprite *sprite)
+{
+    if (++sprite->data[0] <= 13)
+    {
+        sprite->x2++;
+        sprite->y2 += 2;
+        sprite->x2--;
+    }
+    if (sprite->animEnded)
+        DestroySprite(sprite);
 }

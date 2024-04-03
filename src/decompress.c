@@ -50,6 +50,16 @@ void LoadCompressedSpritePalette(const struct CompressedSpritePalette *src)
     LoadSpritePalette(&dest);
 }
 
+void LoadCompressedSpritePaletteWithTag(const u32 *pal, u16 tag)
+{
+    struct SpritePalette dest;
+
+    LZ77UnCompWram(pal, gDecompressionBuffer);
+    dest.data = (void *) gDecompressionBuffer;
+    dest.tag = tag;
+    LoadSpritePalette(&dest);
+}
+
 void LoadCompressedSpritePaletteOverrideBuffer(const struct CompressedSpritePalette *src, void *buffer)
 {
     struct SpritePalette dest;
@@ -60,22 +70,9 @@ void LoadCompressedSpritePaletteOverrideBuffer(const struct CompressedSpritePale
     LoadSpritePalette(&dest);
 }
 
-void DecompressPicFromTable(const struct CompressedSpriteSheet *src, void *buffer, s32 species)
+void DecompressPicFromTable(const struct CompressedSpriteSheet *src, void *buffer)
 {
-    if (species > NUM_SPECIES)
-        LZ77UnCompWram(gMonFrontPicTable[SPECIES_NONE].data, buffer);
-    else
-        LZ77UnCompWram(src->data, buffer);
-}
-
-void DecompressPicFromTableGender(void* buffer, s32 species, u32 personality)
-{
-    if (gMonFrontPicTableFemale[species].data != NULL && IsPersonalityFemale(species, personality))
-        LZ77UnCompWram(gMonFrontPicTableFemale[species].data, buffer);
-    else if (gMonFrontPicTable[species].data != NULL)
-        LZ77UnCompWram(gMonFrontPicTable[species].data, buffer);
-    else
-        LZ77UnCompWram(gMonFrontPicTable[SPECIES_NONE].data, buffer);
+    LZ77UnCompWram(src->data, buffer);
 }
 
 void HandleLoadSpecialPokePic(bool32 isFrontPic, void *dest, s32 species, u32 personality)
@@ -85,26 +82,27 @@ void HandleLoadSpecialPokePic(bool32 isFrontPic, void *dest, s32 species, u32 pe
 
 void LoadSpecialPokePic(void *dest, s32 species, u32 personality, bool8 isFrontPic)
 {
-    if (species > NUM_SPECIES)
-        species = SPECIES_NONE;
-    else if (species == SPECIES_UNOWN)
+    species = SanitizeSpeciesId(species);
+    if (species == SPECIES_UNOWN)
         species = GetUnownSpeciesId(personality);
 
     if (isFrontPic)
     {
-        if (gMonFrontPicTableFemale[species].data != NULL && IsPersonalityFemale(species, personality))
-            LZ77UnCompWram(gMonFrontPicTableFemale[species].data, dest);
-        else if (gMonFrontPicTable[species].data != NULL)
-            LZ77UnCompWram(gMonFrontPicTable[species].data, dest);
+        if (gSpeciesInfo[species].frontPicFemale != NULL && IsPersonalityFemale(species, personality))
+            LZ77UnCompWram(gSpeciesInfo[species].frontPicFemale, dest);
+        else if (gSpeciesInfo[species].frontPic != NULL)
+            LZ77UnCompWram(gSpeciesInfo[species].frontPic, dest);
         else
-            LZ77UnCompWram(gMonFrontPicTable[SPECIES_NONE].data, dest);
+            LZ77UnCompWram(gSpeciesInfo[SPECIES_NONE].frontPic, dest);
     }
     else
     {
-        if (gMonBackPicTable[species].data != NULL)
-            LZ77UnCompWram(gMonBackPicTable[species].data, dest);
+        if (gSpeciesInfo[species].backPicFemale != NULL && IsPersonalityFemale(species, personality))
+            LZ77UnCompWram(gSpeciesInfo[species].backPicFemale, dest);
+        else if (gSpeciesInfo[species].backPic != NULL)
+            LZ77UnCompWram(gSpeciesInfo[species].backPic, dest);
         else
-            LZ77UnCompWram(gMonBackPicTable[SPECIES_NONE].data, dest);
+            LZ77UnCompWram(gSpeciesInfo[SPECIES_NONE].backPic, dest);
     }
 
     if (species == SPECIES_SPINDA && isFrontPic)
@@ -119,7 +117,7 @@ void Unused_LZDecompressWramIndirect(const void **src, void *dest)
     LZ77UnCompWram(*src, dest);
 }
 
-static void StitchObjectsOn8x8Canvas(s32 object_size, s32 object_count, u8 *src_tiles, u8 *dest_tiles)
+static void UNUSED StitchObjectsOn8x8Canvas(s32 object_size, s32 object_count, u8 *src_tiles, u8 *dest_tiles)
 {
     /*
       This function appears to emulate behaviour found in the GB(C) versions regarding how the Pokemon images
@@ -220,7 +218,8 @@ static void StitchObjectsOn8x8Canvas(s32 object_size, s32 object_count, u8 *src_
             // While the remaining space will be filled with actual data
             if (object_size == 6)
             {
-                for (k = 0; k < 256; k++) {
+                for (k = 0; k < 256; k++)
+                {
                     *dest = 0;
                     dest++;
                 }
@@ -230,14 +229,16 @@ static void StitchObjectsOn8x8Canvas(s32 object_size, s32 object_count, u8 *src_
             {
                 if (object_size == 6)
                 {
-                    for (k = 0; k < 32; k++) {
+                    for (k = 0; k < 32; k++)
+                    {
                         *dest = 0;
                         dest++;
                     }
                 }
 
                 // Copy tile data
-                for (k = 0; k < 32 * object_size; k++) {
+                for (k = 0; k < 32 * object_size; k++)
+                {
                     *dest = *src;
                     src++;
                     dest++;
@@ -245,7 +246,8 @@ static void StitchObjectsOn8x8Canvas(s32 object_size, s32 object_count, u8 *src_
 
                 if (object_size == 6)
                 {
-                    for (k = 0; k < 32; k++) {
+                    for (k = 0; k < 32; k++)
+                    {
                         *dest = 0;
                         dest++;
                     }
@@ -254,7 +256,8 @@ static void StitchObjectsOn8x8Canvas(s32 object_size, s32 object_count, u8 *src_
 
             if (object_size == 6)
             {
-                for (k = 0; k < 256; k++) {
+                for (k = 0; k < 256; k++)
+                {
                     *dest = 0;
                     dest++;
                 }

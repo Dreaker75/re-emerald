@@ -9,18 +9,16 @@
 #include "scanline_effect.h"
 #include "task.h"
 #include "trig.h"
+#include "constants/battle_partner.h"
 #include "constants/trainers.h"
-
-static EWRAM_DATA u16 sBgCnt = 0;
-
-extern const u8 gBattleAnimBgCntSet[];
-extern const u8 gBattleAnimBgCntGet[];
 
 static void BattleIntroSlide1(u8);
 static void BattleIntroSlide2(u8);
 static void BattleIntroSlide3(u8);
 static void BattleIntroSlideLink(u8);
 static void BattleIntroSlidePartner(u8);
+
+static const u8 sBattleAnimBgCnts[] = {REG_OFFSET_BG0CNT, REG_OFFSET_BG1CNT, REG_OFFSET_BG2CNT, REG_OFFSET_BG3CNT};
 
 static const TaskFunc sBattleIntroSlideFuncs[] =
 {
@@ -40,59 +38,59 @@ void SetAnimBgAttribute(u8 bgId, u8 attributeId, u8 value)
 {
     if (bgId < 4)
     {
-        sBgCnt = GetGpuReg(gBattleAnimBgCntSet[bgId]);
+        u32 bgCnt = GetGpuReg(sBattleAnimBgCnts[bgId]);
         switch (attributeId)
         {
         case BG_ANIM_SCREEN_SIZE:
-            ((struct BgCnt *)&sBgCnt)->screenSize = value;
+            ((vBgCnt *)&bgCnt)->screenSize = value;
             break;
         case BG_ANIM_AREA_OVERFLOW_MODE:
-            ((struct BgCnt *)&sBgCnt)->areaOverflowMode = value;
+            ((vBgCnt *)&bgCnt)->areaOverflowMode = value;
             break;
         case BG_ANIM_MOSAIC:
-            ((struct BgCnt *)&sBgCnt)->mosaic = value;
+            ((vBgCnt *)&bgCnt)->mosaic = value;
             break;
         case BG_ANIM_CHAR_BASE_BLOCK:
-            ((struct BgCnt *)&sBgCnt)->charBaseBlock = value;
+            ((vBgCnt *)&bgCnt)->charBaseBlock = value;
             break;
         case BG_ANIM_PRIORITY:
-            ((struct BgCnt *)&sBgCnt)->priority = value;
+            ((vBgCnt *)&bgCnt)->priority = value;
             break;
         case BG_ANIM_PALETTES_MODE:
-            ((struct BgCnt *)&sBgCnt)->palettes = value;
+            ((vBgCnt *)&bgCnt)->palettes = value;
             break;
         case BG_ANIM_SCREEN_BASE_BLOCK:
-            ((struct BgCnt *)&sBgCnt)->screenBaseBlock = value;
+            ((vBgCnt *)&bgCnt)->screenBaseBlock = value;
             break;
         }
 
-        SetGpuReg(gBattleAnimBgCntSet[bgId], sBgCnt);
+        SetGpuReg(sBattleAnimBgCnts[bgId], bgCnt);
     }
 }
 
 int GetAnimBgAttribute(u8 bgId, u8 attributeId)
 {
-    u16 bgCnt;
+    u32 bgCnt;
 
     if (bgId < 4)
     {
-        bgCnt = GetGpuReg(gBattleAnimBgCntGet[bgId]);
+        bgCnt = GetGpuReg(sBattleAnimBgCnts[bgId]);
         switch (attributeId)
         {
         case BG_ANIM_SCREEN_SIZE:
-            return ((struct BgCnt *)&bgCnt)->screenSize;
+            return ((vBgCnt *)&bgCnt)->screenSize;
         case BG_ANIM_AREA_OVERFLOW_MODE:
-            return ((struct BgCnt *)&bgCnt)->areaOverflowMode;
+            return ((vBgCnt *)&bgCnt)->areaOverflowMode;
         case BG_ANIM_MOSAIC:
-            return ((struct BgCnt *)&bgCnt)->mosaic;
+            return ((vBgCnt *)&bgCnt)->mosaic;
         case BG_ANIM_CHAR_BASE_BLOCK:
-            return ((struct BgCnt *)&bgCnt)->charBaseBlock;
+            return ((vBgCnt *)&bgCnt)->charBaseBlock;
         case BG_ANIM_PRIORITY:
-            return ((struct BgCnt *)&bgCnt)->priority;
+            return ((vBgCnt *)&bgCnt)->priority;
         case BG_ANIM_PALETTES_MODE:
-            return ((struct BgCnt *)&bgCnt)->palettes;
+            return ((vBgCnt *)&bgCnt)->palettes;
         case BG_ANIM_SCREEN_BASE_BLOCK:
-            return ((struct BgCnt *)&bgCnt)->screenBaseBlock;
+            return ((vBgCnt *)&bgCnt)->screenBaseBlock;
         }
     }
 
@@ -106,7 +104,7 @@ void HandleIntroSlide(u8 terrain)
 {
     u8 taskId;
 
-    if ((gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER) && gPartnerTrainerId != TRAINER_STEVEN_PARTNER && gPartnerTrainerId < TRAINER_CUSTOM_PARTNER)
+    if ((gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER) && gPartnerTrainerId < TRAINER_PARTNER(PARTNER_NONE))
     {
         taskId = CreateTask(BattleIntroSlidePartner, 0);
     }
@@ -118,7 +116,7 @@ void HandleIntroSlide(u8 terrain)
     {
         taskId = CreateTask(BattleIntroSlide3, 0);
     }
-    else if ((gBattleTypeFlags & BATTLE_TYPE_KYOGRE_GROUDON) && gGameVersion != VERSION_RUBY)
+    else if (GetMonData(&gEnemyParty[0], MON_DATA_SPECIES, NULL) == SPECIES_KYOGRE)
     {
         terrain = BATTLE_TERRAIN_UNDERWATER;
         taskId = CreateTask(BattleIntroSlide2, 0);
@@ -196,12 +194,12 @@ static void BattleIntroSlide1(u8 taskId)
         {
             if (gTasks[taskId].tTerrain == BATTLE_TERRAIN_LONG_GRASS)
             {
-                if (gBattle_BG1_Y != 0xFFB0)
+                if (gBattle_BG1_Y != (u16)(-80))
                     gBattle_BG1_Y -= 2;
             }
             else
             {
-                if (gBattle_BG1_Y != 0xFFC8)
+                if (gBattle_BG1_Y != (u16)(-56))
                     gBattle_BG1_Y -= 1;
             }
         }
@@ -587,9 +585,8 @@ static void BattleIntroSlidePartner(u8 taskId)
 void DrawBattlerOnBg(int bgId, u8 x, u8 y, u8 battlerPosition, u8 paletteId, u8 *tiles, u16 *tilemap, u16 tilesOffset)
 {
     int i, j;
-    u8 battler = GetBattlerAtPosition(battlerPosition);
     int offset = tilesOffset;
-    CpuCopy16(gMonSpritesGfxPtr->sprites.ptr[battlerPosition], tiles, BG_SCREEN_SIZE);
+    CpuCopy16(gMonSpritesGfxPtr->spritesGfx[battlerPosition], tiles, BG_SCREEN_SIZE);
     LoadBgTiles(bgId, tiles, 0x1000, tilesOffset);
     for (i = y; i < y + 8; i++)
     {
@@ -602,11 +599,11 @@ void DrawBattlerOnBg(int bgId, u8 x, u8 y, u8 battlerPosition, u8 paletteId, u8 
     LoadBgTilemap(bgId, tilemap, BG_SCREEN_SIZE, 0);
 }
 
-static void DrawBattlerOnBgDMA(u8 x, u8 y, u8 battlerPosition, u8 arg3, u8 paletteId, u16 arg5, u8 arg6, u8 arg7)
+static void UNUSED DrawBattlerOnBgDMA(u8 x, u8 y, u8 battlerPosition, u8 arg3, u8 paletteId, u16 arg5, u8 arg6, u8 arg7)
 {
     int i, j, offset;
 
-    DmaCopy16(3, gMonSpritesGfxPtr->sprites.ptr[battlerPosition] + BG_SCREEN_SIZE * arg3, (void *)BG_SCREEN_ADDR(0) + arg5, BG_SCREEN_SIZE);
+    DmaCopy16(3, gMonSpritesGfxPtr->spritesGfx[battlerPosition] + BG_SCREEN_SIZE * arg3, (void *)BG_SCREEN_ADDR(0) + arg5, BG_SCREEN_SIZE);
     offset = (arg5 >> 5) - (arg7 << 9);
     for (i = y; i < y + 8; i++)
     {

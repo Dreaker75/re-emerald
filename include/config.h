@@ -34,16 +34,6 @@
 #define LOG_HANDLER (LOG_HANDLER_MGBA_PRINT)
 #endif
 
-#define ENGLISH
-
-#ifdef ENGLISH
-#define UNITS_IMPERIAL
-#define CHAR_DEC_SEPARATOR CHAR_PERIOD // Period is used as a decimal separator only in the UK and the US.
-#else
-#define UNITS_METRIC
-#define CHAR_DEC_SEPARATOR CHAR_COMMA
-#endif
-
 // Uncomment to fix some identified minor bugs
 #define BUGFIX
 
@@ -64,16 +54,28 @@
 #define ITEM_EXPANSION
 
 // Generation constants used in configs to define behavior
-#define GEN_3 0
-#define GEN_4 1
-#define GEN_5 2
-#define GEN_6 3
-#define GEN_7 4
-#define GEN_8 5
-#define GEN_9 6
+#define GEN_1 0
+#define GEN_2 1
+#define GEN_3 2
+#define GEN_4 3
+#define GEN_5 4
+#define GEN_6 5
+#define GEN_7 6
+#define GEN_8 7
+#define GEN_9 8
 #define GEN_LATEST GEN_9
 
 // General settings
-#define EXPANSION_INTRO   FALSE    // If TRUE, a custom RHH intro will play after the vanilla copyright screen.
+#define EXPANSION_INTRO              FALSE    // If TRUE, a custom RHH intro will play after the vanilla copyright screen.
+#define POKEDEX_PLUS_HGSS            FALSE   // If TRUE, enables the custom HGSS style Pokedex.
+#define SUMMARY_SCREEN_NATURE_COLORS TRUE    // If TRUE, nature-based stat boosts and reductions will be red and blue in the summary screen.
+#define HQ_RANDOM                    TRUE    // If TRUE, replaces the default RNG with an implementation of SFC32 RNG. May break code that relies on RNG.
+
+// Measurement system constants to be used for UNITS
+#define UNITS_IMPERIAL               0       // Inches, feet, pounds
+#define UNITS_METRIC                 1       // meters, kilograms
+
+#define UNITS                        UNITS_IMPERIAL
+#define CHAR_DEC_SEPARATOR           CHAR_PERIOD // CHAR_PERIOD is used as a decimal separator only in the UK and the US. The rest of the world uses CHAR_COMMA.
 
 #endif // GUARD_CONFIG_H

@@ -57,9 +57,9 @@
 #define BATTLE_TYPE_WALLY_TUTORIAL     (1 << 9) // Used in pokefirered as BATTLE_TYPE_OLD_MAN_TUTORIAL.
 #define BATTLE_TYPE_ROAMER             (1 << 10)
 #define BATTLE_TYPE_EREADER_TRAINER    (1 << 11)
-#define BATTLE_TYPE_KYOGRE_GROUDON     (1 << 12)
+#define BATTLE_TYPE_RAID               (1 << 12)
 #define BATTLE_TYPE_LEGENDARY          (1 << 13)
-#define BATTLE_TYPE_REGI               (1 << 14)
+#define BATTLE_TYPE_14                 (1 << 14)
 #define BATTLE_TYPE_TWO_OPPONENTS      (1 << 15) // Used in pokefirered as BATTLE_TYPE_GHOST.
 #define BATTLE_TYPE_DOME               (1 << 16) // Used in pokefirered as BATTLE_TYPE_POKEDUDE.
 #define BATTLE_TYPE_PALACE             (1 << 17) // Used in pokefirered as BATTLE_TYPE_WILD_SCRIPTED.
@@ -73,19 +73,19 @@
 #define BATTLE_TYPE_RECORDED_LINK      (1 << 25)
 #define BATTLE_TYPE_TRAINER_HILL       (1 << 26)
 #define BATTLE_TYPE_SECRET_BASE        (1 << 27)
-#define BATTLE_TYPE_GROUDON            (1 << 28)
-#define BATTLE_TYPE_KYOGRE             (1 << 29)
-#define BATTLE_TYPE_RAYQUAZA           (1 << 30)
+#define BATTLE_TYPE_28                 (1 << 28)
+#define BATTLE_TYPE_29                 (1 << 29)
+#define BATTLE_TYPE_30                 (1 << 30)
 #define BATTLE_TYPE_RECORDED_IS_MASTER (1 << 31)
 #define BATTLE_TYPE_FRONTIER                (BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_DOME | BATTLE_TYPE_PALACE | BATTLE_TYPE_ARENA | BATTLE_TYPE_FACTORY | BATTLE_TYPE_PIKE | BATTLE_TYPE_PYRAMID)
 #define BATTLE_TYPE_FRONTIER_NO_PYRAMID     (BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_DOME | BATTLE_TYPE_PALACE | BATTLE_TYPE_ARENA | BATTLE_TYPE_FACTORY | BATTLE_TYPE_PIKE)
 #define BATTLE_TYPE_RECORDED_INVALID        ((BATTLE_TYPE_LINK | BATTLE_TYPE_SAFARI | BATTLE_TYPE_FIRST_BATTLE                  \
                                              | BATTLE_TYPE_WALLY_TUTORIAL | BATTLE_TYPE_ROAMER | BATTLE_TYPE_EREADER_TRAINER    \
-                                             | BATTLE_TYPE_KYOGRE_GROUDON | BATTLE_TYPE_LEGENDARY | BATTLE_TYPE_REGI            \
-                                             | BATTLE_TYPE_RECORDED | BATTLE_TYPE_TRAINER_HILL | BATTLE_TYPE_SECRET_BASE        \
-                                             | BATTLE_TYPE_GROUDON | BATTLE_TYPE_KYOGRE | BATTLE_TYPE_RAYQUAZA))
+                                             | BATTLE_TYPE_LEGENDARY                                                            \
+                                             | BATTLE_TYPE_RECORDED | BATTLE_TYPE_TRAINER_HILL | BATTLE_TYPE_SECRET_BASE))
 
 #define WILD_DOUBLE_BATTLE ((gBattleTypeFlags & BATTLE_TYPE_DOUBLE && !(gBattleTypeFlags & (BATTLE_TYPE_LINK | BATTLE_TYPE_TRAINER))))
+#define RECORDED_WILD_BATTLE ((gBattleTypeFlags & BATTLE_TYPE_RECORDED) && !(gBattleTypeFlags & (BATTLE_TYPE_TRAINER | BATTLE_TYPE_FRONTIER)))
 #define BATTLE_TWO_VS_ONE_OPPONENT ((gBattleTypeFlags & BATTLE_TYPE_INGAME_PARTNER && gTrainerBattleOpponent_B == 0xFFFF))
 #define BATTLE_TYPE_HAS_AI          (BATTLE_TYPE_TRAINER | BATTLE_TYPE_FIRST_BATTLE | BATTLE_TYPE_SAFARI | BATTLE_TYPE_ROAMER | BATTLE_TYPE_INGAME_PARTNER)
 
@@ -104,7 +104,10 @@
 #define B_OUTCOME_LINK_BATTLE_RAN      (1 << 7) // 128
 
 // Non-volatile status conditions
-// These persist remain outside of battle and after switching out
+// These remain outside of battle and after switching out.
+// If a new STATUS1 is added here, it should also be added to
+// sCompressedStatuses in src/pokemon.c or else it will be lost outside
+// of battle.
 #define STATUS1_NONE             0
 #define STATUS1_SLEEP            (1 << 0 | 1 << 1 | 1 << 2) // First 3 bits (Number of turns to sleep)
 #define STATUS1_SLEEP_TURN(num)  ((num) << 0) // Just for readability (or if rearranging statuses)
@@ -126,7 +129,7 @@
 #define STATUS2_FLINCHED              (1 << 3)
 #define STATUS2_UPROAR                (1 << 4 | 1 << 5 | 1 << 6)
 #define STATUS2_UPROAR_TURN(num)      ((num) << 4)
-#define STATUS2_UNUSED                (1 << 7)
+#define STATUS2_TORMENT               (1 << 7)
 #define STATUS2_BIDE                  (1 << 8 | 1 << 9)
 #define STATUS2_BIDE_TURN(num)        (((num) << 8) & STATUS2_BIDE)
 #define STATUS2_LOCK_CONFUSE          (1 << 10 | 1 << 11) // e.g. Thrash
@@ -136,7 +139,7 @@
 #define STATUS2_POWDER                (1 << 14)
 #define STATUS2_INFATUATION           (1 << 16 | 1 << 17 | 1 << 18 | 1 << 19)  // 4 bits, one for every battler
 #define STATUS2_INFATUATED_WITH(battler) (gBitTable[battler] << 16)
-#define STATUS2_FOCUS_ENERGY          (1 << 20)
+#define STATUS2_DEFENSE_CURL          (1 << 20)
 #define STATUS2_TRANSFORMED           (1 << 21)
 #define STATUS2_RECHARGE              (1 << 22)
 #define STATUS2_RAGE                  (1 << 23)
@@ -146,8 +149,9 @@
 #define STATUS2_NIGHTMARE             (1 << 27)
 #define STATUS2_CURSED                (1 << 28)
 #define STATUS2_FORESIGHT             (1 << 29)
-#define STATUS2_DEFENSE_CURL          (1 << 30)
-#define STATUS2_TORMENT               (1 << 31)
+#define STATUS2_DRAGON_CHEER          (1 << 30)
+#define STATUS2_FOCUS_ENERGY          (1 << 31)
+#define STATUS2_FOCUS_ENERGY_ANY      (STATUS2_DRAGON_CHEER | STATUS2_FOCUS_ENERGY)
 
 #define STATUS3_LEECHSEED_BATTLER       (1 << 0 | 1 << 1) // The battler to receive HP from Leech Seed
 #define STATUS3_LEECHSEED               (1 << 2)
@@ -163,7 +167,7 @@
 #define STATUS3_YAWN_TURN(num)          (((num) << 11) & STATUS3_YAWN)
 #define STATUS3_IMPRISONED_OTHERS       (1 << 13)
 #define STATUS3_GRUDGE                  (1 << 14)
-#define STATUS3_CANT_SCORE_A_CRIT       (1 << 15)
+#define STATUS3___UNUSED                (1 << 15)
 #define STATUS3_GASTRO_ACID             (1 << 16)
 #define STATUS3_EMBARGO                 (1 << 17)
 #define STATUS3_UNDERWATER              (1 << 18)
@@ -183,25 +187,27 @@
 #define STATUS3_SEMI_INVULNERABLE       (STATUS3_UNDERGROUND | STATUS3_ON_AIR | STATUS3_UNDERWATER | STATUS3_PHANTOM_FORCE)
 
 #define STATUS4_ELECTRIFIED             (1 << 0)
-#define STATUS4_PLASMA_FISTS            (1 << 1)
-#define STATUS4_MUD_SPORT               (1 << 2)    // Only used if B_SPORT_TURNS < GEN_6
-#define STATUS4_WATER_SPORT             (1 << 3)    // Only used if B_SPORT_TURNS < GEN_6
-#define STATUS4_INFINITE_CONFUSION      (1 << 4)    // Used for Berserk Gene
-#define STATUS4_SALT_CURE               (1 << 5)
+#define STATUS4_MUD_SPORT               (1 << 1)    // Only used if B_SPORT_TURNS < GEN_6
+#define STATUS4_WATER_SPORT             (1 << 2)    // Only used if B_SPORT_TURNS < GEN_6
+#define STATUS4_INFINITE_CONFUSION      (1 << 3)    // Used for Berserk Gene
+#define STATUS4_SALT_CURE               (1 << 4)
+#define STATUS4_SYRUP_BOMB              (1 << 5)
+#define STATUS4_GLAIVE_RUSH             (1 << 6)
 
 #define HITMARKER_WAKE_UP_CLEAR         (1 << 4) // Cleared when waking up. Never set or checked.
-#define HITMARKER_SKIP_DMG_TRACK        (1 << 5)
+#define HITMARKER_IGNORE_BIDE           (1 << 5)
 #define HITMARKER_DESTINYBOND           (1 << 6)
-#define HITMARKER_NO_ANIMATIONS         (1 << 7)
+#define HITMARKER_NO_ANIMATIONS         (1 << 7)   // set from battleSceneOff. Never changed during battle
 #define HITMARKER_IGNORE_SUBSTITUTE     (1 << 8)
 #define HITMARKER_NO_ATTACKSTRING       (1 << 9)
 #define HITMARKER_ATTACKSTRING_PRINTED  (1 << 10)
 #define HITMARKER_NO_PPDEDUCT           (1 << 11)
 #define HITMARKER_SWAP_ATTACKER_TARGET  (1 << 12)
-#define HITMARKER_IGNORE_SAFEGUARD      (1 << 13)
+#define HITMARKER_STATUS_ABILITY_EFFECT (1 << 13)
 #define HITMARKER_SYNCHRONISE_EFFECT    (1 << 14)
 #define HITMARKER_RUN                   (1 << 15)
 #define HITMARKER_IGNORE_DISGUISE       (1 << 16)
+#define HITMARKER_DISABLE_ANIMATION     (1 << 17)   // disable animations during battle scripts, e.g. for Bug Bite
 // 3 free spots because of change in handling of UNDERGROUND/UNDERWATER/ON AIR
 #define HITMARKER_UNABLE_TO_USE_MOVE    (1 << 19)
 #define HITMARKER_PASSIVE_DAMAGE        (1 << 20)
@@ -235,9 +241,15 @@
 #define SIDE_STATUS_WIDE_GUARD              (1 << 19)
 #define SIDE_STATUS_CRAFTY_SHIELD           (1 << 20)
 #define SIDE_STATUS_MAT_BLOCK               (1 << 21)
+#define SIDE_STATUS_STEELSURGE              (1 << 22)
+#define SIDE_STATUS_DAMAGE_NON_TYPES        (1 << 23)
+#define SIDE_STATUS_RAINBOW                 (1 << 24)
+#define SIDE_STATUS_SEA_OF_FIRE             (1 << 25)
+#define SIDE_STATUS_SWAMP                   (1 << 26)
 
-#define SIDE_STATUS_HAZARDS_ANY    (SIDE_STATUS_SPIKES | SIDE_STATUS_STICKY_WEB | SIDE_STATUS_TOXIC_SPIKES | SIDE_STATUS_STEALTH_ROCK)
+#define SIDE_STATUS_HAZARDS_ANY    (SIDE_STATUS_SPIKES | SIDE_STATUS_STICKY_WEB | SIDE_STATUS_TOXIC_SPIKES | SIDE_STATUS_STEALTH_ROCK | SIDE_STATUS_STEELSURGE)
 #define SIDE_STATUS_SCREEN_ANY     (SIDE_STATUS_REFLECT | SIDE_STATUS_LIGHTSCREEN | SIDE_STATUS_AURORA_VEIL)
+#define SIDE_STATUS_PLEDGE_ANY     (SIDE_STATUS_RAINBOW | SIDE_STATUS_SEA_OF_FIRE | SIDE_STATUS_SWAMP)
 
 // Field affecting statuses.
 #define STATUS_FIELD_MAGIC_ROOM                     (1 << 0)
@@ -313,6 +325,7 @@
 #define MOVE_EFFECT_TOXIC               6
 #define MOVE_EFFECT_FROSTBITE           7
 #define PRIMARY_STATUS_MOVE_EFFECT      MOVE_EFFECT_FROSTBITE // All above move effects apply primary status
+#define MOVE_EFFECT_FREEZE_OR_FROSTBITE (B_USE_FROSTBITE == TRUE ? MOVE_EFFECT_FROSTBITE : MOVE_EFFECT_FREEZE)
 #define MOVE_EFFECT_CONFUSION           8
 #define MOVE_EFFECT_FLINCH              9
 #define MOVE_EFFECT_TRI_ATTACK          10
@@ -334,14 +347,14 @@
 #define MOVE_EFFECT_SP_DEF_MINUS_1      26
 #define MOVE_EFFECT_ACC_MINUS_1         27
 #define MOVE_EFFECT_EVS_MINUS_1         28
-#define MOVE_EFFECT_BURN_UP             29
+#define MOVE_EFFECT_REMOVE_ARG_TYPE     29
 #define MOVE_EFFECT_RECHARGE            30
 #define MOVE_EFFECT_RAGE                31
 #define MOVE_EFFECT_STEAL_ITEM          32
 #define MOVE_EFFECT_PREVENT_ESCAPE      33
 #define MOVE_EFFECT_NIGHTMARE           34
 #define MOVE_EFFECT_ALL_STATS_UP        35
-#define MOVE_EFFECT_RAPIDSPIN           36
+#define MOVE_EFFECT_RAPID_SPIN          36
 #define MOVE_EFFECT_REMOVE_STATUS       37
 #define MOVE_EFFECT_ATK_DEF_DOWN        38
 #define MOVE_EFFECT_ATK_PLUS_2          39
@@ -375,20 +388,22 @@
 #define MOVE_EFFECT_INCINERATE          67
 #define MOVE_EFFECT_BUG_BITE            68
 #define MOVE_EFFECT_RECOIL_HP_25        69
-#define MOVE_EFFECT_RELIC_SONG          70
-#define MOVE_EFFECT_TRAP_BOTH           71
-#define MOVE_EFFECT_DOUBLE_SHOCK        72
-#define MOVE_EFFECT_ROUND               73
-#define MOVE_EFFECT_STOCKPILE_WORE_OFF  74
-#define MOVE_EFFECT_DIRE_CLAW           75
-#define MOVE_EFFECT_STEALTH_ROCK        76
-#define MOVE_EFFECT_SPIKES              77
-#define MOVE_EFFECT_TRIPLE_ARROWS       78
+#define MOVE_EFFECT_TRAP_BOTH           70
+#define MOVE_EFFECT_ROUND               71
+#define MOVE_EFFECT_STOCKPILE_WORE_OFF  72
+#define MOVE_EFFECT_DIRE_CLAW           73
+#define MOVE_EFFECT_STEALTH_ROCK        74
+#define MOVE_EFFECT_SPIKES              75
+#define MOVE_EFFECT_SYRUP_BOMB          76
+#define MOVE_EFFECT_FLORAL_HEALING      77
+#define MOVE_EFFECT_SECRET_POWER        78
+#define MOVE_EFFECT_PSYCHIC_NOISE       79
 
-#define NUM_MOVE_EFFECTS                79
+#define NUM_MOVE_EFFECTS                80
 
-#define MOVE_EFFECT_AFFECTS_USER        0x4000
-#define MOVE_EFFECT_CERTAIN             0x8000
+#define MOVE_EFFECT_AFFECTS_USER        0x2000
+#define MOVE_EFFECT_CERTAIN             0x4000
+#define MOVE_EFFECT_CONTINUE            0x8000
 
 // Battle terrain defines for gBattleTerrain.
 #define BATTLE_TERRAIN_GRASS            0
@@ -498,5 +513,21 @@
 #define HANDLE_TYPE_MEGA_EVOLUTION 0
 #define HANDLE_TYPE_PRIMAL_REVERSION 1
 #define HANDLE_TYPE_ULTRA_BURST 2
+
+// Constants for Torment
+#define PERMANENT_TORMENT   0xF
+
+// Constants for B_VAR_STARTING_STATUS
+// Timer value controlled by B_VAR_STARTING_STATUS_TIMER
+#define STARTING_STATUS_NONE                0
+#define STARTING_STATUS_ELECTRIC_TERRAIN    1
+#define STARTING_STATUS_MISTY_TERRAIN       2
+#define STARTING_STATUS_GRASSY_TERRAIN      3
+#define STARTING_STATUS_PSYCHIC_TERRAIN     4
+#define STARTING_STATUS_TRICK_ROOM          5
+#define STARTING_STATUS_MAGIC_ROOM          6
+#define STARTING_STATUS_WONDER_ROOM         7
+#define STARTING_STATUS_TAILWIND_PLAYER     8
+#define STARTING_STATUS_TAILWIND_OPPONENT   9
 
 #endif // GUARD_CONSTANTS_BATTLE_H

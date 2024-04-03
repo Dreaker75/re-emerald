@@ -3,7 +3,7 @@
 
 ASSUMPTIONS
 {
-    gItems[ITEM_METRONOME].holdEffect == HOLD_EFFECT_METRONOME;
+    ASSUME(gItemsInfo[ITEM_METRONOME].holdEffect == HOLD_EFFECT_METRONOME);
 }
 
 const uq4_12_t MetronomeMultipliers[] = {
@@ -67,7 +67,6 @@ SINGLE_BATTLE_TEST("Metronome Item's boost is reset if the attacker uses a diffe
 SINGLE_BATTLE_TEST("Metronome Item's boost is reset if the move fails")
 {
     s16 damage[2];
-    KNOWN_FAILING; //https://github.com/rh-hideout/pokeemerald-expansion/issues/3251
     GIVEN {
         PLAYER(SPECIES_WOBBUFFET) { Item(ITEM_METRONOME); }
         OPPONENT(SPECIES_WOBBUFFET);
@@ -110,11 +109,10 @@ SINGLE_BATTLE_TEST("Metronome Item counts charging turn of moves for its attacki
 {
     u32 item;
 
-    KNOWN_FAILING; // https://github.com/rh-hideout/pokeemerald-expansion/issues/3250
     PARAMETRIZE {item = ITEM_NONE; }
     PARAMETRIZE {item = ITEM_METRONOME; }
     GIVEN {
-        ASSUME(gBattleMoves[MOVE_SOLAR_BEAM].effect == EFFECT_SOLAR_BEAM);
+        ASSUME(gMovesInfo[MOVE_SOLAR_BEAM].effect == EFFECT_SOLAR_BEAM);
         PLAYER(SPECIES_WOBBUFFET) { Item(item); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
@@ -136,7 +134,7 @@ SINGLE_BATTLE_TEST("Metronome Item doesn't increase damage per hit of multi-hit 
 {
     s16 damage[3];
     GIVEN {
-        ASSUME(gBattleMoves[MOVE_FURY_ATTACK].effect == EFFECT_MULTI_HIT);
+        ASSUME(gMovesInfo[MOVE_FURY_ATTACK].effect == EFFECT_MULTI_HIT);
         PLAYER(SPECIES_WOBBUFFET) { Item(ITEM_METRONOME); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
