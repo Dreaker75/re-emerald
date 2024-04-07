@@ -942,7 +942,9 @@ static const u16 sPichuTeachableLearnset[] = {
 };
 #endif //P_GEN_2_CROSS_EVOS
 
-static const u16 sPikachuTeachableLearnset[] = {
+#if P_FAMILY_PIKACHU
+#if P_GEN_2_CROSS_EVOS
+static const u16 sPichuTeachableLearnset[] = {
     MOVE_ATTRACT,
     MOVE_BRICK_BREAK,
     MOVE_CALM_MIND,
@@ -984,8 +986,9 @@ static const u16 sPikachuTeachableLearnset[] = {
     MOVE_THUNDER_WAVE,
     MOVE_UNAVAILABLE,
 };
+#endif //P_GEN_2_CROSS_EVOS
 
-static const u16 sRaichuTeachableLearnset[] = {
+static const u16 sPikachuTeachableLearnset[] = {
     MOVE_ATTRACT,
     MOVE_BRICK_BREAK,
     MOVE_CALM_MIND,

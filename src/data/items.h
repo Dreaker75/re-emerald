@@ -11499,7 +11499,7 @@ const struct Item gItemsInfo[] =
 
     [ITEM_PARCEL] =
     {
-        .name = _("OAK'S PARCEL"),
+        .name = _("Parcel"),
         .price = 0,
         .description = COMPOUND_STRING(
             "A parcel for Prof.\n"
