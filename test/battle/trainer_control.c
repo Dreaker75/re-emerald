@@ -26,12 +26,17 @@ static const struct TrainerMon sTestParty1[] =
         .ev = TRAINER_PARTY_EVS(252, 0, 0, 252, 4, 0),
         .lvl = 67,
         .moves = {MOVE_AIR_SLASH, MOVE_BARRIER, MOVE_SOLAR_BEAM, MOVE_EXPLOSION},
-        .nature = TRAINER_PARTY_NATURE(NATURE_HASTY),
-        .nickname = COMPOUND_STRING("Bubbles")
+        .nature = NATURE_HASTY,
+        .nickname = COMPOUND_STRING("Bubbles"),
+        .dynamaxLevel = 5,
     },
     {
         .species = SPECIES_WOBBUFFET,
         .ability = ABILITY_SHADOW_TAG,
+        .lvl = 5,
+    },
+    {
+        .species = SPECIES_WYNAUT,
         .lvl = 5,
     },
 };
@@ -58,6 +63,7 @@ TEST("CreateNPCTrainerPartyForTrainer generates customized Pokémon")
 
     EXPECT(GetMonAbility(&testParty[0]) == ABILITY_TELEPATHY);
     EXPECT(GetMonAbility(&testParty[1]) == ABILITY_SHADOW_TAG);
+    EXPECT(GetMonAbility(&testParty[2]) == ABILITY_SHADOW_TAG);
 
     EXPECT(GetMonData(&testParty[0], MON_DATA_FRIENDSHIP, 0) == 42);
     EXPECT(GetMonData(&testParty[1], MON_DATA_FRIENDSHIP, 0) == 0);
@@ -109,6 +115,10 @@ TEST("CreateNPCTrainerPartyForTrainer generates customized Pokémon")
 
     EXPECT(GetMonGender(&testParty[0]) == MON_FEMALE);
     EXPECT(GetNature(&testParty[0]) == NATURE_HASTY);
+    EXPECT(GetNature(&testParty[1]) == NATURE_HARDY);
+
+    EXPECT_EQ(GetMonData(&testParty[0], MON_DATA_DYNAMAX_LEVEL), 5);
+    EXPECT_EQ(GetMonData(&testParty[1], MON_DATA_DYNAMAX_LEVEL), 0);
 
     Free(testParty);
 }
@@ -123,7 +133,7 @@ TEST("CreateNPCTrainerPartyForTrainer generates different personalities for diff
 
 TEST("ModifyPersonalityForNature can set any nature")
 {
-    u32 personality, nature, j, k;
+    u32 personality = 0, nature = 0, j = 0, k = 0;
     for (j = 0; j < 64; j++)
     {
         for (k = 0; k < NUM_NATURES; k++)

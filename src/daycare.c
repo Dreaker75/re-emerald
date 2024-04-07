@@ -3,6 +3,7 @@
 #include "battle.h"
 #include "daycare.h"
 #include "string_util.h"
+#include "level_caps.h"
 #include "mail.h"
 #include "pokemon_storage_system.h"
 #include "event_data.h"
@@ -26,9 +27,7 @@
 #include "constants/moves.h"
 #include "constants/region_map_sections.h"
 
-extern const struct Evolution gEvolutionTable[][EVOS_PER_MON];
-
-#define IS_DITTO(species) (gBaseStats[species].eggGroup1 == EGG_GROUP_DITTO || gBaseStats[species].eggGroup2 == EGG_GROUP_DITTO)
+#define IS_DITTO(species) (gSpeciesInfo[species].eggGroups[0] == EGG_GROUP_DITTO || gSpeciesInfo[species].eggGroups[1] == EGG_GROUP_DITTO)
 
 static void ClearDaycareMonMail(struct DaycareMail *mail);
 static void SetInitialEggData(struct Pokemon *mon, u16 species, struct DayCare *daycare);
@@ -195,9 +194,7 @@ static void TransferEggMoves(void)
 
                 // Check if you can inherit from them
                 if (GetBoxMonData(&gSaveBlock1Ptr->daycare.mons[k].mon, MON_DATA_SPECIES) != GetBoxMonData(&gSaveBlock1Ptr->daycare.mons[i].mon, MON_DATA_SPECIES)
-            #if P_EGG_MOVE_TRANSFER >= GEN_9
-                    && GetBoxMonData(&gSaveBlock1Ptr->daycare.mons[i].mon, MON_DATA_HELD_ITEM) != ITEM_MIRROR_HERB
-            #endif
+                    && (P_EGG_MOVE_TRANSFER < GEN_9 || GetBoxMonData(&gSaveBlock1Ptr->daycare.mons[i].mon, MON_DATA_HELD_ITEM) != ITEM_MIRROR_HERB)
                 )
                     continue;
 
@@ -231,15 +228,13 @@ static void StorePokemonInDaycare(struct Pokemon *mon, struct DaycareMon *daycar
     }
 
     daycareMon->mon = mon->box;
-    BoxMonRestorePP(&daycareMon->mon);
     daycareMon->steps = 0;
     ZeroMonData(mon);
     CompactPartySlots();
     CalculatePlayerPartyCount();
 
-#if P_EGG_MOVE_TRANSFER >= GEN_8
-    TransferEggMoves();
-#endif
+    if (P_EGG_MOVE_TRANSFER >= GEN_8)
+        TransferEggMoves();
 }
 
 static void StorePokemonInEmptyDaycareSlot(struct Pokemon *mon, struct DayCare *daycare)
@@ -254,10 +249,10 @@ void StoreSelectedPokemonInDaycare(void)
     StorePokemonInEmptyDaycareSlot(&gPlayerParty[monId], &gSaveBlock1Ptr->daycare);
 }
 
-// Shifts the second daycare pokemon slot into the first slot.
+// Shifts the second daycare Pokémon slot into the first slot.
 static void ShiftDaycareSlots(struct DayCare *daycare)
 {
-    // This condition is only satisfied when the player takes out the first pokemon from the daycare.
+    // This condition is only satisfied when the player takes out the first Pokémon from the daycare.
     if (GetBoxMonData(&daycare->mons[1].mon, MON_DATA_SPECIES) != SPECIES_NONE
         && GetBoxMonData(&daycare->mons[0].mon, MON_DATA_SPECIES) == SPECIES_NONE)
     {
@@ -320,7 +315,7 @@ static u16 TakeSelectedPokemonFromDaycare(struct DaycareMon *daycareMon)
         species = newSpecies;
     }
 
-    if (GetMonData(&pokemon, MON_DATA_LEVEL) != MAX_LEVEL)
+    if (GetMonData(&pokemon, MON_DATA_LEVEL) < GetCurrentLevelCap())
     {
         experience = GetMonData(&pokemon, MON_DATA_EXP) + daycareMon->steps;
         SetMonData(&pokemon, MON_DATA_EXP, &experience);
@@ -369,6 +364,8 @@ static u8 GetNumLevelsGainedFromSteps(struct DaycareMon *daycareMon)
 
     levelBefore = GetLevelFromBoxMonExp(&daycareMon->mon);
     levelAfter = GetLevelAfterDaycareSteps(&daycareMon->mon, daycareMon->steps);
+    if (levelAfter > GetCurrentLevelCap())
+        levelAfter = GetCurrentLevelCap();
     return levelAfter - levelBefore;
 }
 
@@ -401,7 +398,7 @@ void GetDaycareCost(void)
     gSpecialVar_0x8005 = GetDaycareCostForMon(&gSaveBlock1Ptr->daycare, gSpecialVar_0x8004);
 }
 
-static void Debug_AddDaycareSteps(u16 numSteps)
+static void UNUSED Debug_AddDaycareSteps(u16 numSteps)
 {
     gSaveBlock1Ptr->daycare.mons[0].steps += numSteps;
     gSaveBlock1Ptr->daycare.mons[1].steps += numSteps;
@@ -434,7 +431,7 @@ static void ClearDaycareMon(struct DaycareMon *daycareMon)
     ClearDaycareMonMail(&daycareMon->mail);
 }
 
-static void ClearAllDaycareData(struct DayCare *daycare)
+static void UNUSED ClearAllDaycareData(struct DayCare *daycare)
 {
     u8 i;
 
@@ -455,14 +452,17 @@ static u16 GetEggSpecies(u16 species)
 
     // Working backwards up to 5 times seems arbitrary, since the maximum number
     // of times would only be 3 for 3-stage evolutions.
-    for (i = 0; i < EVOS_PER_MON; i++)
+    for (i = 0; i < 5; i++)
     {
         found = FALSE;
         for (j = 1; j < NUM_SPECIES; j++)
         {
-            for (k = 0; k < EVOS_PER_MON; k++)
+            const struct Evolution *evolutions = GetSpeciesEvolutions(j);
+            if (evolutions == NULL)
+                continue;
+            for (k = 0; evolutions[k].method != EVOLUTIONS_END; k++)
             {
-                if (gEvolutionTable[j][k].targetSpecies == species)
+                if (SanitizeSpeciesId(evolutions[k].targetSpecies) == species)
                 {
                     species = j;
                     found = TRUE;
@@ -490,10 +490,8 @@ static s32 GetParentToInheritNature(struct DayCare *daycare)
     for (i = 0; i < DAYCARE_MON_COUNT; i++)
     {
         if (ItemId_GetHoldEffect(GetBoxMonData(&daycare->mons[i].mon, MON_DATA_HELD_ITEM)) == HOLD_EFFECT_PREVENT_EVOLVE
-        #if P_NATURE_INHERITANCE == GEN_3
-            && (GetBoxMonGender(&daycare->mons[i].mon) == MON_FEMALE || IS_DITTO(GetBoxMonData(&daycare->mons[i].mon, MON_DATA_SPECIES)))
-        #endif
-        ) {
+            && (P_NATURE_INHERITANCE != GEN_3 || GetBoxMonGender(&daycare->mons[i].mon) == MON_FEMALE || IS_DITTO(GetBoxMonData(&daycare->mons[i].mon, MON_DATA_SPECIES))))
+        {
             slot = i;
             numWithEverstone++;
         }
@@ -501,11 +499,11 @@ static s32 GetParentToInheritNature(struct DayCare *daycare)
 
     if (numWithEverstone >= DAYCARE_MON_COUNT)
         return Random() & 1;
-#if P_NATURE_INHERITANCE > GEN_4
-    return slot;
-#else
+
+    if (P_NATURE_INHERITANCE > GEN_4)
+        return slot;
+
     return Random() & 1 ? slot : -1;
-#endif
 }
 
 static void _TriggerPendingDaycareEgg(struct DayCare *daycare)
@@ -554,8 +552,7 @@ void TriggerPendingDaycareEgg(void)
     _TriggerPendingDaycareEgg(&gSaveBlock1Ptr->daycare);
 }
 
-// Unused
-static void TriggerPendingDaycareMaleEgg(void)
+static void UNUSED TriggerPendingDaycareMaleEgg(void)
 {
     _TriggerPendingDaycareMaleEgg(&gSaveBlock1Ptr->daycare);
 }
@@ -698,16 +695,19 @@ static void InheritPokeball(struct Pokemon *egg, struct BoxPokemon *father, stru
     if (motherBall == ITEM_MASTER_BALL || motherBall == ITEM_CHERISH_BALL)
         motherBall = ITEM_POKE_BALL;
 
-#if P_BALL_INHERITING >= GEN_7
-    if (fatherSpecies == motherSpecies)
-        inheritBall = (Random() % 2 == 0 ? motherBall : fatherBall);
-    else if (motherSpecies != SPECIES_DITTO)
+    if (P_BALL_INHERITING >= GEN_7)
+    {
+        if (fatherSpecies == motherSpecies)
+            inheritBall = (Random() % 2 == 0 ? motherBall : fatherBall);
+        else if (motherSpecies != SPECIES_DITTO)
+            inheritBall = motherBall;
+        else
+            inheritBall = fatherBall;
+    }
+    else if (P_BALL_INHERITING == GEN_6)
+    {
         inheritBall = motherBall;
-    else
-        inheritBall = fatherBall;
-#elif P_BALL_INHERITING == GEN_6
-    inheritBall = motherBall;
-#endif
+    }
     SetMonData(egg, MON_DATA_POKEBALL, &inheritBall);
 }
 
@@ -719,28 +719,25 @@ static void InheritAbility(struct Pokemon *egg, struct BoxPokemon *father, struc
     u8 inheritAbility = motherAbility;
 
     if (motherSpecies == SPECIES_DITTO)
-    #if P_ABILITY_INHERITANCE < GEN_6
-        return;
-    #else
-        inheritAbility = fatherAbility;
-    #endif
+    {
+        if (P_ABILITY_INHERITANCE >= GEN_6)
+            inheritAbility = fatherAbility;
+        else
+            return;
+    }
 
     if (inheritAbility < 2 && (Random() % 10 < 8))
     {
         SetMonData(egg, MON_DATA_ABILITY_NUM, &inheritAbility);
     }
-#if P_ABILITY_INHERITANCE < GEN_6
-    else if (Random() % 10 < 8)
-#else
-    else if (Random() % 10 < 6)
-#endif
+    else if (Random() % 10 < (P_ABILITY_INHERITANCE >= GEN_6 ? 6 : 8))
     {
         // Hidden Abilities have a different chance of being passed down
         SetMonData(egg, MON_DATA_ABILITY_NUM, &inheritAbility);
     }
 }
 
-// Counts the number of egg moves a pokemon learns and stores the moves in
+// Counts the number of egg moves a Pokémon learns and stores the moves in
 // the given array.
 static u8 GetEggMoves(struct Pokemon *pokemon, u16 *eggMoves)
 {
@@ -773,6 +770,63 @@ static u8 GetEggMoves(struct Pokemon *pokemon, u16 *eggMoves)
     return numEggMoves;
 }
 
+u8 GetEggMovesSpecies(u16 species, u16 *eggMoves)
+{
+    u16 eggMoveIdx;
+    u16 numEggMoves;
+    u16 i;
+
+    numEggMoves = 0;
+    eggMoveIdx = 0;
+    for (i = 0; i < ARRAY_COUNT(gEggMoves) - 1; i++)
+    {
+        if (gEggMoves[i] == species + EGG_MOVES_SPECIES_OFFSET)
+        {
+            eggMoveIdx = i + 1;
+            break;
+        }
+    }
+
+    for (i = 0; i < EGG_MOVES_ARRAY_COUNT; i++)
+    {
+        if (gEggMoves[eggMoveIdx + i] > EGG_MOVES_SPECIES_OFFSET)
+        {
+            // TODO: the curly braces around this if statement are required for a matching build.
+            break;
+        }
+
+        eggMoves[i] = gEggMoves[eggMoveIdx + i];
+        numEggMoves++;
+    }
+
+    return numEggMoves;
+}
+
+bool8 SpeciesCanLearnEggMove(u16 species, u16 move) //Move search PokedexPlus HGSS_Ui
+{
+    u16 eggMoveIdx;
+    u16 i;
+    eggMoveIdx = 0;
+    for (i = 0; i < ARRAY_COUNT(gEggMoves) - 1; i++)
+    {
+        if (gEggMoves[i] == species + EGG_MOVES_SPECIES_OFFSET)
+        {
+            eggMoveIdx = i + 1;
+            break;
+        }
+    }
+
+    for (i = 0; i < EGG_MOVES_ARRAY_COUNT; i++)
+    {
+        if (gEggMoves[eggMoveIdx + i] > EGG_MOVES_SPECIES_OFFSET)
+            return FALSE;
+
+        if (move == gEggMoves[eggMoveIdx + i])
+            return TRUE;
+    }
+    return FALSE;
+}
+
 static void BuildEggMoveset(struct Pokemon *egg, struct BoxPokemon *father, struct BoxPokemon *mother)
 {
     u16 numSharedParentMoves;
@@ -800,27 +854,28 @@ static void BuildEggMoveset(struct Pokemon *egg, struct BoxPokemon *father, stru
 
     numEggMoves = GetEggMoves(egg, sHatchedEggEggMoves);
 
-#if P_MOTHER_EGG_MOVE_INHERITANCE >= GEN_6
-    for (i = 0; i < MAX_MON_MOVES; i++)
+    if (P_MOTHER_EGG_MOVE_INHERITANCE >= GEN_6)
     {
-        if (sHatchedEggMotherMoves[i] != MOVE_NONE)
+        for (i = 0; i < MAX_MON_MOVES; i++)
         {
-            for (j = 0; j < numEggMoves; j++)
+            if (sHatchedEggMotherMoves[i] != MOVE_NONE)
             {
-                if (sHatchedEggMotherMoves[i] == sHatchedEggEggMoves[j])
+                for (j = 0; j < numEggMoves; j++)
                 {
-                    if (GiveMoveToMon(egg, sHatchedEggMotherMoves[i]) == MON_HAS_MAX_MOVES)
-                        DeleteFirstMoveAndGiveMoveToMon(egg, sHatchedEggMotherMoves[i]);
-                    break;
+                    if (sHatchedEggMotherMoves[i] == sHatchedEggEggMoves[j])
+                    {
+                        if (GiveMoveToMon(egg, sHatchedEggMotherMoves[i]) == MON_HAS_MAX_MOVES)
+                            DeleteFirstMoveAndGiveMoveToMon(egg, sHatchedEggMotherMoves[i]);
+                        break;
+                    }
                 }
             }
-        }
-        else
-        {
-            break;
+            else
+            {
+                break;
+            }
         }
     }
-#endif
 
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
@@ -841,23 +896,26 @@ static void BuildEggMoveset(struct Pokemon *egg, struct BoxPokemon *father, stru
             break;
         }
     }
-#if P_TM_INHERITANCE < GEN_6
-    for (i = 0; i < MAX_MON_MOVES; i++)
+
+    if (P_TM_INHERITANCE < GEN_6)
     {
-        if (sHatchedEggFatherMoves[i] != MOVE_NONE)
+        for (i = 0; i < MAX_MON_MOVES; i++)
         {
-            for (j = 0; j < NUM_TECHNICAL_MACHINES + NUM_HIDDEN_MACHINES; j++)
+            if (sHatchedEggFatherMoves[i] != MOVE_NONE)
             {
-                u16 moveId = ItemIdToBattleMoveId(ITEM_TM01 + j);
-                if (sHatchedEggFatherMoves[i] == moveId && CanLearnTeachableMove(GetMonData(egg, MON_DATA_SPECIES_OR_EGG), moveId))
+                for (j = 0; j < NUM_TECHNICAL_MACHINES + NUM_HIDDEN_MACHINES; j++)
                 {
-                    if (GiveMoveToMon(egg, sHatchedEggFatherMoves[i]) == MON_HAS_MAX_MOVES)
-                        DeleteFirstMoveAndGiveMoveToMon(egg, sHatchedEggFatherMoves[i]);
+                    u16 moveId = ItemIdToBattleMoveId(ITEM_TM01 + j);
+                    if (sHatchedEggFatherMoves[i] == moveId && CanLearnTeachableMove(GetMonData(egg, MON_DATA_SPECIES_OR_EGG), moveId))
+                    {
+                        if (GiveMoveToMon(egg, sHatchedEggFatherMoves[i]) == MON_HAS_MAX_MOVES)
+                            DeleteFirstMoveAndGiveMoveToMon(egg, sHatchedEggFatherMoves[i]);
+                    }
                 }
             }
         }
     }
-#endif
+
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
         if (sHatchedEggFatherMoves[i] == MOVE_NONE)
@@ -896,11 +954,12 @@ void RejectEggFromDayCare(void)
     RemoveEggFromDayCare(&gSaveBlock1Ptr->daycare);
 }
 
+
 static const struct {
   u16 currSpecies;
   u16 item;
   u16 babySpecies;
-} IncenseBabyTable[][3] =
+} sIncenseBabyTable[] =
 {
     // Regular offspring,   Item,              Incense Offspring
     { SPECIES_WOBBUFFET,    ITEM_LAX_INCENSE,  SPECIES_WYNAUT },
@@ -914,6 +973,7 @@ static const struct {
     { SPECIES_MANTINE,      ITEM_WAVE_INCENSE, SPECIES_MANTYKE },
 };
 
+#if P_INCENSE_BREEDING < GEN_9
 static void AlterEggSpeciesWithIncenseItem(u16 *species, struct DayCare *daycare)
 {
     u32 i;
@@ -921,21 +981,22 @@ static void AlterEggSpeciesWithIncenseItem(u16 *species, struct DayCare *daycare
     motherItem = GetBoxMonData(&daycare->mons[0].mon, MON_DATA_HELD_ITEM);
     fatherItem = GetBoxMonData(&daycare->mons[1].mon, MON_DATA_HELD_ITEM);
 
-    for (i = 0; i < ARRAY_COUNT(IncenseBabyTable); i++)
+    for (i = 0; i < ARRAY_COUNT(sIncenseBabyTable); i++)
     {
-        if (IncenseBabyTable[i]->babySpecies == *species && motherItem != IncenseBabyTable[i]->item && fatherItem != IncenseBabyTable[i]->item)
+        if (sIncenseBabyTable[i].babySpecies == *species && motherItem != sIncenseBabyTable[i].item && fatherItem != sIncenseBabyTable[i].item)
         {
-            *species = IncenseBabyTable[i]->currSpecies;
+            *species = sIncenseBabyTable[i].currSpecies;
             break;
         }
     }
 }
+#endif
 
 static const struct {
   u16 offspring;
   u16 item;
   u16 move;
-} BreedingSpecialMoveItemTable[][3] =
+} sBreedingSpecialMoveItemTable[] =
 {
     // Offspring,    Item,            Move
     { SPECIES_PICHU, ITEM_LIGHT_BALL, MOVE_VOLT_TACKLE },
@@ -947,14 +1008,14 @@ static void GiveMoveIfItem(struct Pokemon *mon, struct DayCare *daycare)
     u32 motherItem = GetBoxMonData(&daycare->mons[0].mon, MON_DATA_HELD_ITEM);
     u32 fatherItem = GetBoxMonData(&daycare->mons[1].mon, MON_DATA_HELD_ITEM);
 
-    for (i = 0; i < ARRAY_COUNT(BreedingSpecialMoveItemTable); i++)
+    for (i = 0; i < ARRAY_COUNT(sBreedingSpecialMoveItemTable); i++)
     {
-        if (BreedingSpecialMoveItemTable[i]->offspring == species
-            && (motherItem == BreedingSpecialMoveItemTable[i]->item ||
-                fatherItem == BreedingSpecialMoveItemTable[i]->item))
+        if (sBreedingSpecialMoveItemTable[i].offspring == species
+            && (motherItem == sBreedingSpecialMoveItemTable[i].item ||
+                fatherItem == sBreedingSpecialMoveItemTable[i].item))
         {
-            if (GiveMoveToMon(mon, BreedingSpecialMoveItemTable[i]->move) == MON_HAS_MAX_MOVES)
-                DeleteFirstMoveAndGiveMoveToMon(mon, BreedingSpecialMoveItemTable[i]->move);
+            if (GiveMoveToMon(mon, sBreedingSpecialMoveItemTable[i].move) == MON_HAS_MAX_MOVES)
+                DeleteFirstMoveAndGiveMoveToMon(mon, sBreedingSpecialMoveItemTable[i].move);
         }
     }
 }
@@ -985,22 +1046,23 @@ static u16 DetermineEggSpeciesAndParentSlots(struct DayCare *daycare, u8 *parent
         eggSpecies = SPECIES_NIDORAN_M;
     else if (eggSpecies == SPECIES_ILLUMISE && daycare->offspringPersonality & EGG_GENDER_MALE)
         eggSpecies = SPECIES_VOLBEAT;
-#if P_NIDORAN_M_DITTO_BREED >= GEN_5
-    else if (eggSpecies == SPECIES_NIDORAN_M && !(daycare->offspringPersonality & EGG_GENDER_MALE))
+    else if (P_NIDORAN_M_DITTO_BREED >= GEN_5 && eggSpecies == SPECIES_NIDORAN_M && !(daycare->offspringPersonality & EGG_GENDER_MALE))
         eggSpecies = SPECIES_NIDORAN_F;
-    else if (eggSpecies == SPECIES_VOLBEAT && !(daycare->offspringPersonality & EGG_GENDER_MALE))
+    else if (P_NIDORAN_M_DITTO_BREED >= GEN_5 && eggSpecies == SPECIES_VOLBEAT && !(daycare->offspringPersonality & EGG_GENDER_MALE))
         eggSpecies = SPECIES_ILLUMISE;
-#endif
     else if (eggSpecies == SPECIES_MANAPHY)
         eggSpecies = SPECIES_PHIONE;
     else if (eggSpecies == SPECIES_SINISTEA_ANTIQUE)
-        eggSpecies = SPECIES_SINISTEA;
-    else if (GET_BASE_SPECIES_ID(eggSpecies) == SPECIES_VIVILLON)
-        eggSpecies = SPECIES_SCATTERBUG;
+        eggSpecies = SPECIES_SINISTEA_PHONY;
     else if (GET_BASE_SPECIES_ID(eggSpecies) == SPECIES_ROTOM)
         eggSpecies = SPECIES_ROTOM;
     else if (GET_BASE_SPECIES_ID(eggSpecies) == SPECIES_FURFROU)
         eggSpecies = SPECIES_FURFROU;
+    // To avoid single-stage Totem Pokémon to breed more of themselves.
+    else if (eggSpecies == SPECIES_MIMIKYU_TOTEM_DISGUISED)
+        eggSpecies = SPECIES_MIMIKYU_DISGUISED;
+    else if (eggSpecies == SPECIES_TOGEDEMARU_TOTEM)
+        eggSpecies = SPECIES_TOGEDEMARU;
 
     // Make Ditto the "mother" slot if the other daycare mon is male.
     if (species[parentSlots[1]] == SPECIES_DITTO && GetBoxMonGender(&daycare->mons[parentSlots[0]].mon) != MON_FEMALE)
@@ -1017,7 +1079,7 @@ static void _GiveEggFromDaycare(struct DayCare *daycare)
 {
     struct Pokemon egg;
     u16 species;
-    u8 parentSlots[DAYCARE_MON_COUNT];
+    u8 parentSlots[DAYCARE_MON_COUNT] = {0};
     bool8 isEgg;
 
     species = DetermineEggSpeciesAndParentSlots(daycare, parentSlots);
@@ -1028,9 +1090,8 @@ static void _GiveEggFromDaycare(struct DayCare *daycare)
     InheritIVs(&egg, daycare);
     InheritPokeball(&egg, &daycare->mons[parentSlots[1]].mon, &daycare->mons[parentSlots[0]].mon);
     BuildEggMoveset(&egg, &daycare->mons[parentSlots[1]].mon, &daycare->mons[parentSlots[0]].mon);
-#if P_ABILITY_INHERITANCE >= GEN_6
-    InheritAbility(&egg, &daycare->mons[parentSlots[1]].mon, &daycare->mons[parentSlots[0]].mon);
-#endif
+    if (P_ABILITY_INHERITANCE >= GEN_6)
+        InheritAbility(&egg, &daycare->mons[parentSlots[1]].mon, &daycare->mons[parentSlots[0]].mon);
 
     GiveMoveIfItem(&egg, daycare);
 
@@ -1202,7 +1263,7 @@ u8 GetDaycareState(void)
     return DAYCARE_NO_MONS;
 }
 
-static u8 GetDaycarePokemonCount(void)
+static u8 UNUSED GetDaycarePokemonCount(void)
 {
     u8 ret = CountPokemonInDaycare(&gSaveBlock1Ptr->daycare);
     if (ret)
@@ -1250,7 +1311,7 @@ u8 GetDaycareCompatibilityScore(struct DayCare *daycare)
     }
 
     // check unbreedable egg group
-    if (eggGroups[0][0] == EGG_GROUP_UNDISCOVERED || eggGroups[1][0] == EGG_GROUP_UNDISCOVERED)
+    if (eggGroups[0][0] == EGG_GROUP_NO_EGGS_DISCOVERED || eggGroups[1][0] == EGG_GROUP_NO_EGGS_DISCOVERED)
         return PARENTS_INCOMPATIBLE;
     // two Ditto can't breed
     if (eggGroups[0][0] == EGG_GROUP_DITTO && eggGroups[1][0] == EGG_GROUP_DITTO)
@@ -1358,7 +1419,7 @@ static u8 *AppendMonGenderSymbol(u8 *name, struct BoxPokemon *boxMon)
     return AppendGenderSymbol(name, GetBoxMonGender(boxMon));
 }
 
-static void GetDaycareLevelMenuText(struct DayCare *daycare, u8 *dest)
+static void UNUSED GetDaycareLevelMenuText(struct DayCare *daycare, u8 *dest)
 {
     u8 monNames[DAYCARE_MON_COUNT][POKEMON_NAME_BUFFER_SIZE];
     u8 i;
@@ -1377,7 +1438,7 @@ static void GetDaycareLevelMenuText(struct DayCare *daycare, u8 *dest)
     StringAppend(dest, gText_Exit4);
 }
 
-static void GetDaycareLevelMenuLevelText(struct DayCare *daycare, u8 *dest)
+static void UNUSED GetDaycareLevelMenuLevelText(struct DayCare *daycare, u8 *dest)
 {
     u8 i;
     u8 level;

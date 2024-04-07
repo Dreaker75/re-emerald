@@ -3,28 +3,28 @@
 
 ASSUMPTIONS
 {
-    ASSUME(gBattleMoves[MOVE_ROOST].effect == EFFECT_ROOST);
+    ASSUME(gMovesInfo[MOVE_ROOST].effect == EFFECT_ROOST);
     ASSUME(gSpeciesInfo[SPECIES_WOBBUFFET].types[0] != TYPE_FLYING);
     ASSUME(gSpeciesInfo[SPECIES_WOBBUFFET].types[1] != TYPE_FLYING);
     // One attack of each type to verify typelessness
-    ASSUME(gBattleMoves[MOVE_POUND].type == TYPE_NORMAL);
-    ASSUME(gBattleMoves[MOVE_KARATE_CHOP].type == TYPE_FIGHTING);
-    ASSUME(gBattleMoves[MOVE_GUST].type == TYPE_FLYING);
-    ASSUME(gBattleMoves[MOVE_POISON_STING].type == TYPE_POISON);
-    ASSUME(gBattleMoves[MOVE_EARTHQUAKE].type == TYPE_GROUND);
-    ASSUME(gBattleMoves[MOVE_ROCK_THROW].type == TYPE_ROCK);
-    ASSUME(gBattleMoves[MOVE_LEECH_LIFE].type == TYPE_BUG);
-    ASSUME(gBattleMoves[MOVE_LICK].type == TYPE_GHOST);
-    ASSUME(gBattleMoves[MOVE_STEEL_WING].type == TYPE_STEEL);
-    ASSUME(gBattleMoves[MOVE_EMBER].type == TYPE_FIRE);
-    ASSUME(gBattleMoves[MOVE_WATER_GUN].type == TYPE_WATER);
-    ASSUME(gBattleMoves[MOVE_VINE_WHIP].type == TYPE_GRASS);
-    ASSUME(gBattleMoves[MOVE_THUNDER_SHOCK].type == TYPE_ELECTRIC);
-    ASSUME(gBattleMoves[MOVE_CONFUSION].type == TYPE_PSYCHIC);
-    ASSUME(gBattleMoves[MOVE_ICE_BEAM].type == TYPE_ICE);
-    ASSUME(gBattleMoves[MOVE_DRAGON_BREATH].type == TYPE_DRAGON);
-    ASSUME(gBattleMoves[MOVE_BITE].type == TYPE_DARK);
-    ASSUME(gBattleMoves[MOVE_DISARMING_VOICE].type == TYPE_FAIRY);
+    ASSUME(gMovesInfo[MOVE_POUND].type == TYPE_NORMAL);
+    ASSUME(gMovesInfo[MOVE_KARATE_CHOP].type == TYPE_FIGHTING);
+    ASSUME(gMovesInfo[MOVE_GUST].type == TYPE_FLYING);
+    ASSUME(gMovesInfo[MOVE_POISON_STING].type == TYPE_POISON);
+    ASSUME(gMovesInfo[MOVE_EARTHQUAKE].type == TYPE_GROUND);
+    ASSUME(gMovesInfo[MOVE_ROCK_THROW].type == TYPE_ROCK);
+    ASSUME(gMovesInfo[MOVE_LEECH_LIFE].type == TYPE_BUG);
+    ASSUME(gMovesInfo[MOVE_LICK].type == TYPE_GHOST);
+    ASSUME(gMovesInfo[MOVE_STEEL_WING].type == TYPE_STEEL);
+    ASSUME(gMovesInfo[MOVE_EMBER].type == TYPE_FIRE);
+    ASSUME(gMovesInfo[MOVE_WATER_GUN].type == TYPE_WATER);
+    ASSUME(gMovesInfo[MOVE_VINE_WHIP].type == TYPE_GRASS);
+    ASSUME(gMovesInfo[MOVE_THUNDER_SHOCK].type == TYPE_ELECTRIC);
+    ASSUME(gMovesInfo[MOVE_CONFUSION].type == TYPE_PSYCHIC);
+    ASSUME(gMovesInfo[MOVE_ICE_BEAM].type == TYPE_ICE);
+    ASSUME(gMovesInfo[MOVE_DRAGON_BREATH].type == TYPE_DRAGON);
+    ASSUME(gMovesInfo[MOVE_BITE].type == TYPE_DARK);
+    ASSUME(gMovesInfo[MOVE_DISARMING_VOICE].type == TYPE_FAIRY);
 }
 
 SINGLE_BATTLE_TEST("Roost fails when user is at full HP")
@@ -63,7 +63,7 @@ SINGLE_BATTLE_TEST("Roost fails if the user is under the effects of Heal Block")
 
 SINGLE_BATTLE_TEST("Roost recovers 50% of the user's Max HP")
 {
-    s16 hp;
+    u16 hp;
 
     KNOWN_FAILING; // All healing is currently rounded down
     GIVEN {
@@ -131,7 +131,6 @@ SINGLE_BATTLE_TEST("Roost, if used by a Flying/Flying type, treats the user as a
     PARAMETRIZE{ damagingMove = MOVE_DISARMING_VOICE; }
 
     GIVEN {
-        ASSUME(P_GEN_5_POKEMON == TRUE);
         ASSUME(gSpeciesInfo[SPECIES_TORNADUS].types[0] == TYPE_FLYING);
         ASSUME(gSpeciesInfo[SPECIES_TORNADUS].types[1] == TYPE_FLYING);
         PLAYER(SPECIES_TORNADUS) { HP(50); MaxHP(100); }
@@ -416,7 +415,6 @@ SINGLE_BATTLE_TEST("Roost does not suppress the ungrounded effect of Magnet Rise
 
 SINGLE_BATTLE_TEST("Roost does not suppress the ungrounded effect of Telekinesis")
 {
-    KNOWN_FAILING; // Telekinesis currently says the pokemon was identified
     GIVEN {
         PLAYER(SPECIES_WOBBUFFET) { HP(1); }
         OPPONENT(SPECIES_WOBBUFFET);

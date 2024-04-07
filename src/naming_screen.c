@@ -1856,7 +1856,18 @@ static void SaveInputText(void)
     {
         if (sNamingScreen->textBuffer[i] != CHAR_SPACE && sNamingScreen->textBuffer[i] != EOS)
         {
-            StringCopyN(sNamingScreen->destBuffer, sNamingScreen->textBuffer, sNamingScreen->template->maxChars + 1);
+            // If there is space, prepend fixed-case character
+            if (DECAP_ENABLED && !DECAP_NICKNAMES
+             && (sNamingScreen->templateNum == NAMING_SCREEN_PLAYER
+                || sNamingScreen->templateNum == NAMING_SCREEN_NICKNAME
+                || sNamingScreen->templateNum == NAMING_SCREEN_CAUGHT_MON)
+             && sNamingScreen->textBuffer[GetTextEntryPosition()] == EOS)
+            {
+                *sNamingScreen->destBuffer = CHAR_FIXED_CASE;
+                StringCopyN(sNamingScreen->destBuffer + 1, sNamingScreen->textBuffer, sNamingScreen->template->maxChars + 0);
+            }
+            else
+                StringCopyN(sNamingScreen->destBuffer, sNamingScreen->textBuffer, sNamingScreen->template->maxChars + 1);
             break;
         }
     }
@@ -2058,23 +2069,23 @@ static bool8 IsWideLetter(u8 character)
     return FALSE;
 }
 
-// Debug? Unused, and arguments aren't sensible for non-player screens.
-static void Debug_NamingScreenPlayer(void)
+// Debug? Arguments aren't sensible for non-player screens.
+static void UNUSED Debug_NamingScreenPlayer(void)
 {
     DoNamingScreen(NAMING_SCREEN_PLAYER, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldWithOpenMenu);
 }
 
-static void Debug_NamingScreenBox(void)
+static void UNUSED Debug_NamingScreenBox(void)
 {
     DoNamingScreen(NAMING_SCREEN_BOX, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldWithOpenMenu);
 }
 
-static void Debug_NamingScreenCaughtMon(void)
+static void UNUSED Debug_NamingScreenCaughtMon(void)
 {
     DoNamingScreen(NAMING_SCREEN_CAUGHT_MON, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldWithOpenMenu);
 }
 
-static void Debug_NamingScreenNickname(void)
+static void UNUSED Debug_NamingScreenNickname(void)
 {
     DoNamingScreen(NAMING_SCREEN_NICKNAME, gSaveBlock2Ptr->playerName, gSaveBlock2Ptr->playerGender, 0, 0, CB2_ReturnToFieldWithOpenMenu);
 }
@@ -2584,5 +2595,3 @@ static const struct SpritePalette sSpritePalettes[] =
     {gNamingScreenMenu_Pal[4], PALTAG_OK_BUTTON},
     {}
 };
-
-

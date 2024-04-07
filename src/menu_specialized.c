@@ -27,8 +27,6 @@
 #include "constants/battle_move_effects.h"
 #include "gba/io_reg.h"
 
-extern const struct CompressedSpriteSheet gMonFrontPicTable[];
-
 EWRAM_DATA static u8 sMailboxWindowIds[MAILBOXWIN_COUNT] = {0};
 EWRAM_DATA static struct ListMenuItem *sMailboxList = NULL;
 
@@ -237,8 +235,7 @@ void MailboxMenu_RemoveWindow(u8 windowIdx)
     sMailboxWindowIds[windowIdx] = WINDOW_NONE;
 }
 
-// Unused
-static u8 MailboxMenu_GetWindowId(u8 windowIdx)
+static u8 UNUSED MailboxMenu_GetWindowId(u8 windowIdx)
 {
     return sMailboxWindowIds[windowIdx];
 }
@@ -589,7 +586,7 @@ static void ConditionGraph_CalcRightHalf(struct ConditionGraph *graph)
     // No need for conditional, positions on the Beauty line are always above the Cute line
     ConditionGraph_CalcLine(graph, graph->scanlineRight[0], &graph->curPositions[GRAPH_BEAUTY], &graph->curPositions[GRAPH_CUTE], TRUE, NULL);
 
-    // Calculate Cute -> Tough line (includes left scanline because this crosses the halfway point)
+    // Calculate Cute -> Smart line (includes left scanline because this crosses the halfway point)
     i = (graph->curPositions[GRAPH_CUTE].y <= graph->curPositions[GRAPH_SMART].y);
     ConditionGraph_CalcLine(graph, graph->scanlineRight[0], &graph->curPositions[GRAPH_CUTE], &graph->curPositions[GRAPH_SMART], i, graph->scanlineLeft[0]);
 
@@ -754,7 +751,7 @@ u8 LoadMoveRelearnerMovesList(const struct ListMenuItem *items, u16 numChoices)
 static void MoveRelearnerLoadBattleMoveDescription(u32 chosenMove)
 {
     s32 x;
-    const struct BattleMove *move;
+    const struct MoveInfo *move;
     u8 buffer[32];
     const u8 *str;
 
@@ -779,8 +776,8 @@ static void MoveRelearnerLoadBattleMoveDescription(u32 chosenMove)
         CopyWindowToVram(RELEARNERWIN_DESC_BATTLE, COPYWIN_GFX);
         return;
     }
-    move = &gBattleMoves[chosenMove];
-    str = gTypeNames[move->type];
+    move = &gMovesInfo[chosenMove];
+    str = gTypesInfo[move->type].name;
     AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, str, 4, 25, TEXT_SKIP_DRAW, NULL);
 
     x = 4 + GetStringWidth(FONT_NORMAL, gText_MoveRelearnerPP, 0);
@@ -810,7 +807,7 @@ static void MoveRelearnerLoadBattleMoveDescription(u32 chosenMove)
     AddTextPrinterParameterized(RELEARNERWIN_DESC_BATTLE, FONT_NORMAL, str, 106, 41, TEXT_SKIP_DRAW, NULL);
 
     if (move->effect != EFFECT_PLACEHOLDER)
-        str = gMoveDescriptionPointers[chosenMove - 1];
+        str = gMovesInfo[chosenMove].description;
     else
         str = gNotDoneYetDescription;
 
@@ -821,7 +818,7 @@ static void MoveRelearnerMenuLoadContestMoveDescription(u32 chosenMove)
 {
     s32 x;
     const u8 *str;
-    const struct ContestMove *move;
+    const struct MoveInfo *move;
 
     MoveRelearnerShowHideHearts(chosenMove);
     FillWindowPixelBuffer(RELEARNERWIN_DESC_CONTEST, PIXEL_FILL(1));
@@ -843,11 +840,11 @@ static void MoveRelearnerMenuLoadContestMoveDescription(u32 chosenMove)
         return;
     }
 
-    move = &gContestMoves[chosenMove];
+    move = &gMovesInfo[chosenMove];
     str = gContestMoveTypeTextPointers[move->contestCategory];
     AddTextPrinterParameterized(RELEARNERWIN_DESC_CONTEST, FONT_NORMAL, str, 4, 25, TEXT_SKIP_DRAW, NULL);
 
-    str = gContestEffectDescriptionPointers[move->effect];
+    str = gContestEffectDescriptionPointers[move->contestEffect];
     AddTextPrinterParameterized(RELEARNERWIN_DESC_CONTEST, FONT_NARROW, str, 0, 65, TEXT_SKIP_DRAW, NULL);
 
     CopyWindowToVram(RELEARNERWIN_DESC_CONTEST, COPYWIN_GFX);
@@ -1078,11 +1075,11 @@ void GetConditionMenuMonGfx(void *tilesDst, void *palDst, u16 boxId, u16 monId, 
     if (partyId != numMons)
     {
         u16 species = GetBoxOrPartyMonData(boxId, monId, MON_DATA_SPECIES_OR_EGG, NULL);
-        u32 trainerId = GetBoxOrPartyMonData(boxId, monId, MON_DATA_OT_ID, NULL);
+        bool8 isShiny = GetBoxOrPartyMonData(boxId, monId, MON_DATA_IS_SHINY, NULL);
         u32 personality = GetBoxOrPartyMonData(boxId, monId, MON_DATA_PERSONALITY, NULL);
 
         LoadSpecialPokePic(tilesDst, species, personality, TRUE);
-        LZ77UnCompWram(GetMonSpritePalFromSpeciesAndPersonality(species, trainerId, personality), palDst);
+        LZ77UnCompWram(GetMonSpritePalFromSpeciesAndPersonality(species, isShiny, personality), palDst);
     }
 }
 

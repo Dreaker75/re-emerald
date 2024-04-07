@@ -184,6 +184,13 @@ static void HandleInputChooseAction(u32 battler)
             ActionSelectionCreateCursorAt(gActionSelectionCursor[battler], 0);
         }
     }
+    else if (B_QUICK_MOVE_CURSOR_TO_RUN && JOY_NEW(B_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+        ActionSelectionDestroyCursorAt(gActionSelectionCursor[battler]);
+        gActionSelectionCursor[battler] = 3;
+        ActionSelectionCreateCursorAt(gActionSelectionCursor[battler], 0);
+    }
 }
 
 static void Controller_WaitForHealthbox(u32 battler)
@@ -242,7 +249,7 @@ static void SafariHandleDrawTrainerPic(u32 battler)
     u32 trainerPicId = gSaveBlock2Ptr->playerGender + TRAINER_BACK_PIC_BRENDAN;
 
     BtlController_HandleDrawTrainerPic(battler, trainerPicId, FALSE,
-                                       80, 80 + 4 * (8 - gTrainerBackPicCoords[trainerPicId].size),
+                                       80, 80 + 4 * (8 - gTrainerBacksprites[trainerPicId].coordinates.size),
                                        30);
 }
 

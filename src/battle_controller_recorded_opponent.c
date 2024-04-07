@@ -420,9 +420,7 @@ static void RecordedOpponentHandleDrawTrainerPic(u32 battler)
         }
     }
 
-    BtlController_HandleDrawTrainerPic(battler, trainerPicId, TRUE,
-                                       xPos, 40 + 4 * (8 - gTrainerFrontPicCoords[trainerPicId].size),
-                                       -1);
+    BtlController_HandleDrawTrainerPic(battler, trainerPicId, TRUE, xPos, 40, -1);
 }
 
 static void RecordedOpponentHandleTrainerSlideBack(u32 battler)
@@ -437,25 +435,7 @@ static void RecordedOpponentHandleMoveAnimation(u32 battler)
 
 static void RecordedOpponentHandlePrintString(u32 battler)
 {
-    u16 *stringId;
-
-    gBattle_BG0_X = 0;
-    gBattle_BG0_Y = 0;
-    stringId = (u16 *)(&gBattleResources->bufferA[battler][2]);
-    BufferStringBattle(*stringId, battler);
-
-    if (gTestRunnerEnabled)
-    {
-        TestRunner_Battle_RecordMessage(gDisplayedStringBattle);
-        if (gTestRunnerHeadless)
-        {
-            RecordedOpponentBufferExecCompleted(battler);
-            return;
-        }
-    }
-
-    BattlePutTextOnWindow(gDisplayedStringBattle, B_WIN_MSG);
-    gBattlerControllerFuncs[battler] = Controller_WaitForString;
+    BtlController_HandlePrintString(battler, FALSE, FALSE);
 }
 
 static void RecordedOpponentHandleChooseAction(u32 battler)
@@ -501,27 +481,7 @@ static void RecordedOpponentHandleChoosePokemon(u32 battler)
 
 static void RecordedOpponentHandleHealthBarUpdate(u32 battler)
 {
-    s16 hpVal;
-    s32 maxHP, curHP;
-
-    LoadBattleBarGfx(0);
-    hpVal = gBattleResources->bufferA[battler][2] | (gBattleResources->bufferA[battler][3] << 8);
-
-    maxHP = GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_MAX_HP);
-    curHP = GetMonData(&gEnemyParty[gBattlerPartyIndexes[battler]], MON_DATA_HP);
-
-    if (hpVal != INSTANT_HP_BAR_DROP)
-    {
-        SetBattleBarStruct(battler, gHealthboxSpriteIds[battler], maxHP, curHP, hpVal);
-        TestRunner_Battle_RecordHP(battler, curHP, min(maxHP, max(0, curHP - hpVal)));
-    }
-    else
-    {
-        SetBattleBarStruct(battler, gHealthboxSpriteIds[battler], maxHP, 0, hpVal);
-        TestRunner_Battle_RecordHP(battler, curHP, 0);
-    }
-
-    gBattlerControllerFuncs[battler] = Controller_WaitForHealthBar;
+    BtlController_HandleHealthBarUpdate(battler, FALSE);
 }
 
 static void RecordedOpponentHandleStatusIconUpdate(u32 battler)

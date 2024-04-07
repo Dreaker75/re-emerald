@@ -7,9 +7,9 @@ SINGLE_BATTLE_TEST("Purifying Salt halves damage from Ghost-type moves", s16 dam
     PARAMETRIZE { ability = ABILITY_STURDY; }
     PARAMETRIZE { ability = ABILITY_PURIFYING_SALT; }
     GIVEN {
-        ASSUME(gBattleMoves[MOVE_SHADOW_BALL].type == TYPE_GHOST);
+        ASSUME(gMovesInfo[MOVE_SHADOW_BALL].type == TYPE_GHOST);
         PLAYER(SPECIES_WOBBUFFET);
-        OPPONENT(SPECIES_WOBBUFFET) { Ability(ability); }
+        OPPONENT(SPECIES_GARGANACL) { Ability(ability); }
     } WHEN {
         TURN { MOVE(player, MOVE_SHADOW_BALL); }
     } SCENE {
@@ -22,13 +22,13 @@ SINGLE_BATTLE_TEST("Purifying Salt halves damage from Ghost-type moves", s16 dam
 SINGLE_BATTLE_TEST("Purifying Salt makes Rest fail")
 {
     GIVEN {
-        PLAYER(SPECIES_WOBBUFFET) { Ability(ABILITY_PURIFYING_SALT); HP(1); MaxHP(100);}
+        PLAYER(SPECIES_GARGANACL) { Ability(ABILITY_PURIFYING_SALT); HP(1); MaxHP(100);}
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
         TURN { MOVE(player, MOVE_REST); }
     } SCENE {
         NONE_OF {
-            MESSAGE("Wobbuffet went to sleep!");
+            MESSAGE("Garganacl went to sleep!");
         }
     }
 }
@@ -43,11 +43,11 @@ SINGLE_BATTLE_TEST("Purifying Salt grants immunity to status effects")
     PARAMETRIZE { move = MOVE_TOXIC; status = STATUS1_TOXIC_POISON; }
     PARAMETRIZE { move = MOVE_POWDER_SNOW; status = STATUS1_FREEZE; }
     GIVEN {
-        ASSUME(gBattleMoves[MOVE_WILL_O_WISP].effect == EFFECT_WILL_O_WISP);
-        ASSUME(gBattleMoves[MOVE_HYPNOSIS].effect == EFFECT_SLEEP);
-        ASSUME(gBattleMoves[MOVE_THUNDER_WAVE].effect == EFFECT_PARALYZE);
-        ASSUME(gBattleMoves[MOVE_TOXIC].effect == EFFECT_TOXIC);
-        ASSUME(gBattleMoves[MOVE_POWDER_SNOW].effect == EFFECT_FREEZE_HIT);
+        ASSUME(gMovesInfo[MOVE_WILL_O_WISP].effect == EFFECT_WILL_O_WISP);
+        ASSUME(gMovesInfo[MOVE_HYPNOSIS].effect == EFFECT_SLEEP);
+        ASSUME(gMovesInfo[MOVE_THUNDER_WAVE].effect == EFFECT_PARALYZE);
+        ASSUME(gMovesInfo[MOVE_TOXIC].effect == EFFECT_TOXIC);
+        ASSUME(MoveHasAdditionalEffect(MOVE_POWDER_SNOW, MOVE_EFFECT_FREEZE_OR_FROSTBITE) == TRUE);
         PLAYER(SPECIES_WOBBUFFET) { Ability(ABILITY_PURIFYING_SALT); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {

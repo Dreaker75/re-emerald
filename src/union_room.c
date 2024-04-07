@@ -203,7 +203,6 @@ static EWRAM_DATA union
     struct WirelessLink_Group *group;
     struct WirelessLink_URoom *uRoom;
 } sWirelessLinkMain = {};
-static EWRAM_DATA u32 sUnused = 0;
 EWRAM_DATA struct RfuGameCompatibilityData gRfuPartnerCompatibilityData = {};
 EWRAM_DATA u16 gUnionRoomOfferedSpecies = 0;
 EWRAM_DATA u8 gUnionRoomRequestedMonType = 0;
@@ -1043,8 +1042,8 @@ static void Task_TryJoinLinkGroup(u8 taskId)
             id = ListMenu_ProcessInput(data->listTaskId);
             if (JOY_NEW(A_BUTTON) && id != LIST_NOTHING_CHOSEN)
             {
-                // this unused variable along with the assignment is needed to match
-                u32 activity = data->playerList->players[id].rfu.data.activity;
+                // Needed to match
+                u32 UNUSED activity = data->playerList->players[id].rfu.data.activity;
 
                 if (data->playerList->players[id].groupScheduledAnim == UNION_ROOM_SPAWN_IN && !data->playerList->players[id].rfu.data.startedActivity)
                 {
@@ -2149,8 +2148,8 @@ static void Task_CardOrNewsWithFriend(u8 taskId)
             id = ListMenu_ProcessInput(data->listTaskId);
             if (JOY_NEW(A_BUTTON) && id != LIST_NOTHING_CHOSEN)
             {
-                // this unused variable along with the assignment is needed to match
-                u32 activity = data->playerList->players[id].rfu.data.activity;
+                // Needed to match
+                u32 UNUSED activity = data->playerList->players[id].rfu.data.activity;
 
                 if (data->playerList->players[id].groupScheduledAnim == UNION_ROOM_SPAWN_IN && !data->playerList->players[id].rfu.data.startedActivity)
                 {
@@ -3185,12 +3184,12 @@ static void Task_RunUnionRoom(u8 taskId)
                     break;
                 case UR_TRADE_NOTYPE:
                     CopyAndTranslatePlayerName(gStringVar1, &uroom->playerList->players[input]);
-                    StringCopy(gStringVar2, gTypeNames[uroom->playerList->players[input].rfu.data.tradeType]);
+                    StringCopy(gStringVar2, gTypesInfo[uroom->playerList->players[input].rfu.data.tradeType].name);
                     ScheduleFieldMessageWithFollowupState(UR_STATE_TRADING_BOARD_LOAD, sText_DontHaveTypeTrainerWants);
                     break;
                 case UR_TRADE_NOEGG:
                     CopyAndTranslatePlayerName(gStringVar1, &uroom->playerList->players[input]);
-                    StringCopy(gStringVar2, gTypeNames[uroom->playerList->players[input].rfu.data.tradeType]);
+                    StringCopy(gStringVar2, gTypesInfo[uroom->playerList->players[input].rfu.data.tradeType].name);
                     ScheduleFieldMessageWithFollowupState(UR_STATE_TRADING_BOARD_LOAD, sText_DontHaveEggTrainerWants);
                     break;
                 }
@@ -4066,7 +4065,7 @@ static s32 UnionRoomGetPlayerInteractionResponse(struct RfuPlayerList *list, boo
         CopyAndTranslatePlayerName(gStringVar1, player);
         if (overrideGender)
         {
-            playerGender = (player->rfu.data.compatibility.playerTrainerId[overrideGender + 1] >> 3) & 1;
+            playerGender = (player->rfu.data.compatibility.playerTrainerId[overrideGender - 1] >> 3) & 1;
         }
         switch (player->rfu.data.activity & 0x3F)
         {
@@ -4445,7 +4444,7 @@ static void ViewURoomPartnerTrainerCard(u8 *unused, struct WirelessLink_URoom *d
 
     DynamicPlaceholderTextUtil_Reset();
 
-    StringCopy(data->trainerCardStrBuffer[0], gTrainerClassNames[GetUnionRoomTrainerClass()]);
+    StringCopy(data->trainerCardStrBuffer[0], gTrainerClasses[GetUnionRoomTrainerClass()].name);
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(0, data->trainerCardStrBuffer[0]);
 
     DynamicPlaceholderTextUtil_SetPlaceholderPtr(1, trainerCard->playerName);

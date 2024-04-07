@@ -2758,7 +2758,7 @@ static void GetEasyChatConfirmDeletionText(const u8 **str1, const u8 **str2)
     *str2 = gText_BeDeletedThatOkay;
 }
 
-static void GetKeyboardCursorColAndRow(u8 *column, u8 *row)
+static void GetKeyboardCursorColAndRow(s8 *column, s8 *row)
 {
     *column = sEasyChatScreen->keyboardColumn;
     *row = sEasyChatScreen->keyboardRow;
@@ -2774,7 +2774,7 @@ static u8 GetKeyboardScrollOffset(void)
     return sEasyChatScreen->keyboardScrollOffset;
 }
 
-static void GetWordSelectColAndRow(u8 *column, u8 *row)
+static void GetWordSelectColAndRow(s8 *column, s8 *row)
 {
     *column = sEasyChatScreen->wordSelectColumn;
     *row = sEasyChatScreen->wordSelectRow;
@@ -2790,7 +2790,7 @@ static u8 GetWordSelectLastRow(void)
     return sEasyChatScreen->wordSelectLastRow;
 }
 
-static u8 UnusedDummy(void)
+static u8 UNUSED UnusedDummy(void)
 {
     return FALSE;
 }
@@ -3954,6 +3954,8 @@ static void PrintTitle(void)
 
 static void PrintEasyChatText(u8 windowId, u8 fontId, const u8 *str, u8 x, u8 y, u8 speed, void (*callback)(struct TextPrinterTemplate *, u16))
 {
+    if (DECAP_ENABLED && DECAP_MIRRORING && !DECAP_EASY_CHAT)
+        str = MirrorPtr(str);
     AddTextPrinterParameterized(windowId, fontId, str, x, y, speed, callback);
 }
 
@@ -5207,7 +5209,7 @@ static const u8 *GetEasyChatWord(u8 groupId, u16 index)
         return GetSpeciesName(index);
     case EC_GROUP_MOVE_1:
     case EC_GROUP_MOVE_2:
-        return gMoveNames[index];
+        return GetMoveName(index);
     default:
         return gEasyChatGroups[groupId].wordData.words[index].text;
     }
@@ -5240,6 +5242,9 @@ u8 *ConvertEasyChatWordsToString(u8 *dest, const u16 *src, u16 columns, u16 rows
     u16 i, j;
     u16 numColumns = columns - 1;
 
+    if (DECAP_ENABLED && !DECAP_EASY_CHAT)
+        *dest++ = CHAR_FIXED_CASE;
+
     for (i = 0; i < rows; i++)
     {
         for (j = 0; j < numColumns; j++)
@@ -5264,7 +5269,7 @@ u8 *ConvertEasyChatWordsToString(u8 *dest, const u16 *src, u16 columns, u16 rows
     return dest;
 }
 
-static u8 *UnusedConvertEasyChatWordsToString(u8 *dest, const u16 *src, u16 columns, u16 rows)
+static u8 UNUSED *UnusedConvertEasyChatWordsToString(u8 *dest, const u16 *src, u16 columns, u16 rows)
 {
     u16 i, j, k;
     u16 numColumns;
@@ -5503,8 +5508,7 @@ u16 UnlockRandomTrendySaying(void)
     return EC_EMPTY_WORD;
 }
 
-// Unused
-static u16 GetRandomUnlockedTrendySaying(void)
+static u16 UNUSED GetRandomUnlockedTrendySaying(void)
 {
     u16 i;
     u16 n = GetNumTrendySayingsUnlocked();
@@ -5650,8 +5654,7 @@ static u8 GetUnlockedEasyChatGroupId(u8 index)
         return sWordData->unlockedGroupIds[index];
 }
 
-// Unused
-static u8 *BufferEasyChatWordGroupName(u8 *dest, u8 groupId, u16 totalChars)
+static u8 UNUSED *BufferEasyChatWordGroupName(u8 *dest, u8 groupId, u16 totalChars)
 {
     u16 i;
     u8 *str = StringCopy(dest, sEasyChatGroupNamePointers[groupId]);
