@@ -1895,7 +1895,11 @@ u8 GetGenderFromSpeciesAndPersonality(u16 species, u32 personality)
 
 bool32 IsPersonalityFemale(u16 species, u32 personality)
 {
+#if P_GENDER_DIFFERENCES
     return GetGenderFromSpeciesAndPersonality(species, personality) == MON_FEMALE;
+#else
+    return FALSE;
+#endif
 }
 
 u32 GetUnownSpeciesId(u32 personality)
