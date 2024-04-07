@@ -24,10 +24,10 @@ SINGLE_BATTLE_TEST("Stamina raises Defense by 1 when hit by a move")
     PARAMETRIZE {move = MOVE_GUST; }
 
     GIVEN {
-        ASSUME(gBattleMoves[MOVE_TACKLE].power != 0);
-        ASSUME(gBattleMoves[MOVE_GUST].power != 0);
-        ASSUME(gBattleMoves[MOVE_GUST].split == SPLIT_SPECIAL);
-        ASSUME(gBattleMoves[MOVE_TACKLE].split == SPLIT_PHYSICAL);
+        ASSUME(gMovesInfo[MOVE_TACKLE].power != 0);
+        ASSUME(gMovesInfo[MOVE_GUST].power != 0);
+        ASSUME(gMovesInfo[MOVE_GUST].category == DAMAGE_CATEGORY_SPECIAL);
+        ASSUME(gMovesInfo[MOVE_TACKLE].category == DAMAGE_CATEGORY_PHYSICAL);
         PLAYER(SPECIES_WOBBUFFET) { Ability(ABILITY_STAMINA); }
         OPPONENT(SPECIES_WOBBUFFET);
     } WHEN {
@@ -56,7 +56,7 @@ DOUBLE_BATTLE_TEST("Stamina activates correctly for every battler with the abili
     PARAMETRIZE {abilityLeft = ABILITY_STAMINA, abilityRight = ABILITY_STAMINA; }
 
     GIVEN {
-        ASSUME(gBattleMoves[MOVE_EARTHQUAKE].target == MOVE_TARGET_FOES_AND_ALLY);
+        ASSUME(gMovesInfo[MOVE_EARTHQUAKE].target == MOVE_TARGET_FOES_AND_ALLY);
         PLAYER(SPECIES_WOBBUFFET) { Ability(abilityLeft); Speed(10); }
         PLAYER(SPECIES_WOBBUFFET) { Ability(abilityRight); Speed(5); }
         OPPONENT(SPECIES_WOBBUFFET) {Speed(20); }
@@ -85,5 +85,41 @@ DOUBLE_BATTLE_TEST("Stamina activates correctly for every battler with the abili
         EXPECT_NE(playerRight->hp, playerRight->maxHP);
         EXPECT_NE(opponentRight->hp, opponentRight->maxHP);
         EXPECT_EQ(opponentLeft->hp, opponentLeft->maxHP);
+    }
+}
+
+SINGLE_BATTLE_TEST("Stamina activates for every hit of a multi hit move")
+{
+    GIVEN {
+        PLAYER(SPECIES_WOBBUFFET);
+        OPPONENT(SPECIES_MUDBRAY) { Ability(ABILITY_STAMINA); }
+    } WHEN {
+        TURN { MOVE(player, MOVE_DOUBLE_KICK); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_DOUBLE_KICK, player);
+        HP_BAR(opponent);
+        STAMINA_STAT_RAISE(opponent, "Foe Mudbray's Defense rose!");
+        STAMINA_STAT_RAISE(opponent, "Foe Mudbray's Defense rose!");
+    } THEN {
+        EXPECT_EQ(opponent->statStages[STAT_DEF], DEFAULT_STAT_STAGE + 2);
+    }
+}
+
+SINGLE_BATTLE_TEST("Stamina is not activated by users own Substitute")
+{
+    GIVEN {
+        PLAYER(SPECIES_MUDBRAY) { Ability(ABILITY_STAMINA); }
+        OPPONENT(SPECIES_WOBBUFFET);
+    } WHEN {
+        TURN { MOVE(player, MOVE_SUBSTITUTE); }
+    } SCENE {
+        ANIMATION(ANIM_TYPE_MOVE, MOVE_SUBSTITUTE, player);
+        MESSAGE("Mudbray made a SUBSTITUTE!");
+        NONE_OF {
+            ABILITY_POPUP(player, ABILITY_STAMINA);
+            MESSAGE("Mudbray's Defense rose!");
+        }
+    } THEN {
+        EXPECT_EQ(player->statStages[STAT_DEF], DEFAULT_STAT_STAGE);
     }
 }

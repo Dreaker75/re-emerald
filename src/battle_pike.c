@@ -861,10 +861,7 @@ static bool8 DoesTypePreventStatus(u16 species, u32 status)
         break;
     case STATUS1_PARALYSIS:
         if (gSpeciesInfo[species].types[0] == TYPE_GROUND || gSpeciesInfo[species].types[1] == TYPE_GROUND
-        #if B_PARALYZE_ELECTRIC >= GEN_6
-            || gSpeciesInfo[species].types[0] == TYPE_ELECTRIC || gSpeciesInfo[species].types[1] == TYPE_ELECTRIC
-        #endif
-        )
+            || (B_PARALYZE_ELECTRIC >= GEN_6 && (gSpeciesInfo[species].types[0] == TYPE_ELECTRIC || gSpeciesInfo[species].types[1] == TYPE_ELECTRIC)))
             ret = TRUE;
         break;
     case STATUS1_BURN:
@@ -889,14 +886,8 @@ static bool8 TryInflictRandomStatus(void)
 
     for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
         indices[i] = i;
-    for (j = 0; j < 10; j++)
-    {
-        u8 temp, id;
 
-        i = Random() % FRONTIER_PARTY_SIZE;
-        id = Random() % FRONTIER_PARTY_SIZE;
-        SWAP(indices[i], indices[id], temp);
-    }
+    Shuffle(indices, FRONTIER_PARTY_SIZE, sizeof(indices[0]));
 
     if (gSaveBlock2Ptr->frontier.curChallengeBattleNum <= 4)
         count = 1;
@@ -916,11 +907,7 @@ static bool8 TryInflictRandomStatus(void)
         if (rand < 35)
             sStatusFlags = STATUS1_TOXIC_POISON;
         else if (rand < 60)
-        #if B_USE_FROSTBITE == TRUE
-            sStatusFlags = STATUS1_FROSTBITE;
-        #else
-            sStatusFlags = STATUS1_FREEZE;
-        #endif
+            sStatusFlags = B_USE_FROSTBITE ? STATUS1_FROSTBITE : STATUS1_FREEZE;
         else if (rand < 80)
             sStatusFlags = STATUS1_PARALYSIS;
         else if (rand < 90)
@@ -1111,8 +1098,7 @@ static u16 GetNPCRoomGraphicsId(void)
     return sNPCTable[sNpcId].graphicsId;
 }
 
-// Unused
-static u8 GetInWildMonRoom(void)
+static bool8 UNUSED GetInWildMonRoom(void)
 {
     return sInWildMonRoom;
 }
@@ -1273,7 +1259,7 @@ static void Task_DoStatusInflictionScreenFlash(u8 taskId)
 
 static void TryHealMons(u8 healCount)
 {
-    u8 j, i, k;
+    u8 j, i;
     u8 indices[FRONTIER_PARTY_SIZE];
 
     if (healCount == 0)
@@ -1282,17 +1268,9 @@ static void TryHealMons(u8 healCount)
     for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
         indices[i] = i;
 
-    // Only 'healCount' number of pokemon will be healed.
+    // Only 'healCount' number of Pokémon will be healed.
     // The order in which they're (attempted to be) healed is random,
-    // and determined by performing 10 random swaps to this index array.
-    for (k = 0; k < 10; k++)
-    {
-        u8 temp;
-
-        i = Random() % FRONTIER_PARTY_SIZE;
-        j = Random() % FRONTIER_PARTY_SIZE;
-        SWAP(indices[i], indices[j], temp);
-    }
+    Shuffle(indices, FRONTIER_PARTY_SIZE, sizeof(indices[0]));
 
     for (i = 0; i < FRONTIER_PARTY_SIZE; i++)
     {
