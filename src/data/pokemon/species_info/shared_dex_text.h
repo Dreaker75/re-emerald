@@ -24,7 +24,7 @@ const u8 gMarowakAlolanPokedexText[] = _(
     "pain that will never fade.");
 
 const u8 gEeveePokedexText[] = _(
-    "An Eevee has an unstable genetic makeup\n"
+    "An EEVEE has an unstable genetic makeup\n"
     "that suddenly mutates due to its\n"
     "environment. Radiation from various\n"
     "Stones causes this Pokémon to evolve.");
@@ -38,7 +38,7 @@ const u8 gUnownPokedexText[] = _(
 
 // Gen 3 families
 const u8 gDeoxysNormalPokedexText[] = _(
-    "Deoxys emerged from a virus that came\n"
+    "DEOXYS emerged from a virus that came\n"
     "from space. It is highly intelligent and\n"
     "can shoot lasers from the crystalline\n"
     "organ on its chest.");
