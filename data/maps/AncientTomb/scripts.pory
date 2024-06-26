@@ -69,6 +69,7 @@ AncientTomb_EventScript_Registeel::
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_WON, AncientTomb_EventScript_DefeatedRegisteel
+	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, AncientTomb_EventScript_CaughtRegisteel
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, AncientTomb_EventScript_RanFromRegisteel
 	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, AncientTomb_EventScript_RanFromRegisteel
 	setflag FLAG_DEFEATED_REGISTEEL
@@ -78,6 +79,11 @@ AncientTomb_EventScript_Registeel::
 AncientTomb_EventScript_DefeatedRegisteel::
 	setflag FLAG_DEFEATED_REGISTEEL
 	goto Common_EventScript_RemoveStaticPokemon
+	end
+
+AncientTomb_EventScript_CaughtRegisteel::
+	setflag FLAG_CAUGHT_REGISTEEL
+	goto AncientTomb_EventScript_DefeatedRegisteel
 	end
 
 AncientTomb_EventScript_RanFromRegisteel::

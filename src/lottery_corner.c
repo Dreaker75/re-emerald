@@ -27,11 +27,12 @@ void ResetLotteryCorner(void)
     VarSet(VAR_POKELOT_PRIZE_ITEM, 0);
 }
 
-void SetRandomLotteryNumber(u16 i)
+void SetRandomLotteryNumber(void)
 {
     u32 var = Random();
+    u16 rolls = VarGet(VAR_LOTTERY_RNG_TIMES);
 
-    while (--i != 0xFFFF)
+    while (--rolls != 0xFFFF)
         var = ISO_RANDOMIZE2(var);
 
     SetLotteryNumber(var);

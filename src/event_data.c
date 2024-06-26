@@ -1,6 +1,8 @@
 #include "global.h"
 #include "event_data.h"
 #include "pokedex.h"
+#include "field_specials.h"
+#include "lottery_corner.h"
 
 #define SPECIAL_FLAGS_SIZE  (NUM_SPECIAL_FLAGS / 8)  // 8 flags per byte
 #define TEMP_FLAGS_SIZE     (NUM_TEMP_FLAGS / 8)
@@ -50,6 +52,101 @@ void ClearTempFieldEventData(void)
 void ClearDailyFlags(void)
 {
     memset(&gSaveBlock1Ptr->flags[DAILY_FLAGS_START / 8], 0, DAILY_FLAGS_SIZE);
+    SetShoalItemFlag();
+
+    // Increase the amount of rolls the lottery rng will do, this function is only called when the day rolls over or when the E4 is beaten
+    VarSet(VAR_LOTTERY_RNG_TIMES, VarGet(VAR_LOTTERY_RNG_TIMES) + 1);
+    // Set the variable to 1 if it's 0 to avoid problems with the Lottery code
+    if (VarGet(VAR_LOTTERY_RNG_TIMES) == 0)
+    {
+        VarSet(VAR_LOTTERY_RNG_TIMES, 1);
+    }
+
+    // Generate a new ID for the lottery
+    SetRandomLotteryNumber();
+
+    // Reset the defeated flags for any Legendary Pokemon that hasn't been caught yet
+    FlagClear(FLAG_DEFEATED_SUDOWOODO);
+    if (FlagGet(FLAG_CAUGHT_ARTICUNO) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_ARTICUNO);
+    }
+    if (FlagGet(FLAG_CAUGHT_ZAPDOS) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_ZAPDOS);
+    }
+    if (FlagGet(FLAG_CAUGHT_MOLTRES) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_MOLTRES);
+    }
+    if (FlagGet(FLAG_CAUGHT_MEWTWO) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_MEWTWO);
+    }
+    if (FlagGet(FLAG_CAUGHT_MEW) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_MEW);
+    }
+    if (FlagGet(FLAG_CAUGHT_RAIKOU) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_RAIKOU);
+    }
+    if (FlagGet(FLAG_CAUGHT_ENTEI) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_ENTEI);
+    }
+    if (FlagGet(FLAG_CAUGHT_SUICUNE) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_SUICUNE);
+    }
+    if (FlagGet(FLAG_CAUGHT_LUGIA) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_LUGIA);
+    }
+    if (FlagGet(FLAG_CAUGHT_HO_OH) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_HO_OH);
+    }
+    if (FlagGet(FLAG_CAUGHT_CELEBI) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_CELEBI);
+    }
+    if (FlagGet(FLAG_CAUGHT_REGIROCK) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_REGIROCK);
+    }
+    if (FlagGet(FLAG_CAUGHT_REGICE) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_REGICE);
+    }
+    if (FlagGet(FLAG_CAUGHT_REGISTEEL) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_REGISTEEL);
+    }
+    if (FlagGet(FLAG_CAUGHT_KYOGRE) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_KYOGRE);
+    }
+    if (FlagGet(FLAG_CAUGHT_GROUDON) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_GROUDON);
+    }
+    if (FlagGet(FLAG_CAUGHT_RAYQUAZA) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_RAYQUAZA);
+    }
+    if (FlagGet(FLAG_CAUGHT_LATIAS_OR_LATIOS) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_LATIAS_OR_LATIOS);
+    }
+    if (FlagGet(FLAG_CAUGHT_JIRACHI) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_JIRACHI);
+    }
+    if (FlagGet(FLAG_CAUGHT_DEOXYS) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_DEOXYS);
+    }
 }
 
 void DisableNationalPokedex(void)

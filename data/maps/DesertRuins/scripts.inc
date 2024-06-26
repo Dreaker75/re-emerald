@@ -68,6 +68,7 @@ DesertRuins_EventScript_Regirock::
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_WON, DesertRuins_EventScript_DefeatedRegirock
+	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, DesertRuins_EventScript_CaughtRegirock
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, DesertRuins_EventScript_RanFromRegirock
 	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, DesertRuins_EventScript_RanFromRegirock
 	setflag FLAG_DEFEATED_REGIROCK
@@ -77,6 +78,11 @@ DesertRuins_EventScript_Regirock::
 DesertRuins_EventScript_DefeatedRegirock::
 	setflag FLAG_DEFEATED_REGIROCK
 	goto Common_EventScript_RemoveStaticPokemon
+	end
+
+DesertRuins_EventScript_CaughtRegirock::
+	setflag FLAG_CAUGHT_REGIROCK
+	goto DesertRuins_EventScript_DefeatedRegirock
 	end
 
 DesertRuins_EventScript_RanFromRegirock::

@@ -3,7 +3,6 @@
 #include "rtc.h"
 #include "time_events.h"
 #include "field_specials.h"
-#include "lottery_corner.h"
 #include "dewford_trend.h"
 #include "tv.h"
 #include "field_weather.h"
@@ -47,13 +46,10 @@ static void UpdatePerDay(struct Time *localTime)
         UpdateDewfordTrendPerDay(daysSince);
         UpdateTVShowsPerDay(daysSince);
         UpdateWeatherPerDay(daysSince);
-        // UpdatePartyPokerusTime(daysSince);
         UpdateMirageRnd(daysSince);
         UpdateBirchState(daysSince);
         UpdateFrontierManiac(daysSince);
         UpdateFrontierGambler(daysSince);
-        SetShoalItemFlag(daysSince);
-        SetRandomLotteryNumber(daysSince);
         *days = localTime->days;
     }
 }

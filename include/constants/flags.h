@@ -465,15 +465,15 @@
 #define FLAG_SHOWN_AURORA_TICKET             0x1AF
 #define FLAG_SHOWN_OLD_SEA_MAP               0x1B0
 #define FLAG_UNUSED_0x1B1                    0x1B1
-#define FLAG_UNUSED_0x1B2                    0x1B2
-#define FLAG_UNUSED_0x1B3                    0x1B3
-#define FLAG_UNUSED_0x1B4                    0x1B4
-#define FLAG_UNUSED_0x1B5                    0x1B5
-#define FLAG_UNUSED_0x1B6                    0x1B6
-#define FLAG_UNUSED_0x1B7                    0x1B7
-#define FLAG_UNUSED_0x1B8                    0x1B8
-#define FLAG_UNUSED_0x1B9                    0x1B9
-#define FLAG_UNUSED_0x1BA                    0x1BA
+#define FLAG_DEFEATED_ARTICUNO               0x1B2 // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
+#define FLAG_DEFEATED_ZAPDOS                 0x1B3 // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
+#define FLAG_DEFEATED_MOLTRES                0x1B4 // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
+#define FLAG_DEFEATED_MEWTWO                 0x1B5 // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
+#define FLAG_DEFEATED_RAIKOU                 0x1B6 // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
+#define FLAG_DEFEATED_ENTEI                  0x1B7 // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
+#define FLAG_DEFEATED_SUICUNE                0x1B8 // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
+#define FLAG_DEFEATED_CELEBI                 0x1B9 // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
+#define FLAG_DEFEATED_JIRACHI                0x1BA // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
 #define FLAG_DEFEATED_REGIROCK               0x1BB
 #define FLAG_DEFEATED_REGICE                 0x1BC
 #define FLAG_DEFEATED_REGISTEEL              0x1BD
@@ -1502,23 +1502,24 @@
 
 #define FLAG_RECEIVED_POKEDEX_FROM_BIRCH            (SYSTEM_FLAGS + 0x84)
 
-#define FLAG_UNUSED_0x8E5                           (SYSTEM_FLAGS + 0x85) // Unused Flag
-#define FLAG_UNUSED_0x8E6                           (SYSTEM_FLAGS + 0x86) // Unused Flag
-#define FLAG_UNUSED_0x8E7                           (SYSTEM_FLAGS + 0x87) // Unused Flag
-#define FLAG_UNUSED_0x8E8                           (SYSTEM_FLAGS + 0x88) // Unused Flag
-#define FLAG_UNUSED_0x8E9                           (SYSTEM_FLAGS + 0x89) // Unused Flag
-#define FLAG_UNUSED_0x8EA                           (SYSTEM_FLAGS + 0x8A) // Unused Flag
-#define FLAG_UNUSED_0x8EB                           (SYSTEM_FLAGS + 0x8B) // Unused Flag
-#define FLAG_UNUSED_0x8EC                           (SYSTEM_FLAGS + 0x8C) // Unused Flag
-#define FLAG_UNUSED_0x8ED                           (SYSTEM_FLAGS + 0x8D) // Unused Flag
-#define FLAG_UNUSED_0x8EE                           (SYSTEM_FLAGS + 0x8E) // Unused Flag
-#define FLAG_UNUSED_0x8EF                           (SYSTEM_FLAGS + 0x8F) // Unused Flag
-#define FLAG_UNUSED_0x8F0                           (SYSTEM_FLAGS + 0x90) // Unused Flag
-#define FLAG_UNUSED_0x8F1                           (SYSTEM_FLAGS + 0x91) // Unused Flag
-#define FLAG_UNUSED_0x8F2                           (SYSTEM_FLAGS + 0x92) // Unused Flag
-#define FLAG_UNUSED_0x8F3                           (SYSTEM_FLAGS + 0x93) // Unused Flag
-#define FLAG_UNUSED_0x8F4                           (SYSTEM_FLAGS + 0x94) // Unused Flag
-#define FLAG_UNUSED_0x8F5                           (SYSTEM_FLAGS + 0x95) // Unused Flag
+// New flags to know if each Legendary Pokemon has been caught
+#define FLAG_CAUGHT_ARTICUNO                        (SYSTEM_FLAGS + 0x85)
+#define FLAG_CAUGHT_ZAPDOS                          (SYSTEM_FLAGS + 0x86)
+#define FLAG_CAUGHT_MOLTRES                         (SYSTEM_FLAGS + 0x87)
+#define FLAG_CAUGHT_MEWTWO                          (SYSTEM_FLAGS + 0x88)
+#define FLAG_CAUGHT_RAIKOU                          (SYSTEM_FLAGS + 0x89)
+#define FLAG_CAUGHT_ENTEI                           (SYSTEM_FLAGS + 0x8A)
+#define FLAG_CAUGHT_SUICUNE                         (SYSTEM_FLAGS + 0x8B)
+#define FLAG_CAUGHT_CELEBI                          (SYSTEM_FLAGS + 0x8C)
+#define FLAG_CAUGHT_REGIROCK                        (SYSTEM_FLAGS + 0x8D)
+#define FLAG_CAUGHT_REGICE                          (SYSTEM_FLAGS + 0x8E)
+#define FLAG_CAUGHT_REGISTEEL                       (SYSTEM_FLAGS + 0x8F)
+#define FLAG_CAUGHT_LATIAS_OR_LATIOS_ROAMER         (SYSTEM_FLAGS + 0x90)
+#define FLAG_CAUGHT_GROUDON                         (SYSTEM_FLAGS + 0x91)
+#define FLAG_CAUGHT_KYOGRE                          (SYSTEM_FLAGS + 0x92)
+#define FLAG_CAUGHT_RAYQUAZA                        (SYSTEM_FLAGS + 0x93)
+#define FLAG_CAUGHT_JIRACHI                         (SYSTEM_FLAGS + 0x94)
+#define FLAG_CAUGHT_DEOXYS                          (SYSTEM_FLAGS + 0x95)
 #define FLAG_UNUSED_0x8F6                           (SYSTEM_FLAGS + 0x96) // Unused Flag
 #define FLAG_UNUSED_0x8F7                           (SYSTEM_FLAGS + 0x97) // Unused Flag
 #define FLAG_UNUSED_0x8F8                           (SYSTEM_FLAGS + 0x98) // Unused Flag

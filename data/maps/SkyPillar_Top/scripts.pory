@@ -56,6 +56,7 @@ SkyPillar_Top_EventScript_Rayquaza::
 	clearflag FLAG_SYS_CTRL_OBJ_DELETE
 	specialvar VAR_RESULT, GetBattleOutcome
 	goto_if_eq VAR_RESULT, B_OUTCOME_WON, SkyPillar_Top_EventScript_DefeatedRayquaza
+	goto_if_eq VAR_RESULT, B_OUTCOME_CAUGHT, SkyPillar_Top_EventScript_CaughtRayquaza
 	goto_if_eq VAR_RESULT, B_OUTCOME_RAN, SkyPillar_Top_EventScript_RanFromRayquaza
 	goto_if_eq VAR_RESULT, B_OUTCOME_PLAYER_TELEPORTED, SkyPillar_Top_EventScript_RanFromRayquaza
 	setflag FLAG_DEFEATED_RAYQUAZA
@@ -65,6 +66,11 @@ SkyPillar_Top_EventScript_Rayquaza::
 SkyPillar_Top_EventScript_DefeatedRayquaza::
 	setflag FLAG_DEFEATED_RAYQUAZA
 	goto SkyPillar_Top_EventScript_DefeatedRayquaza2
+	end
+
+SkyPillar_Top_EventScript_CaughtRayquaza::
+	setflag FLAG_CAUGHT_RAYQUAZA
+	goto SkyPillar_Top_EventScript_DefeatedRayquaza
 	end
 
 SkyPillar_Top_EventScript_RanFromRayquaza::

@@ -1428,7 +1428,7 @@ u8 TryUpdateRusturfTunnelState(void)
     return FALSE;
 }
 
-void SetShoalItemFlag(u16 unused)
+void SetShoalItemFlag(void)
 {
     FlagSet(FLAG_SYS_SHOAL_ITEM);
 }
