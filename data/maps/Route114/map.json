@@ -166,7 +166,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_RockSmash",
-      "flag": "FLAG_TEMP_11"
+      "flag": "FLAG_HIDE_ROUTE_114_ROCK_1"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_GENTLEMAN",
@@ -257,7 +257,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_RockSmash",
-      "flag": "FLAG_TEMP_12"
+      "flag": "FLAG_HIDE_ROUTE_114_ROCK_2"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
@@ -270,7 +270,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_RockSmash",
-      "flag": "FLAG_TEMP_13"
+      "flag": "FLAG_HIDE_ROUTE_114_ROCK_3"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
@@ -283,7 +283,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_RockSmash",
-      "flag": "FLAG_TEMP_14"
+      "flag": "FLAG_HIDE_ROUTE_114_ROCK_4"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
@@ -296,7 +296,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_RockSmash",
-      "flag": "FLAG_TEMP_15"
+      "flag": "FLAG_HIDE_ROUTE_114_ROCK_5"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_LASS",

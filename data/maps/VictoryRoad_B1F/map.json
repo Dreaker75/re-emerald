@@ -116,7 +116,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_RockSmash",
-      "flag": "FLAG_TEMP_19"
+      "flag": "FLAG_HIDE_VICTORY_ROAD_ROCK_2"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
@@ -129,7 +129,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_RockSmash",
-      "flag": "FLAG_TEMP_1A"
+      "flag": "FLAG_HIDE_VICTORY_ROAD_ROCK_1"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
@@ -142,7 +142,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_RockSmash",
-      "flag": "FLAG_TEMP_1B"
+      "flag": "FLAG_HIDE_VICTORY_ROAD_ROCK_3"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
@@ -155,7 +155,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_RockSmash",
-      "flag": "FLAG_TEMP_1C"
+      "flag": "FLAG_HIDE_VICTORY_ROAD_ROCK_4"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
@@ -168,7 +168,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_RockSmash",
-      "flag": "FLAG_TEMP_1D"
+      "flag": "FLAG_HIDE_VICTORY_ROAD_ROCK_5"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_PUSHABLE_BOULDER",
@@ -233,7 +233,7 @@
       "trainer_type": "TRAINER_TYPE_NONE",
       "trainer_sight_or_berry_tree_id": "0",
       "script": "EventScript_RockSmash",
-      "flag": "FLAG_TEMP_15"
+      "flag": "FLAG_HIDE_VICTORY_ROAD_ROCK_6"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -286,6 +286,97 @@
       "trainer_sight_or_berry_tree_id": "3",
       "script": "VictoryRoad_B1F_EventScript_Halle",
       "flag": "0"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 29,
+      "y": 27,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_18"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 31,
+      "y": 27,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_19"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 4,
+      "y": 27,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_15"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 9,
+      "y": 5,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_1A"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 16,
+      "y": 9,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_1B"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 22,
+      "y": 15,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_1C"
+    },
+    {
+      "graphics_id": "OBJ_EVENT_GFX_BREAKABLE_ROCK",
+      "x": 34,
+      "y": 26,
+      "elevation": 3,
+      "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
+      "movement_range_x": 0,
+      "movement_range_y": 0,
+      "trainer_type": "TRAINER_TYPE_NONE",
+      "trainer_sight_or_berry_tree_id": "0",
+      "script": "EventScript_RockSmash",
+      "flag": "FLAG_TEMP_1D"
     }
   ],
   "warp_events": [

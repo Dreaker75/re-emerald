@@ -2,7 +2,25 @@
 
  - A QoL hack for Pokemon Emerald based on pokeemerald Expansion that tries to keep the essence of vanilla Emerald while at the same time fixing a lot of the outdated mechanics.
  - This hack will have all Pokemon, sprites, attacks, items, etc **as they appeared in vanilla Emerald** and only updates QoL stuff like breeding mechanics, EVs, etc.
- - This will be a 386-Romhack that will have repeatable methods to get every item in-game, as well as try to fix the Battle Frontier economy, among many other things.
+ - This will be a 386-Romhack that will have repeatable methods to get every item in-game, will try to fix the Battle Frontier economy, and many other things.
+
+## pokeemerald-expansion options:
+ - Most of the out-of-battle mechanics have been updated to be the best QoL versions of themselves (Like the Gen VI Exp. Share), with some exceptions:
+    - The overworld Poison effect has been left alone and can still faint your Pokemon outside of battle
+ - Most of the in-battle mechanics have been left alone and work exactly like they did in vanilla Emerald, with some exceptions:
+    - A Pokemon can now evolve after a battle even if it has fainted.
+    - The player now loses money like in later games after losing a battle, rather than losing half their money.
+    - Unevolved Pokemon that evolve through level now get bonus experience if they're past their level requirement.
+    - All EVs now cap at 252, rather than 255, and the stats are recalculated after every battle, even at level 100.
+    - All non-berry items are restored after battle.
+    
+## Custom changes:
+ - Rock Smash rocks will either trigger a wild Pokemon battle, or they won't (No more random chance to trigger an encounter. If a rock doesn't give you an encounter, it never will)
+ - Rock Smash rocks that block the path to certain areas or items will never respawn
+
+## Map changes:
+ - Added a Rock Smash and a Strength Boulder to Route 115 that allows for easier backtracking to Meteor Falls
+ - Moved the Sudowoodo in the Battle Frontier 1 tile up so it doesn't block the way to Artisan Cave. This is to deal with the fact that it can now respawn every day
 
 ============================================================================================
 

@@ -766,8 +766,8 @@ void RockSmashWildEncounter(void)
         {
             gSpecialVar_Result = FALSE;
         }
-        else if (WildEncounterCheck(wildPokemonInfo->encounterRate, TRUE) == TRUE
-         && TryGenerateWildMon(wildPokemonInfo, WILD_AREA_ROCKS, WILD_CHECK_REPEL | WILD_CHECK_KEEN_EYE) == TRUE)
+        // CHANGED: Made it so Rock Smash rocks that have encounters always spawn a Pokemon, regardless of player's Repel and Abilities
+        else if (TryGenerateWildMon(wildPokemonInfo, WILD_AREA_ROCKS, 0) == TRUE)
         {
             BattleSetup_StartWildBattle();
             gSpecialVar_Result = TRUE;
