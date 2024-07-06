@@ -1241,28 +1241,29 @@
 #define FLAG_HIDE_VICTORY_ROAD_ROCK_5                               0x4A5
 #define FLAG_HIDE_VICTORY_ROAD_ROCK_6                               0x4A6
 
-#define FLAG_UNUSED_0x4A7                                           0x4A7 // Unused Flag
-#define FLAG_UNUSED_0x4A8                                           0x4A8 // Unused Flag
-#define FLAG_UNUSED_0x4A9                                           0x4A9 // Unused Flag
-#define FLAG_UNUSED_0x4AA                                           0x4AA // Unused Flag
-#define FLAG_UNUSED_0x4AB                                           0x4AB // Unused Flag
-#define FLAG_UNUSED_0x4AC                                           0x4AC // Unused Flag
-#define FLAG_UNUSED_0x4AD                                           0x4AD // Unused Flag
-#define FLAG_UNUSED_0x4AE                                           0x4AE // Unused Flag
-#define FLAG_UNUSED_0x4AF                                           0x4AF // Unused Flag
-#define FLAG_UNUSED_0x4B0                                           0x4B0 // Unused Flag
-#define FLAG_UNUSED_0x4B1                                           0x4B1 // Unused Flag
-#define FLAG_UNUSED_0x4B2                                           0x4B2 // Unused Flag
-#define FLAG_UNUSED_0x4B3                                           0x4B3 // Unused Flag
-#define FLAG_UNUSED_0x4B4                                           0x4B4 // Unused Flag
-#define FLAG_UNUSED_0x4B5                                           0x4B5 // Unused Flag
-#define FLAG_UNUSED_0x4B6                                           0x4B6 // Unused Flag
-#define FLAG_UNUSED_0x4B7                                           0x4B7 // Unused Flag
-#define FLAG_UNUSED_0x4B8                                           0x4B8 // Unused Flag
-#define FLAG_UNUSED_0x4B9                                           0x4B9 // Unused Flag
-#define FLAG_UNUSED_0x4BA                                           0x4BA // Unused Flag
-#define FLAG_UNUSED_0x4BB                                           0x4BB // Unused Flag
-#define FLAG_UNUSED_0x4BC                                           0x4BC // Unused Flag
+// Cut trees
+#define FLAG_HIDE_PETALBURG_WOODS_TREE_1                            0x4A7
+#define FLAG_HIDE_PETALBURG_WOODS_TREE_2                            0x4A8
+#define FLAG_HIDE_ROUTE_103_TREE_1                                  0x4A9
+#define FLAG_HIDE_ROUTE_103_TREE_2                                  0x4AA
+#define FLAG_HIDE_ROUTE_104_TREE                                    0x4AB
+#define FLAG_HIDE_ROUTE_111_TREE                                    0x4AC
+#define FLAG_HIDE_ROUTE_116_TREE_1                                  0x4AD
+#define FLAG_HIDE_ROUTE_116_TREE_2                                  0x4AE
+#define FLAG_HIDE_ROUTE_116_TREE_3                                  0x4AF
+#define FLAG_HIDE_ROUTE_116_TREE_4                                  0x4B0
+#define FLAG_HIDE_ROUTE_116_TREE_5                                  0x4B1
+#define FLAG_HIDE_ROUTE_117_TREE                                    0x4B2
+#define FLAG_HIDE_ROUTE_118_TREE                                    0x4B3
+#define FLAG_HIDE_ROUTE_120_TREE_1                                  0x4B4
+#define FLAG_HIDE_ROUTE_120_TREE_2                                  0x4B5
+#define FLAG_HIDE_ROUTE_120_TREE_3                                  0x4B6
+#define FLAG_HIDE_ROUTE_121_TREE_1                                  0x4B7
+#define FLAG_HIDE_ROUTE_121_TREE_2                                  0x4B8
+#define FLAG_HIDE_ROUTE_121_TREE_3                                  0x4B9
+#define FLAG_HIDE_ROUTE_123_TREE_1                                  0x4BA
+#define FLAG_HIDE_ROUTE_123_TREE_2                                  0x4BB
+#define FLAG_HIDE_ROUTE_123_TREE_3                                  0x4BC
 #define FLAG_UNUSED_0x4BD                                           0x4BD // Unused Flag
 #define FLAG_UNUSED_0x4BE                                           0x4BE // Unused Flag
 #define FLAG_UNUSED_0x4BF                                           0x4BF // Unused Flag
