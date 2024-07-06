@@ -1264,7 +1264,9 @@
 #define FLAG_HIDE_ROUTE_123_TREE_1                                  0x4BA
 #define FLAG_HIDE_ROUTE_123_TREE_2                                  0x4BB
 #define FLAG_HIDE_ROUTE_123_TREE_3                                  0x4BC
-#define FLAG_UNUSED_0x4BD                                           0x4BD // Unused Flag
+
+#define FLAG_ASKED_TO_USE_FLASH                                     0x4BD // ADDED: Flag to know if the player has been asked to use Flash on a dark cave
+
 #define FLAG_UNUSED_0x4BE                                           0x4BE // Unused Flag
 #define FLAG_UNUSED_0x4BF                                           0x4BF // Unused Flag
 #define FLAG_UNUSED_0x4C0                                           0x4C0 // Unused Flag

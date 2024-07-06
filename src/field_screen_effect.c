@@ -977,7 +977,8 @@ void AnimateFlash(u8 newFlashLevel)
     bool8 fullBrightness = FALSE;
     if (newFlashLevel == 0)
         fullBrightness = TRUE;
-    StartUpdateFlashLevelEffect(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, sFlashLevelToRadius[curFlashLevel], sFlashLevelToRadius[newFlashLevel], fullBrightness, 1);
+    // Changed delta so the radius increases faster when using flash in a cave to account for the bigger size (the entire screen), while leaving it the same for the Dewford Gym
+    StartUpdateFlashLevelEffect(DISPLAY_WIDTH / 2, DISPLAY_HEIGHT / 2, sFlashLevelToRadius[curFlashLevel], sFlashLevelToRadius[newFlashLevel], fullBrightness, min(curFlashLevel - newFlashLevel, 3));
     StartWaitForFlashUpdate();
     LockPlayerFieldControls();
 }

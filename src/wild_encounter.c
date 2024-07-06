@@ -54,6 +54,7 @@ static void FeebasSeedRng(u16 seed);
 static bool8 IsWildLevelAllowedByRepel(u8 level);
 static void ApplyFluteEncounterRateMod(u32 *encRate);
 static void ApplyCleanseTagEncounterRateMod(u32 *encRate);
+static void ApplyFlashEncounterRateMod(u32 *encRate);
 static u8 GetMaxLevelOfSpeciesInWildTable(const struct WildPokemon *wildMon, u16 species, u8 area);
 #ifdef BUGFIX
 static bool8 TryGetAbilityInfluencedWildMonIndex(const struct WildPokemon *wildMon, u8 type, u16 ability, u8 *monIndex, u32 size);
@@ -591,6 +592,9 @@ static bool8 WildEncounterCheck(u32 encounterRate, bool8 ignoreAbility)
         else if (ability == ABILITY_NO_GUARD)
             encounterRate *= 2;
     }
+
+    ApplyFlashEncounterRateMod(&encounterRate);
+    
     if (encounterRate > MAX_ENCOUNTER_RATE)
         encounterRate = MAX_ENCOUNTER_RATE;
     return EncounterOddsCheck(encounterRate);
@@ -1096,6 +1100,13 @@ static void ApplyCleanseTagEncounterRateMod(u32 *encRate)
 {
     if (GetMonData(&gPlayerParty[0], MON_DATA_HELD_ITEM) == ITEM_CLEANSE_TAG)
         *encRate = *encRate * 2 / 3;
+}
+
+// ADDED: Encounter rate on dark caves is reduced when Flash is used
+static void ApplyFlashEncounterRateMod(u32 *encRate){
+    if (FlagGet(FLAG_SYS_USE_FLASH) == TRUE && gMapHeader.cave == TRUE){
+        *encRate = *encRate / 5;
+    }
 }
 
 bool8 TryDoDoubleWildBattle(void)

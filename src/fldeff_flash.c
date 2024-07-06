@@ -15,6 +15,7 @@
 #include "task.h"
 #include "constants/songs.h"
 #include "constants/map_types.h"
+#include "constants/field_effects.h"
 
 struct FlashStruct
 {
@@ -27,6 +28,7 @@ struct FlashStruct
 
 static void FieldCallback_Flash(void);
 static void FldEff_UseFlash(void);
+static void FieldMove_Flash(void);
 static bool8 TryDoMapTransition(void);
 static void DoExitCaveTransition(void);
 static void Task_ExitCaveTransition1(u8 taskId);
@@ -103,6 +105,23 @@ static void FldEff_UseFlash(void)
     PlaySE(SE_M_REFLECT);
     FlagSet(FLAG_SYS_USE_FLASH);
     ScriptContext_SetupScript(EventScript_UseFlash);
+}
+
+bool8 FldEff_UseFlashOverworld(void)
+{
+    u8 taskId = CreateFieldMoveTask();
+
+    gTasks[taskId].data[8] = (u32)FieldMove_Flash >> 16;
+    gTasks[taskId].data[9] = (u32)FieldMove_Flash;
+    return FALSE;
+}
+
+static void FieldMove_Flash(void)
+{
+    PlaySE(SE_M_REFLECT);
+    FlagSet(FLAG_SYS_USE_FLASH);
+    FieldEffectActiveListRemove(FLDEFF_USE_FLASH);
+    ScriptContext_Enable();
 }
 
 static void CB2_ChangeMapMain(void)

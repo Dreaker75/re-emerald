@@ -39,6 +39,7 @@
 
 static EWRAM_DATA u8 sWildEncounterImmunitySteps = 0;
 static EWRAM_DATA u16 sPrevMetatileBehavior = 0;
+EWRAM_DATA u16 sLastMapSectionId = 0;
 
 u8 gSelectedObjectEvent;
 
@@ -190,6 +191,17 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
         // Calls the Waterfall event directly
         ScriptContext_SetupScript(EventScript_UseWaterfall);
         return TRUE;
+    }
+
+    // ADDED: Gives a message to the player upon entering a dark cave to ask if Flash should be used
+    if (FlagGet(FLAG_ASKED_TO_USE_FLASH) == FALSE && gMapHeader.cave == TRUE && !FlagGet(FLAG_SYS_USE_FLASH)){
+        // Save the current map section to only give the popup again if the player leaves the current dungeon and then comes back
+        sLastMapSectionId = gMapHeader.regionMapSectionId;
+        ScriptContext_SetupScript(EventScript_WantToUseFlash);
+        return TRUE;
+    }
+    else if(FlagGet(FLAG_ASKED_TO_USE_FLASH) == TRUE && gMapHeader.regionMapSectionId != sLastMapSectionId){
+        FlagClear(FLAG_ASKED_TO_USE_FLASH);
     }
 
     if (input->heldDirection2 && input->dpadDirection == playerDirection)
