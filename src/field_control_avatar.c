@@ -34,6 +34,7 @@
 #include "constants/event_objects.h"
 #include "constants/field_poison.h"
 #include "constants/map_types.h"
+#include "constants/moves.h"
 #include "constants/songs.h"
 #include "constants/trainer_hill.h"
 
@@ -193,12 +194,23 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
         return TRUE;
     }
 
-    // ADDED: Gives a message to the player upon entering a dark cave to ask if Flash should be used
-    if (FlagGet(FLAG_ASKED_TO_USE_FLASH) == FALSE && gMapHeader.cave == TRUE && !FlagGet(FLAG_SYS_USE_FLASH)){
+    // ADDED: Gives a message to the player upon entering a dark cave to ask if Flash should be used, if the required badge has been obtained
+    if (FlagGet(FLAG_BADGE02_GET) == TRUE && FlagGet(FLAG_ASKED_TO_USE_FLASH) == FALSE && gMapHeader.cave == TRUE && !FlagGet(FLAG_SYS_USE_FLASH)){
         // Save the current map section to only give the popup again if the player leaves the current dungeon and then comes back
-        sLastMapSectionId = gMapHeader.regionMapSectionId;
-        ScriptContext_SetupScript(EventScript_WantToUseFlash);
-        return TRUE;
+        u8 i;
+
+        // Check to make sure the player has a Pokemon in the party that can use Flash, otherwise continue with the rest of the checks
+        for (i = 0; i < PARTY_SIZE; i++)
+        {
+            if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE)
+                break;
+            if (CanLearnTeachableMove(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES), MOVE_FLASH))
+            {
+                sLastMapSectionId = gMapHeader.regionMapSectionId;
+                ScriptContext_SetupScript(EventScript_WantToUseFlash);
+                return TRUE;
+            }
+        }
     }
     else if(FlagGet(FLAG_ASKED_TO_USE_FLASH) == TRUE && gMapHeader.regionMapSectionId != sLastMapSectionId){
         FlagClear(FLAG_ASKED_TO_USE_FLASH);
