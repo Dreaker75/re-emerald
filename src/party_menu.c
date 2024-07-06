@@ -85,6 +85,7 @@ enum {
     MENU_SUMMARY,
     MENU_SWITCH,
     MENU_CANCEL1,
+    MENU_USE_MOVE,
     MENU_ITEM,
     MENU_GIVE,
     MENU_TAKE_ITEM,
@@ -124,6 +125,7 @@ enum {
     ACTIONS_SUMMARY_ONLY,
     ACTIONS_ITEM,
     ACTIONS_MAIL,
+    ACTIONS_USE_MOVE,
     ACTIONS_REGISTER,
     ACTIONS_TRADE,
     ACTIONS_SPIN_TRADE,
@@ -211,8 +213,10 @@ struct PartyMenuInternal
     u32 spriteIdCancelPokeball:7;
     u32 messageId:14;
     u8 windowId[3];
-    u8 actions[8];
+    u8 actions[9];      // CHANGED: Added a 9th slot to display all 8 Field Moves and the Cancel option in a submenu
     u8 numActions;
+    u8 fieldMoves[8];   // ADDED: Used to hold the Field Moves the Pokemon can learn when it has more than 4 (If it has 4 or less, they're stored in actions like normal)
+    u8 numFieldMoves;   // ADDED: Number of Field Moves the Pokemon can learn (Minimum 4, maximum 8)
     // In vanilla Emerald, only the first 0xB0 hwords (0x160 bytes) are actually used.
     // However, a full 0x100 hwords (0x200 bytes) are allocated.
     // It is likely that the 0x160 value used below is a constant defined by
@@ -480,6 +484,7 @@ static void BlitBitmapToPartyWindow_RightColumn(u8, u8, u8, u8, u8, bool8);
 static void CursorCb_Summary(u8);
 static void CursorCb_Switch(u8);
 static void CursorCb_Cancel1(u8);
+static void CursorCb_UseAMove(u8);
 static void CursorCb_Item(u8);
 static void CursorCb_Give(u8);
 static void CursorCb_TakeItem(u8);
@@ -2640,6 +2645,9 @@ void DisplayPartyMenuStdMessage(u32 stringId)
         case PARTY_MSG_DO_WHAT_WITH_MON:
             *windowPtr = AddWindow(&sDoWhatWithMonMsgWindowTemplate);
             break;
+        case PARTY_MSG_CHOOSE_A_MOVE_TO_USE:
+            *windowPtr = AddWindow(&sChooseAMoveWindowTemplate);
+            break;
         case PARTY_MSG_DO_WHAT_WITH_ITEM:
             *windowPtr = AddWindow(&sDoWhatWithItemMsgWindowTemplate);
             break;
@@ -2711,6 +2719,9 @@ static u8 DisplaySelectionWindow(u8 windowType)
         break;
     case SELECTWINDOW_MAIL:
         window = sMailReadTakeWindowTemplate;
+        break;
+    case SELECTWINDOW_USE_A_MOVE:
+        SetWindowTemplateFields(&window, 2, 18, 19 - ((sPartyMenuInternal->numFieldMoves + 1) * 2), 10, (sPartyMenuInternal->numFieldMoves + 1) * 2, 14, 0x2E9);
         break;
     case SELECTWINDOW_CATALOG:
         window = sCatalogSelectWindowTemplate;
@@ -2784,6 +2795,14 @@ static void SetPartyMonSelectionActions(struct Pokemon *mons, u8 slotId, u8 acti
     {
         SetPartyMonFieldSelectionActions(mons, slotId);
     }
+    else if (action == ACTIONS_USE_MOVE){
+        sPartyMenuInternal->numActions = sPartyMenuInternal->numFieldMoves + 1;
+        // Add the field moves to the new submenu created
+        for (i = 0; i < sPartyMenuInternal->numFieldMoves; i++)
+            sPartyMenuInternal->actions[i] = sPartyMenuInternal->fieldMoves[i];
+        // Add the Cancel option at the end
+        sPartyMenuInternal->actions[i] = MENU_CANCEL2;
+    }
     else
     {
         sPartyMenuInternal->numActions = sPartyMenuActionCounts[action];
@@ -2794,22 +2813,32 @@ static void SetPartyMonSelectionActions(struct Pokemon *mons, u8 slotId, u8 acti
 
 static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
 {
-    u8 i, j;
+    u8 i;
 
     sPartyMenuInternal->numActions = 0;
+    sPartyMenuInternal->numFieldMoves = 0;
+
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_SUMMARY);
 
-    // Add field moves to action list
-    for (i = 0; i < MAX_MON_MOVES; i++)
+    // Add field moves to field moves list
+    for (i = 0; i < sizeof(sMenuExclusiveFieldMoves) / sizeof(sMenuExclusiveFieldMoves[0]); i++)
     {
-        for (j = 0; j != FIELD_MOVES_COUNT; j++)
-        {
-            if (GetMonData(&mons[slotId], i + MON_DATA_MOVE1) == sFieldMoves[j])
-            {
-                AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, j + MENU_FIELD_MOVES);
-                break;
-            }
+        if (CanLearnTeachableMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sMenuExclusiveFieldMoves[i]]) == TRUE){
+            AppendToList(sPartyMenuInternal->fieldMoves, &sPartyMenuInternal->numFieldMoves, sMenuExclusiveFieldMoves[i] + MENU_FIELD_MOVES);
         }
+    }
+
+    // If the Pokemon knows 4 or less menu Field Moves, add them to the list like normal
+    if (sPartyMenuInternal->numFieldMoves <= 4)
+    {
+        for (i = 0; i < sPartyMenuInternal->numFieldMoves; i++)
+        {
+            AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, sPartyMenuInternal->fieldMoves[i]);
+        }
+    }
+    // Otherwise, add the option for opening the new submenu
+    else {
+        AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_USE_MOVE);
     }
 
     if (!InBattlePike())
@@ -3273,6 +3302,18 @@ static void CursorCb_Item(u8 taskId)
     SetPartyMonSelectionActions(gPlayerParty, gPartyMenu.slotId, ACTIONS_ITEM);
     DisplaySelectionWindow(SELECTWINDOW_ITEM);
     DisplayPartyMenuStdMessage(PARTY_MSG_DO_WHAT_WITH_ITEM);
+    gTasks[taskId].data[0] = 0xFF;
+    gTasks[taskId].func = Task_HandleSelectionMenuInput;
+}
+
+static void CursorCb_UseAMove(u8 taskId)
+{
+    PlaySE(SE_SELECT);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    SetPartyMonSelectionActions(gPlayerParty, gPartyMenu.slotId, ACTIONS_USE_MOVE);
+    DisplaySelectionWindow(SELECTWINDOW_USE_A_MOVE);
+    DisplayPartyMenuStdMessage(PARTY_MSG_CHOOSE_A_MOVE_TO_USE);
     gTasks[taskId].data[0] = 0xFF;
     gTasks[taskId].func = Task_HandleSelectionMenuInput;
 }

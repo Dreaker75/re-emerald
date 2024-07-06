@@ -515,6 +515,17 @@ static const struct WindowTemplate sMailReadTakeWindowTemplate =
     .baseBlock = 0x39D,
 };
 
+static const struct WindowTemplate sChooseAMoveWindowTemplate =
+{
+    .bg = 2,
+    .tilemapLeft = 1,
+    .tilemapTop = 17,
+    .width = 15,
+    .height = 2,
+    .paletteNum = 15,
+    .baseBlock = 0x24F,
+};
+
 static const struct WindowTemplate sMoveSelectWindowTemplate =
 {
     .bg = 2,
@@ -642,6 +653,7 @@ static const u8 *const sActionStringTable[] =
     [PARTY_MSG_ALREADY_SURFING]        = gText_AlreadySurfing,
     [PARTY_MSG_CURRENT_TOO_FAST]       = gText_CurrentIsTooFast,
     [PARTY_MSG_ENJOY_CYCLING]          = gText_EnjoyCycling,
+    [PARTY_MSG_CHOOSE_A_MOVE_TO_USE]   = gText_ChooseMoveToUse,
     [PARTY_MSG_ALREADY_IN_USE]         = gText_InUseAlready_PM,
     [PARTY_MSG_CANT_USE_HERE]          = gText_CantUseHere,
     [PARTY_MSG_NO_MON_FOR_BATTLE]      = gText_NoPokemonForBattle,
@@ -695,6 +707,7 @@ struct
     [MENU_SUMMARY] = {gText_Summary5, CursorCb_Summary},
     [MENU_SWITCH] = {gText_Switch2, CursorCb_Switch},
     [MENU_CANCEL1] = {gText_Cancel2, CursorCb_Cancel1},
+    [MENU_USE_MOVE] = {gText_UseMove, CursorCb_UseAMove},
     [MENU_ITEM] = {gText_Item, CursorCb_Item},
     [MENU_GIVE] = {gMenuText_Give, CursorCb_Give},
     [MENU_TAKE_ITEM] = {gText_Take, CursorCb_TakeItem},
@@ -798,6 +811,20 @@ static const u16 sFieldMoves[FIELD_MOVES_COUNT + 1] =
     // NOTE: This value is used as the terminal value for the table. There's no reason to do this, as the size of the table is known.
     //       Whichever move shares this value (MOVE_SWORDS_DANCE by default) if present will be treated as the end of the array rather than a field move.
     [FIELD_MOVES_COUNT]       = FIELD_MOVES_COUNT
+};
+
+// ADDED: List of field moves that have to be used from the menu. Added to simplify code.
+// - Cut is here because of the grass cutting effect
+// - Flash is here because it's needed for one for the Regis' puzzles
+static const u16 sMenuExclusiveFieldMoves[] = {
+    FIELD_MOVE_CUT,
+    FIELD_MOVE_FLASH,
+    FIELD_MOVE_FLY,
+    FIELD_MOVE_TELEPORT,
+    FIELD_MOVE_DIG,
+    FIELD_MOVE_MILK_DRINK,
+    FIELD_MOVE_SOFT_BOILED,
+    FIELD_MOVE_SWEET_SCENT,
 };
 
 struct

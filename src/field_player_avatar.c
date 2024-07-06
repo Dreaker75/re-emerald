@@ -1285,7 +1285,7 @@ bool8 PartyHasMonWithSurf(void)
         {
             if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE)
                 break;
-            if (MonKnowsMove(&gPlayerParty[i], MOVE_SURF))
+            if (CanLearnTeachableMove(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES), MOVE_SURF))
                 return TRUE;
         }
     }
@@ -1731,19 +1731,8 @@ static bool8 Fishing_Init(struct Task *task)
 static bool8 Fishing_GetRodOut(struct Task *task)
 {
     struct ObjectEvent *playerObjEvent;
-    // const s16 minRounds1[] = {
-    //     [OLD_ROD]   = 1,
-    //     [GOOD_ROD]  = 1,
-    //     [SUPER_ROD] = 1
-    // };
-    // const s16 minRounds2[] = {
-    //     [OLD_ROD]   = 1,
-    //     [GOOD_ROD]  = 3,
-    //     [SUPER_ROD] = 6
-    // };
 
     task->tRoundsPlayed = 0;
-    // task->tMinRoundsRequired = minRounds1[task->tFishingRod] + (Random() % minRounds2[task->tFishingRod]);
     task->tMinRoundsRequired = 0;
     task->tPlayerGfxId = gObjectEvents[gPlayerAvatar.objectEventId].graphicsId;
     playerObjEvent = &gObjectEvents[gPlayerAvatar.objectEventId];
@@ -1767,20 +1756,11 @@ static bool8 Fishing_WaitBeforeDots(struct Task *task)
 
 static bool8 Fishing_InitDots(struct Task *task)
 {
-    u32 randVal;
-
     LoadMessageBoxAndFrameGfx(0, TRUE);
     task->tStep++;
     task->tFrameCounter = 0;
     task->tNumDots = 0;
-    // randVal = Random();
-    // randVal %= 10;
-    // task->tDotsRequired = randVal + 1;
     task->tDotsRequired = 3;
-    // if (task->tRoundsPlayed == 0)
-    //     task->tDotsRequired = randVal + 4;
-    // if (task->tDotsRequired >= 10)
-    //     task->tDotsRequired = 10;
     return TRUE;
 }
 
@@ -1790,25 +1770,12 @@ static bool8 Fishing_ShowDots(struct Task *task)
 
     AlignFishingAnimationFrames();
     task->tFrameCounter++;
-    // if (JOY_NEW(A_BUTTON))
-    // {
-    //     task->tStep = FISHING_NO_BITE;
-    //     if (task->tRoundsPlayed != 0)
-    //         task->tStep = FISHING_GOT_AWAY;
-    //     return TRUE;
-    // }
-    // else
-    // {
     if (task->tFrameCounter >= 20)
     {
         task->tFrameCounter = 0;
         if (task->tNumDots >= task->tDotsRequired)
         {
             task->tStep = FISHING_ON_HOOK;
-            // task->tStep++;
-            // if (task->tRoundsPlayed != 0)
-            //     task->tStep++;
-            // task->tRoundsPlayed++;
         }
         else
         {
@@ -1817,16 +1784,12 @@ static bool8 Fishing_ShowDots(struct Task *task)
         }
     }
     return FALSE;
-    // }
 }
 
 static bool8 Fishing_CheckForBite(struct Task *task)
 {
-    // bool8 bite;
-
     AlignFishingAnimationFrames();
     task->tStep++;
-    // bite = FALSE;
 
     if (!DoesCurrentMapHaveFishingMons())
     {
@@ -1834,25 +1797,6 @@ static bool8 Fishing_CheckForBite(struct Task *task)
     }
     else
     {
-        // if (!GetMonData(&gPlayerParty[0], MON_DATA_SANITY_IS_EGG))
-        // {
-        //     u16 ability = GetMonAbility(&gPlayerParty[0]);
-        //     if (ability == ABILITY_SUCTION_CUPS || ability  == ABILITY_STICKY_HOLD)
-        //     {
-        //         if (Random() % 100 > 14)
-        //             bite = TRUE;
-        //     }
-        // }
-
-        // if (!bite)
-        // {
-        //     if (Random() & 1)
-        //         task->tStep = FISHING_NO_BITE;
-        //     else
-        //         bite = TRUE;
-        // }
-
-        // if (bite == TRUE)
         StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], GetFishingBiteDirectionAnimNum(GetPlayerFacingDirection()));
     }
     return TRUE;
@@ -1870,17 +1814,7 @@ static bool8 Fishing_GotBite(struct Task *task)
 // We have a bite. Now, wait for the player to press A, or the timer to expire.
 static bool8 Fishing_WaitForA(struct Task *task)
 {
-    // const s16 reelTimeouts[3] = {
-    //     [OLD_ROD]   = 36,
-    //     [GOOD_ROD]  = 33,
-    //     [SUPER_ROD] = 30
-    // };
-
     AlignFishingAnimationFrames();
-    // task->tFrameCounter++;
-    // if (task->tFrameCounter >= reelTimeouts[task->tFishingRod])
-    //     task->tStep = FISHING_GOT_AWAY;
-    // else if (JOY_NEW(A_BUTTON))
     if (JOY_NEW(A_BUTTON))
         task->tStep++;
     return FALSE;

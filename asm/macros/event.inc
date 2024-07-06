@@ -1813,6 +1813,17 @@
 	_dynmultichoice \left, \top, \ignoreBPress, \maxBeforeScroll, \shouldSort, \initialSelected, \callbacks, NULL
 	.endm
 
+@ CUSTOM MACROS
+
+	@ Used so field moves like HMs work even without the Pokemon knowing the move, as long as the species can learn it. 
+	@ Checks if at least one Pokemon in the player's party can learn the specified move. If so, VAR_RESULT is set to the
+	@ (zero-indexed) slot number of the first Pokemon that can learn the move. If not, VAR_RESULT is set to PARTY_SIZE.
+	@ VAR_0x8004 is also set to this Pokemon's species.
+	.macro checkpartylearnablemove move:req
+	.byte 0xe5
+	.2byte \move
+	.endm
+
 
 @ Supplementary
 
