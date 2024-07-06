@@ -184,6 +184,14 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
     if (input->pressedAButton && TryStartInteractionScript(&position, metatileBehavior, playerDirection) == TRUE)
         return TRUE;
 
+    // ADDED: Checks if the player is trying to climb a Waterfall by pressing Up rather than interacting it with
+    if (MetatileBehavior_IsWaterfall(metatileBehavior) == TRUE && FlagGet(FLAG_BADGE08_GET) == TRUE && IsPlayerSurfingNorth() == TRUE &&
+        input->heldDirection2 && input->dpadDirection == DIR_NORTH){
+        // Calls the Waterfall event directly
+        ScriptContext_SetupScript(EventScript_UseWaterfall);
+        return TRUE;
+    }
+
     if (input->heldDirection2 && input->dpadDirection == playerDirection)
     {
         if (TryDoorWarp(&position, metatileBehavior, playerDirection) == TRUE)
