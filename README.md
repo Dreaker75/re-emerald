@@ -13,14 +13,50 @@
     - Unevolved Pokemon that evolve through level now get bonus experience if they're past their level requirement.
     - All EVs now cap at 252, rather than 255, and the stats are recalculated after every battle, even at level 100.
     - All non-berry items are restored after battle.
+
+## Pokemon location changes:
+ - Table slots and slot % have been tweaked all around (The lowest change a Pokemon will have to appear is now 5%, although usually they're 10% or higher)
+ - All RS exclusive Pokemon have been re-added to the wild in their respective locations and the encounters in those places have been tweaked accordingly
+ - A focus has been put on Emerald being the "shared version" and now, all previous RS version exclusives will have the same chance to appear in their respective location (ex. Lotad and Seedot, Zangoose and Seviper, etc)
+ - Non-Hoenn mons have been added to many post-game areas, although only a few have been added at the moment. Some examples include Diglett in Desert Underpass or Unown in Altering Cave
+ - All the changes implemented can be found on the [wild encounters](https://github.com/Dreaker75/re-emerald/blob/main/src/data/wild_encounters.json) file
+
+## Mechanics changes:
+ - The fishing minigame has been removed for all Rods and using one will now always land a Pokemon
+ - Move tutors are no longer a one-time use
+ - TMs are now infinite use, and their locations have been changed to accomodate for this change:
+    - The TMs in the pickup table have been replaced by other items: TM44 Rest -> Upgrade, TM01 FocusPunch -> Brightpowder, TM26 Earthquake -> Sacred Ash
+    - All the Trainer Hill TMs have been removed and the rewards have been overhauled (more below)
+    - All TMs in the Game Corner have been replaced by type-held items: Silk Scarf, Charcoal, Mystic Water and Miracle Seed
     
-## Custom changes:
+## Field move changes:
  - Rock Smash rocks will either trigger a wild Pokemon battle, or they won't (No more random chance to trigger an encounter. If a rock doesn't give you an encounter, it never will)
  - Rock Smash rocks that block the path to certain areas or items will never respawn
+ - Cut trees will stay cut even after reloading the map
+ - HMs and field moves can be used by any Pokemon that can learn them, regardless of whether they currently know it (Badges are still needed for HMs)
+ - Field moves show less messages when used
+ - Waterfall is now automatically used when you try to scale a Waterfall (No more having to stand in front of it and press A)
+ - Flash has been revamped in a few ways
+    - Using Flash in a cave will now light up the entire room
+    - The speed of the Flash raidus expanding has been increased to triple its speed to accomodate for the change
+    - Flash will now reduce the encounter chance of wild Pokemon on areas where it has been used by a whooping 1/5
+    - A message is displayed the first time you enter a dark cave in each area asking if you want to use Flash
+
+## Facilities changes:
+ - Though the Contests themselves remain entirely untouched, a few of the mechanics surrounding them have been changed:
+    - Pokemon can now continue eating PokeBlocks after reaching max Sheen, allowing to easily reach max stats on all five contest stats like ORAS
+    - Beating a Contest Rank now unlocks the next tier for all Pokemon, much like ORAS
+    - Winning a Contest will also award the Ribbons for the lower ranks, and an amount Luxury Balls depending on the Rank won (The Luxury Balls are awarded regardless of whether the Pokemon got a Ribbon for that Rank)
+ - The Trainer Hill now gives more battle-related items and does not require beating the mode in under a certain time to get them. 
 
 ## Map changes:
  - Added a Rock Smash and a Strength Boulder to Route 115 that allows for easier backtracking to Meteor Falls
  - Moved the Sudowoodo in the Battle Frontier 1 tile up so it doesn't block the way to Artisan Cave. This is to deal with the fact that it can now respawn every day
+
+## Other changes:
+ - Defeating the Elite Four now resets a few daily events like gifts and the Lillycove lottery
+ - All static Pokemon will now respawn the following day if they were defeated (This is also affected by defeating the Elite Four)
+ - Sudowoodo will also respawn if it has been captured, allowing for multiples to be caught in a single file.
 
 ============================================================================================
 

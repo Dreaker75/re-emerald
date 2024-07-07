@@ -131,8 +131,6 @@ static void UpdateSelection(bool8);
 static void CloseUsePokeblockMenu(void);
 static void AskUsePokeblock(void);
 static s8 HandleAskUsePokeblockInput(void);
-static bool8 IsSheenMaxed(void);
-static void PrintWontEatAnymore(void);
 static void FeedPokeblockToMon(void);
 static void EraseMenuWindow(void);
 static u8 GetPartyIdFromSelectionId(u8);
@@ -665,15 +663,7 @@ static void UsePokeblockMenu(void)
             sInfo->mainState = STATE_HANDLE_INPUT;
             break;
         case 0: // YES
-            // if (IsSheenMaxed())
-            // {
-            //     PrintWontEatAnymore();
-            //     sInfo->mainState = STATE_WAIT_MSG;
-            // }
-            // else
-            // {
             SetUsePokeblockCallback(FeedPokeblockToMon);
-            // }
             break;
         }
         break;
@@ -945,15 +935,6 @@ static bool8 TryPrintNextEnhancement(void)
     return TRUE;
 }
 
-static void PrintWontEatAnymore(void)
-{
-    FillWindowPixelBuffer(WIN_TEXT, 17);
-    DrawTextBorderOuter(WIN_TEXT, 151, 14);
-    AddTextPrinterParameterized(WIN_TEXT, FONT_NORMAL, gText_WontEatAnymore, 0, 1, 0, NULL);
-    PutWindowTilemap(WIN_TEXT);
-    CopyWindowToVram(WIN_TEXT, COPYWIN_FULL);
-}
-
 static void EraseMenuWindow(void)
 {
     rbox_fill_rectangle(WIN_TEXT);
@@ -1065,17 +1046,6 @@ static void CalculatePokeblockEffectiveness(struct Pokeblock *pokeblock, struct 
         if (flavor == direction)
             sInfo->pokeblockStatBoosts[i] += boost * flavor;
     }
-}
-
-static bool8 IsSheenMaxed(void)
-{
-    if (GetBoxOrPartyMonData(sMenu->party[sMenu->info.curSelection].boxId,
-                             sMenu->party[sMenu->info.curSelection].monId,
-                             MON_DATA_SHEEN,
-                             NULL) == MAX_SHEEN)
-        return TRUE;
-    else
-        return FALSE;
 }
 
 static u8 GetPartyIdFromSelectionId(u8 selectionId)
