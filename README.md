@@ -28,6 +28,7 @@
     - The TMs in the pickup table have been replaced by other items: TM44 Rest -> Upgrade, TM01 FocusPunch -> Brightpowder, TM26 Earthquake -> Sacred Ash
     - All the Trainer Hill TMs have been removed and the rewards have been overhauled (more below)
     - All TMs in the Game Corner have been replaced by type-held items: Silk Scarf, Charcoal, Mystic Water and Miracle Seed
+ - PokeRus no longer stops being contagius after a few days have passed
     
 ## Field move changes:
  - Rock Smash rocks will either trigger a wild Pokemon battle, or they won't (No more random chance to trigger an encounter. If a rock doesn't give you an encounter, it never will)
@@ -58,6 +59,8 @@
  - All static Pokemon will now respawn the following day if they were defeated (This is also affected by defeating the Elite Four)
  - Sudowoodo will also respawn if it has been captured, allowing for multiples to be caught in a single file.
 
+# Future changes
+ - To see the future changes planned for this romhack, check out [ToDoList.md](https://github.com/Dreaker75/re-emerald/blob/main/FUTURE_PLANS.md)
 ============================================================================================
 
 # pokeemerald-expansion
