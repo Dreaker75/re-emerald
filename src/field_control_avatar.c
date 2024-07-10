@@ -34,6 +34,7 @@
 #include "constants/event_objects.h"
 #include "constants/field_poison.h"
 #include "constants/map_types.h"
+#include "constants/metatile_behaviors.h"
 #include "constants/moves.h"
 #include "constants/songs.h"
 #include "constants/trainer_hill.h"
@@ -972,6 +973,11 @@ static const u8 *GetCoordEventScriptAtPosition(struct MapHeader *mapHeader, u16 
         {
             if (coordEvents[i].elevation == elevation || coordEvents[i].elevation == 0)
             {
+                // MB_STRENGTH_LAST_POSITION events should only be triggered by pushing a boulder on top
+                if (MapGridGetMetatileBehaviorAt(x + MAP_OFFSET, y + MAP_OFFSET) == MB_STRENGTH_LAST_POSITION){
+                    return NULL;
+                }
+
                 const u8 *script = TryRunCoordEventScript(&coordEvents[i]);
                 if (script != NULL)
                     return script;
@@ -1067,4 +1073,24 @@ int SetCableClubWarp(void)
     MapGridGetMetatileBehaviorAt(position.x, position.y);  //unnecessary
     SetupWarp(&gMapHeader, GetWarpEventAtMapPosition(&gMapHeader, &position), &position);
     return 0;
+}
+
+void HandleBoulderFinalPosition(u16 x, u16 y)
+{
+    int i;
+    const struct CoordEvent * events = gMapHeader.events->coordEvents;
+    int n = gMapHeader.events->coordEventCount;
+
+    if (MapGridGetMetatileBehaviorAt(x, y) == MB_STRENGTH_LAST_POSITION)
+    {
+        for (i = 0; i < n; i++)
+        {
+            if (events[i].x + MAP_OFFSET == x && events[i].y + MAP_OFFSET == y)
+            {
+                PlaySE(SE_RG_CARD_OPEN);
+                ScriptContext_SetupScript(events[i].script);
+                LockPlayerFieldControls();
+            }
+        }
+    }
 }

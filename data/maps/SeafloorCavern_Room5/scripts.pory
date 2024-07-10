@@ -1,5 +1,94 @@
-raw `
-SeafloorCavern_Room5_MapScripts::
-	.byte 0
+const BOULDER_1 = 1
+const BOULDER_2 = 2
+const BOULDER_3 = 6
+const BOULDER_4 = 3
 
-`
+const BOULDER_1_X = 3
+const BOULDER_2_X = 4
+const BOULDER_3_X = 12
+const BOULDER_4_X = 13
+
+const BOULDER_1_Y = 10
+const BOULDER_2_Y = 13
+const BOULDER_3_Y = 9
+const BOULDER_4_Y = 7
+
+mapscripts SeafloorCavern_Room5_MapScripts {
+	MAP_SCRIPT_ON_TRANSITION: SeafloorCavern_Room5_OnTransition
+}
+
+script SeafloorCavern_Room5_OnTransition {
+	call(SeafloorCavern_Room5_EventScript_SetBoulderPositions)
+}
+
+script SeafloorCavern_Room5_EventScript_SetBoulderPositions {
+	if (flag(FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_1)){
+		setobjectxyperm(BOULDER_1, BOULDER_1_X, BOULDER_1_Y)
+	}
+	if (flag(FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_2)){
+		setobjectxyperm(BOULDER_2, BOULDER_2_X, BOULDER_2_Y)
+	}
+	if (flag(FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_3)){
+		setobjectxyperm(BOULDER_3, BOULDER_3_X, BOULDER_3_Y)
+	}
+	if (flag(FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_4)){
+		setobjectxyperm(BOULDER_4, BOULDER_4_X, BOULDER_4_Y)
+	}
+}
+
+script SeafloorCavern_Room5_EventScript_BoulderTrigger1 {
+	isobjectincoordinate(BOULDER_1, BOULDER_1_X, BOULDER_1_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_1)
+		call(SeafloorCavern_Room5_EventScript_UpdateBoulders)
+	}
+}
+
+script SeafloorCavern_Room5_EventScript_BoulderTrigger2 {
+	isobjectincoordinate(BOULDER_2, BOULDER_2_X, BOULDER_2_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_2)
+		call(SeafloorCavern_Room5_EventScript_UpdateBoulders)
+	}
+}
+
+script SeafloorCavern_Room5_EventScript_BoulderTrigger3 {
+	isobjectincoordinate(BOULDER_3, BOULDER_3_X, BOULDER_3_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_3)
+		call(SeafloorCavern_Room5_EventScript_UpdateBoulders)
+	}
+}
+
+script SeafloorCavern_Room5_EventScript_BoulderTrigger4 {
+	isobjectincoordinate(BOULDER_4, BOULDER_4_X, BOULDER_4_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_4)
+		call(SeafloorCavern_Room5_EventScript_UpdateBoulders)
+	}
+}
+
+script SeafloorCavern_Room5_EventScript_UpdateBoulders {
+	setvar(VAR_0x8000, 0)
+
+	if (flag(FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_1)){
+		setobjectxyperm(BOULDER_1, BOULDER_1_X, BOULDER_1_Y)
+		addvar(VAR_0x8000, 1)
+	}
+	if (flag(FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_2)){
+		setobjectxyperm(BOULDER_2, BOULDER_2_X, BOULDER_2_Y)
+		addvar(VAR_0x8000, 1)
+	}
+	if (flag(FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_3)){
+		setobjectxyperm(BOULDER_3, BOULDER_3_X, BOULDER_3_Y)
+		addvar(VAR_0x8000, 1)
+	}
+	if (flag(FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_4)){
+		setobjectxyperm(BOULDER_4, BOULDER_4_X, BOULDER_4_Y)
+		addvar(VAR_0x8000, 1)
+	}
+
+	if(var(VAR_0x8000) == 4){
+		addvar(VAR_SEAFLOORCAVERN_ROOM5_BOULDERS_STATE, 1)
+	}
+}

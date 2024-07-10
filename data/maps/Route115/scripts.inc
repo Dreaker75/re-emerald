@@ -13,6 +13,7 @@ Route115_OnTransition:
 	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_HideMapNamePopup
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_115_WEST, AbnormalWeather_StartGroudonWeather
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_115_EAST, AbnormalWeather_StartGroudonWeather
+	call Route115_EventScript_SetBoulderPositions
 	end
 
 Route115_OnFrame:
@@ -142,3 +143,25 @@ Route115_Text_RouteSignRustboro:
 Route115_Text_MeteorFallsSign:
 	.string "METEOR FALLS\n"
 	.string "FALLARBOR TOWN THROUGH HERE$"
+
+Route115_EventScript_SetBoulderPositions::
+	goto_if_set FLAG_MOVE_ROUTE115_BOULDER, Route115_EventScript_SetBoulderPositions_1
+	return
+
+Route115_EventScript_SetBoulderPositions_1:
+	setobjectxyperm 25, 23, 68
+	return
+
+
+Route115_EventScript_BoulderTrigger::
+	isobjectincoordinate 25, 23, 68
+	compare VAR_RESULT, TRUE
+	goto_if_eq Route115_EventScript_BoulderTrigger_1
+	return
+
+Route115_EventScript_BoulderTrigger_1:
+	setflag FLAG_MOVE_ROUTE115_BOULDER
+	setobjectxyperm 25, 23, 68
+	addvar VAR_ROUTE115_BOULDERS_STATE, 1
+	return
+

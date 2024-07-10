@@ -14,6 +14,7 @@ Route115_OnTransition:
 	call_if_eq VAR_SHOULD_END_ABNORMAL_WEATHER, 1, AbnormalWeather_EventScript_HideMapNamePopup
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_115_WEST, AbnormalWeather_StartGroudonWeather
 	call_if_eq VAR_ABNORMAL_WEATHER_LOCATION, ABNORMAL_WEATHER_ROUTE_115_EAST, AbnormalWeather_StartGroudonWeather
+	call Route115_EventScript_SetBoulderPositions
 	end
 
 Route115_OnFrame:
@@ -145,3 +146,24 @@ Route115_Text_MeteorFallsSign:
 	.string "FALLARBOR TOWN THROUGH HERE$"
 
 `
+
+const BOULDER = 25
+
+const BOULDER_X = 23
+
+const BOULDER_Y = 68
+
+script Route115_EventScript_SetBoulderPositions {
+	if (flag(FLAG_MOVE_ROUTE115_BOULDER)){
+		setobjectxyperm(BOULDER, BOULDER_X, BOULDER_Y)
+	}
+}
+
+script Route115_EventScript_BoulderTrigger {
+	isobjectincoordinate(BOULDER, BOULDER_X, BOULDER_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_ROUTE115_BOULDER)
+		setobjectxyperm(BOULDER, BOULDER_X, BOULDER_Y)
+		addvar(VAR_ROUTE115_BOULDERS_STATE, 1)
+	}
+}

@@ -6,6 +6,7 @@
 #include "field_camera.h"
 #include "field_effect.h"
 #include "field_effect_helpers.h"
+#include "field_control_avatar.h"
 #include "field_player_avatar.h"
 #include "fieldmap.h"
 #include "menu.h"
@@ -1509,6 +1510,7 @@ static bool8 PushBoulder_End(struct Task *task, struct ObjectEvent *player, stru
     {
         ObjectEventClearHeldMovementIfFinished(player);
         ObjectEventClearHeldMovementIfFinished(boulder);
+        HandleBoulderFinalPosition(boulder->currentCoords.x, boulder->currentCoords.y);
         gPlayerAvatar.preventStep = FALSE;
         UnlockPlayerFieldControls();
         DestroyTask(FindTaskIdByFunc(Task_PushBoulder));

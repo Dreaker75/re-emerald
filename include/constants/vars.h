@@ -125,30 +125,30 @@
 #define VAR_ROUTE110_STATE                               0x4069
 #define VAR_ROUTE111_STATE                               0x406A // Unused Var
 #define VAR_ROUTE112_STATE                               0x406B // Unused Var
-#define VAR_ROUTE113_STATE                               0x406C // Unused Var
-#define VAR_ROUTE114_STATE                               0x406D // Unused Var
-#define VAR_ROUTE115_STATE                               0x406E // Unused Var
-#define VAR_ROUTE116_STATE                               0x406F
-#define VAR_ROUTE117_STATE                               0x4070 // Unused Var
-#define VAR_ROUTE118_STATE                               0x4071
-#define VAR_ROUTE119_STATE                               0x4072
-#define VAR_ROUTE120_STATE                               0x4073 // Unused Var
-#define VAR_ROUTE121_STATE                               0x4074
-#define VAR_ROUTE122_STATE                               0x4075 // Unused Var
-#define VAR_ROUTE123_STATE                               0x4076 // Unused Var
-#define VAR_ROUTE124_STATE                               0x4077 // Unused Var
-#define VAR_ROUTE125_STATE                               0x4078 // Unused Var
-#define VAR_ROUTE126_STATE                               0x4079 // Unused Var
-#define VAR_ROUTE127_STATE                               0x407A // Unused Var
-#define VAR_ROUTE128_STATE                               0x407B
-#define VAR_ROUTE129_STATE                               0x407C // Unused Var
-#define VAR_ROUTE130_STATE                               0x407D // Unused Var
-#define VAR_ROUTE131_STATE                               0x407E // Unused Var
-#define VAR_ROUTE132_STATE                               0x407F // Unused Var
-#define VAR_ROUTE133_STATE                               0x4080 // Unused Var
-#define VAR_ROUTE134_STATE                               0x4081 // Unused Var
-#define VAR_LITTLEROOT_HOUSES_STATE_MAY                  0x4082
-#define VAR_UNUSED_0x4083                                0x4083 // Unused Var
+#define VAR_ROUTE112_BOULDERS_STATE                      0x406C // CHANGED: Used to know the state of the Strength boulders in Route 112 (0 for not all solved, 1 otherwise)
+#define VAR_ROUTE113_STATE                               0x406D // Unused Var
+#define VAR_ROUTE114_STATE                               0x406E // Unused Var
+#define VAR_ROUTE115_STATE                               0x406F // Unused Var
+#define VAR_ROUTE115_BOULDERS_STATE                      0x4070 // CHANGED: Strength Boulder states on Route 115
+#define VAR_ROUTE116_STATE                               0x4071
+#define VAR_ROUTE117_STATE                               0x4072 // Unused Var
+#define VAR_ROUTE118_STATE                               0x4073
+#define VAR_ROUTE119_STATE                               0x4074
+#define VAR_ROUTE120_STATE                               0x4075 // Unused Var
+#define VAR_ROUTE121_STATE                               0x4076
+#define VAR_ROUTE122_STATE                               0x4077 // Unused Var
+#define VAR_ROUTE128_STATE                               0x4078
+#define VAR_FIERY_PATH_BOULDERS_STATE                    0x4079 // CHANGED: Strength Boulder states on Fiery Path
+#define VAR_SHOALCAVE_LOWTIDELOWERROOM_BOULDERS_STATE    0x407A // CHANGED: Strength Boulder states on Shoal Cave
+#define VAR_MAGMA_HIDEOUT_BOULDERS_STATE                 0x407B // CHANGED: Strength Boulder states on Magma Hideout
+#define VAR_SEAFLOORCAVERN_ROOM1_BOULDERS_STATE          0x407C // CHANGED: Strength Boulder states on Seafloor Cavern
+#define VAR_SEAFLOORCAVERN_ROOM2_BOULDERS_STATE          0x407D // CHANGED: Strength Boulder states on Seafloor Cavern
+#define VAR_SEAFLOORCAVERN_ROOM5_BOULDERS_STATE          0x407E // CHANGED: Strength Boulder states on Seafloor Cavern
+#define VAR_SEAFLOORCAVERN_ROOM8_TRIGGER3_BOULDER        0x407F // CHANGED: State of Boulder Trigger 3 in Seafloor Cavern Room 8 (Can have 2 different boulders as final)
+#define VAR_SEAFLOORCAVERN_ROOM8_TRIGGER4_BOULDER        0x4080 // CHANGED: State of Boulder Trigger 4 in Seafloor Cavern Room 8 (Can have 2 different boulders as final)
+#define VAR_SEAFLOORCAVERN_ROOM8_BOULDERS_STATE          0x4081 // CHANGED: Strength Boulder states on Seafloor Cavern
+#define VAR_VICTORY_ROAD_B1F_BOULDERS_STATE              0x4082 // CHANGED: Strength Boulder states on Victory Road
+#define VAR_LITTLEROOT_HOUSES_STATE_MAY                  0x4083
 #define VAR_BIRCH_LAB_STATE                              0x4084
 #define VAR_PETALBURG_GYM_STATE                          0x4085 // 0-1: Wally tutorial, 2-6: 0-4 badges, 7: Defeated Norman, 8: Rematch Norman
 #define VAR_CONTEST_HALL_STATE                           0x4086

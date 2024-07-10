@@ -4,8 +4,8 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
 ### Important: Keep in mind that everything in this file is subject to change at any point. A feature being here doesn't mean it's guaranteed to happen.
 
 ## Features for Alpha release
- - Strength boulders will remain in their place once the puzzle has been solved
- - Make Fly usable from the PokeNav map
+ - Make Fly usable from the PokeNav map and allow flying to every location, not just towns
+ - Make Teleport work like the old Fly
  - Updated Battle Frontier prizes and BP economy
  - Bag expansion: Make it possible to store at least 1 of each item in the bag, and up to 999 of each item in a single slot
  - Update Battle Tent rewards
@@ -23,7 +23,10 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Remove the catching and PokeNave tutorial
  - Change the Bullet Seed TM NPC (And Roxanne's) dialogue to account for TMs being reusable now
  - Change the Cut HM NPC dialogue to account for HMs being forgettable normally now and being unnecessary to use the move (Still debating whether to make having the HMs required to be able to use the move outside of battle)
+ - Change the Flash HM NPC dialoge to mention the new flash range and the reduced encounters
  - Change the dialogue from the Fallarbor NPC that's digging a hole to mention the Diglett
+ - Make Petalburg Gym's doors work as normal doors
+ - Change the PC options to lis MOVE POKEMON and MOVE ITEMS above WITHDRAW and DEPOSIT POKEMON
 
 ## Features for Beta release
  - Updated trades: Make all current trades in the game more useful and add new ones for non-Hoenn Pokemon
@@ -41,6 +44,8 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Add stuff to Scorched Slab to make it more interesting (could add a whole new dungeon like ORAS)
  - Add stuff to Slateport Museum to make it useful to visit after Team Aqua has been defeated
  - Add a prize for beating the Cycling Road record the first time, and a lesser prize for every time it's beaten afterwards
+ - Add trainers and other things to Seafloor Cavern post-game, kind of like Mt. Chimney after the Team Aqua vs Team Magma face off
+ - Increase the amount of BP given by Scott for finding him throughout the game
  
 ## Features for Base Version release
  - Roaming mechanic Revamp to make it less tedious
@@ -62,9 +67,9 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
 
 ## Backlog
 Features here are things I'd like to add once everything else above has been implemented. Still debating whether to make these part of the base Re:Emerald or do it under a new name, as these are features that will significantly change the base of Pokemon Emerald.
- - Add the Fame Checker into the game
  - Add an ItemDex to track all the items obtained
  - Add an AttackDex to track all the attacks seen and used
  - Add a Pokemon Chaining mechanic to make it easier to find Pokemon with higher stats or Shinies. It will work differently than the DexNave
  - Add an AreaDex that will show everything available in an area, from Pokemon and Items to trades and gift the player has not yet received
  - Add Achievements that will be akin to B2W2 Medals
+ - Add the Fame Checker into the game

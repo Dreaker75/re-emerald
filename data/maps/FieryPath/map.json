@@ -136,7 +136,60 @@
     }
   ],
   "coord_events": [
-
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 15,
+      "elevation": 3,
+      "var": "VAR_FIERY_PATH_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "FieryPath_EventScript_BoulderTrigger1"
+    },
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 14,
+      "elevation": 3,
+      "var": "VAR_FIERY_PATH_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "FieryPath_EventScript_BoulderTrigger2"
+    },
+    {
+      "type": "trigger",
+      "x": 12,
+      "y": 11,
+      "elevation": 3,
+      "var": "VAR_FIERY_PATH_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "FieryPath_EventScript_BoulderTrigger3"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 22,
+      "elevation": 3,
+      "var": "VAR_FIERY_PATH_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "FieryPath_EventScript_BoulderTrigger4"
+    },
+    {
+      "type": "trigger",
+      "x": 7,
+      "y": 23,
+      "elevation": 3,
+      "var": "VAR_FIERY_PATH_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "FieryPath_EventScript_BoulderTrigger5"
+    },
+    {
+      "type": "trigger",
+      "x": 5,
+      "y": 21,
+      "elevation": 3,
+      "var": "VAR_FIERY_PATH_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "FieryPath_EventScript_BoulderTrigger6"
+    }
   ],
   "bg_events": [
 

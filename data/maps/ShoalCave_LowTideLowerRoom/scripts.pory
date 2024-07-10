@@ -1,6 +1,7 @@
 raw `
 ShoalCave_LowTideLowerRoom_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, ShoalCave_LowTideLowerRoom_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, ShoalCave_LowTideLowerRoom_OnTransition
 	.byte 0
 
 ShoalCave_LowTideLowerRoom_OnLoad:
@@ -58,3 +59,25 @@ ShoalCave_LowTideLowerRoom_Text_EverythingStartsWithFocus:
 	.string "Everything starts with focus!$"
 
 `
+
+const BOULDER = 1
+const BOULDER_X = 28
+const BOULDER_Y = 3
+
+script ShoalCave_LowTideLowerRoom_OnTransition {
+	call(ShoalCave_LowTideLowerRoom_EventScript_SetBoulderPositions)
+}
+
+script ShoalCave_LowTideLowerRoom_EventScript_SetBoulderPositions {
+	if (var(VAR_SHOALCAVE_LOWTIDELOWERROOM_BOULDERS_STATE) == 1){
+		setobjectxyperm(BOULDER, BOULDER_X, BOULDER_Y)
+	}
+}
+
+script ShoalCave_LowTideLowerRoom_EventScript_BoulderTrigger {
+	isobjectincoordinate(BOULDER, BOULDER_X, BOULDER_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setobjectxyperm(BOULDER, BOULDER_X, BOULDER_Y)
+		addvar(VAR_SHOALCAVE_LOWTIDELOWERROOM_BOULDERS_STATE, 1)
+	}
+}

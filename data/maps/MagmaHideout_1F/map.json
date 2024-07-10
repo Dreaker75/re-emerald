@@ -124,7 +124,33 @@
     }
   ],
   "coord_events": [
-
+    {
+      "type": "trigger",
+      "x": 4,
+      "y": 22,
+      "elevation": 3,
+      "var": "VAR_MAGMA_HIDEOUT_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "MagmaHideout_1F_EventScript_BoulderTrigger1"
+    },
+    {
+      "type": "trigger",
+      "x": 10,
+      "y": 22,
+      "elevation": 3,
+      "var": "VAR_MAGMA_HIDEOUT_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "MagmaHideout_1F_EventScript_BoulderTrigger2"
+    },
+    {
+      "type": "trigger",
+      "x": 4,
+      "y": 23,
+      "elevation": 3,
+      "var": "VAR_MAGMA_HIDEOUT_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "MagmaHideout_1F_EventScript_BoulderTrigger3"
+    }
   ],
   "bg_events": [
 

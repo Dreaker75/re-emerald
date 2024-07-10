@@ -5,6 +5,7 @@ MagmaHideout_1F_MapScripts::
 
 MagmaHideout_1F_OnTransition:
 	setvar VAR_JAGGED_PASS_ASH_WEATHER, 0
+	call MagmaHideout_1F_EventScript_SetBoulderPositions
 	end
 
 MagmaHideout_1F_EventScript_Grunt1::
@@ -53,3 +54,70 @@ MagmaHideout_1F_Text_Grunt2PostBattle:
 	.string "to the end, don't you think?$"
 
 `
+
+const BOULDER_1 = 4
+const BOULDER_2 = 5
+const BOULDER_3 = 6
+const BOULDER_1_X = 4
+const BOULDER_2_X = 10
+const BOULDER_3_X = 4
+const BOULDER_1_Y = 22
+const BOULDER_2_Y = 22
+const BOULDER_3_Y = 23
+
+script MagmaHideout_1F_EventScript_SetBoulderPositions {
+	if (flag(FLAG_MOVE_MAGMA_HIDEOUT_BOULDER_1)){
+		setobjectxyperm(BOULDER_1, BOULDER_1_X, BOULDER_1_Y)
+	}
+	if (flag(FLAG_MOVE_MAGMA_HIDEOUT_BOULDER_2)){
+		setobjectxyperm(BOULDER_2, BOULDER_2_X, BOULDER_2_Y)
+	}
+	if (flag(FLAG_MOVE_MAGMA_HIDEOUT_BOULDER_3)){
+		setobjectxyperm(BOULDER_3, BOULDER_3_X, BOULDER_3_Y)
+	}
+}
+
+script MagmaHideout_1F_EventScript_BoulderTrigger1 {
+	isobjectincoordinate(BOULDER_1, BOULDER_1_X, BOULDER_1_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_MAGMA_HIDEOUT_BOULDER_1)
+		call(MagmaHideout_1F_EventScript_UpdateBoulders)
+	}
+}
+
+script MagmaHideout_1F_EventScript_BoulderTrigger2 {
+	isobjectincoordinate(BOULDER_2, BOULDER_2_X, BOULDER_2_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_MAGMA_HIDEOUT_BOULDER_2)
+		call(MagmaHideout_1F_EventScript_UpdateBoulders)
+	}
+}
+
+script MagmaHideout_1F_EventScript_BoulderTrigger3 {
+	isobjectincoordinate(BOULDER_3, BOULDER_3_X, BOULDER_3_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_MAGMA_HIDEOUT_BOULDER_3)
+		call(MagmaHideout_1F_EventScript_UpdateBoulders)
+	}
+}
+
+script MagmaHideout_1F_EventScript_UpdateBoulders {
+	setvar(VAR_0x8000, 0)
+
+	if (flag(FLAG_MOVE_MAGMA_HIDEOUT_BOULDER_1)){
+		setobjectxyperm(BOULDER_1, BOULDER_1_X, BOULDER_1_Y)
+		addvar(VAR_0x8000, 1)
+	}
+	if (flag(FLAG_MOVE_MAGMA_HIDEOUT_BOULDER_2)){
+		setobjectxyperm(BOULDER_2, BOULDER_2_X, BOULDER_2_Y)
+		addvar(VAR_0x8000, 1)
+	}
+	if (flag(FLAG_MOVE_MAGMA_HIDEOUT_BOULDER_3)){
+		setobjectxyperm(BOULDER_3, BOULDER_3_X, BOULDER_3_Y)
+		addvar(VAR_0x8000, 1)
+	}
+
+	if(var(VAR_0x8000) == 3){
+		addvar(VAR_MAGMA_HIDEOUT_BOULDERS_STATE, 1)
+	}
+}

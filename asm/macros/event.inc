@@ -1824,6 +1824,14 @@
 	.2byte \move
 	.endm
 
+	@ Gets the specified (localId) object's position on the current map.
+	.macro isobjectincoordinate localId:req, x:req, y:req
+	.byte 0xe6
+	.2byte \localId
+	.2byte \x
+	.2byte \y
+	.endm
+
 
 @ Supplementary
 

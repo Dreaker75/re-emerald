@@ -150,7 +150,42 @@
     }
   ],
   "coord_events": [
-
+    {
+      "type": "trigger",
+      "x": 4,
+      "y": 2,
+      "elevation": 3,
+      "var": "VAR_SEAFLOORCAVERN_ROOM2_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "SeafloorCavern_Room2_EventScript_BoulderTrigger1"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 10,
+      "elevation": 3,
+      "var": "VAR_SEAFLOORCAVERN_ROOM2_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "SeafloorCavern_Room2_EventScript_BoulderTrigger4"
+    },
+    {
+      "type": "trigger",
+      "x": 3,
+      "y": 7,
+      "elevation": 3,
+      "var": "VAR_SEAFLOORCAVERN_ROOM2_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "SeafloorCavern_Room2_EventScript_BoulderTrigger2"
+    },
+    {
+      "type": "trigger",
+      "x": 11,
+      "y": 7,
+      "elevation": 3,
+      "var": "VAR_SEAFLOORCAVERN_ROOM2_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "SeafloorCavern_Room2_EventScript_BoulderTrigger3"
+    }
   ],
   "bg_events": [
 

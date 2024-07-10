@@ -184,7 +184,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_BERRY_TREE",
       "x": 31,
-      "y": 64,
+      "y": 63,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_BERRY_TREE_GROWTH",
       "movement_range_x": 0,
@@ -197,7 +197,7 @@
     {
       "graphics_id": "OBJ_EVENT_GFX_BERRY_TREE",
       "x": 31,
-      "y": 65,
+      "y": 64,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_BERRY_TREE_GROWTH",
       "movement_range_x": 0,
@@ -375,7 +375,15 @@
     }
   ],
   "coord_events": [
-
+    {
+      "type": "trigger",
+      "x": 23,
+      "y": 68,
+      "elevation": 3,
+      "var": "VAR_ROUTE115_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "Route115_EventScript_BoulderTrigger"
+    }
   ],
   "bg_events": [
     {

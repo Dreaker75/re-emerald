@@ -188,7 +188,78 @@
     }
   ],
   "coord_events": [
-
+    {
+      "type": "trigger",
+      "x": 4,
+      "y": 3,
+      "elevation": 3,
+      "var": "VAR_SEAFLOORCAVERN_ROOM8_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "SeafloorCavern_Room8_EventScript_BoulderTrigger1"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 3,
+      "elevation": 3,
+      "var": "VAR_SEAFLOORCAVERN_ROOM8_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "SeafloorCavern_Room8_EventScript_BoulderTrigger2"
+    },
+    {
+      "type": "trigger",
+      "x": 4,
+      "y": 4,
+      "elevation": 3,
+      "var": "VAR_SEAFLOORCAVERN_ROOM8_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "SeafloorCavern_Room8_EventScript_BoulderTrigger3"
+    },
+    {
+      "type": "trigger",
+      "x": 6,
+      "y": 4,
+      "elevation": 3,
+      "var": "VAR_SEAFLOORCAVERN_ROOM8_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "SeafloorCavern_Room8_EventScript_BoulderTrigger4"
+    },
+    {
+      "type": "trigger",
+      "x": 3,
+      "y": 5,
+      "elevation": 3,
+      "var": "VAR_SEAFLOORCAVERN_ROOM8_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "SeafloorCavern_Room8_EventScript_BoulderTrigger5"
+    },
+    {
+      "type": "trigger",
+      "x": 7,
+      "y": 5,
+      "elevation": 3,
+      "var": "VAR_SEAFLOORCAVERN_ROOM8_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "SeafloorCavern_Room8_EventScript_BoulderTrigger6"
+    },
+    {
+      "type": "trigger",
+      "x": 3,
+      "y": 7,
+      "elevation": 3,
+      "var": "VAR_SEAFLOORCAVERN_ROOM8_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "SeafloorCavern_Room8_EventScript_BoulderTrigger7"
+    },
+    {
+      "type": "trigger",
+      "x": 7,
+      "y": 7,
+      "elevation": 3,
+      "var": "VAR_SEAFLOORCAVERN_ROOM8_BOULDERS_STATE",
+      "var_value": "0",
+      "script": "SeafloorCavern_Room8_EventScript_BoulderTrigger8"
+    }
   ],
   "bg_events": [
 

@@ -1,2 +1,123 @@
 SeafloorCavern_Room5_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, SeafloorCavern_Room5_OnTransition
 	.byte 0
+
+
+SeafloorCavern_Room5_OnTransition::
+	call SeafloorCavern_Room5_EventScript_SetBoulderPositions
+	return
+
+
+SeafloorCavern_Room5_EventScript_SetBoulderPositions::
+	goto_if_set FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_1, SeafloorCavern_Room5_EventScript_SetBoulderPositions_2
+SeafloorCavern_Room5_EventScript_SetBoulderPositions_1:
+	goto_if_set FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_2, SeafloorCavern_Room5_EventScript_SetBoulderPositions_5
+SeafloorCavern_Room5_EventScript_SetBoulderPositions_4:
+	goto_if_set FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_3, SeafloorCavern_Room5_EventScript_SetBoulderPositions_8
+SeafloorCavern_Room5_EventScript_SetBoulderPositions_7:
+	goto_if_set FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_4, SeafloorCavern_Room5_EventScript_SetBoulderPositions_10
+	return
+
+SeafloorCavern_Room5_EventScript_SetBoulderPositions_2:
+	setobjectxyperm 1, 3, 10
+	goto SeafloorCavern_Room5_EventScript_SetBoulderPositions_1
+
+SeafloorCavern_Room5_EventScript_SetBoulderPositions_5:
+	setobjectxyperm 2, 4, 13
+	goto SeafloorCavern_Room5_EventScript_SetBoulderPositions_4
+
+SeafloorCavern_Room5_EventScript_SetBoulderPositions_8:
+	setobjectxyperm 6, 12, 9
+	goto SeafloorCavern_Room5_EventScript_SetBoulderPositions_7
+
+SeafloorCavern_Room5_EventScript_SetBoulderPositions_10:
+	setobjectxyperm 3, 13, 7
+	return
+
+
+SeafloorCavern_Room5_EventScript_BoulderTrigger1::
+	isobjectincoordinate 1, 3, 10
+	compare VAR_RESULT, TRUE
+	goto_if_eq SeafloorCavern_Room5_EventScript_BoulderTrigger1_1
+	return
+
+SeafloorCavern_Room5_EventScript_BoulderTrigger1_1:
+	setflag FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_1
+	call SeafloorCavern_Room5_EventScript_UpdateBoulders
+	return
+
+
+SeafloorCavern_Room5_EventScript_BoulderTrigger2::
+	isobjectincoordinate 2, 4, 13
+	compare VAR_RESULT, TRUE
+	goto_if_eq SeafloorCavern_Room5_EventScript_BoulderTrigger2_1
+	return
+
+SeafloorCavern_Room5_EventScript_BoulderTrigger2_1:
+	setflag FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_2
+	call SeafloorCavern_Room5_EventScript_UpdateBoulders
+	return
+
+
+SeafloorCavern_Room5_EventScript_BoulderTrigger3::
+	isobjectincoordinate 6, 12, 9
+	compare VAR_RESULT, TRUE
+	goto_if_eq SeafloorCavern_Room5_EventScript_BoulderTrigger3_1
+	return
+
+SeafloorCavern_Room5_EventScript_BoulderTrigger3_1:
+	setflag FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_3
+	call SeafloorCavern_Room5_EventScript_UpdateBoulders
+	return
+
+
+SeafloorCavern_Room5_EventScript_BoulderTrigger4::
+	isobjectincoordinate 3, 13, 7
+	compare VAR_RESULT, TRUE
+	goto_if_eq SeafloorCavern_Room5_EventScript_BoulderTrigger4_1
+	return
+
+SeafloorCavern_Room5_EventScript_BoulderTrigger4_1:
+	setflag FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_4
+	call SeafloorCavern_Room5_EventScript_UpdateBoulders
+	return
+
+
+SeafloorCavern_Room5_EventScript_UpdateBoulders::
+	setvar VAR_0x8000, 0
+	goto_if_set FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_1, SeafloorCavern_Room5_EventScript_UpdateBoulders_2
+SeafloorCavern_Room5_EventScript_UpdateBoulders_1:
+	goto_if_set FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_2, SeafloorCavern_Room5_EventScript_UpdateBoulders_5
+SeafloorCavern_Room5_EventScript_UpdateBoulders_4:
+	goto_if_set FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_3, SeafloorCavern_Room5_EventScript_UpdateBoulders_8
+SeafloorCavern_Room5_EventScript_UpdateBoulders_7:
+	goto_if_set FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_4, SeafloorCavern_Room5_EventScript_UpdateBoulders_11
+SeafloorCavern_Room5_EventScript_UpdateBoulders_10:
+	compare VAR_0x8000, 4
+	goto_if_eq SeafloorCavern_Room5_EventScript_UpdateBoulders_13
+	return
+
+SeafloorCavern_Room5_EventScript_UpdateBoulders_2:
+	setobjectxyperm 1, 3, 10
+	addvar VAR_0x8000, 1
+	goto SeafloorCavern_Room5_EventScript_UpdateBoulders_1
+
+SeafloorCavern_Room5_EventScript_UpdateBoulders_5:
+	setobjectxyperm 2, 4, 13
+	addvar VAR_0x8000, 1
+	goto SeafloorCavern_Room5_EventScript_UpdateBoulders_4
+
+SeafloorCavern_Room5_EventScript_UpdateBoulders_8:
+	setobjectxyperm 6, 12, 9
+	addvar VAR_0x8000, 1
+	goto SeafloorCavern_Room5_EventScript_UpdateBoulders_7
+
+SeafloorCavern_Room5_EventScript_UpdateBoulders_11:
+	setobjectxyperm 3, 13, 7
+	addvar VAR_0x8000, 1
+	goto SeafloorCavern_Room5_EventScript_UpdateBoulders_10
+
+SeafloorCavern_Room5_EventScript_UpdateBoulders_13:
+	addvar VAR_SEAFLOORCAVERN_ROOM5_BOULDERS_STATE, 1
+	return
+

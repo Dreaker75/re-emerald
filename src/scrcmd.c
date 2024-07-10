@@ -2430,3 +2430,20 @@ bool8 ScrCmd_checkpartylearnablemove(struct ScriptContext *ctx)
     }
     return FALSE;
 }
+
+bool8 ScrCmd_isobjectincoordinate(struct ScriptContext *ctx)
+{
+    u16 localId = VarGet(ScriptReadHalfword(ctx));
+    u16 x = VarGet(ScriptReadHalfword(ctx)) + MAP_OFFSET;
+    u16 y = VarGet(ScriptReadHalfword(ctx)) + MAP_OFFSET;
+    u8 objectEventId;
+    gSpecialVar_Result = FALSE;
+
+    if(!TryGetObjectEventIdByLocalIdAndMap(localId, gSaveBlock1Ptr->location.mapNum, gSaveBlock1Ptr->location.mapGroup, &objectEventId)){
+        if(gObjectEvents[objectEventId].currentCoords.x == x && gObjectEvents[objectEventId].currentCoords.y  == y){
+            gSpecialVar_Result = TRUE;
+        }
+    }
+
+    return TRUE;
+}

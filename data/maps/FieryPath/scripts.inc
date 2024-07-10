@@ -5,9 +5,174 @@ FieryPath_MapScripts::
 FieryPath_OnTransition:
 	call_if_unset FLAG_LANDMARK_FIERY_PATH, FieryPath_EventScript_MoveScottToFallarbor
 	setflag FLAG_LANDMARK_FIERY_PATH
+	call FieryPath_EventScript_SetBoulderPositions
 	end
 
 FieryPath_EventScript_MoveScottToFallarbor::
 	setflag FLAG_HIDE_VERDANTURF_TOWN_SCOTT
 	clearflag FLAG_HIDE_FALLARBOR_TOWN_BATTLE_TENT_SCOTT
 	return
+
+FieryPath_EventScript_SetBoulderPositions::
+	goto_if_set FLAG_MOVE_FIERY_PATH_BOULDER_1, FieryPath_EventScript_SetBoulderPositions_2
+FieryPath_EventScript_SetBoulderPositions_1:
+	goto_if_set FLAG_MOVE_FIERY_PATH_BOULDER_2, FieryPath_EventScript_SetBoulderPositions_5
+FieryPath_EventScript_SetBoulderPositions_4:
+	goto_if_set FLAG_MOVE_FIERY_PATH_BOULDER_3, FieryPath_EventScript_SetBoulderPositions_8
+FieryPath_EventScript_SetBoulderPositions_7:
+	goto_if_set FLAG_MOVE_FIERY_PATH_BOULDER_4, FieryPath_EventScript_SetBoulderPositions_11
+FieryPath_EventScript_SetBoulderPositions_10:
+	goto_if_set FLAG_MOVE_FIERY_PATH_BOULDER_5, FieryPath_EventScript_SetBoulderPositions_14
+FieryPath_EventScript_SetBoulderPositions_13:
+	goto_if_set FLAG_MOVE_FIERY_PATH_BOULDER_6, FieryPath_EventScript_SetBoulderPositions_16
+	return
+
+FieryPath_EventScript_SetBoulderPositions_2:
+	setobjectxyperm 3, 10, 15
+	goto FieryPath_EventScript_SetBoulderPositions_1
+
+FieryPath_EventScript_SetBoulderPositions_5:
+	setobjectxyperm 2, 10, 14
+	goto FieryPath_EventScript_SetBoulderPositions_4
+
+FieryPath_EventScript_SetBoulderPositions_8:
+	setobjectxyperm 4, 12, 11
+	goto FieryPath_EventScript_SetBoulderPositions_7
+
+FieryPath_EventScript_SetBoulderPositions_11:
+	setobjectxyperm 5, 6, 22
+	goto FieryPath_EventScript_SetBoulderPositions_10
+
+FieryPath_EventScript_SetBoulderPositions_14:
+	setobjectxyperm 6, 7, 23
+	goto FieryPath_EventScript_SetBoulderPositions_13
+
+FieryPath_EventScript_SetBoulderPositions_16:
+	setobjectxyperm 7, 5, 21
+	return
+
+
+FieryPath_EventScript_BoulderTrigger1::
+	isobjectincoordinate 3, 10, 15
+	compare VAR_RESULT, TRUE
+	goto_if_eq FieryPath_EventScript_BoulderTrigger1_1
+	return
+
+FieryPath_EventScript_BoulderTrigger1_1:
+	setflag FLAG_MOVE_FIERY_PATH_BOULDER_1
+	call FieryPath_EventScript_UpdateBoulders
+	return
+
+
+FieryPath_EventScript_BoulderTrigger2::
+	isobjectincoordinate 2, 10, 14
+	compare VAR_RESULT, TRUE
+	goto_if_eq FieryPath_EventScript_BoulderTrigger2_1
+	return
+
+FieryPath_EventScript_BoulderTrigger2_1:
+	setflag FLAG_MOVE_FIERY_PATH_BOULDER_2
+	call FieryPath_EventScript_UpdateBoulders
+	return
+
+
+FieryPath_EventScript_BoulderTrigger3::
+	isobjectincoordinate 4, 12, 11
+	compare VAR_RESULT, TRUE
+	goto_if_eq FieryPath_EventScript_BoulderTrigger3_1
+	return
+
+FieryPath_EventScript_BoulderTrigger3_1:
+	setflag FLAG_MOVE_FIERY_PATH_BOULDER_3
+	call FieryPath_EventScript_UpdateBoulders
+	return
+
+
+FieryPath_EventScript_BoulderTrigger4::
+	isobjectincoordinate 5, 6, 22
+	compare VAR_RESULT, TRUE
+	goto_if_eq FieryPath_EventScript_BoulderTrigger4_1
+	return
+
+FieryPath_EventScript_BoulderTrigger4_1:
+	setflag FLAG_MOVE_FIERY_PATH_BOULDER_4
+	call FieryPath_EventScript_UpdateBoulders
+	return
+
+
+FieryPath_EventScript_BoulderTrigger5::
+	isobjectincoordinate 6, 7, 23
+	compare VAR_RESULT, TRUE
+	goto_if_eq FieryPath_EventScript_BoulderTrigger5_1
+	return
+
+FieryPath_EventScript_BoulderTrigger5_1:
+	setflag FLAG_MOVE_FIERY_PATH_BOULDER_5
+	call FieryPath_EventScript_UpdateBoulders
+	return
+
+
+FieryPath_EventScript_BoulderTrigger6::
+	isobjectincoordinate 7, 5, 21
+	compare VAR_RESULT, TRUE
+	goto_if_eq FieryPath_EventScript_BoulderTrigger6_1
+	return
+
+FieryPath_EventScript_BoulderTrigger6_1:
+	setflag FLAG_MOVE_FIERY_PATH_BOULDER_6
+	call FieryPath_EventScript_UpdateBoulders
+	return
+
+
+FieryPath_EventScript_UpdateBoulders::
+	setvar VAR_0x8000, 0
+	goto_if_set FLAG_MOVE_FIERY_PATH_BOULDER_1, FieryPath_EventScript_UpdateBoulders_2
+FieryPath_EventScript_UpdateBoulders_1:
+	goto_if_set FLAG_MOVE_FIERY_PATH_BOULDER_2, FieryPath_EventScript_UpdateBoulders_5
+FieryPath_EventScript_UpdateBoulders_4:
+	goto_if_set FLAG_MOVE_FIERY_PATH_BOULDER_3, FieryPath_EventScript_UpdateBoulders_8
+FieryPath_EventScript_UpdateBoulders_7:
+	goto_if_set FLAG_MOVE_FIERY_PATH_BOULDER_4, FieryPath_EventScript_UpdateBoulders_11
+FieryPath_EventScript_UpdateBoulders_10:
+	goto_if_set FLAG_MOVE_FIERY_PATH_BOULDER_5, FieryPath_EventScript_UpdateBoulders_14
+FieryPath_EventScript_UpdateBoulders_13:
+	goto_if_set FLAG_MOVE_FIERY_PATH_BOULDER_6, FieryPath_EventScript_UpdateBoulders_17
+FieryPath_EventScript_UpdateBoulders_16:
+	compare VAR_0x8000, 6
+	goto_if_eq FieryPath_EventScript_UpdateBoulders_19
+	return
+
+FieryPath_EventScript_UpdateBoulders_2:
+	setobjectxyperm 3, 10, 15
+	addvar VAR_0x8000, 1
+	goto FieryPath_EventScript_UpdateBoulders_1
+
+FieryPath_EventScript_UpdateBoulders_5:
+	setobjectxyperm 2, 10, 14
+	addvar VAR_0x8000, 1
+	goto FieryPath_EventScript_UpdateBoulders_4
+
+FieryPath_EventScript_UpdateBoulders_8:
+	setobjectxyperm 4, 12, 11
+	addvar VAR_0x8000, 1
+	goto FieryPath_EventScript_UpdateBoulders_7
+
+FieryPath_EventScript_UpdateBoulders_11:
+	setobjectxyperm 5, 6, 22
+	addvar VAR_0x8000, 1
+	goto FieryPath_EventScript_UpdateBoulders_10
+
+FieryPath_EventScript_UpdateBoulders_14:
+	setobjectxyperm 6, 7, 23
+	addvar VAR_0x8000, 1
+	goto FieryPath_EventScript_UpdateBoulders_13
+
+FieryPath_EventScript_UpdateBoulders_17:
+	setobjectxyperm 7, 5, 21
+	addvar VAR_0x8000, 1
+	goto FieryPath_EventScript_UpdateBoulders_16
+
+FieryPath_EventScript_UpdateBoulders_19:
+	addvar VAR_FIERY_PATH_BOULDERS_STATE, 1
+	return
+

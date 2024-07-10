@@ -1,7 +1,4 @@
 raw `
-SeafloorCavern_Room1_MapScripts::
-	.byte 0
-
 SeafloorCavern_Room1_EventScript_Grunt1::
 	trainerbattle_single TRAINER_GRUNT_SEAFLOOR_CAVERN_1, SeafloorCavern_Room1_Text_Grunt1Intro, SeafloorCavern_Room1_Text_Grunt1Defeat
 	msgbox SeafloorCavern_Room1_Text_Grunt1PostBattle, MSGBOX_AUTOCLOSE
@@ -36,3 +33,60 @@ SeafloorCavern_Room1_Text_Grunt2PostBattle:
 	.string "It's way too tight in there!$"
 
 `
+
+const BOULDER_1 = 1
+const BOULDER_2 = 2
+const BOULDER_1_X = 5
+const BOULDER_2_X = 13
+const BOULDER_1_Y = 10
+const BOULDER_2_Y = 11
+
+mapscripts SeafloorCavern_Room1_MapScripts {
+	MAP_SCRIPT_ON_TRANSITION: SeafloorCavern_Room1_OnTransition
+}
+
+script SeafloorCavern_Room1_OnTransition {
+	call(SeafloorCavern_Room1_EventScript_SetBoulderPositions)
+}
+
+script SeafloorCavern_Room1_EventScript_SetBoulderPositions {
+	if (flag(FLAG_MOVE_SEAFLOORCAVERN_ROOM1_BOULDER_1)){
+		setobjectxyperm(BOULDER_1, BOULDER_1_X, BOULDER_1_Y)
+	}
+	if (flag(FLAG_MOVE_SEAFLOORCAVERN_ROOM1_BOULDER_2)){
+		setobjectxyperm(BOULDER_2, BOULDER_2_X, BOULDER_2_Y)
+	}
+}
+
+script SeafloorCavern_Room1_EventScript_BoulderTrigger1 {
+	isobjectincoordinate(BOULDER_1, BOULDER_1_X, BOULDER_1_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_SEAFLOORCAVERN_ROOM1_BOULDER_1)
+		call(SeafloorCavern_Room1_EventScript_UpdateBoulders)
+	}
+}
+
+script SeafloorCavern_Room1_EventScript_BoulderTrigger2 {
+	isobjectincoordinate(BOULDER_2, BOULDER_2_X, BOULDER_2_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_SEAFLOORCAVERN_ROOM1_BOULDER_2)
+		call(SeafloorCavern_Room1_EventScript_UpdateBoulders)
+	}
+}
+
+script SeafloorCavern_Room1_EventScript_UpdateBoulders {
+	setvar(VAR_0x8000, 0)
+
+	if (flag(FLAG_MOVE_SEAFLOORCAVERN_ROOM1_BOULDER_1)){
+		setobjectxyperm(BOULDER_1, BOULDER_1_X, BOULDER_1_Y)
+		addvar(VAR_0x8000, 1)
+	}
+	if (flag(FLAG_MOVE_SEAFLOORCAVERN_ROOM1_BOULDER_2)){
+		setobjectxyperm(BOULDER_2, BOULDER_2_X, BOULDER_2_Y)
+		addvar(VAR_0x8000, 1)
+	}
+
+	if(var(VAR_0x8000) == 2){
+		addvar(VAR_SEAFLOORCAVERN_ROOM1_BOULDERS_STATE, 1)
+	}
+}

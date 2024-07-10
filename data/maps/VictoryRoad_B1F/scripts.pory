@@ -1,7 +1,4 @@
 raw `
-VictoryRoad_B1F_MapScripts::
-	.byte 0
-
 VictoryRoad_B1F_EventScript_Samuel::
 	trainerbattle_single TRAINER_SAMUEL, VictoryRoad_B1F_Text_SamuelIntro, VictoryRoad_B1F_Text_SamuelDefeat
 	msgbox VictoryRoad_B1F_Text_SamuelPostBattle, MSGBOX_AUTOCLOSE
@@ -91,3 +88,169 @@ VictoryRoad_B1F_Text_HallePostBattle:
 	.string "the way!$"
 
 `
+const BOULDER_1 = 3
+const BOULDER_2 = 4
+const BOULDER_3 = 1
+const BOULDER_4 = 2
+const BOULDER_5 = 7
+const BOULDER_6 = 13
+const BOULDER_7 = 5
+const BOULDER_8 = 6
+
+const BOULDER_1_X = 3
+const BOULDER_2_X = 10
+const BOULDER_3_X = 20
+const BOULDER_4_X = 21
+const BOULDER_5_X = 34
+const BOULDER_6_X = 33
+const BOULDER_7_X = 20
+const BOULDER_8_X = 22
+
+const BOULDER_1_Y = 7
+const BOULDER_2_Y = 10
+const BOULDER_3_Y = 6
+const BOULDER_4_Y = 3
+const BOULDER_5_Y = 5
+const BOULDER_6_Y = 4
+const BOULDER_7_Y = 27
+const BOULDER_8_Y = 20
+
+mapscripts VictoryRoad_B1F_MapScripts {
+	MAP_SCRIPT_ON_TRANSITION: VictoryRoad_B1F_OnTransition
+}
+
+script VictoryRoad_B1F_OnTransition {
+	call(VictoryRoad_B1F_EventScript_SetBoulderPositions)
+}
+
+script VictoryRoad_B1F_EventScript_SetBoulderPositions {
+	if (flag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_1)){
+		setobjectxyperm(BOULDER_1, BOULDER_1_X, BOULDER_1_Y)
+	}
+	if (flag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_2)){
+		setobjectxyperm(BOULDER_2, BOULDER_2_X, BOULDER_2_Y)
+	}
+	if (flag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_3)){
+		setobjectxyperm(BOULDER_3, BOULDER_3_X, BOULDER_3_Y)
+	}
+	if (flag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_4)){
+		setobjectxyperm(BOULDER_4, BOULDER_4_X, BOULDER_4_Y)
+	}
+	if (flag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_5)){
+		setobjectxyperm(BOULDER_5, BOULDER_5_X, BOULDER_5_Y)
+	}
+	if (flag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_6)){
+		setobjectxyperm(BOULDER_6, BOULDER_6_X, BOULDER_6_Y)
+	}
+	if (flag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_7)){
+		setobjectxyperm(BOULDER_7, BOULDER_7_X, BOULDER_7_Y)
+	}
+	if (flag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_8)){
+		setobjectxyperm(BOULDER_8, BOULDER_8_X, BOULDER_8_Y)
+	}
+}
+
+script VictoryRoad_B1F_EventScript_BoulderTrigger1 {
+	isobjectincoordinate(BOULDER_1, BOULDER_1_X, BOULDER_1_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_1)
+		call(VictoryRoad_B1F_EventScript_UpdateBoulders)
+	}
+}
+
+script VictoryRoad_B1F_EventScript_BoulderTrigger2 {
+	isobjectincoordinate(BOULDER_2, BOULDER_2_X, BOULDER_2_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_2)
+		call(VictoryRoad_B1F_EventScript_UpdateBoulders)
+	}
+}
+
+script VictoryRoad_B1F_EventScript_BoulderTrigger3 {
+	isobjectincoordinate(BOULDER_3, BOULDER_3_X, BOULDER_3_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_3)
+		call(VictoryRoad_B1F_EventScript_UpdateBoulders)
+	}
+}
+
+script VictoryRoad_B1F_EventScript_BoulderTrigger4 {
+	isobjectincoordinate(BOULDER_4, BOULDER_4_X, BOULDER_4_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_4)
+		call(VictoryRoad_B1F_EventScript_UpdateBoulders)
+	}
+}
+
+script VictoryRoad_B1F_EventScript_BoulderTrigger5 {
+	isobjectincoordinate(BOULDER_5, BOULDER_5_X, BOULDER_5_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_5)
+		call(VictoryRoad_B1F_EventScript_UpdateBoulders)
+	}
+}
+
+script VictoryRoad_B1F_EventScript_BoulderTrigger6 {
+	isobjectincoordinate(BOULDER_6, BOULDER_6_X, BOULDER_6_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_6)
+		call(VictoryRoad_B1F_EventScript_UpdateBoulders)
+	}
+}
+
+script VictoryRoad_B1F_EventScript_BoulderTrigger7 {
+	isobjectincoordinate(BOULDER_7, BOULDER_7_X, BOULDER_7_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_7)
+		call(VictoryRoad_B1F_EventScript_UpdateBoulders)
+	}
+}
+
+script VictoryRoad_B1F_EventScript_BoulderTrigger8 {
+	isobjectincoordinate(BOULDER_8, BOULDER_8_X, BOULDER_8_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_8)
+		call(VictoryRoad_B1F_EventScript_UpdateBoulders)
+	}
+}
+
+script VictoryRoad_B1F_EventScript_UpdateBoulders {
+	setvar(VAR_0x8000, 0)
+
+	if (flag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_1)){
+		setobjectxyperm(BOULDER_1, BOULDER_1_X, BOULDER_1_Y)
+		addvar(VAR_0x8000, 1)
+	}
+	if (flag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_2)){
+		setobjectxyperm(BOULDER_2, BOULDER_2_X, BOULDER_2_Y)
+		addvar(VAR_0x8000, 1)
+	}
+	if (flag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_3)){
+		setobjectxyperm(BOULDER_3, BOULDER_3_X, BOULDER_3_Y)
+		addvar(VAR_0x8000, 1)
+	}
+	if (flag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_4)){
+		setobjectxyperm(BOULDER_4, BOULDER_4_X, BOULDER_4_Y)
+		addvar(VAR_0x8000, 1)
+	}
+	if (flag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_5)){
+		setobjectxyperm(BOULDER_5, BOULDER_5_X, BOULDER_5_Y)
+		addvar(VAR_0x8000, 1)
+	}
+	if (flag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_6)){
+		setobjectxyperm(BOULDER_6, BOULDER_6_X, BOULDER_6_Y)
+		addvar(VAR_0x8000, 1)
+	}
+	if (flag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_7)){
+		setobjectxyperm(BOULDER_7, BOULDER_7_X, BOULDER_7_Y)
+		addvar(VAR_0x8000, 1)
+	}
+	if (flag(FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_8)){
+		setobjectxyperm(BOULDER_8, BOULDER_8_X, BOULDER_8_Y)
+		addvar(VAR_0x8000, 1)
+	}
+
+	if(var(VAR_0x8000) == 8){
+		addvar(VAR_VICTORY_ROAD_B1F_BOULDERS_STATE, 1)
+	}
+}

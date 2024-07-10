@@ -9,6 +9,7 @@ Route112_MapScripts::
 Route112_OnTransition:
 	clearflag FLAG_FORCE_MIRAGE_TOWER_VISIBLE
 	setvar VAR_JAGGED_PASS_ASH_WEATHER, 0
+	call Route112_EventScript_SetBoulderPositions
 	end
 
 Route112_EventScript_MagmaGrunts::
@@ -129,7 +130,9 @@ Route112_Text_CantLetAnyonePassUntilTheyreBack:
 Route112_Text_NotEasyToGetBackToLavaridge:
 	.string "Eh, I'd like to get to MAUVILLE, but if\n"
 	.string "I went down these ledges, it'd be no\l"
-	.string "easy matter to get back to LAVARIDGE.$"
+	.string "easy matter to get back to LAVARIDGE.\p"
+	.string "Although, if I had the LAVARIDGE GYM\n"
+	.string "BADGE it would be a different story.$"
 
 Route112_Text_MtChimneyCableCarSign:
 	.string "MT. CHIMNEY CABLE CAR\n"
@@ -145,3 +148,22 @@ Route112_Text_RouteSignLavaridge:
 	.string "{LEFT_ARROW} LAVARIDGE TOWN$"
 
 `
+
+const BOULDER = 15
+const BOULDER_X = 8
+const BOULDER_Y = 49
+
+script Route112_EventScript_SetBoulderPositions {
+	if (flag(FLAG_MOVE_ROUTE112_BOULDER)){
+		setobjectxyperm(BOULDER, BOULDER_X, BOULDER_Y)
+	}
+}
+
+script Route112_EventScript_BoulderTrigger {
+	isobjectincoordinate(BOULDER, BOULDER_X, BOULDER_Y)
+	if(var(VAR_RESULT) == TRUE){
+		setflag(FLAG_MOVE_ROUTE112_BOULDER)
+		setobjectxyperm(BOULDER, BOULDER_X, BOULDER_Y)
+		addvar(VAR_ROUTE112_BOULDERS_STATE, 1)
+	}
+}

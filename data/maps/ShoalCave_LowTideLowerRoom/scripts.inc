@@ -1,5 +1,6 @@
 ShoalCave_LowTideLowerRoom_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, ShoalCave_LowTideLowerRoom_OnLoad
+	map_script MAP_SCRIPT_ON_TRANSITION, ShoalCave_LowTideLowerRoom_OnTransition
 	.byte 0
 
 ShoalCave_LowTideLowerRoom_OnLoad:
@@ -55,3 +56,30 @@ ShoalCave_LowTideLowerRoom_Text_CanOvercomeColdWithFocus:
 
 ShoalCave_LowTideLowerRoom_Text_EverythingStartsWithFocus:
 	.string "Everything starts with focus!$"
+
+ShoalCave_LowTideLowerRoom_OnTransition::
+	call ShoalCave_LowTideLowerRoom_EventScript_SetBoulderPositions
+	return
+
+
+ShoalCave_LowTideLowerRoom_EventScript_SetBoulderPositions::
+	compare VAR_SHOALCAVE_LOWTIDELOWERROOM_BOULDERS_STATE, 1
+	goto_if_eq ShoalCave_LowTideLowerRoom_EventScript_SetBoulderPositions_1
+	return
+
+ShoalCave_LowTideLowerRoom_EventScript_SetBoulderPositions_1:
+	setobjectxyperm 1, 28, 3
+	return
+
+
+ShoalCave_LowTideLowerRoom_EventScript_BoulderTrigger::
+	isobjectincoordinate 1, 28, 3
+	compare VAR_RESULT, TRUE
+	goto_if_eq ShoalCave_LowTideLowerRoom_EventScript_BoulderTrigger_1
+	return
+
+ShoalCave_LowTideLowerRoom_EventScript_BoulderTrigger_1:
+	setobjectxyperm 1, 28, 3
+	addvar VAR_SHOALCAVE_LOWTIDELOWERROOM_BOULDERS_STATE, 1
+	return
+

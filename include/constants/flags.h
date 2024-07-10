@@ -1248,61 +1248,62 @@
 #define FLAG_HIDE_ROUTE_103_TREE_2                                  0x4AA
 #define FLAG_HIDE_ROUTE_104_TREE                                    0x4AB
 #define FLAG_HIDE_ROUTE_111_TREE                                    0x4AC
-#define FLAG_HIDE_ROUTE_116_TREE_1                                  0x4AD
-#define FLAG_HIDE_ROUTE_116_TREE_2                                  0x4AE
-#define FLAG_HIDE_ROUTE_116_TREE_3                                  0x4AF
-#define FLAG_HIDE_ROUTE_116_TREE_4                                  0x4B0
-#define FLAG_HIDE_ROUTE_116_TREE_5                                  0x4B1
-#define FLAG_HIDE_ROUTE_117_TREE                                    0x4B2
-#define FLAG_HIDE_ROUTE_118_TREE                                    0x4B3
-#define FLAG_HIDE_ROUTE_120_TREE_1                                  0x4B4
-#define FLAG_HIDE_ROUTE_120_TREE_2                                  0x4B5
-#define FLAG_HIDE_ROUTE_120_TREE_3                                  0x4B6
-#define FLAG_HIDE_ROUTE_121_TREE_1                                  0x4B7
-#define FLAG_HIDE_ROUTE_121_TREE_2                                  0x4B8
-#define FLAG_HIDE_ROUTE_121_TREE_3                                  0x4B9
-#define FLAG_HIDE_ROUTE_123_TREE_1                                  0x4BA
-#define FLAG_HIDE_ROUTE_123_TREE_2                                  0x4BB
-#define FLAG_HIDE_ROUTE_123_TREE_3                                  0x4BC
+#define FLAG_HIDE_ROUTE_112_TREE                                    0x4AD
+#define FLAG_HIDE_ROUTE_116_TREE_1                                  0x4AE
+#define FLAG_HIDE_ROUTE_116_TREE_2                                  0x4AF
+#define FLAG_HIDE_ROUTE_116_TREE_3                                  0x4B0
+#define FLAG_HIDE_ROUTE_116_TREE_4                                  0x4B1
+#define FLAG_HIDE_ROUTE_116_TREE_5                                  0x4B2
+#define FLAG_HIDE_ROUTE_117_TREE                                    0x4B3
+#define FLAG_HIDE_ROUTE_118_TREE                                    0x4B4
+#define FLAG_HIDE_ROUTE_120_TREE_1                                  0x4B5
+#define FLAG_HIDE_ROUTE_120_TREE_2                                  0x4B6
+#define FLAG_HIDE_ROUTE_120_TREE_3                                  0x4B7
+#define FLAG_HIDE_ROUTE_121_TREE_1                                  0x4B8
+#define FLAG_HIDE_ROUTE_121_TREE_2                                  0x4B9
+#define FLAG_HIDE_ROUTE_121_TREE_3                                  0x4BA
+#define FLAG_HIDE_ROUTE_123_TREE_1                                  0x4BB
+#define FLAG_HIDE_ROUTE_123_TREE_2                                  0x4BC
+#define FLAG_HIDE_ROUTE_123_TREE_3                                  0x4BD
 
-#define FLAG_ASKED_TO_USE_FLASH                                     0x4BD // ADDED: Flag to know if the player has been asked to use Flash on a dark cave
+#define FLAG_ASKED_TO_USE_FLASH                                     0x4BE // ADDED: Flag to know if the player has been asked to use Flash on a dark cave
 
-#define FLAG_UNUSED_0x4BE                                           0x4BE // Unused Flag
-#define FLAG_UNUSED_0x4BF                                           0x4BF // Unused Flag
-#define FLAG_UNUSED_0x4C0                                           0x4C0 // Unused Flag
-#define FLAG_UNUSED_0x4C1                                           0x4C1 // Unused Flag
-#define FLAG_UNUSED_0x4C2                                           0x4C2 // Unused Flag
-#define FLAG_UNUSED_0x4C3                                           0x4C3 // Unused Flag
-#define FLAG_UNUSED_0x4C4                                           0x4C4 // Unused Flag
-#define FLAG_UNUSED_0x4C5                                           0x4C5 // Unused Flag
-#define FLAG_UNUSED_0x4C6                                           0x4C6 // Unused Flag
-#define FLAG_UNUSED_0x4C7                                           0x4C7 // Unused Flag
-#define FLAG_UNUSED_0x4C8                                           0x4C8 // Unused Flag
-#define FLAG_UNUSED_0x4C9                                           0x4C9 // Unused Flag
-#define FLAG_UNUSED_0x4CA                                           0x4CA // Unused Flag
-#define FLAG_UNUSED_0x4CB                                           0x4CB // Unused Flag
-#define FLAG_UNUSED_0x4CC                                           0x4CC // Unused Flag
-#define FLAG_UNUSED_0x4CD                                           0x4CD // Unused Flag
-#define FLAG_UNUSED_0x4CE                                           0x4CE // Unused Flag
-#define FLAG_UNUSED_0x4CF                                           0x4CF // Unused Flag
-#define FLAG_UNUSED_0x4D0                                           0x4D0 // Unused Flag
-#define FLAG_UNUSED_0x4D1                                           0x4D1 // Unused Flag
-#define FLAG_UNUSED_0x4D2                                           0x4D2 // Unused Flag
-#define FLAG_UNUSED_0x4D3                                           0x4D3 // Unused Flag
-#define FLAG_UNUSED_0x4D4                                           0x4D4 // Unused Flag
-#define FLAG_UNUSED_0x4D5                                           0x4D5 // Unused Flag
-#define FLAG_UNUSED_0x4D6                                           0x4D6 // Unused Flag
-#define FLAG_UNUSED_0x4D7                                           0x4D7 // Unused Flag
-#define FLAG_UNUSED_0x4D8                                           0x4D8 // Unused Flag
-#define FLAG_UNUSED_0x4D9                                           0x4D9 // Unused Flag
-#define FLAG_UNUSED_0x4DA                                           0x4DA // Unused Flag
-#define FLAG_UNUSED_0x4DB                                           0x4DB // Unused Flag
-#define FLAG_UNUSED_0x4DC                                           0x4DC // Unused Flag
-#define FLAG_UNUSED_0x4DD                                           0x4DD // Unused Flag
-#define FLAG_UNUSED_0x4DE                                           0x4DE // Unused Flag
-#define FLAG_UNUSED_0x4DF                                           0x4DF // Unused Flag
-#define FLAG_UNUSED_0x4E0                                           0x4E0 // Unused Flag
-#define FLAG_UNUSED_0x4E1                                           0x4E1 // Unused Flag
+// Solved Strength Puzzles
+#define FLAG_MOVE_ROUTE112_BOULDER                                  0x4BF
+#define FLAG_MOVE_ROUTE115_BOULDER                                  0x4C0
+#define FLAG_MOVE_FIERY_PATH_BOULDER_1                              0x4C1
+#define FLAG_MOVE_FIERY_PATH_BOULDER_2                              0x4C2
+#define FLAG_MOVE_FIERY_PATH_BOULDER_3                              0x4C3
+#define FLAG_MOVE_FIERY_PATH_BOULDER_4                              0x4C4
+#define FLAG_MOVE_FIERY_PATH_BOULDER_5                              0x4C5
+#define FLAG_MOVE_FIERY_PATH_BOULDER_6                              0x4C6
+#define FLAG_MOVE_MAGMA_HIDEOUT_BOULDER_1                           0x4C7
+#define FLAG_MOVE_MAGMA_HIDEOUT_BOULDER_2                           0x4C8
+#define FLAG_MOVE_MAGMA_HIDEOUT_BOULDER_3                           0x4C9
+#define FLAG_MOVE_SEAFLOORCAVERN_ROOM1_BOULDER_1                    0x4CA
+#define FLAG_MOVE_SEAFLOORCAVERN_ROOM1_BOULDER_2                    0x4CB
+#define FLAG_MOVE_SEAFLOORCAVERN_ROOM2_BOULDER_1                    0x4CC
+#define FLAG_MOVE_SEAFLOORCAVERN_ROOM2_BOULDER_2                    0x4CD
+#define FLAG_MOVE_SEAFLOORCAVERN_ROOM2_BOULDER_3                    0x4CE
+#define FLAG_MOVE_SEAFLOORCAVERN_ROOM2_BOULDER_4                    0x4CF
+#define FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_1                    0x4D0
+#define FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_2                    0x4D1
+#define FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_3                    0x4D2
+#define FLAG_MOVE_SEAFLOORCAVERN_ROOM5_BOULDER_4                    0x4D3
+#define FLAG_MOVE_SEAFLOORCAVERN_ROOM8_BOULDER_1                    0x4D4
+#define FLAG_MOVE_SEAFLOORCAVERN_ROOM8_BOULDER_2                    0x4D5
+#define FLAG_MOVE_SEAFLOORCAVERN_ROOM8_BOULDER_5                    0x4D6
+#define FLAG_MOVE_SEAFLOORCAVERN_ROOM8_BOULDER_6                    0x4D7
+#define FLAG_MOVE_SEAFLOORCAVERN_ROOM8_BOULDER_7                    0x4D8
+#define FLAG_MOVE_SEAFLOORCAVERN_ROOM8_BOULDER_8                    0x4D9
+#define FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_1                        0x4DA
+#define FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_2                        0x4DB
+#define FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_3                        0x4DC
+#define FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_4                        0x4DD
+#define FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_5                        0x4DE
+#define FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_6                        0x4DF
+#define FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_7                        0x4E0
+#define FLAG_MOVE_VICTORY_ROAD_B1F_BOULDER_8                        0x4E1
 #define FLAG_UNUSED_0x4E2                                           0x4E2 // Unused Flag
 #define FLAG_UNUSED_0x4E3                                           0x4E3 // Unused Flag
 #define FLAG_UNUSED_0x4E4                                           0x4E4 // Unused Flag
