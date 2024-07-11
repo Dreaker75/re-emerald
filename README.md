@@ -69,7 +69,8 @@
       - Haunter - Shadow Ball
  - Defeating the Elite Four now resets a few daily events like gifts and the Lillycove lottery
  - All static Pokemon will now respawn the following day if they were defeated (This is also affected by defeating the Elite Four)
- - Sudowoodo will also respawn if it has been captured, allowing for multiples to be caught in a single file.
+ - Sudowoodo will also respawn if it has been captured, allowing for multiples to be caught in a single file
+ - Move Pokemon and Item options in the PC now appear before Withdraw and Deposit Pokemon like in newer games
 
 # Future changes
  - To see the future changes planned for this romhack, check out [ToDoList.md](https://github.com/Dreaker75/re-emerald/blob/main/FUTURE_PLANS.md)

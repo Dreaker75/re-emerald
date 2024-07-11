@@ -4,6 +4,7 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
 ### Important: Keep in mind that everything in this file is subject to change at any point. A feature being here doesn't mean it's guaranteed to happen.
 
 ## Features for Alpha release
+ - Add version number on the Main Menu
  - Make Fly usable from the PokeNav map and allow flying to every location, not just towns
  - Make Teleport work like the old Fly
  - Updated Battle Frontier prizes and BP economy
@@ -26,7 +27,6 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Change the Flash HM NPC dialoge to mention the new flash range and the reduced encounters
  - Change the dialogue from the Fallarbor NPC that's digging a hole to mention the Diglett
  - Make Petalburg Gym's doors work as normal doors
- - Change the PC options to list MOVE POKEMON and MOVE ITEMS above WITHDRAW and DEPOSIT POKEMON
 
 ## Features for Beta release
  - Updated trades: Make all current trades in the game more useful and add new ones for non-Hoenn Pokemon
