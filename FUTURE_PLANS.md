@@ -20,13 +20,13 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Update Wild Pokemon held items to make more items re-obtainable
  - Change Hidden and PokeBall items found throughout the game to be more useful
  - Team Aqua base doesn't close off after beating Team Aqua (To make it impossible to miss the Master Ball)
- - Remove the catching and PokeNave tutorial
+ - Remove the catching and PokeNav tutorial
  - Change the Bullet Seed TM NPC (And Roxanne's) dialogue to account for TMs being reusable now
  - Change the Cut HM NPC dialogue to account for HMs being forgettable normally now and being unnecessary to use the move (Still debating whether to make having the HMs required to be able to use the move outside of battle)
  - Change the Flash HM NPC dialoge to mention the new flash range and the reduced encounters
  - Change the dialogue from the Fallarbor NPC that's digging a hole to mention the Diglett
  - Make Petalburg Gym's doors work as normal doors
- - Change the PC options to lis MOVE POKEMON and MOVE ITEMS above WITHDRAW and DEPOSIT POKEMON
+ - Change the PC options to list MOVE POKEMON and MOVE ITEMS above WITHDRAW and DEPOSIT POKEMON
 
 ## Features for Beta release
  - Updated trades: Make all current trades in the game more useful and add new ones for non-Hoenn Pokemon
@@ -46,6 +46,7 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Add a prize for beating the Cycling Road record the first time, and a lesser prize for every time it's beaten afterwards
  - Add trainers and other things to Seafloor Cavern post-game, kind of like Mt. Chimney after the Team Aqua vs Team Magma face off
  - Increase the amount of BP given by Scott for finding him throughout the game
+ - Improve berry planting by making the berry yields 2-5 berries (depending on type) minimum, with more being given when watered during growth. Also make the fully grown berry plants remain harvestable until they're claimed
  
 ## Features for Base Version release
  - Roaming mechanic Revamp to make it less tedious
@@ -64,6 +65,7 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Display the Pokemon's EVs and IVs in the status screen
  - Add a pocket in the bag for Medicine, Held Items and Evolution Items
  - Fix bugs like the Roaming IV bug or the broken RNG bug
+ - Allow player to change name or gender/sprite at any point
 
 ## Backlog
 Features here are things I'd like to add once everything else above has been implemented. Still debating whether to make these part of the base Re:Emerald or do it under a new name, as these are features that will significantly change the base of Pokemon Emerald.

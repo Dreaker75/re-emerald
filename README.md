@@ -60,6 +60,13 @@
  - Made some slight tweaks to some of the Seafloor Cavern rooms
 
 ## Other changes:
+ - All trade evolutions now have an extra evolution method
+   - Pokemon that evolve by trade while holding an item now also evolve by levelling up while holding said item
+   - Pokemon that evolve by trade without an item now evolve by levelling up when knowing a specific move:
+      - Kadabra - Psychic
+      - Machoke - Dynamic Punch
+      - Graveler - Earthquake
+      - Haunter - Shadow Ball
  - Defeating the Elite Four now resets a few daily events like gifts and the Lillycove lottery
  - All static Pokemon will now respawn the following day if they were defeated (This is also affected by defeating the Elite Four)
  - Sudowoodo will also respawn if it has been captured, allowing for multiples to be caught in a single file.
