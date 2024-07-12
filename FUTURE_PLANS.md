@@ -4,7 +4,6 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
 ### Important: Keep in mind that everything in this file is subject to change at any point. A feature being here doesn't mean it's guaranteed to happen.
 
 ## Features for Alpha release
- - Turn on the Defeated flag for the Roamer Lati when they faint
  - Add version number on the Main Menu
  - Make Fly usable from the PokeNav map and allow flying to every location, not just towns
  - Make Teleport work like the old Fly
@@ -64,14 +63,14 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Make a second encounter table for Route 134, to vary between surfing/fishing from Slateport or Pacifidlog
  - Display the Pokemon's EVs and IVs in the status screen
  - Add a pocket in the bag for Medicine, Held Items and Evolution Items
- - Fix bugs like the Roaming IV bug or the broken RNG bug
  - Allow player to change name or gender/sprite at any point
+ - Defeating a Trainer in a Secret Base will give the player a reward
 
 ## Backlog
 Features here are things I'd like to add once everything else above has been implemented. Still debating whether to make these part of the base Re:Emerald or do it under a new name, as these are features that will significantly change the base of Pokemon Emerald.
  - Add an ItemDex to track all the items obtained
  - Add an AttackDex to track all the attacks seen and used
- - Add a Pokemon Chaining mechanic to make it easier to find Pokemon with higher stats or Shinies. It will work differently than the DexNave
+ - Add a Pokemon Chaining mechanic to make it easier to find Pokemon with higher stats or Shinies. It will work differently than the DexNav or the PokeRadar
  - Add an AreaDex that will show everything available in an area, from Pokemon and Items to trades and gift the player has not yet received
  - Add Achievements that will be akin to B2W2 Medals
  - Add the Fame Checker into the game

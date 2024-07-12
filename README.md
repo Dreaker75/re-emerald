@@ -29,6 +29,7 @@
     - All the Trainer Hill TMs have been removed and the rewards have been overhauled (more below)
     - All TMs in the Game Corner have been replaced by type-held items: Silk Scarf, Charcoal, Mystic Water and Miracle Seed
  - PokeRus no longer stops being contagius after a few days have passed
+ - The Roamer is now guaranteed to be the first encounter in the route if it's there
     
 ## Field move changes:
  - Rock Smash rocks will either trigger a wild Pokemon battle, or they won't (No more random chance to trigger an encounter. If a rock doesn't give you an encounter, it never will)
@@ -68,8 +69,8 @@
       - Graveler - Earthquake
       - Haunter - Shadow Ball
  - Defeating the Elite Four now resets a few daily events like gifts and the Lillycove lottery
- - All static Pokemon will now respawn the following day if they were defeated (This is also affected by defeating the Elite Four)
- - Sudowoodo will also respawn if it has been captured, allowing for multiples to be caught in a single file
+ - All Legendary Pokemon (Including the roamer) will now respawn the following day if they are defeated (This is also affected by defeating the Elite Four)
+ - Sudowoodo will respawn every day whether it was defeated or caught
  - Releasing a Legendary Pokemon will clear its CAUGHT flag, allowing them to be caught again starting the following day
  - Move Pokemon and Item options in the PC now appear before Withdraw and Deposit Pokemon like in newer games
 
