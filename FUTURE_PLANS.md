@@ -18,8 +18,6 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Add Autorun option
  - Update Wild Pokemon held items to make more items re-obtainable
  - Change Hidden and PokeBall items found throughout the game to be more useful
- - Team Aqua base doesn't close off after beating Team Aqua (To make it impossible to miss the Master Ball)
- - Remove the catching and PokeNav tutorial
  - Make Petalburg Gym's doors work as normal doors
  - Change Mirage Tower to always be present in the desert
 
@@ -42,6 +40,8 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Add trainers and other things to Seafloor Cavern post-game, kind of like Mt. Chimney after the Team Aqua vs Team Magma face off
  - Increase the amount of BP given by Scott for finding him throughout the game
  - Improve berry planting by making the berry yields 2-5 berries (depending on type) minimum, with more being given when watered during growth. Also make the fully grown berry plants remain harvestable until they're claimed
+ - Add ability to change the Pokemon's PokeBall (old PokeBall is lost)
+ - Remove the beeps when Pokemon is low on HP
  
 ## Features for Base Version release
  - Roaming mechanic Revamp to make it less tedious

@@ -82,6 +82,7 @@ Route102_Text_WatchMeCatchPokemon:
 	.string "…Whoa!$"
 
 Route102_Text_WallyIDidIt:
+	.string "...................................................\p"
 	.string "WALLY: I did it… It's my…\n"
 	.string "My POKéMON!$"
 

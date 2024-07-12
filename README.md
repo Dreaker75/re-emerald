@@ -76,6 +76,7 @@
  - Running is allowed everywhere, including places like bridges and tall grass
  - Move Pokemon and Item options in the PC now appear before Withdraw and Deposit Pokemon like in newer games
  - Removed the second save confirmation popup, the game will now save after the first one. The warning for saving when a different file exists was left untouched.
+ - Removed Wally's tutorial battle and the PokeNav's tutorial call to Mr. Stone
 
 # Future changes
  - To see the future changes planned for this romhack, check out [ToDoList.md](https://github.com/Dreaker75/re-emerald/blob/main/FUTURE_PLANS.md)

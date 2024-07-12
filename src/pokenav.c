@@ -47,7 +47,6 @@ static void CB2_Pokenav(void);
 static void Task_RunLoopedTask_LinkMode(u8);
 static void Task_RunLoopedTask(u8);
 static void Task_Pokenav(u8);
-static void CB2_InitPokenavForTutorial(void);
 
 const struct PokenavCallbacks PokenavMenuCallbacks[15] =
 {
@@ -323,37 +322,6 @@ void CB2_InitPokeNav(void)
     {
         InitPokenavResources(gPokenavResources);
         ResetTasks();
-        SetVBlankCallback(NULL);
-        CreateTask(Task_Pokenav, 0);
-        SetMainCallback2(CB2_Pokenav);
-        SetVBlankCallback(VBlankCB_Pokenav);
-    }
-}
-
-void OpenPokenavForTutorial(void)
-{
-    SetMainCallback2(CB2_InitPokenavForTutorial);
-    FadeScreen(FADE_TO_BLACK, 0);
-}
-
-static void CB2_InitPokenavForTutorial(void)
-{
-    UpdatePaletteFade();
-    if (gPaletteFade.active)
-        return;
-
-    gPokenavResources = Alloc(sizeof(*gPokenavResources));
-    if (gPokenavResources == NULL)
-    {
-        SetMainCallback2(CB2_ReturnToFieldContinueScriptPlayMapMusic);
-    }
-    else
-    {
-        InitPokenavResources(gPokenavResources);
-        gPokenavResources->mode = POKENAV_MODE_FORCE_CALL_READY;
-        ResetTasks();
-        ResetSpriteData();
-        FreeAllSpritePalettes();
         SetVBlankCallback(NULL);
         CreateTask(Task_Pokenav, 0);
         SetMainCallback2(CB2_Pokenav);
