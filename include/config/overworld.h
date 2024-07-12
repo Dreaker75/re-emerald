@@ -3,6 +3,7 @@
 
 // Movement config
 #define OW_RUNNING_INDOORS          GEN_LATEST  // In Gen4+, players are allowed to run indoors.
+#define OW_RUNNING_EVERYWHERE       TRUE        // ADDED: If TRUE, allows running indoors and also ignores Metatiles limitations on running
 
 // Other settings
 #define OW_POISON_DAMAGE                GEN_3      // In Gen4, Pokémon no longer faint from Poison in the overworld. In Gen5+, they no longer take damage at all.

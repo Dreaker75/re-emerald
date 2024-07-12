@@ -72,6 +72,7 @@
  - All Legendary Pokemon (Including the roamer) will now respawn the following day if they are defeated (This is also affected by defeating the Elite Four)
  - Sudowoodo will respawn every day whether it was defeated or caught
  - Releasing a Legendary Pokemon will clear its CAUGHT flag, allowing them to be caught again starting the following day
+ - Running is allowed everywhere, including places like bridges and tall grass
  - Move Pokemon and Item options in the PC now appear before Withdraw and Deposit Pokemon like in newer games
 
 # Future changes

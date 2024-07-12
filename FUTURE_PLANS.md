@@ -16,7 +16,6 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Make it possible to buy Coins in any amount in the Game Corner
  - Give an option to make the text display instant
  - Revamp Feebas mechanic: It will still appear on specific tiles, but these tiles will be the same for everyone based on its Pokedex description
- - Player can run everywhere (Indoor, bridges, tall grass, etc)
  - Add Autorun option
  - Update Wild Pokemon held items to make more items re-obtainable
  - Change Hidden and PokeBall items found throughout the game to be more useful
