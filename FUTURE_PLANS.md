@@ -5,6 +5,7 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
 
 ## Features for Alpha release
  - Add version number on the Main Menu
+ - Make HM moves forgettable like normal moves
  - Make Fly usable from the PokeNav map and allow flying to every location, not just towns
  - Make Teleport work like the old Fly
  - Updated Battle Frontier prizes and BP economy
@@ -21,11 +22,8 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Change Hidden and PokeBall items found throughout the game to be more useful
  - Team Aqua base doesn't close off after beating Team Aqua (To make it impossible to miss the Master Ball)
  - Remove the catching and PokeNav tutorial
- - Change the Bullet Seed TM NPC (And Roxanne's) dialogue to account for TMs being reusable now
- - Change the Cut HM NPC dialogue to account for HMs being forgettable normally now and being unnecessary to use the move (Still debating whether to make having the HMs required to be able to use the move outside of battle)
- - Change the Flash HM NPC dialoge to mention the new flash range and the reduced encounters
- - Change the dialogue from the Fallarbor NPC that's digging a hole to mention the Diglett
  - Make Petalburg Gym's doors work as normal doors
+ - Change Mirage Tower to always be present in the desert
 
 ## Features for Beta release
  - Updated trades: Make all current trades in the game more useful and add new ones for non-Hoenn Pokemon
