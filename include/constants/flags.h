@@ -464,22 +464,22 @@
 #define FLAG_SHOWN_EON_TICKET                0x1AE
 #define FLAG_SHOWN_AURORA_TICKET             0x1AF
 #define FLAG_SHOWN_OLD_SEA_MAP               0x1B0
-#define FLAG_UNUSED_0x1B1                    0x1B1
-#define FLAG_DEFEATED_ARTICUNO               0x1B2 // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
-#define FLAG_DEFEATED_ZAPDOS                 0x1B3 // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
-#define FLAG_DEFEATED_MOLTRES                0x1B4 // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
-#define FLAG_DEFEATED_MEWTWO                 0x1B5 // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
-#define FLAG_DEFEATED_RAIKOU                 0x1B6 // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
-#define FLAG_DEFEATED_ENTEI                  0x1B7 // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
-#define FLAG_DEFEATED_SUICUNE                0x1B8 // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
-#define FLAG_DEFEATED_CELEBI                 0x1B9 // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
-#define FLAG_DEFEATED_JIRACHI                0x1BA // ADDED: Flag to know if Articuno should respawn after one day (Or after beating the Elite Four)
-#define FLAG_DEFEATED_REGIROCK               0x1BB
-#define FLAG_DEFEATED_REGICE                 0x1BC
-#define FLAG_DEFEATED_REGISTEEL              0x1BD
-#define FLAG_DEFEATED_KYOGRE                 0x1BE
-#define FLAG_DEFEATED_GROUDON                0x1BF
-#define FLAG_DEFEATED_RAYQUAZA               0x1C0
+#define FLAG_DEFEATED_ARTICUNO               0x1B1      // ADDED: Flag to know if Articuno should respawn after one day
+#define FLAG_DEFEATED_ZAPDOS                 0x1B2      // ADDED: Flag to know if Articuno should respawn after one day
+#define FLAG_DEFEATED_MOLTRES                0x1B3      // ADDED: Flag to know if Articuno should respawn after one day
+#define FLAG_DEFEATED_MEWTWO                 0x1B4      // ADDED: Flag to know if Articuno should respawn after one day
+#define FLAG_DEFEATED_RAIKOU                 0x1B5      // ADDED: Flag to know if Articuno should respawn after one day
+#define FLAG_DEFEATED_ENTEI                  0x1B6      // ADDED: Flag to know if Articuno should respawn after one day
+#define FLAG_DEFEATED_SUICUNE                0x1B7      // ADDED: Flag to know if Articuno should respawn after one day
+#define FLAG_DEFEATED_CELEBI                 0x1B8      // ADDED: Flag to know if Articuno should respawn after one day
+#define FLAG_DEFEATED_LATIAS_OR_LATIOS_ROAMER   0x1B9   // ADDED: Flag to know if the roaming Lati should respawn after one day
+#define FLAG_DEFEATED_REGIROCK               0x1BA
+#define FLAG_DEFEATED_REGICE                 0x1BB
+#define FLAG_DEFEATED_REGISTEEL              0x1BC
+#define FLAG_DEFEATED_KYOGRE                 0x1BD
+#define FLAG_DEFEATED_GROUDON                0x1BE
+#define FLAG_DEFEATED_RAYQUAZA               0x1BF
+#define FLAG_DEFEATED_JIRACHI                0x1C0      // ADDED: Flag to know if Articuno should respawn after one day
 #define FLAG_DEFEATED_VOLTORB_1_NEW_MAUVILLE 0x1C1
 #define FLAG_DEFEATED_VOLTORB_2_NEW_MAUVILLE 0x1C2
 #define FLAG_DEFEATED_VOLTORB_3_NEW_MAUVILLE 0x1C3
@@ -487,8 +487,8 @@
 #define FLAG_DEFEATED_ELECTRODE_2_AQUA_HIDEOUT 0x1C5
 #define FLAG_DEFEATED_SUDOWOODO              0x1C6
 #define FLAG_DEFEATED_MEW                    0x1C7
-#define FLAG_DEFEATED_LATIAS_OR_LATIOS       0x1C8
-#define FLAG_CAUGHT_LATIAS_OR_LATIOS         0x1C9
+#define FLAG_DEFEATED_LATIAS_OR_LATIOS_SOUTHERN 0x1C8
+#define FLAG_CAUGHT_LATIAS_OR_LATIOS_SOUTHERN   0x1C9
 #define FLAG_CAUGHT_MEW                      0x1CA
 #define FLAG_MET_SCOTT_AFTER_OBTAINING_STONE_BADGE 0x1CB
 #define FLAG_MET_SCOTT_IN_VERDANTURF         0x1CC

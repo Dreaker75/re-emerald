@@ -135,9 +135,13 @@ void ClearDailyFlags(void)
     {
         FlagClear(FLAG_DEFEATED_RAYQUAZA);
     }
-    if (FlagGet(FLAG_CAUGHT_LATIAS_OR_LATIOS) == FALSE)
+    if (FlagGet(FLAG_CAUGHT_LATIAS_OR_LATIOS_SOUTHERN) == FALSE)
     {
-        FlagClear(FLAG_DEFEATED_LATIAS_OR_LATIOS);
+        FlagClear(FLAG_DEFEATED_LATIAS_OR_LATIOS_SOUTHERN);
+    }
+    if (FlagGet(FLAG_CAUGHT_LATIAS_OR_LATIOS_ROAMER) == FALSE)
+    {
+        FlagClear(FLAG_DEFEATED_LATIAS_OR_LATIOS_ROAMER);
     }
     if (FlagGet(FLAG_CAUGHT_JIRACHI) == FALSE)
     {

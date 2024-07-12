@@ -684,6 +684,8 @@ static bool8 IsMonBeingMoved(void);
 static void TryRefreshDisplayMon(void);
 static void ReshowDisplayMon(void);
 static void SetDisplayMonData(void *, u8);
+// Clear caught flags for Legendary Pokemon released so they can be caught again
+static void TryClearLegendaryCaughtFlag(u16);
 
 // Moving multiple Pokémon at once
 static void MultiMove_Free(void);
@@ -6512,6 +6514,7 @@ static void ReleaseMon(void)
 {
     u8 boxId;
 
+    TryClearLegendaryCaughtFlag(GetMonData(&sStorage->tempMon, MON_DATA_SPECIES));
     DestroyReleaseMonIcon();
     if (sIsMonBeingMoved)
     {
@@ -7061,6 +7064,85 @@ static void SetDisplayMonData(void *pokemon, u8 mode)
             StringCopyPadded(sStorage->displayMonItemName, ItemId_GetName(sStorage->displayMonItemId), CHAR_SPACE, 8);
         else
             StringFill(sStorage->displayMonItemName, CHAR_SPACE, 8);
+    }
+}
+
+static void TryClearLegendaryCaughtFlag(u16 pokemonSpecies){
+    switch (pokemonSpecies)
+    {
+    case SPECIES_ARTICUNO:
+        FlagClear(FLAG_CAUGHT_ARTICUNO);
+        break;
+    case SPECIES_ZAPDOS:
+        FlagClear(FLAG_CAUGHT_ZAPDOS);
+        break;
+    case SPECIES_MOLTRES:
+        FlagClear(FLAG_CAUGHT_MOLTRES);
+        break;
+    case SPECIES_MEWTWO:
+        FlagClear(FLAG_CAUGHT_MEWTWO);
+        break;
+    case SPECIES_MEW:
+        FlagClear(FLAG_CAUGHT_MEW);
+        break;
+    case SPECIES_RAIKOU:
+        FlagClear(FLAG_CAUGHT_RAIKOU);
+        break;
+    case SPECIES_ENTEI:
+        FlagClear(FLAG_CAUGHT_ENTEI);
+        break;
+    case SPECIES_SUICUNE:
+        FlagClear(FLAG_CAUGHT_SUICUNE);
+        break;
+    case SPECIES_LUGIA:
+        FlagClear(FLAG_CAUGHT_LUGIA);
+        break;
+    case SPECIES_HO_OH:
+        FlagClear(FLAG_CAUGHT_HO_OH);
+        break;
+    case SPECIES_CELEBI:
+        FlagClear(FLAG_CAUGHT_CELEBI);
+        break;
+    case SPECIES_REGIROCK:
+        FlagClear(FLAG_CAUGHT_REGIROCK);
+        break;
+    case SPECIES_REGICE:
+        FlagClear(FLAG_CAUGHT_REGICE);
+        break;
+    case SPECIES_REGISTEEL:
+        FlagClear(FLAG_CAUGHT_REGISTEEL);
+        break;
+    case SPECIES_LATIAS:
+        if (VarGet(VAR_ROAMER_POKEMON) == 0){
+            FlagClear(FLAG_CAUGHT_LATIAS_OR_LATIOS_ROAMER);
+        }
+        else {
+            FlagClear(FLAG_CAUGHT_LATIAS_OR_LATIOS_SOUTHERN);
+        }
+        break;
+    case SPECIES_LATIOS:
+        if (VarGet(VAR_ROAMER_POKEMON) == 1){
+            FlagClear(FLAG_CAUGHT_LATIAS_OR_LATIOS_ROAMER);
+        }
+        else {
+            FlagClear(FLAG_CAUGHT_LATIAS_OR_LATIOS_SOUTHERN);
+        }
+        break;
+    case SPECIES_KYOGRE:
+        FlagClear(FLAG_CAUGHT_KYOGRE);
+        break;
+    case SPECIES_GROUDON:
+        FlagClear(FLAG_CAUGHT_GROUDON);
+        break;
+    case SPECIES_RAYQUAZA:
+        FlagClear(FLAG_CAUGHT_RAYQUAZA);
+        break;
+    case SPECIES_JIRACHI:
+        FlagClear(FLAG_CAUGHT_JIRACHI);
+        break;
+    case SPECIES_DEOXYS:
+        FlagClear(FLAG_CAUGHT_DEOXYS);
+        break;
     }
 }
 

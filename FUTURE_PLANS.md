@@ -4,6 +4,7 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
 ### Important: Keep in mind that everything in this file is subject to change at any point. A feature being here doesn't mean it's guaranteed to happen.
 
 ## Features for Alpha release
+ - Turn on the Defeated flag for the Roamer Lati when they faint
  - Add version number on the Main Menu
  - Make Fly usable from the PokeNav map and allow flying to every location, not just towns
  - Make Teleport work like the old Fly
@@ -15,7 +16,6 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Make it possible to buy Coins in any amount in the Game Corner
  - Give an option to make the text display instant
  - Revamp Feebas mechanic: It will still appear on specific tiles, but these tiles will be the same for everyone based on its Pokedex description
- - Respawn Legendary Pokemon if they are released by the player
  - Player can run everywhere (Indoor, bridges, tall grass, etc)
  - Add Autorun option
  - Update Wild Pokemon held items to make more items re-obtainable

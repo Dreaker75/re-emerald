@@ -70,6 +70,7 @@
  - Defeating the Elite Four now resets a few daily events like gifts and the Lillycove lottery
  - All static Pokemon will now respawn the following day if they were defeated (This is also affected by defeating the Elite Four)
  - Sudowoodo will also respawn if it has been captured, allowing for multiples to be caught in a single file
+ - Releasing a Legendary Pokemon will clear its CAUGHT flag, allowing them to be caught again starting the following day
  - Move Pokemon and Item options in the PC now appear before Withdraw and Deposit Pokemon like in newer games
 
 # Future changes
