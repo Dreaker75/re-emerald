@@ -2,10 +2,6 @@
 gText_ConfirmSave::
 	.string "Would you like to save the game?$"
 
-gText_AlreadySavedFile::
-	.string "There is already a saved file.\n"
-	.string "Is it okay to overwrite it?$"
-
 gText_SavingDontTurnOff::
 	.fixstr "SAVING…\n"
 	.string "DON'T TURN OFF THE POWER.$"

@@ -1289,7 +1289,6 @@ const u8 gJPText_PlayersXPokmonDoesNotExist[] = _("{DYNAMIC 0}の{DYNAMIC 1}ひ�
 const u8 gText_ExitingChat[] = _("Exiting the chat…");
 const u8 gText_LeaderLeftEndingChat[] = _("The LEADER, {DYNAMIC 0}, has\nleft, ending the chat.");
 const u8 gText_RegisteredTextChangedOKToSave[] = _("The registered text has been changed.\nIs it okay to save the game?");
-const u8 gText_AlreadySavedFile_Chat[] = _("There is already a saved file.\nIs it okay to overwrite it?");
 const u8 gText_SavingDontTurnOff_Chat[] = _("SAVING…\nDON'T TURN OFF THE POWER.");
 const u8 gText_PlayerSavedGame_Chat[] = _("{DYNAMIC 0} saved the game.");
 const u8 gText_IfLeaderLeavesChatEnds[] = _("If the LEADER leaves, the chat\nwill end. Is that okay?");

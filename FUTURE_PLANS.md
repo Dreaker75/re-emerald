@@ -22,7 +22,6 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Remove the catching and PokeNav tutorial
  - Make Petalburg Gym's doors work as normal doors
  - Change Mirage Tower to always be present in the desert
- - Remove the extra SAVE confirmation
 
 ## Features for Beta release
  - Updated trades: Make all current trades in the game more useful and add new ones for non-Hoenn Pokemon

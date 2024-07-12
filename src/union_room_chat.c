@@ -55,7 +55,6 @@ enum {
     STDMESSAGE_EXITING_CHAT,
     STDMESSAGE_LEADER_LEFT,
     STDMESSAGE_ASK_SAVE,
-    STDMESSAGE_ASK_OVERWRITE,
     STDMESSAGE_SAVING_NO_OFF,
     STDMESSAGE_SAVED_THE_GAME,
     STDMESSAGE_WARN_LEADER_LEAVE,
@@ -303,7 +302,6 @@ static bool32 Display_PrintInputText(u8 *state);
 static bool32 Display_PrintExitingChat(u8 *state);
 static bool32 Display_PrintLeaderLeft(u8 *state);
 static bool32 Display_AskSave(u8 *state);
-static bool32 Display_AskOverwriteSave(u8 *state);
 static bool32 Display_PrintSavingDontTurnOff(u8 *state);
 static bool32 Display_PrintSavedTheGame(u8 *state);
 static bool32 Display_AskConfirmLeaderLeave(u8 *state);
@@ -622,7 +620,6 @@ static const struct SubtaskInfo sDisplaySubtasks[] = {
     {CHATDISPLAY_FUNC_PRINT_EXITING_CHAT,       Display_PrintExitingChat},
     {CHATDISPLAY_FUNC_PRINT_LEADER_LEFT,        Display_PrintLeaderLeft},
     {CHATDISPLAY_FUNC_ASK_SAVE,                 Display_AskSave},
-    {CHATDISPLAY_FUNC_ASK_OVERWRITE_SAVE,       Display_AskOverwriteSave},
     {CHATDISPLAY_FUNC_PRINT_SAVING,             Display_PrintSavingDontTurnOff},
     {CHATDISPLAY_FUNC_PRINT_SAVED_GAME,         Display_PrintSavedTheGame},
     {CHATDISPLAY_FUNC_ASK_CONFIRM_LEADER_LEAVE, Display_AskConfirmLeaderLeave}
@@ -691,16 +688,6 @@ static const struct MessageWindowInfo sDisplayStdMessages[] = {
     },
     [STDMESSAGE_ASK_SAVE] = {
         .text = gText_RegisteredTextChangedOKToSave,
-        .boxType = 2,
-        .x = 0,
-        .y = 1,
-        .letterSpacing = 0,
-        .lineSpacing = 0,
-        .hasPlaceholders = FALSE,
-        .useWiderBox = TRUE
-    },
-    [STDMESSAGE_ASK_OVERWRITE] = {
-        .text = gText_AlreadySavedFile_Chat,
         .boxType = 2,
         .x = 0,
         .y = 1,
@@ -2662,23 +2649,6 @@ static bool32 Display_AskSave(u8 *state)
     {
     case 0:
         AddStdMessageWindow(STDMESSAGE_ASK_SAVE, 0);
-        AddYesNoMenuAt(23, 10, 1);
-        CopyWindowToVram(sDisplay->messageWindowId, COPYWIN_FULL);
-        (*state)++;
-        break;
-    case 1:
-        return IsDma3ManagerBusyWithBgCopy();
-    }
-
-    return TRUE;
-}
-
-static bool32 Display_AskOverwriteSave(u8 *state)
-{
-    switch (*state)
-    {
-    case 0:
-        AddStdMessageWindow(STDMESSAGE_ASK_OVERWRITE, 0);
         AddYesNoMenuAt(23, 10, 1);
         CopyWindowToVram(sDisplay->messageWindowId, COPYWIN_FULL);
         (*state)++;
