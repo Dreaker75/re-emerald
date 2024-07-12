@@ -986,6 +986,7 @@ static void Task_EvolutionScene(u8 taskId)
                 {
                     // Selected move to forget
                     u16 move = GetMonData(mon, var + MON_DATA_MOVE1);
+#if P_CAN_FORGET_HM == FALSE
                     if (IsMoveHM(move))
                     {
                         // Can't forget HMs
@@ -995,13 +996,16 @@ static void Task_EvolutionScene(u8 taskId)
                     }
                     else
                     {
+#endif                        
                         // Forget move
                         PREPARE_MOVE_BUFFER(gBattleTextBuff2, move)
 
                         RemoveMonPPBonus(mon, var);
                         SetMonMoveSlot(mon, gMoveToLearn, var);
                         gTasks[taskId].tLearnMoveState++;
+#if P_CAN_FORGET_HM == FALSE
                     }
+#endif
                 }
             }
             break;
@@ -1368,6 +1372,7 @@ static void Task_TradeEvolutionScene(u8 taskId)
                 {
                     // Selected move to forget
                     u16 move = GetMonData(mon, var + MON_DATA_MOVE1);
+#if P_CAN_FORGET_HM == FALSE
                     if (IsMoveHM(move))
                     {
                         // Can't forget HMs
@@ -1377,6 +1382,7 @@ static void Task_TradeEvolutionScene(u8 taskId)
                     }
                     else
                     {
+#endif
                         // Forget move
                         PREPARE_MOVE_BUFFER(gBattleTextBuff2, move)
 
@@ -1385,7 +1391,9 @@ static void Task_TradeEvolutionScene(u8 taskId)
                         BattleStringExpandPlaceholdersToDisplayedString(gBattleStringsTable[STRINGID_123POOF - BATTLESTRINGS_TABLE_START]);
                         DrawTextOnTradeWindow(0, gDisplayedStringBattle, 1);
                         gTasks[taskId].tLearnMoveState++;
+#if P_CAN_FORGET_HM == FALSE
                     }
+#endif
                 }
             }
             break;

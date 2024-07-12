@@ -37,6 +37,7 @@
  - Cut trees will stay cut even after reloading the map
  - Strength boulders will now stay in place when moved onto the appropiate switches (If it reset after being placed in a switch, it's because the puzzle wouldn't be solvable and it needs to be placed in another switch)
  - HMs and field moves can be used by any Pokemon that can learn them, regardless of whether they currently know it (Badges are still needed for HMs)
+ - HMs can now be replaced just like any other moves
  - Field moves show less messages when used
  - Waterfall is now automatically used when you try to scale a Waterfall (No more having to stand in front of it and press A)
  - Flash has been revamped in a few ways

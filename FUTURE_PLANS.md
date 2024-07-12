@@ -5,7 +5,6 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
 
 ## Features for Alpha release
  - Add version number on the Main Menu
- - Make HM moves forgettable like normal moves
  - Make Fly usable from the PokeNav map and allow flying to every location, not just towns
  - Make Teleport work like the old Fly
  - Updated Battle Frontier prizes and BP economy
@@ -23,6 +22,7 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Remove the catching and PokeNav tutorial
  - Make Petalburg Gym's doors work as normal doors
  - Change Mirage Tower to always be present in the desert
+ - Remove the extra SAVE confirmation
 
 ## Features for Beta release
  - Updated trades: Make all current trades in the game more useful and add new ones for non-Hoenn Pokemon

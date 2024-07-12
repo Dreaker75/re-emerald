@@ -5504,6 +5504,7 @@ const u32 *GetMonSpritePalFromSpeciesAndPersonality(u16 species, bool32 isShiny,
     }
 }
 
+#if P_CAN_FORGET_HM == FALSE
 bool8 IsMoveHM(u16 move)
 {
     int i = 0;
@@ -5514,6 +5515,7 @@ bool8 IsMoveHM(u16 move)
     }
     return FALSE;
 }
+#endif
 
 bool8 IsMonSpriteNotFlipped(u16 species)
 {
