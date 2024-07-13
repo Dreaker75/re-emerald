@@ -20,7 +20,7 @@ bool8 MetatileBehavior_IsSandOrDeepSand(u8);
 bool8 MetatileBehavior_IsDeepSand(u8);
 bool8 MetatileBehavior_IsReflective(u8);
 bool8 MetatileBehavior_IsIce(u8);
-bool8 MetatileBehavior_IsWarpDoor(u8);
+bool8 MetatileBehavior_IsPetalburgGymDoor(u8);
 bool8 MetatileBehavior_IsDoor(u8);
 bool8 MetatileBehavior_IsEscalator(u8);
 bool8 MetatileBehavior_IsLadder(u8);

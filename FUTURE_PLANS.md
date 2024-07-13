@@ -18,7 +18,6 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Add Autorun option
  - Update Wild Pokemon held items to make more items re-obtainable
  - Change Hidden and PokeBall items found throughout the game to be more useful
- - Make Petalburg Gym's doors work as normal doors
  - Change Mirage Tower to always be present in the desert
 
 ## Features for Beta release

@@ -187,16 +187,22 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
     if (input->pressedAButton && TryStartInteractionScript(&position, metatileBehavior, playerDirection) == TRUE)
         return TRUE;
 
+    // ADDED: If the player turned to face the Petalburg Gym's door, don't warp yet in case they want to read the sign
+    if (MetatileBehavior_IsPetalburgGymDoor(metatileBehavior) && gObjectEvents[gPlayerAvatar.objectEventId].previousMovementDirection != DIR_NORTH)
+        return FALSE;
+
     // ADDED: Checks if the player is trying to climb a Waterfall by pressing Up rather than interacting it with
     if (MetatileBehavior_IsWaterfall(metatileBehavior) == TRUE && FlagGet(FLAG_BADGE08_GET) == TRUE && IsPlayerSurfingNorth() == TRUE &&
-        input->heldDirection2 && input->dpadDirection == DIR_NORTH){
+        input->heldDirection2 && input->dpadDirection == DIR_NORTH)
+    {
         // Calls the Waterfall event directly
         ScriptContext_SetupScript(EventScript_UseWaterfall);
         return TRUE;
     }
 
     // ADDED: Gives a message to the player upon entering a dark cave to ask if Flash should be used, if the required badge has been obtained
-    if (FlagGet(FLAG_BADGE02_GET) == TRUE && FlagGet(FLAG_ASKED_TO_USE_FLASH) == FALSE && gMapHeader.cave == TRUE && !FlagGet(FLAG_SYS_USE_FLASH)){
+    if (FlagGet(FLAG_BADGE02_GET) == TRUE && FlagGet(FLAG_ASKED_TO_USE_FLASH) == FALSE && gMapHeader.cave == TRUE && !FlagGet(FLAG_SYS_USE_FLASH))
+    {
         // Save the current map section to only give the popup again if the player leaves the current dungeon and then comes back
         u8 i;
 
@@ -213,7 +219,8 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
             }
         }
     }
-    else if(FlagGet(FLAG_ASKED_TO_USE_FLASH) == TRUE && gMapHeader.regionMapSectionId != sLastMapSectionId){
+    else if (FlagGet(FLAG_ASKED_TO_USE_FLASH) == TRUE && gMapHeader.regionMapSectionId != sLastMapSectionId)
+    {
         FlagClear(FLAG_ASKED_TO_USE_FLASH);
     }
 
@@ -601,13 +608,13 @@ static bool8 TryStartStepCountScript(u16 metatileBehavior)
 
     if (!(gPlayerAvatar.flags & PLAYER_AVATAR_FLAG_FORCED_MOVE) && !MetatileBehavior_IsForcedMovementTile(metatileBehavior))
     {
-    #if OW_POISON_DAMAGE < GEN_5
+#if OW_POISON_DAMAGE < GEN_5
         if (UpdatePoisonStepCounter() == TRUE)
         {
             ScriptContext_SetupScript(EventScript_FieldPoison);
             return TRUE;
         }
-    #endif
+#endif
         if (ShouldEggHatch())
         {
             IncrementGameStat(GAME_STAT_HATCHED_EGGS);
@@ -817,7 +824,7 @@ static bool8 TryStartWarpEventScript(struct MapPosition *position, u16 metatileB
 
 static bool8 IsWarpMetatileBehavior(u16 metatileBehavior)
 {
-    if (MetatileBehavior_IsWarpDoor(metatileBehavior) != TRUE
+    if (MetatileBehavior_IsDoor(metatileBehavior) != TRUE
      && MetatileBehavior_IsLadder(metatileBehavior) != TRUE
      && MetatileBehavior_IsEscalator(metatileBehavior) != TRUE
      && MetatileBehavior_IsNonAnimDoor(metatileBehavior) != TRUE
@@ -909,7 +916,7 @@ static bool8 TryDoorWarp(struct MapPosition *position, u16 metatileBehavior, u8 
             return TRUE;
         }
 
-        if (MetatileBehavior_IsWarpDoor(metatileBehavior) == TRUE)
+        if (MetatileBehavior_IsDoor(metatileBehavior) == TRUE)
         {
             warpEventId = GetWarpEventAtMapPosition(&gMapHeader, position);
             if (warpEventId != WARP_ID_NONE && IsWarpMetatileBehavior(metatileBehavior) == TRUE)
@@ -974,7 +981,8 @@ static const u8 *GetCoordEventScriptAtPosition(struct MapHeader *mapHeader, u16 
             if (coordEvents[i].elevation == elevation || coordEvents[i].elevation == 0)
             {
                 // MB_STRENGTH_LAST_POSITION events should only be triggered by pushing a boulder on top
-                if (MapGridGetMetatileBehaviorAt(x + MAP_OFFSET, y + MAP_OFFSET) == MB_STRENGTH_LAST_POSITION){
+                if (MapGridGetMetatileBehaviorAt(x + MAP_OFFSET, y + MAP_OFFSET) == MB_STRENGTH_LAST_POSITION)
+                {
                     return NULL;
                 }
 
@@ -1068,9 +1076,9 @@ int SetCableClubWarp(void)
 {
     struct MapPosition position;
 
-    GetPlayerMovementDirection();  //unnecessary
+    GetPlayerMovementDirection(); // unnecessary
     GetPlayerPosition(&position);
-    MapGridGetMetatileBehaviorAt(position.x, position.y);  //unnecessary
+    MapGridGetMetatileBehaviorAt(position.x, position.y); // unnecessary
     SetupWarp(&gMapHeader, GetWarpEventAtMapPosition(&gMapHeader, &position), &position);
     return 0;
 }
@@ -1078,7 +1086,7 @@ int SetCableClubWarp(void)
 void HandleBoulderFinalPosition(u16 x, u16 y)
 {
     int i;
-    const struct CoordEvent * events = gMapHeader.events->coordEvents;
+    const struct CoordEvent *events = gMapHeader.events->coordEvents;
     int n = gMapHeader.events->coordEventCount;
 
     if (MapGridGetMetatileBehaviorAt(x, y) == MB_STRENGTH_LAST_POSITION)

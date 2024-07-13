@@ -1109,7 +1109,7 @@ static void PlayCollisionSoundIfNotFacingWarp(u8 direction)
         {
             PlayerGetDestCoords(&x, &y);
             MoveCoords(direction, &x, &y);
-            if (MetatileBehavior_IsWarpDoor(MapGridGetMetatileBehaviorAt(x, y)))
+            if (MetatileBehavior_IsDoor(MapGridGetMetatileBehaviorAt(x, y)))
                 return;
         }
         PlaySE(SE_WALL_HIT);

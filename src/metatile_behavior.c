@@ -217,9 +217,9 @@ bool8 MetatileBehavior_IsIce(u8 metatileBehavior)
         return FALSE;
 }
 
-bool8 MetatileBehavior_IsWarpDoor(u8 metatileBehavior)
+bool8 MetatileBehavior_IsPetalburgGymDoor(u8 metatileBehavior)
 {
-    if (metatileBehavior == MB_ANIMATED_DOOR)
+    if (metatileBehavior == MB_PETALBURG_GYM_DOOR)
         return TRUE;
     else
         return FALSE;
