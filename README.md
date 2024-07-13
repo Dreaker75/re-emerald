@@ -21,6 +21,7 @@
  - A focus has been put on Emerald being the "shared version" and now, all previous RS version exclusives will have the same chance to appear in their respective location (ex. Lotad and Seedot, Zangoose and Seviper, etc)
  - Non-Hoenn mons have been added to many post-game areas, although only a few have been added at the moment. Some examples include Diglett in Desert Underpass or Unown in Altering Cave
  - All the changes implemented can be found on the [wild encounters](https://github.com/Dreaker75/re-emerald/blob/main/src/data/wild_encounters.json) file
+ - The Feebas mechanic has been reworked. Feebas will still only appear in specific tiles of Route 119 50% of the time, but said tiles are no longer random. Instead, they're based on Feebas' Emerald Pokedex entry.
 
 ### Wild held items changes:
  - Amulet Coin: Meowth (5% - Not currently available in the wild)
