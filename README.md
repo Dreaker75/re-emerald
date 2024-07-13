@@ -47,6 +47,7 @@
     - All TMs in the Game Corner have been replaced by type-held items: Silk Scarf, Charcoal, Mystic Water and Miracle Seed
  - PokeRus no longer stops being contagius after a few days have passed
  - The Roamer is now guaranteed to be the first encounter in the route if it's there
+ - You can now toggle the default moving speed (walking or running) by pressing the R button in the overworld after getting the running shoes. Holding B will let you run at the opposite speed as usual. The toggle has no visual cue at the momment, but does have a sound effect attached to it.
     
 ## Field move changes:
  - Rock Smash rocks will either trigger a wild Pokemon battle, or they won't (No more random chance to trigger an encounter. If a rock doesn't give you an encounter, it never will)

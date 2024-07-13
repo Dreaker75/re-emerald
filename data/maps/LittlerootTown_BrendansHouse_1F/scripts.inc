@@ -384,8 +384,11 @@ PlayersHouse_1F_Text_TheresAMovieOnTV:
 PlayersHouse_1F_Text_RunningShoesManual:
 	.string "It's the instruction booklet for the\n"
 	.string "RUNNING SHOES.\p"
-	.string "“Press the B Button to run while\n"
-	.string "wearing your RUNNING SHOES.\p"
+	.string "“Press the R Button while wearing your\n"
+	.string "RUNNING SHOES to switch between walking\l"
+	.string "and running speed!\p"
+	.string "“Hold the B Button to temporarily\n"
+	.string "switch speeds.\p"
 	.string "“Lace up your RUNNING SHOES and hit\n"
 	.string "the road running!”$"
 

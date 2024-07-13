@@ -14,7 +14,6 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Automatically put items picked up by Pick Up in the bag, and make it possible to pick up items even while the Pokemon is already holding an item
  - Make it possible to buy Coins in any amount in the Game Corner
  - Give an option to make the text display instant
- - Add Autorun option
  - Change Hidden and PokeBall items found throughout the game to be more useful
  - Change Mirage Tower to always be present in the desert
  - Change Lottery rewards
@@ -60,6 +59,8 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Allow player to change name or gender/sprite at any point
  - Defeating a Trainer in a Secret Base will give the player a reward
  - Add a way to earn all missing Ribbons
+ - Pressing L on the overworld will bring out a list of registered items (up to 10)
+ - Pressing R on the overworld will bring out a list of useful things (toggle auto run, Sweet Scent (If an appropiate mon exists in party), etc)
 
 ## Backlog
 Features here are things I'd like to add once everything else above has been implemented. Still debating whether to make these part of the base Re:Emerald or do it under a new name, as these are features that will significantly change the base of Pokemon Emerald.

@@ -893,6 +893,7 @@ LittlerootTown_EventScript_Mom::
 LittlerootTown_EventScript_SetReceivedRunningShoes::
 	removeobject LOCALID_MOM
 	setflag FLAG_SYS_B_DASH
+	setflag FLAG_SYS_IS_RUNNING_TOGGLED
 	setvar VAR_LITTLEROOT_TOWN_STATE, 4
 	release
 	end
@@ -942,8 +943,11 @@ LittlerootTown_Text_SwitchShoesWithRunningShoes:
 LittlerootTown_Text_ExplainRunningShoes:
 	.string "MOM: {PLAYER}, those shoes came with\n"
 	.string "instructions.\p"
-	.string "“Press the B Button while wearing these\n"
-	.string "RUNNING SHOES to run extra-fast!\p"
+	.string "“Press the R Button while wearing these\n"
+	.string "RUNNING SHOES to switch between walking\l"
+	.string "and running speed!\p"
+	.string "“Hold the B Button to temporarily\n"
+	.string "switch speeds.\p"
 	.string "“Slip on these RUNNING SHOES and race\n"
 	.string "in the great outdoors!”$"
 
