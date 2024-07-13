@@ -16,9 +16,9 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Give an option to make the text display instant
  - Revamp Feebas mechanic: It will still appear on specific tiles, but these tiles will be the same for everyone based on its Pokedex description
  - Add Autorun option
- - Update Wild Pokemon held items to make more items re-obtainable
  - Change Hidden and PokeBall items found throughout the game to be more useful
  - Change Mirage Tower to always be present in the desert
+ - Change Lottery rewards
 
 ## Features for Beta release
  - Updated trades: Make all current trades in the game more useful and add new ones for non-Hoenn Pokemon

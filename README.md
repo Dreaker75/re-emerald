@@ -14,12 +14,28 @@
     - All EVs now cap at 252, rather than 255, and the stats are recalculated after every battle, even at level 100.
     - All non-berry items are restored after battle.
 
-## Pokemon location changes:
+## Pokemon changes:
+### Location changes:
  - Table slots and slot % have been tweaked all around (The lowest change a Pokemon will have to appear is now 5%, although usually they're 10% or higher)
  - All RS exclusive Pokemon have been re-added to the wild in their respective locations and the encounters in those places have been tweaked accordingly
  - A focus has been put on Emerald being the "shared version" and now, all previous RS version exclusives will have the same chance to appear in their respective location (ex. Lotad and Seedot, Zangoose and Seviper, etc)
  - Non-Hoenn mons have been added to many post-game areas, although only a few have been added at the moment. Some examples include Diglett in Desert Underpass or Unown in Altering Cave
  - All the changes implemented can be found on the [wild encounters](https://github.com/Dreaker75/re-emerald/blob/main/src/data/wild_encounters.json) file
+
+### Wild held items changes:
+ - Amulet Coin: Meowth (5% - Not currently available in the wild)
+ - Berry Juice: Shuckle (100% - No longer holds Oran Berry)
+ - Blue Shard: Clamperl (50%)
+ - Cleanse Tag: Chimecho (50%)
+ - Green Shard: Relicanth (50%)
+ - DeepSeaScale: Chinchou, Lanturn, Relicanth (5%)
+ - DeepSeaTooth: Carvanha, Sharpedo (5%)
+ - Lucky Punch: Chansey (50% - Not currently available in the wild)
+ - Magnet: Magnemite, Magneton (50%)
+ - NeverMeltIce: Snorunt (5%)
+ - Red Shard: Corsola (50%)
+ - Soothe Bell: Chimecho (5%)
+ - Yellow Shard: Chinchou, Lanturn (50%)
 
 ## Mechanics changes:
  - The fishing minigame has been removed for all Rods and using one will now always land a Pokemon
