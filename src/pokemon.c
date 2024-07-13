@@ -5919,6 +5919,9 @@ bool8 HasTwoFramesAnimation(u16 species)
 {
     return (species != SPECIES_CASTFORM
      && species != SPECIES_DEOXYS
+     && species != SPECIES_DEOXYS_ATTACK
+     && species != SPECIES_DEOXYS_DEFENSE
+     && species != SPECIES_DEOXYS_SPEED
      && species != SPECIES_SPINDA
      && species != SPECIES_UNOWN);
 }

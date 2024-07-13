@@ -59,6 +59,7 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Add a pocket in the bag for Medicine, Held Items and Evolution Items
  - Allow player to change name or gender/sprite at any point
  - Defeating a Trainer in a Secret Base will give the player a reward
+ - Add a way to earn all missing Ribbons
 
 ## Backlog
 Features here are things I'd like to add once everything else above has been implemented. Still debating whether to make these part of the base Re:Emerald or do it under a new name, as these are features that will significantly change the base of Pokemon Emerald.
