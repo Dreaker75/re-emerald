@@ -639,7 +639,11 @@ static void BuyMenuPrintPriceInList(u8 windowId, u32 itemId, u8 y)
                 5);
         }
 
-        if (ItemId_GetImportance(itemId) && (CheckBagHasItem(itemId, 1) || CheckPCHasItem(itemId, 1)))
+        if (ItemId_GetImportance(itemId) && (CheckBagHasItem(itemId, 1)
+#if I_STORE_SYSTEM == GEN_3
+         || CheckPCHasItem(itemId, 1)
+#endif
+         ))
             StringCopy(gStringVar4, gText_SoldOut);
         else
             StringExpandPlaceholders(gStringVar4, gText_PokedollarVar1);
@@ -992,7 +996,11 @@ static void Task_BuyMenu(u8 taskId)
             else
                 sShopData->totalCost = gDecorations[itemId].price;
 
-            if (ItemId_GetImportance(itemId) && (CheckBagHasItem(itemId, 1) || CheckPCHasItem(itemId, 1)))
+            if (ItemId_GetImportance(itemId) && (CheckBagHasItem(itemId, 1)
+#if I_STORE_SYSTEM == GEN_3
+             || CheckPCHasItem(itemId, 1)
+#endif
+             ))
                 BuyMenuDisplayMessage(taskId, gText_ThatItemIsSoldOut, BuyMenuReturnToItemList);
             else if (!IsEnoughMoney(&gSaveBlock1Ptr->money, sShopData->totalCost))
             {

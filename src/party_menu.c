@@ -6881,9 +6881,11 @@ static void DisplayItemMustBeRemovedFirstMessage(u8 taskId)
 
 static void RemoveItemToGiveFromBag(u16 item)
 {
+#if I_STORE_SYSTEM == GEN_3
     if (gPartyMenu.action == PARTY_ACTION_GIVE_PC_ITEM) // Unused, never occurs
         RemovePCItem(item, 1);
     else
+#endif
         RemoveBagItem(item, 1);
 }
 
@@ -6891,10 +6893,14 @@ static void RemoveItemToGiveFromBag(u16 item)
 // but there always should be, and the return is ignored in all uses
 static bool8 ReturnGiveItemToBagOrPC(u16 item)
 {
+#if I_STORE_SYSTEM == GEN_3
     if (gPartyMenu.action == PARTY_ACTION_GIVE_ITEM)
+#endif
         return AddBagItem(item, 1);
+#if I_STORE_SYSTEM == GEN_3
     else
         return AddPCItem(item, 1);
+#endif
 }
 
 void ChooseMonToGiveMailFromMailbox(void)

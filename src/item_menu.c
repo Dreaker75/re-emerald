@@ -178,9 +178,11 @@ static void RemoveMoneyWindow(void);
 static void Task_ChooseHowManyToSell(u8);
 static void SellItem(u8);
 static void WaitAfterItemSell(u8);
+#if I_STORE_SYSTEM == GEN_3
 static void TryDepositItem(u8);
 static void Task_ChooseHowManyToDeposit(u8 taskId);
 static void WaitDepositErrorMessage(u8);
+#endif
 static void CB2_ApprenticeExitBagMenu(void);
 static void CB2_FavorLadyExitBagMenu(void);
 static void CB2_QuizLadyExitBagMenu(void);
@@ -204,7 +206,9 @@ static void ItemMenu_ConfirmQuizLady(u8);
 static void Task_ItemContext_Normal(u8);
 static void Task_ItemContext_GiveToParty(u8);
 static void Task_ItemContext_Sell(u8);
+#if I_STORE_SYSTEM == GEN_3
 static void Task_ItemContext_Deposit(u8);
+#endif
 static void Task_ItemContext_GiveToPC(u8);
 static void ConfirmToss(u8);
 static void CancelToss(u8);
@@ -347,7 +351,9 @@ static const TaskFunc sContextMenuFuncs[] = {
     [ITEMMENULOCATION_SHOP] =                   Task_ItemContext_Sell,
     [ITEMMENULOCATION_BERRY_TREE] =             Task_FadeAndCloseBagMenu,
     [ITEMMENULOCATION_BERRY_BLENDER_CRUSH] =    Task_ItemContext_Normal,
+#if I_STORE_SYSTEM == GEN_3
     [ITEMMENULOCATION_ITEMPC] =                 Task_ItemContext_Deposit,
+#endif
     [ITEMMENULOCATION_FAVOR_LADY] =             Task_ItemContext_Normal,
     [ITEMMENULOCATION_QUIZ_LADY] =              Task_ItemContext_Normal,
     [ITEMMENULOCATION_APPRENTICE] =             Task_ItemContext_Normal,
@@ -596,10 +602,12 @@ void CB2_GoToSellMenu(void)
     GoToBagMenu(ITEMMENULOCATION_SHOP, POCKETS_COUNT, CB2_ExitSellMenu);
 }
 
+#if I_STORE_SYSTEM == GEN_3
 void CB2_GoToItemDepositMenu(void)
 {
     GoToBagMenu(ITEMMENULOCATION_ITEMPC, POCKETS_COUNT, CB2_PlayerPCExitBagMenu);
 }
+#endif
 
 void ApprenticeOpenBagMenu(void)
 {
@@ -1603,7 +1611,9 @@ static void OpenContextMenu(u8 taskId)
     case ITEMMENULOCATION_PARTY:
     case ITEMMENULOCATION_SHOP:
     case ITEMMENULOCATION_BERRY_TREE:
+#if I_STORE_SYSTEM == GEN_3
     case ITEMMENULOCATION_ITEMPC:
+#endif
     case ITEMMENULOCATION_BERRY_TREE_MULCH:
     default:
         if (MenuHelpers_IsLinkActive() == TRUE || InUnionRoom() == TRUE)
@@ -2215,6 +2225,7 @@ static void WaitAfterItemSell(u8 taskId)
     }
 }
 
+#if I_STORE_SYSTEM == GEN_3
 static void Task_ItemContext_Deposit(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
@@ -2299,6 +2310,7 @@ static void WaitDepositErrorMessage(u8 taskId)
         ReturnToItemList(taskId);
     }
 }
+#endif
 
 static bool8 IsWallysBag(void)
 {

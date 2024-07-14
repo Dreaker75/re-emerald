@@ -5,7 +5,7 @@
  - This will be a 386-Romhack that will have repeatable methods to get every item in-game, will try to fix the Battle Frontier economy, and many other things.
 
 ## pokeemerald-expansion options:
- - Most of the out-of-battle mechanics have been updated to be the best QoL versions of themselves (Like the Gen VI Exp. Share), with some exceptions:
+ - Most of the out-of-battle mechanics have been updated to be the best QoL versions of themselves, with some exceptions:
     - The overworld Poison effect has been left alone and can still faint your Pokemon outside of battle
  - Most of the in-battle mechanics have been left alone and work exactly like they did in vanilla Emerald, with some exceptions:
     - A Pokemon can now evolve after a battle even if it has fainted.
@@ -13,6 +13,7 @@
     - Unevolved Pokemon that evolve through level now get bonus experience if they're past their level requirement.
     - All EVs now cap at 252, rather than 255, and the stats are recalculated after every battle, even at level 100.
     - All non-berry items are restored after battle.
+ - The Bag can store up to x999 of the same item
 
 ## Pokemon changes:
 ### Location changes:
@@ -47,7 +48,13 @@
     - All TMs in the Game Corner have been replaced by type-held items: Silk Scarf, Charcoal, Mystic Water and Miracle Seed
  - PokeRus no longer stops being contagius after a few days have passed
  - The Roamer is now guaranteed to be the first encounter in the route if it's there
+ - Running is allowed everywhere, including places like bridges and tall grass
  - You can now toggle the default moving speed (walking or running) by pressing the R button in the overworld after getting the running shoes. Holding B will let you run at the opposite speed as usual. The toggle has no visual cue at the momment, but does have a sound effect attached to it.
+ - Modified the Item storing system to work like Gen 4:
+    - The PC Item storage has been removed (The slots form here have been moved to the bag) 
+    - The Bag capacity has been modified to allow for storing 1 of each item in all Pockets except the main items pocket
+    - Each item can only have 1 slot in the bag. If the maximum amount (x999) is reached, no more of that item can be obtained, even if the bag has a free slot
+    - The main item pocket can now store up to 93 different items (this is still not enough to fit all different items, as there are 139 in Emerald. To add the missing 46 slots I'll have to mess around with the save memory a lot more, which I'll leave for a later time)
     
 ## Field move changes:
  - Rock Smash rocks will either trigger a wild Pokemon battle, or they won't (No more random chance to trigger an encounter. If a rock doesn't give you an encounter, it never will)
@@ -91,7 +98,6 @@
  - All Legendary Pokemon (Including the roamer) will now respawn the following day if they are defeated (This is also affected by defeating the Elite Four)
  - Sudowoodo will respawn every day whether it was defeated or caught
  - Releasing a Legendary Pokemon will clear its CAUGHT flag, allowing them to be caught again starting the following day
- - Running is allowed everywhere, including places like bridges and tall grass
  - Move Pokemon and Item options in the PC now appear before Withdraw and Deposit Pokemon like in newer games
  - Removed the second save confirmation popup, the game will now save after the first one. The warning for saving when a different file exists was left untouched.
  - Removed Wally's tutorial battle and the PokeNav's tutorial call to Mr. Stone

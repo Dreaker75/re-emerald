@@ -11,7 +11,9 @@ enum {
     ITEMMENULOCATION_SHOP,
     ITEMMENULOCATION_BERRY_TREE,
     ITEMMENULOCATION_BERRY_BLENDER_CRUSH,
+#if I_STORE_SYSTEM == GEN_3
     ITEMMENULOCATION_ITEMPC,
+#endif
     ITEMMENULOCATION_FAVOR_LADY,
     ITEMMENULOCATION_QUIZ_LADY,
     ITEMMENULOCATION_APPRENTICE,
@@ -86,7 +88,9 @@ struct BagMenu
 extern struct BagMenu *gBagMenu;
 extern u16 gSpecialVar_ItemId;
 
+#if I_STORE_SYSTEM == GEN_3
 void CB2_GoToItemDepositMenu(void);
+#endif
 void FavorLadyOpenBagMenu(void);
 void QuizLadyOpenBagMenu(void);
 void ApprenticeOpenBagMenu(void);

@@ -8,7 +8,6 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Make Fly usable from the PokeNav map and allow flying to every location, not just towns
  - Make Teleport work like the old Fly
  - Updated Battle Frontier prizes and BP economy
- - Bag expansion: Make it possible to store at least 1 of each item in the bag, and up to 999 of each item in a single slot
  - Update Battle Tent rewards
  - Add a counter for buying PokeBlocks in the Lillycove Department Store, like Platinum
  - Automatically put items picked up by Pick Up in the bag, and make it possible to pick up items even while the Pokemon is already holding an item
@@ -56,6 +55,7 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Make a second encounter table for Route 134, to vary between surfing/fishing from Slateport or Pacifidlog
  - Display the Pokemon's EVs and IVs in the status screen
  - Add a pocket in the bag for Medicine, Held Items and Evolution Items
+ - Bag expansion: Make it possible to store at least 1 of each item in the bag (Currently at 93, need to be 139 in total between the new pockets added)
  - Allow player to change name or gender/sprite at any point
  - Defeating a Trainer in a Secret Base will give the player a reward
  - Add a way to earn all missing Ribbons

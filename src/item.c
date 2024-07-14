@@ -174,25 +174,43 @@ u32 GetFreeSpaceForItemInBag(u16 itemId)
     u8 i;
     u8 pocket = ItemId_GetPocket(itemId) - 1;
     u16 ownedCount;
+#if I_STORE_SYSTEM == GEN_3
     u32 spaceForItem = 0;
+#else
+    u8 emptySpaceFound;   
+#endif
 
     if (ItemId_GetPocket(itemId) == POCKET_NONE)
         return 0;
 
-    // Check space in any existing item slots that already contain this item
+    // Check if the item exists in a pocket already
     for (i = 0; i < gBagPockets[pocket].capacity; i++)
     {
         if (gBagPockets[pocket].itemSlots[i].itemId == itemId)
         {
             ownedCount = GetBagItemQuantity(&gBagPockets[pocket].itemSlots[i].quantity);
+#if I_STORE_SYSTEM == GEN_3
             spaceForItem += max(0, MAX_BAG_ITEM_CAPACITY - ownedCount);
+#else
+            return max(0, MAX_BAG_ITEM_CAPACITY - ownedCount);
+#endif
         }
         else if (gBagPockets[pocket].itemSlots[i].itemId == ITEM_NONE)
         {
+#if I_STORE_SYSTEM == GEN_3
             spaceForItem += MAX_BAG_ITEM_CAPACITY;
+#else
+            emptySpaceFound = TRUE;
+#endif
         }
     }
+
+#if I_STORE_SYSTEM == GEN_3
     return spaceForItem;
+#else
+    // Otherwise, return whether an empty slot was found for it
+    return emptySpaceFound ? MAX_BAG_ITEM_CAPACITY : 0;
+#endif
 }
 
 bool8 AddBagItem(u16 itemId, u16 count)
@@ -232,13 +250,17 @@ bool8 AddBagItem(u16 itemId, u16 count)
                     Free(newItems);
                     return TRUE;
                 }
+                // If the item's slot is full, and I_STORE_SYSTEM != GEN_3, don't create a new one
                 else
                 {
+#if I_STORE_SYSTEM == GEN_3
                     // try creating another instance of the item if possible
                     if (pocket == TMHM_POCKET || pocket == BERRIES_POCKET)
                     {
+#endif
                         Free(newItems);
                         return FALSE;
+#if I_STORE_SYSTEM == GEN_3
                     }
                     else
                     {
@@ -250,6 +272,7 @@ bool8 AddBagItem(u16 itemId, u16 count)
                             break;
                         }
                     }
+#endif
                 }
             }
         }
@@ -257,12 +280,13 @@ bool8 AddBagItem(u16 itemId, u16 count)
         // we're done if quantity is equal to 0
         if (count > 0)
         {
-            // either no existing item was found or we have to create another instance, because the capacity was exceeded
+            // either no existing item was found, or I_STORE_SYSTEM == GEN_3 and we have to create another instance, because the capacity was exceeded
             for (i = 0; i < itemPocket->capacity; i++)
             {
                 if (newItems[i].itemId == ITEM_NONE)
                 {
                     newItems[i].itemId = itemId;
+#if I_STORE_SYSTEM == GEN_3
                     if (count > MAX_BAG_ITEM_CAPACITY)
                     {
                         // try creating a new slot with max capacity if duplicates are possible
@@ -278,9 +302,15 @@ bool8 AddBagItem(u16 itemId, u16 count)
                     {
                         // created a new slot and added quantity
                         SetBagItemQuantity(&newItems[i].quantity, count);
+#else
+                    // if the quantity received is higher than the max item capacity, give as many items as possible (realistically won't happen, since it would require giving 999 items at once)
+                    SetBagItemQuantity(&newItems[i].quantity, min(count, MAX_BAG_ITEM_CAPACITY));
+#endif
                         count = 0;
                         break;
+#if I_STORE_SYSTEM == GEN_3
                     }
+#endif
                 }
             }
 
@@ -400,6 +430,7 @@ void ClearItemSlots(struct ItemSlot *itemSlots, u8 itemCount)
     }
 }
 
+#if I_STORE_SYSTEM == GEN_3
 static s32 FindFreePCItemSlot(void)
 {
     s8 i;
@@ -522,6 +553,7 @@ void CompactPCItems(void)
         }
     }
 }
+#endif
 
 void SwapRegisteredBike(void)
 {

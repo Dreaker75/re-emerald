@@ -113,7 +113,9 @@ enum GivePCBagFillDebugMenu
 {
     DEBUG_PCBAG_MENU_ITEM_FILL_PC_BOXES_FAST,
     DEBUG_PCBAG_MENU_ITEM_FILL_PC_BOXES_SLOW,
+#if I_STORE_SYSTEM == GEN_3
     DEBUG_PCBAG_MENU_ITEM_FILL_PC_ITEMS,
+#endif
     DEBUG_PCBAG_MENU_ITEM_FILL_POCKET_ITEMS,
     DEBUG_PCBAG_MENU_ITEM_FILL_POCKET_BALLS,
     DEBUG_PCBAG_MENU_ITEM_FILL_POCKET_TMHM,
@@ -378,7 +380,9 @@ static void DebugAction_Util_BerryFunctions(u8 taskId);
 static void DebugAction_OpenPCBagFillMenu(u8 taskId);
 static void DebugAction_PCBag_Fill_PCBoxes_Fast(u8 taskId);
 static void DebugAction_PCBag_Fill_PCBoxes_Slow(u8 taskId);
+#if I_STORE_SYSTEM == GEN_3
 static void DebugAction_PCBag_Fill_PCItemStorage(u8 taskId);
+#endif
 static void DebugAction_PCBag_Fill_PocketItems(u8 taskId);
 static void DebugAction_PCBag_Fill_PocketPokeBalls(u8 taskId);
 static void DebugAction_PCBag_Fill_PocketTMHM(u8 taskId);
@@ -734,7 +738,9 @@ static const struct ListMenuItem sDebugMenu_Items_PCBag_Fill[] =
 {
     [DEBUG_PCBAG_MENU_ITEM_FILL_PC_BOXES_FAST]    = {sDebugText_PCBag_Fill_Pc_Fast,         DEBUG_PCBAG_MENU_ITEM_FILL_PC_BOXES_FAST},
     [DEBUG_PCBAG_MENU_ITEM_FILL_PC_BOXES_SLOW]    = {sDebugText_PCBag_Fill_Pc_Slow,         DEBUG_PCBAG_MENU_ITEM_FILL_PC_BOXES_SLOW},
+#if I_STORE_SYSTEM == GEN_3
     [DEBUG_PCBAG_MENU_ITEM_FILL_PC_ITEMS]         = {sDebugText_PCBag_Fill_Pc_Items ,       DEBUG_PCBAG_MENU_ITEM_FILL_PC_ITEMS},
+#endif
     [DEBUG_PCBAG_MENU_ITEM_FILL_POCKET_ITEMS]     = {sDebugText_PCBag_Fill_PocketItems,     DEBUG_PCBAG_MENU_ITEM_FILL_POCKET_ITEMS},
     [DEBUG_PCBAG_MENU_ITEM_FILL_POCKET_BALLS]     = {sDebugText_PCBag_Fill_PocketPokeBalls, DEBUG_PCBAG_MENU_ITEM_FILL_POCKET_BALLS},
     [DEBUG_PCBAG_MENU_ITEM_FILL_POCKET_TMHM]      = {sDebugText_PCBag_Fill_PocketTMHM,      DEBUG_PCBAG_MENU_ITEM_FILL_POCKET_TMHM},
@@ -903,7 +909,9 @@ static void (*const sDebugMenu_Actions_PCBag_Fill[])(u8) =
 {
     [DEBUG_PCBAG_MENU_ITEM_FILL_PC_BOXES_FAST]    = DebugAction_PCBag_Fill_PCBoxes_Fast,
     [DEBUG_PCBAG_MENU_ITEM_FILL_PC_BOXES_SLOW]    = DebugAction_PCBag_Fill_PCBoxes_Slow,
+#if I_STORE_SYSTEM == GEN_3
     [DEBUG_PCBAG_MENU_ITEM_FILL_PC_ITEMS]         = DebugAction_PCBag_Fill_PCItemStorage,
+#endif
     [DEBUG_PCBAG_MENU_ITEM_FILL_POCKET_ITEMS]     = DebugAction_PCBag_Fill_PocketItems,
     [DEBUG_PCBAG_MENU_ITEM_FILL_POCKET_BALLS]     = DebugAction_PCBag_Fill_PocketPokeBalls,
     [DEBUG_PCBAG_MENU_ITEM_FILL_POCKET_TMHM]      = DebugAction_PCBag_Fill_PocketTMHM,
@@ -4139,6 +4147,7 @@ static void DebugAction_PCBag_Fill_PCBoxes_Slow(u8 taskId)
     Debug_DestroyMenu_Full_Script(taskId, Debug_BoxFilledMessage);
 }
 
+#if I_STORE_SYSTEM == GEN_3
 static void DebugAction_PCBag_Fill_PCItemStorage(u8 taskId)
 {
     u16 itemId;
@@ -4149,6 +4158,7 @@ static void DebugAction_PCBag_Fill_PCItemStorage(u8 taskId)
             AddPCItem(itemId, MAX_PC_ITEM_CAPACITY);
     }
 }
+#endif
 
 static void DebugAction_PCBag_Fill_PocketItems(u8 taskId)
 {

@@ -185,7 +185,9 @@ void NewGameInitData(void)
     ClearRoamerLocationData();
     gSaveBlock1Ptr->registeredItem = ITEM_NONE;
     ClearBag();
+#if I_STORE_SYSTEM == GEN_3
     NewGameInitPCItems();
+#endif
     ClearPokeblocks();
     ClearDecorationInventories();
     InitEasyChatPhrases();

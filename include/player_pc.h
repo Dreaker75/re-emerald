@@ -20,7 +20,9 @@ extern const struct MenuAction gMailboxMailOptions[];
 void ReshowPlayerPC(u8 taskId);
 void CB2_PlayerPCExitBagMenu(void);
 void Mailbox_ReturnToMailListAfterDeposit(void);
+#if I_STORE_SYSTEM == GEN_3
 void NewGameInitPCItems(void);
+#endif
 
 
 #endif //GUARD_PLAYER_PC_H

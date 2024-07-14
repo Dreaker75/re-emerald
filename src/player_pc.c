@@ -87,6 +87,7 @@ enum {
 
 #define SWAP_LINE_LENGTH 7
 
+#if I_STORE_SYSTEM == GEN_3
 struct ItemStorageMenu
 {
     struct ListMenuItem listItems[PC_ITEMS_COUNT + 1];
@@ -96,10 +97,13 @@ struct ItemStorageMenu
     u8 spriteId;
     u8 swapLineSpriteIds[SWAP_LINE_LENGTH];
 };
+#endif
 
 static void InitPlayerPCMenu(u8);
 static void PlayerPCProcessMenuInput(u8);
+#if I_STORE_SYSTEM == GEN_3
 static void InitItemStorageMenu(u8, u8);
+#endif
 
 static u8 GetMailboxMailCount(void);
 static void Mailbox_CompactMailList(void);
@@ -110,7 +114,9 @@ static void Mailbox_ReturnToPlayerPC(u8);
 static void Mailbox_PrintMailOptions(u8);
 static void Mailbox_MailOptionsProcessInput(u8);
 
+#if I_STORE_SYSTEM == GEN_3
 static void PlayerPC_ItemStorage(u8);
+#endif
 static void PlayerPC_Mailbox(u8);
 static void PlayerPC_Decoration(u8);
 static void PlayerPC_TurnOff(u8);
@@ -133,16 +139,18 @@ static void Mailbox_ReshowAfterMail(void);
 static void Mailbox_HandleReturnToProcessInput(u8);
 static void Mailbox_UpdateMailListAfterDeposit(void);
 
+#if I_STORE_SYSTEM == GEN_3
 static void ItemStorage_Withdraw(u8);
 static void ItemStorage_Deposit(u8);
 static void ItemStorage_Toss(u8);
 static void ItemStorage_Exit(u8);
 static void ItemStorage_TossItemYes(u8);
 static void ItemStorage_TossItemNo(u8);
-
 static void ItemStorageMenuPrint(const u8 *);
 static void ItemStorageMenuProcessInput(u8);
+#endif
 static void SetPlayerPCListCount(u8);
+#if I_STORE_SYSTEM == GEN_3
 static void ItemStorage_HandleReturnToProcessInput(u8);
 
 static void ItemStorage_Enter(u8, bool8);
@@ -175,10 +183,12 @@ static void ItemStorage_PrintDescription(s32);
 static void ItemStorage_EraseMainMenu(u8);
 static void ItemStorage_MoveCursor(s32, bool8, struct ListMenu *);
 static void ItemStorage_PrintMenuItem(u8, u32, u8);
+#endif
 
 static EWRAM_DATA const u8 *sTopMenuOptionOrder = NULL;
 static EWRAM_DATA u8 sTopMenuNumOptions = 0;
 EWRAM_DATA struct PlayerPCItemPageStruct gPlayerPCItemPageInfo = {};
+#if I_STORE_SYSTEM == GEN_3
 static EWRAM_DATA struct ItemStorageMenu *sItemStorageMenu = NULL;
 
 static const u8 *const sItemStorage_OptionDescriptions[] =
@@ -188,10 +198,13 @@ static const u8 *const sItemStorage_OptionDescriptions[] =
     [MENU_TOSS]     = gText_ThrowAwayItemsInPC,
     [MENU_EXIT]     = gText_GoBackPrevMenu,
 };
+#endif
 
 static const struct MenuAction sPlayerPCMenuActions[] =
 {
+#if I_STORE_SYSTEM == GEN_3
     [MENU_ITEMSTORAGE] = { gText_ItemStorage, {PlayerPC_ItemStorage} },
+#endif
     [MENU_MAILBOX]     = { gText_Mailbox,     {PlayerPC_Mailbox} },
     [MENU_DECORATION]  = { gText_Decoration,  {PlayerPC_Decoration} },
     [MENU_TURNOFF]     = { gText_TurnOff,     {PlayerPC_TurnOff} }
@@ -199,7 +212,9 @@ static const struct MenuAction sPlayerPCMenuActions[] =
 
 static const u8 sBedroomPC_OptionOrder[] =
 {
+#if I_STORE_SYSTEM == GEN_3
     MENU_ITEMSTORAGE,
+#endif
     MENU_MAILBOX,
     MENU_DECORATION,
     MENU_TURNOFF
@@ -208,12 +223,15 @@ static const u8 sBedroomPC_OptionOrder[] =
 
 static const u8 sPlayerPC_OptionOrder[] =
 {
+#if I_STORE_SYSTEM == GEN_3
     MENU_ITEMSTORAGE,
+#endif
     MENU_MAILBOX,
     MENU_TURNOFF
 };
 #define NUM_PLAYER_PC_OPTIONS ARRAY_COUNT(sPlayerPC_OptionOrder)
 
+#if I_STORE_SYSTEM == GEN_3
 static const struct MenuAction sItemStorage_MenuActions[] =
 {
     [MENU_WITHDRAW] = { gText_WithdrawItem, {ItemStorage_Withdraw} },
@@ -221,6 +239,7 @@ static const struct MenuAction sItemStorage_MenuActions[] =
     [MENU_TOSS]     = { gText_TossItem,     {ItemStorage_Toss} },
     [MENU_EXIT]     = { gText_Cancel,       {ItemStorage_Exit} }
 };
+#endif
 
 static const u16 sNewGamePCItems[][2] =
 {
@@ -243,7 +262,11 @@ static const struct WindowTemplate sWindowTemplates_MainMenus[] =
         .tilemapLeft = 1,
         .tilemapTop = 1,
         .width = 9,
+#if I_STORE_SYSTEM == GEN_3
         .height = 6,
+#else
+        .height = 4,
+#endif
         .paletteNum = 15,
         .baseBlock = 1
     },
@@ -252,7 +275,11 @@ static const struct WindowTemplate sWindowTemplates_MainMenus[] =
         .tilemapLeft = 1,
         .tilemapTop = 1,
         .width = 9,
+#if I_STORE_SYSTEM == GEN_3
         .height = 8,
+#else
+        .height = 6,
+#endif
         .paletteNum = 15,
         .baseBlock = 1
     },
@@ -267,6 +294,7 @@ static const struct WindowTemplate sWindowTemplates_MainMenus[] =
     }
 };
 
+#if I_STORE_SYSTEM == GEN_3
 static const struct YesNoFuncTable ItemTossYesNoFuncs =
 {
     ItemStorage_TossItemYes,
@@ -294,6 +322,7 @@ static const struct ListMenuTemplate sListMenuTemplate_ItemStorage =
     .fontId = FONT_NARROW,
     .cursorKind = CURSOR_BLACK_ARROW,
 };
+#endif
 
 static const struct WindowTemplate sWindowTemplates_ItemStorage[ITEMPC_WIN_COUNT] =
 {
@@ -355,6 +384,7 @@ static const struct WindowTemplate sWindowTemplates_ItemStorage[ITEMPC_WIN_COUNT
 
 static const u8 sSwapArrowTextColors[] = {TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY, TEXT_COLOR_DARK_GRAY};
 
+#if I_STORE_SYSTEM == GEN_3
 void NewGameInitPCItems(void)
 {
     u8 i = 0;
@@ -369,6 +399,7 @@ void NewGameInitPCItems(void)
         i++;
     }
 }
+#endif
 
 void BedroomPC(void)
 {
@@ -448,11 +479,13 @@ void ReshowPlayerPC(u8 var)
     DisplayItemMessageOnField(var, gText_WhatWouldYouLike, InitPlayerPCMenu);
 }
 
+#if I_STORE_SYSTEM == GEN_3
 static void PlayerPC_ItemStorage(u8 taskId)
 {
     InitItemStorageMenu(taskId, MENU_WITHDRAW);
     gTasks[taskId].func = ItemStorageMenuProcessInput;
 }
+#endif
 
 static void PlayerPC_Mailbox(u8 taskId)
 {
@@ -505,6 +538,7 @@ static void PlayerPC_TurnOff(u8 taskId)
     DestroyTask(taskId);
 }
 
+#if I_STORE_SYSTEM == GEN_3
 static void InitItemStorageMenu(u8 taskId, u8 var)
 {
     s16 *data;
@@ -646,6 +680,7 @@ static void ItemStorage_Exit(u8 taskId)
     ItemStorage_EraseMainMenu(taskId);
     ReshowPlayerPC(taskId);
 }
+#endif
 
 // Used by Item Storage and the Mailbox
 static void SetPlayerPCListCount(u8 taskId)
@@ -656,6 +691,7 @@ static void SetPlayerPCListCount(u8 taskId)
         gPlayerPCItemPageInfo.pageItems = gPlayerPCItemPageInfo.count + 1;
 }
 
+#if I_STORE_SYSTEM == GEN_3
 static void ItemStorage_EraseMainMenu(u8 taskId)
 {
     s16 *data = gTasks[taskId].data;
@@ -664,6 +700,7 @@ static void ItemStorage_EraseMainMenu(u8 taskId)
     RemoveWindow(tWindowId);
     ScheduleBgCopyTilemapToVram(0);
 }
+#endif
 
 static u8 GetMailboxMailCount(void)
 {
@@ -939,6 +976,7 @@ static void Mailbox_Cancel(u8 taskId)
     gTasks[taskId].func = Mailbox_ProcessInput;
 }
 
+#if I_STORE_SYSTEM == GEN_3
 static void ItemStorage_Init(void)
 {
     sItemStorageMenu = AllocZeroed(sizeof(*sItemStorageMenu));
@@ -1504,3 +1542,4 @@ static void ItemStorage_ReturnToListInput(u8 taskId)
     ItemStorage_AddScrollIndicator();
     gTasks[taskId].func = ItemStorage_ProcessInput;
 }
+#endif

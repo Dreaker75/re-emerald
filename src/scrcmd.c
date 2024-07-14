@@ -534,19 +534,23 @@ bool8 ScrCmd_checkitemtype(struct ScriptContext *ctx)
 
 bool8 ScrCmd_addpcitem(struct ScriptContext *ctx)
 {
+#if I_STORE_SYSTEM == GEN_3
     u16 itemId = VarGet(ScriptReadHalfword(ctx));
     u16 quantity = VarGet(ScriptReadHalfword(ctx));
 
     gSpecialVar_Result = AddPCItem(itemId, quantity);
+#endif
     return FALSE;
 }
 
 bool8 ScrCmd_checkpcitem(struct ScriptContext *ctx)
 {
+#if I_STORE_SYSTEM == GEN_3
     u16 itemId = VarGet(ScriptReadHalfword(ctx));
     u16 quantity = VarGet(ScriptReadHalfword(ctx));
 
     gSpecialVar_Result = CheckPCHasItem(itemId, quantity);
+#endif
     return FALSE;
 }
 

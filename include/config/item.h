@@ -22,6 +22,12 @@
 // TM config
 #define I_REUSABLE_TMS          TRUE       // In Gen5-8, TMs are reusable. Setting this to TRUE will make all vanilla TMs reusable, though they can also be cherry-picked by setting their importance to 1.
 
+// Bag config
+// Changes the way items are stored
+// - In GEN_3, the bag had 30 slots, the PC had 50 slots, and an item could be stored in more than 1 slot.
+// - In GEN_4, there was no PC storage, the bag could fit 1 of each item and could only hold 1 stack of each
+#define I_STORE_SYSTEM          GEN_4
+
 // Exp. Share config
 // To use this feature, replace the 0 with the flag ID you're assigning it to.
 // Eg: Replace with FLAG_UNUSED_0x264 so you can use that flag to toggle the feature.

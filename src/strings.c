@@ -266,7 +266,9 @@ const u8 *const gBagMenu_ReturnToStrings[] =
     [ITEMMENULOCATION_SHOP]                = gText_TheShop,
     [ITEMMENULOCATION_BERRY_TREE]          = gText_TheField,
     [ITEMMENULOCATION_BERRY_BLENDER_CRUSH] = gText_TheField,
+#if I_STORE_SYSTEM == GEN_3
     [ITEMMENULOCATION_ITEMPC]              = gText_ThePC,
+#endif
     [ITEMMENULOCATION_FAVOR_LADY]          = gText_TheField,
     [ITEMMENULOCATION_QUIZ_LADY]           = gText_TheField,
     [ITEMMENULOCATION_APPRENTICE]          = gText_TheField,

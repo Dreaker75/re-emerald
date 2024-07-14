@@ -966,7 +966,11 @@ static void ReceiveGiftItem(u16 *item, u8 multiplayerId)
 {
     if (multiplayerId != 0 && *item != ITEM_NONE && GetPocketByItemId(*item) == POCKET_KEY_ITEMS)
     {
-        if (!CheckBagHasItem(*item, 1) && !CheckPCHasItem(*item, 1) && AddBagItem(*item, 1))
+        if (!CheckBagHasItem(*item, 1)
+#if I_STORE_SYSTEM == GEN_3
+         && !CheckPCHasItem(*item, 1)
+#endif
+         && AddBagItem(*item, 1))
         {
             VarSet(VAR_TEMP_RECORD_MIX_GIFT_ITEM, *item);
             StringCopy(gStringVar1, gLinkPlayers[0].name);
