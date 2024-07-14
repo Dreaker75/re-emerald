@@ -10,7 +10,7 @@ OldaleTown_OnTransition:
 	call Common_EventScript_SetupRivalGfxId
 	setflag FLAG_VISITED_OLDALE_TOWN
 	call_if_unset FLAG_ADVENTURE_STARTED, OldaleTown_EventScript_BlockWestEntrance
-	call_if_unset FLAG_RECEIVED_POTION_OLDALE, OldaleTown_EventScript_MoveMartEmployee
+	call_if_unset FLAG_OLDALE_EMPLOYEE_MOVED, OldaleTown_EventScript_MoveMartEmployee
 	call_if_set FLAG_ADVENTURE_STARTED, OldaleTown_EventScript_SetOldaleState
 	end
 
@@ -41,8 +41,8 @@ OldaleTown_EventScript_MartEmployee::
 	lock
 	faceplayer
 	goto_if_set FLAG_RECEIVED_POTION_OLDALE, OldaleTown_EventScript_ExplainPotion
-	goto_if_set FLAG_TEMP_1, OldaleTown_EventScript_ExplainPotion
-	setflag FLAG_TEMP_1
+	goto_if_set FLAG_OLDALE_EMPLOYEE_MOVED, OldaleTown_EventScript_GivePotion
+	setflag FLAG_OLDALE_EMPLOYEE_MOVED
 	playbgm MUS_FOLLOW_ME, FALSE
 	msgbox OldaleTown_Text_IWorkAtPokemonMart, MSGBOX_DEFAULT
 	closemessage
@@ -75,6 +75,11 @@ OldaleTown_EventScript_GoToMartEast::
 
 OldaleTown_EventScript_ExplainPokemonMart::
 	msgbox OldaleTown_Text_ThisIsAPokemonMart, MSGBOX_DEFAULT
+	goto OldaleTown_EventScript_GivePotion
+	end
+
+OldaleTown_EventScript_GivePotion::
+	msgbox OldaleTown_Text_IdLikeYouToHaveThis, MSGBOX_DEFAULT
 	giveitem ITEM_POTION
 	goto_if_eq VAR_RESULT, FALSE, OldaleTown_EventScript_BagIsFull
 	msgbox OldaleTown_Text_PotionExplanation, MSGBOX_DEFAULT
@@ -356,7 +361,9 @@ OldaleTown_Text_ThisIsAPokemonMart:
 	.string "This is a POKéMON MART.\n"
 	.string "Just look for our blue roof.\p"
 	.string "We sell a variety of goods including\n"
-	.string "POKé BALLS for catching POKéMON.\p"
+	.string "POKé BALLS for catching POKéMON.$"
+
+OldaleTown_Text_IdLikeYouToHaveThis:
 	.string "Here, I'd like you to have this as\n"
 	.string "a promotional item.$"
 
