@@ -98,6 +98,12 @@
  - All Legendary Pokemon (Including the roamer) will now respawn the following day if they are defeated (This is also affected by defeating the Elite Four)
  - Sudowoodo will respawn every day whether it was defeated or caught
  - Releasing a Legendary Pokemon will clear its CAUGHT flag, allowing them to be caught again starting the following day
+ - The prizes for the Pokemon Lottery Corner have been updated and also give a reward for matching 1 number:
+      - 1 number matches: Max Revive
+      - 2 numbers match: Rare Candy
+      - 3 numbers match: PP Max
+      - 4 numbers match: Leftovers
+      - 5 numbers match: Master Ball
  - Move Pokemon and Item options in the PC now appear before Withdraw and Deposit Pokemon like in newer games
  - Removed the second save confirmation popup, the game will now save after the first one. The warning for saving when a different file exists was left untouched.
  - Removed Wally's tutorial battle and the PokeNav's tutorial call to Mr. Stone

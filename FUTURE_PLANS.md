@@ -14,8 +14,6 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Make it possible to buy Coins in any amount in the Game Corner
  - Give an option to make the text display instant
  - Change Hidden and PokeBall items found throughout the game to be more useful
- - Change Mirage Tower to always be present in the desert
- - Change Lottery rewards
 
 ## Features for Beta release
  - Updated trades: Make all current trades in the game more useful and add new ones for non-Hoenn Pokemon

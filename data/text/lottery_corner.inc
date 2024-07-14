@@ -40,6 +40,11 @@ LilycoveCity_DepartmentStore_1F_Text_NoNumbersMatched:
 	.string "I'm sorry.\n"
 	.string "None of the numbers matched.$"
 
+LilycoveCity_DepartmentStore_1F_Text_OneDigitMatched:
+	.string "One digit matched, so you win the\n"
+	.string "fourth prize!\l"
+	.string "You've won the {STR_VAR_1}!$"
+
 LilycoveCity_DepartmentStore_1F_Text_TwoDigitsMatched:
 	.string "Two digits matched, so you win the\n"
 	.string "third prize!\l"

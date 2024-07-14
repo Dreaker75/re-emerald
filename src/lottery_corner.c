@@ -13,9 +13,10 @@ static EWRAM_DATA u16 sOtIdDigit = 0;
 
 static const u16 sLotteryPrizes[] =
 {
-    ITEM_PP_UP,
-    ITEM_EXP_SHARE,
     ITEM_MAX_REVIVE,
+    ITEM_RARE_CANDY,
+    ITEM_PP_MAX,
+    ITEM_LEFTOVERS,
     ITEM_MASTER_BALL,
 };
 
@@ -66,9 +67,9 @@ void PickLotteryCornerTicket(void)
                 u32 otId = GetMonData(mon, MON_DATA_OT_ID);
                 u8 numMatchingDigits = GetMatchingDigits(gSpecialVar_Result, otId);
 
-                if (numMatchingDigits > gSpecialVar_0x8004 && numMatchingDigits > 1)
+                if (numMatchingDigits > gSpecialVar_0x8004 && numMatchingDigits > 0)
                 {
-                    gSpecialVar_0x8004 = numMatchingDigits - 1;
+                    gSpecialVar_0x8004 = numMatchingDigits;
                     box = TOTAL_BOXES_COUNT;
                     slot = i;
                 }
@@ -88,9 +89,9 @@ void PickLotteryCornerTicket(void)
                 u32 otId = GetBoxMonData(&gPokemonStoragePtr->boxes[i][j], MON_DATA_OT_ID);
                 u8 numMatchingDigits = GetMatchingDigits(gSpecialVar_Result, otId);
 
-                if (numMatchingDigits > gSpecialVar_0x8004 && numMatchingDigits > 1)
+                if (numMatchingDigits > gSpecialVar_0x8004 && numMatchingDigits > 0)
                 {
-                    gSpecialVar_0x8004 = numMatchingDigits - 1;
+                    gSpecialVar_0x8004 = numMatchingDigits;
                     box = i;
                     slot = j;
                 }
