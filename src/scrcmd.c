@@ -2425,7 +2425,8 @@ bool8 ScrCmd_checkpartylearnablemove(struct ScriptContext *ctx)
         u16 species = GetMonData(&gPlayerParty[i], MON_DATA_SPECIES, NULL);
         if (!species)
             break;
-        if (!GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG) && CanLearnTeachableMove(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG), moveId) == TRUE)
+        if (!GetMonData(&gPlayerParty[i], MON_DATA_IS_EGG) && 
+            (MonKnowsMove(&gPlayerParty[i], moveId) == TRUE || CanLearnTeachableMove(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES_OR_EGG), moveId) == TRUE))
         {
             gSpecialVar_Result = i;
             gSpecialVar_0x8004 = species;

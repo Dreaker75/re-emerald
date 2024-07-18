@@ -2823,7 +2823,9 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
     // Add field moves to field moves list
     for (i = 0; i < sizeof(sMenuExclusiveFieldMoves) / sizeof(sMenuExclusiveFieldMoves[0]); i++)
     {
-        if (CanLearnTeachableMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sMenuExclusiveFieldMoves[i]]) == TRUE){
+        if (MonKnowsMove(&mons[slotId], sFieldMoves[sMenuExclusiveFieldMoves[i]]) == TRUE || 
+            CanLearnTeachableMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sMenuExclusiveFieldMoves[i]]) == TRUE)
+        {
             AppendToList(sPartyMenuInternal->fieldMoves, &sPartyMenuInternal->numFieldMoves, sMenuExclusiveFieldMoves[i] + MENU_FIELD_MOVES);
         }
     }

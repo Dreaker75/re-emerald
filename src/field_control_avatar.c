@@ -20,6 +20,7 @@
 #include "match_call.h"
 #include "metatile_behavior.h"
 #include "overworld.h"
+#include "party_menu.h"
 #include "pokemon.h"
 #include "safari_zone.h"
 #include "script.h"
@@ -213,7 +214,7 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
         {
             if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE)
                 break;
-            if (CanLearnTeachableMove(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES), MOVE_FLASH))
+            if (MonKnowsMove(&gPlayerParty[i], MOVE_FLASH) == TRUE || CanLearnTeachableMove(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES), MOVE_FLASH))
             {
                 sLastMapSectionId = gMapHeader.regionMapSectionId;
                 ScriptContext_SetupScript(EventScript_WantToUseFlash);

@@ -1290,7 +1290,7 @@ bool8 PartyHasMonWithSurf(void)
         {
             if (GetMonData(&gPlayerParty[i], MON_DATA_SPECIES) == SPECIES_NONE)
                 break;
-            if (CanLearnTeachableMove(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES), MOVE_SURF))
+            if (MonKnowsMove(&gPlayerParty[i], MOVE_SURF) == TRUE || CanLearnTeachableMove(GetMonData(&gPlayerParty[i], MON_DATA_SPECIES), MOVE_SURF))
                 return TRUE;
         }
     }
