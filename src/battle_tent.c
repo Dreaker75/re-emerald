@@ -21,25 +21,22 @@
 
 // This file's functions.
 static void InitVerdanturfTentChallenge(void);
-static void GetVerdanturfTentPrize(void);
-static void SetVerdanturfTentPrize(void);
+static void GetVerdanturfTentPrizeHeld(void);
+static void SetVerdanturfTentPrizeHeld(void);
 static void SetVerdanturfTentTrainerGfx(void);
 static void BufferVerdanturfTentTrainerIntro(void);
 static void SaveVerdanturfTentChallenge(void);
-static void SetRandomVerdanturfTentPrize(void);
 static void GiveVerdanturfTentPrize(void);
 static void InitFallarborTentChallenge(void);
-static void GetFallarborTentPrize(void);
-static void SetFallarborTentPrize(void);
+static void GetFallarborTentPrizeHeld(void);
+static void SetFallarborTentPrizeHeld(void);
 static void SaveFallarborTentChallenge(void);
-static void SetRandomFallarborTentPrize(void);
 static void GiveFallarborTentPrize(void);
 static void BufferFallarborTentTrainerName(void);
 static void InitSlateportTentChallenge(void);
-static void GetSlateportTentPrize(void);
-static void SetSlateportTentPrize(void);
+static void GetSlateportTentPrizeHeld(void);
+static void SetSlateportTentPrizeHeld(void);
 static void SaveSlateportTentChallenge(void);
-static void SetRandomSlateportTentPrize(void);
 static void GiveSlateportTentPrize(void);
 static void SelectInitialRentalMons(void);
 static void SwapRentalMons(void);
@@ -61,37 +58,36 @@ static u16 sRandMonId;
 void static (*const sVerdanturfTentFuncs[])(void) =
 {
     [VERDANTURF_TENT_FUNC_INIT]               = InitVerdanturfTentChallenge,
-    [VERDANTURF_TENT_FUNC_GET_PRIZE]          = GetVerdanturfTentPrize,
-    [VERDANTURF_TENT_FUNC_SET_PRIZE]          = SetVerdanturfTentPrize,
+    [VERDANTURF_TENT_FUNC_GET_PRIZE_HELD]     = GetVerdanturfTentPrizeHeld,
+    [VERDANTURF_TENT_FUNC_SET_PRIZE_HELD]     = SetVerdanturfTentPrizeHeld,
     [VERDANTURF_TENT_FUNC_SET_OPPONENT_GFX]   = SetVerdanturfTentTrainerGfx,
     [VERDANTURF_TENT_FUNC_GET_OPPONENT_INTRO] = BufferVerdanturfTentTrainerIntro,
     [VERDANTURF_TENT_FUNC_SAVE]               = SaveVerdanturfTentChallenge,
-    [VERDANTURF_TENT_FUNC_SET_RANDOM_PRIZE]   = SetRandomVerdanturfTentPrize,
     [VERDANTURF_TENT_FUNC_GIVE_PRIZE]         = GiveVerdanturfTentPrize
 };
 
-static const u16 sVerdanturfTentRewards[] = {ITEM_NEST_BALL};
+static const u16 sVerdanturfTentReward = ITEM_RARE_CANDY;
+static const u8 sVerdanturfTentRewardAmount = 5;
 
 void static (*const sFallarborTentFuncs[])(void) =
 {
     [FALLARBOR_TENT_FUNC_INIT]              = InitFallarborTentChallenge,
-    [FALLARBOR_TENT_FUNC_GET_PRIZE]         = GetFallarborTentPrize,
-    [FALLARBOR_TENT_FUNC_SET_PRIZE]         = SetFallarborTentPrize,
+    [FALLARBOR_TENT_FUNC_GET_PRIZE_HELD]    = GetFallarborTentPrizeHeld,
+    [FALLARBOR_TENT_FUNC_SET_PRIZE_HELD]    = SetFallarborTentPrizeHeld,
     [FALLARBOR_TENT_FUNC_SAVE]              = SaveFallarborTentChallenge,
-    [FALLARBOR_TENT_FUNC_SET_RANDOM_PRIZE]  = SetRandomFallarborTentPrize,
     [FALLARBOR_TENT_FUNC_GIVE_PRIZE]        = GiveFallarborTentPrize,
     [FALLARBOR_TENT_FUNC_GET_OPPONENT_NAME] = BufferFallarborTentTrainerName
 };
 
-static const u16 sFallarborTentRewards[] = {ITEM_HYPER_POTION};
+static const u16 sFallarborTentReward = ITEM_PP_UP;
+static const u8 sFallarborTentRewardAmount = 12;
 
 void static (*const sSlateportTentFuncs[])(void) =
 {
     [SLATEPORT_TENT_FUNC_INIT]                   = InitSlateportTentChallenge,
-    [SLATEPORT_TENT_FUNC_GET_PRIZE]              = GetSlateportTentPrize,
-    [SLATEPORT_TENT_FUNC_SET_PRIZE]              = SetSlateportTentPrize,
+    [SLATEPORT_TENT_FUNC_GET_PRIZE_HELD]         = GetSlateportTentPrizeHeld,
+    [SLATEPORT_TENT_FUNC_SET_PRIZE_HELD]         = SetSlateportTentPrizeHeld,
     [SLATEPORT_TENT_FUNC_SAVE]                   = SaveSlateportTentChallenge,
-    [SLATEPORT_TENT_FUNC_SET_RANDOM_PRIZE]       = SetRandomSlateportTentPrize,
     [SLATEPORT_TENT_FUNC_GIVE_PRIZE]             = GiveSlateportTentPrize,
     [SLATEPORT_TENT_FUNC_SELECT_RENT_MONS]       = SelectInitialRentalMons,
     [SLATEPORT_TENT_FUNC_SWAP_RENT_MONS]         = SwapRentalMons,
@@ -99,7 +95,8 @@ void static (*const sSlateportTentFuncs[])(void) =
     [SLATEPORT_TENT_FUNC_GENERATE_RENTAL_MONS]   = GenerateInitialRentalMons
 };
 
-static const u16 sSlateportTentRewards[] = {ITEM_FULL_HEAL};
+static const u16 sSlateportTentRewards[] = {ITEM_HP_UP, ITEM_PROTEIN, ITEM_IRON, ITEM_CALCIUM, ITEM_ZINC, ITEM_CARBOS};
+static const u8 sSlateportTentRewardsAmount = 2;
 
 // code
 void CallVerdanturfTentFunction(void)
@@ -115,14 +112,14 @@ static void InitVerdanturfTentChallenge(void)
     SetDynamicWarp(0, gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum, WARP_ID_NONE);
 }
 
-static void GetVerdanturfTentPrize(void)
+static void GetVerdanturfTentPrizeHeld(void)
 {
-    gSpecialVar_Result = gSaveBlock2Ptr->frontier.verdanturfTentPrize;
+    gSpecialVar_Result = gSaveBlock2Ptr->frontier.verdanturfTentPrizeHeld;
 }
 
-static void SetVerdanturfTentPrize(void)
+static void SetVerdanturfTentPrizeHeld(void)
 {
-    gSaveBlock2Ptr->frontier.verdanturfTentPrize = gSpecialVar_0x8006;
+    gSaveBlock2Ptr->frontier.verdanturfTentPrizeHeld = gSpecialVar_0x8005;
 }
 
 static void SetVerdanturfTentTrainerGfx(void)
@@ -145,17 +142,25 @@ static void SaveVerdanturfTentChallenge(void)
     SaveGameFrontier();
 }
 
-static void SetRandomVerdanturfTentPrize(void)
-{
-    gSaveBlock2Ptr->frontier.verdanturfTentPrize = sVerdanturfTentRewards[Random() % ARRAY_COUNT(sVerdanturfTentRewards)];
-}
-
 static void GiveVerdanturfTentPrize(void)
 {
-    if (AddBagItem(gSaveBlock2Ptr->frontier.verdanturfTentPrize, 1) == TRUE)
+    u8 amountToGive = sVerdanturfTentRewardAmount;
+
+    if (gSpecialVar_0x8005 == TRUE)
     {
-        CopyItemName(gSaveBlock2Ptr->frontier.verdanturfTentPrize, gStringVar1);
-        gSaveBlock2Ptr->frontier.verdanturfTentPrize = ITEM_NONE;
+        amountToGive = min(GetFreeSpaceForItemInBag(sVerdanturfTentReward), amountToGive);
+        // The item's capacity is full
+        if (amountToGive == 0)
+        {
+            // Set VAR_RESULT to FALSE to not display any message and return
+            gSpecialVar_Result = FALSE;
+            return;
+        }
+    }
+
+    if (AddBagItem(sVerdanturfTentReward, amountToGive) == TRUE)
+    {
+        CopyItemName(sVerdanturfTentReward, gStringVar1);
         gSpecialVar_Result = TRUE;
     }
     else
@@ -177,14 +182,14 @@ static void InitFallarborTentChallenge(void)
     SetDynamicWarp(0, gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum, WARP_ID_NONE);
 }
 
-static void GetFallarborTentPrize(void)
+static void GetFallarborTentPrizeHeld(void)
 {
-    gSpecialVar_Result = gSaveBlock2Ptr->frontier.fallarborTentPrize;
+    gSpecialVar_Result = gSaveBlock2Ptr->frontier.fallarborTentPrizeHeld;
 }
 
-static void SetFallarborTentPrize(void)
+static void SetFallarborTentPrizeHeld(void)
 {
-    gSaveBlock2Ptr->frontier.fallarborTentPrize = gSpecialVar_0x8006;
+    gSaveBlock2Ptr->frontier.fallarborTentPrizeHeld = gSpecialVar_0x8005;
 }
 
 static void SaveFallarborTentChallenge(void)
@@ -195,17 +200,25 @@ static void SaveFallarborTentChallenge(void)
     SaveGameFrontier();
 }
 
-static void SetRandomFallarborTentPrize(void)
-{
-    gSaveBlock2Ptr->frontier.fallarborTentPrize = sFallarborTentRewards[Random() % ARRAY_COUNT(sFallarborTentRewards)];
-}
-
 static void GiveFallarborTentPrize(void)
 {
-    if (AddBagItem(gSaveBlock2Ptr->frontier.fallarborTentPrize, 1) == TRUE)
+    u8 amountToGive = sFallarborTentRewardAmount;
+
+    if (gSpecialVar_0x8005 == TRUE)
     {
-        CopyItemName(gSaveBlock2Ptr->frontier.fallarborTentPrize, gStringVar1);
-        gSaveBlock2Ptr->frontier.fallarborTentPrize = ITEM_NONE;
+        amountToGive = min(GetFreeSpaceForItemInBag(sFallarborTentReward), amountToGive);
+        // The item's capacity is full
+        if (amountToGive == 0)
+        {
+            // Set VAR_RESULT to FALSE to not display any message and return
+            gSpecialVar_Result = FALSE;
+            return;
+        }
+    }
+
+    if (AddBagItem(sFallarborTentReward, amountToGive) == TRUE)
+    {
+        CopyItemName(sFallarborTentReward, gStringVar1);
         gSpecialVar_Result = TRUE;
     }
     else
@@ -232,14 +245,14 @@ static void InitSlateportTentChallenge(void)
     SetDynamicWarp(0, gSaveBlock1Ptr->location.mapGroup, gSaveBlock1Ptr->location.mapNum, WARP_ID_NONE);
 }
 
-static void GetSlateportTentPrize(void)
+static void GetSlateportTentPrizeHeld(void)
 {
-    gSpecialVar_Result = gSaveBlock2Ptr->frontier.slateportTentPrize;
+    gSpecialVar_Result = gSaveBlock2Ptr->frontier.slateportTentPrizeHeld;
 }
 
-static void SetSlateportTentPrize(void)
+static void SetSlateportTentPrizeHeld(void)
 {
-    gSaveBlock2Ptr->frontier.slateportTentPrize = gSpecialVar_0x8006;
+    gSaveBlock2Ptr->frontier.slateportTentPrizeHeld = gSpecialVar_0x8005;
 }
 
 static void SaveSlateportTentChallenge(void)
@@ -250,22 +263,30 @@ static void SaveSlateportTentChallenge(void)
     SaveGameFrontier();
 }
 
-static void SetRandomSlateportTentPrize(void)
-{
-    gSaveBlock2Ptr->frontier.slateportTentPrize = sSlateportTentRewards[Random() % ARRAY_COUNT(sSlateportTentRewards)];
-}
-
 static void GiveSlateportTentPrize(void)
 {
-    if (AddBagItem(gSaveBlock2Ptr->frontier.slateportTentPrize, 1) == TRUE)
+    u8 timesBagFull = 0;
+    u8 amountToGive = sSlateportTentRewardsAmount;
+    gSpecialVar_Result = FALSE;
+
+    for (u8 i = 0; i < ARRAY_COUNT(sSlateportTentRewards); i++)
     {
-        CopyItemName(gSaveBlock2Ptr->frontier.slateportTentPrize, gStringVar1);
-        gSaveBlock2Ptr->frontier.slateportTentPrize = ITEM_NONE;
-        gSpecialVar_Result = TRUE;
+        if (gSpecialVar_0x8005 == TRUE)
+        {
+            amountToGive = min(GetFreeSpaceForItemInBag(sSlateportTentRewards[i]), sSlateportTentRewardsAmount);
+        }
+
+        // amountToGive will only ever be different than sSlateportTentRewardsAmount if gSpecialVar_0x8005 == TRUE
+        //  if it's 0, there's no room in the bag for the item, so no need to try to add it
+        if (amountToGive == 0 || !AddBagItem(sSlateportTentRewards[i], amountToGive)){
+            timesBagFull++;
+        }
     }
-    else
+        
+    if (timesBagFull < ARRAY_COUNT(sSlateportTentRewards))
     {
-        gSpecialVar_Result = FALSE;
+        StringCopy(gStringVar1, COMPOUND_STRING("2x SETS OF VITAMINS"));
+        gSpecialVar_Result = TRUE;
     }
 }
 

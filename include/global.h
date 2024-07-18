@@ -427,9 +427,13 @@ struct BattleFrontier
     /*0xE2C*/ struct PyramidBag pyramidBag;
     /*0xE68*/ u8 pyramidLightRadius;
     /*0xE69*/ //u8 padding4;
-    /*0xE6A*/ u16 verdanturfTentPrize;
-    /*0xE6C*/ u16 fallarborTentPrize;
-    /*0xE6E*/ u16 slateportTentPrize;
+    /*0xE6A*/ u8 verdanturfTentPrizeHeld:1;  // CHANGED: Battle Tents now give the prize without saving it
+    /*0xE6A*/ u8 fallarborTentPrizeHeld:1;   // so these bools save whether the prize has been saved due to no room in bag
+    /*0xE6A*/ u8 slateportTentPrizeHeld:1;   //
+    /*0xE6A*/ u8 unused_E6A:5;
+    /*0xE6B*/ u8 unused_E6B;
+    /*0xE6C*/ u16 unused_E6C;
+    /*0xE6E*/ u16 unused_E6E;
     /*0xE70*/ struct RentalMon rentalMons[FRONTIER_PARTY_SIZE * 2];
     /*0xEB8*/ u16 battlePoints;
     /*0xEBA*/ u16 cardBattlePoints;

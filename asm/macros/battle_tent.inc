@@ -6,17 +6,16 @@
 	special CallVerdanturfTentFunction
 	.endm
 
-	@ Get the current prize item id
-	.macro verdanturftent_getprize
-	setvar VAR_0x8004, VERDANTURF_TENT_FUNC_GET_PRIZE
+	@ Get the whether the prize is currently being held for the player
+	.macro verdanturftent_getprize_held
+	setvar VAR_0x8004, VERDANTURF_TENT_FUNC_GET_PRIZE_HELD
 	special CallVerdanturfTentFunction
 	.endm
 
-	@ Unused. Set the prize item to be given
-	.macro verdanturftent_setprize unusedArg:req, itemId:req
-	setvar VAR_0x8004, VERDANTURF_TENT_FUNC_SET_PRIZE
-	setvar VAR_0x8005, \unusedArg
-	setvar VAR_0x8006, \itemId
+	@ Set whether the prize is currently being held for the player
+	.macro verdanturftent_setprizeheld isSaved:req
+	setvar VAR_0x8004, VERDANTURF_TENT_FUNC_SET_PRIZE_HELD
+	setvar VAR_0x8005, \isSaved
 	special CallVerdanturfTentFunction
 	.endm
 
@@ -39,15 +38,11 @@
 	special CallVerdanturfTentFunction
 	.endm
 
-	@ Set the prize item as randomly selected from a list. Randomness unnecessary, as the list is only 1 item
-	.macro verdanturftent_setrandomprize
-	setvar VAR_0x8004, VERDANTURF_TENT_FUNC_SET_RANDOM_PRIZE
-	special CallVerdanturfTentFunction
-	.endm
-
 	@ Give the current prize item. FALSE if no room for prize
-	.macro verdanturftent_giveprize
+	@ giveUntilMax is a bool to know whether to give the player as many items as possible and ignoring the rest
+	.macro verdanturftent_giveprize, giveUntilMax:req
 	setvar VAR_0x8004, VERDANTURF_TENT_FUNC_GIVE_PRIZE
+	setvar VAR_0x8005, \giveUntilMax
 	special CallVerdanturfTentFunction
 	.endm
 
@@ -60,17 +55,16 @@
 	special CallFallarborTentFunction
 	.endm
 
-	@ Get the current prize item id
-	.macro fallarbortent_getprize
-	setvar VAR_0x8004, FALLARBOR_TENT_FUNC_GET_PRIZE
+	@ Get the whether the prize is currently being held for the player
+	.macro fallarbortent_getprize_held
+	setvar VAR_0x8004, FALLARBOR_TENT_FUNC_GET_PRIZE_HELD
 	special CallFallarborTentFunction
 	.endm
 
-	@ Unused. Set the prize item to be given
-	.macro fallarbortent_setprize unusedArg:req, itemId:req
-	setvar VAR_0x8004, FALLARBOR_TENT_FUNC_SET_PRIZE
-	setvar VAR_0x8005, \unusedArg
-	setvar VAR_0x8006, \itemId
+	@ Toggle whether the prize is currently being held for the player
+	.macro fallarbortent_setprizeheld isSaved:req
+	setvar VAR_0x8004, FALLARBOR_TENT_FUNC_SET_PRIZE_HELD
+	setvar VAR_0x8005, \isSaved
 	special CallFallarborTentFunction
 	.endm
 
@@ -81,15 +75,11 @@
 	special CallFallarborTentFunction
 	.endm
 
-	@ Set the prize item as randomly selected from a list. Randomness unnecessary, as the list is only 1 item
-	.macro fallarbortent_setrandomprize
-	setvar VAR_0x8004, FALLARBOR_TENT_FUNC_SET_RANDOM_PRIZE
-	special CallFallarborTentFunction
-	.endm
-
 	@ Give the current prize item. FALSE if no room for prize
-	.macro fallarbortent_giveprize
+	@ giveUntilMax is a bool to know whether to give the player as many items as possible and ignoring the rest
+	.macro fallarbortent_giveprize, giveUntilMax:req
 	setvar VAR_0x8004, FALLARBOR_TENT_FUNC_GIVE_PRIZE
+	setvar VAR_0x8005, \giveUntilMax
 	special CallFallarborTentFunction
 	.endm
 
@@ -108,17 +98,16 @@
 	special CallSlateportTentFunction
 	.endm
 
-	@ Get the current prize item id
-	.macro slateporttent_getprize
-	setvar VAR_0x8004, SLATEPORT_TENT_FUNC_GET_PRIZE
+	@ Get the whether the prize is currently being held for the player
+	.macro slateporttent_getprize_held
+	setvar VAR_0x8004, SLATEPORT_TENT_FUNC_GET_PRIZE_HELD
 	special CallSlateportTentFunction
 	.endm
 
-	@ Unused. Set the prize item to be given
-	.macro slateporttent_setprize unusedArg:req, itemId:req
-	setvar VAR_0x8004, SLATEPORT_TENT_FUNC_SET_PRIZE
-	setvar VAR_0x8005, \unusedArg
-	setvar VAR_0x8006, \itemId
+	@ Toggle whether the prize is currently being held for the player
+	.macro slateporttent_setprizeheld isSaved:req
+	setvar VAR_0x8004, SLATEPORT_TENT_FUNC_SET_PRIZE_HELD
+	setvar VAR_0x8005, \isSaved
 	special CallSlateportTentFunction
 	.endm
 
@@ -129,15 +118,11 @@
 	special CallSlateportTentFunction
 	.endm
 
-	@ Set the prize item as randomly selected from a list. Randomness unnecessary, as the list is only 1 item
-	.macro slateporttent_setrandomprize
-	setvar VAR_0x8004, SLATEPORT_TENT_FUNC_SET_RANDOM_PRIZE
-	special CallSlateportTentFunction
-	.endm
-
 	@ Give the current prize item. FALSE if no room for prize
-	.macro slateporttent_giveprize
+	@ giveUntilMax is a bool to know whether to give the player as many items as possible and ignoring the rest
+	.macro slateporttent_giveprize, giveUntilMax:req
 	setvar VAR_0x8004, SLATEPORT_TENT_FUNC_GIVE_PRIZE
+	setvar VAR_0x8005, \giveUntilMax
 	special CallSlateportTentFunction
 	.endm
 

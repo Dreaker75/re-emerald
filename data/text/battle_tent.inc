@@ -97,11 +97,19 @@ FallarborTown_BattleTentLobby_Text_ReceivedPrize:
 	.string "{PLAYER} received the prize\n"
 	.string "{STR_VAR_1}.$"
 
-FallarborTown_BattleTentLobby_Text_BagFullReturnForPrize:
+FallarborTown_BattleTentLobby_Text_BagFullWantToKeep:
 	.string "Oh?\n"
 	.string "Your BAG seems to be full.\p"
-	.string "I urge you to clear space and\n"
-	.string "return for your prize.$"
+	.string "Should I hold onto the prize\n"
+	.string "while you make some room?$"
+
+FallarborTown_BattleTentLobby_Text_HoldingOntoPrize:
+	.string "Understood. Then I will hold\n"
+	.string "onto the prize for you.$"
+
+FallarborTown_BattleTentLobby_Text_RefusedToClaimPrize:
+	.string "Understood. Then I will not\n"
+	.string "hold onto the prize.$"
 
 FallarborTown_BattleTentLobby_Text_ThankYouWaitWhileSaving:
 	.string "Thank you so much for participating!\p"
@@ -211,6 +219,20 @@ VerdanturfTown_BattleTentLobby_Text_FeatWillBeRecorded:
 VerdanturfTown_BattleTentLobby_Text_PresentYouWithPrize:
 	.string "For the feat of your 3-win streak,\n"
 	.string "we present you with this prize.$"
+	
+VerdanturfTown_BattleTentLobby_Text_BagFullWantToKeep:
+	.string "You seem to have no space for\n"
+	.string "our prize.\p"
+	.string "Shall I hold onto the prize\n"
+	.string "while you organize your BAG?$"
+
+VerdanturfTown_BattleTentLobby_Text_HoldingOntoPrize:
+	.string "Very well. I shall hold onto\n"
+	.string "it for the time being.$"
+
+VerdanturfTown_BattleTentLobby_Text_RefusedToClaimPrize:
+	.string "Very well. I will not\n"
+	.string "hold onto it anymore.$"
 
 SlateportCity_BattleTentLobby_Text_WelcomeToBattleTent:
 	.string "Welcome to the BATTLE TENT\n"
@@ -284,11 +306,23 @@ SlateportCity_BattleTentLobby_Text_AwardYouThisPrize:
 	.string "In recognition of your 3-win streak,\n"
 	.string "we award you this prize.$"
 
-SlateportCity_BattleTentLobby_Text_NoRoomInBagMakeRoom:
+SlateportCity_BattleTentLobby_Text_BagFullWantToKeep:
 	.string "Oh?\n"
 	.string "You seem to have no room for this.\p"
-	.string "Please make room in your BAG and\n"
-	.string "let me know.$"
+	.string "Should I keep it until you\n"
+	.string "make some room?$"
+
+SlateportCity_BattleTentLobby_Text_HoldingOntoPrize:
+	.string "Got it. I will hold onto\n"
+	.string "these for the time being.$"
+
+SlateportCity_BattleTentLobby_Text_RefusedToClaimPrize:
+	.string "Got it. I won't hold onto\n"
+	.string "these then.$"
+
+BattleTentLobby_Text_ClaimedPartialPrize:
+	.string "{PLAYER} kept part of the prize\n"
+	.string "{STR_VAR_1}.$"
 
 SlateportCity_BattleTentLobby_Text_BeenWaitingForYou:
 	.string "We've been waiting for you!\p"

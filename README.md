@@ -76,7 +76,11 @@
     - Pokemon can now continue eating PokeBlocks after reaching max Sheen, allowing to easily reach max stats on all five contest stats like ORAS
     - Beating a Contest Rank now unlocks the next tier for all Pokemon, much like ORAS
     - Winning a Contest will also award the Ribbons for the lower ranks, and an amount Luxury Balls depending on the Rank won (The Luxury Balls are awarded regardless of whether the Pokemon got a Ribbon for that Rank)
- - The Trainer Hill now gives more battle-related items and does not require beating the mode in under a certain time to get them. 
+ - The Trainer Hill now gives more battle-related items and does not require beating the mode in under a certain time to get them.
+ - The prizes for all Battle Tents have been updated, and you can now choose whether you want to claim them or discard them if your bag is full. If you choose to discard them, you will automatically claim as many of the items as you have room for in your bag (Note: These rewards are opened for rebalancing later on if they seem too good/bad):
+    - Slateport Tent: 2x sets of Vitamins (HP Up, Protein, Iron, Calcium, Zinc, Carbos)
+    - Vendarturf Tent: 5x Rare Candies
+    - Fallarbor Tent: 12x PP Up
 
 ## Map changes:
  - Added a Rock Smash and a Strength Boulder to Route 115 that allows for easier backtracking to Meteor Falls

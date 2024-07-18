@@ -8,12 +8,12 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Make Fly usable from the PokeNav map and allow flying to every location, not just towns
  - Make Teleport work like the old Fly
  - Updated Battle Frontier prizes and BP economy
- - Update Battle Tent rewards
  - Add a counter for buying PokeBlocks in the Lillycove Department Store, like Platinum
  - Automatically put items picked up by Pick Up in the bag, and make it possible to pick up items even while the Pokemon is already holding an item
  - Make it possible to buy Coins in any amount in the Game Corner
  - Give an option to make the text display instant
  - Change Hidden and PokeBall items found throughout the game to be more useful
+ - Cut down on the Pokemon Center Dialogue
 
 ## Features for Beta release
  - Updated trades: Make all current trades in the game more useful and add new ones for non-Hoenn Pokemon

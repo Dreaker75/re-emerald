@@ -41,7 +41,6 @@ VerdanturfTown_BattleTentLobby_EventScript_WonChallenge::
 	msgbox VerdanturfTown_BattleTentLobby_Text_AchievedThreeWinStreak, MSGBOX_DEFAULT
 	message VerdanturfTown_BattleTentLobby_Text_FeatWillBeRecorded
 	waitmessage
-	verdanturftent_setrandomprize
 	frontier_set FRONTIER_DATA_LVL_MODE, FRONTIER_LVL_50
 	verdanturftent_save 0
 	playse SE_SAVE
@@ -49,7 +48,7 @@ VerdanturfTown_BattleTentLobby_EventScript_WonChallenge::
 
 VerdanturfTown_BattleTentLobby_EventScript_GivePrize::
 	msgbox VerdanturfTown_BattleTentLobby_Text_PresentYouWithPrize, MSGBOX_DEFAULT
-	verdanturftent_giveprize
+	verdanturftent_giveprize FALSE
 	switch VAR_RESULT
 	case FALSE, VerdanturfTown_BattleTentLobby_EventScript_NoRoomForPrize
 	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
@@ -64,12 +63,32 @@ VerdanturfTown_BattleTentLobby_EventScript_GivePrize::
 	end
 
 VerdanturfTown_BattleTentLobby_EventScript_NoRoomForPrize::
-	msgbox BattleFrontier_BattlePalaceLobby_Text_NoSpaceForPrize, MSGBOX_DEFAULT
+	msgbox VerdanturfTown_BattleTentLobby_Text_BagFullWantToKeep, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, VerdanturfTown_BattleTentLobby_EventScript_RefusedToClaimPrize
+	msgbox VerdanturfTown_BattleTentLobby_Text_HoldingOntoPrize, MSGBOX_DEFAULT
+	verdanturftent_setprizeheld TRUE
 	waitmessage
 	closemessage
 	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
+	
+VerdanturfTown_BattleTentLobby_EventScript_RefusedToClaimPrize::
+	verdanturftent_giveprize TRUE
+	call_if_eq VAR_RESULT, TRUE, VerdanturfTown_BattleTentLobby_EventScript_ClaimPartialPrize
+	msgbox VerdanturfTown_BattleTentLobby_Text_RefusedToClaimPrize, MSGBOX_DEFAULT
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	msgbox VerdanturfTown_BattleTentLobby_Text_ReturnFortified, MSGBOX_DEFAULT
+	closemessage
+	verdanturftent_setprizeheld FALSE
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	releaseall
+	end
+
+VerdanturfTown_BattleTentLobby_EventScript_ClaimPartialPrize::
+	msgbox BattleTentLobby_Text_ClaimedPartialPrize, MSGBOX_DEFAULT
+	closemessage
+	return
 
 VerdanturfTown_BattleTentLobby_EventScript_PrizeWaiting::
 	lockall
@@ -106,8 +125,8 @@ VerdanturfTown_BattleTentLobby_EventScript_ResumeChallenge::
 VerdanturfTown_BattleTentLobby_EventScript_Attendant::
 	lock
 	faceplayer
-	verdanturftent_getprize
-	goto_if_ne VAR_RESULT, ITEM_NONE, VerdanturfTown_BattleTentLobby_EventScript_PrizeWaiting
+	verdanturftent_getprize_held
+	goto_if_eq VAR_RESULT, TRUE, VerdanturfTown_BattleTentLobby_EventScript_PrizeWaiting
 	special SavePlayerParty
 	msgbox VerdanturfTown_BattleTentLobby_Text_WelcomeToBattleTent, MSGBOX_DEFAULT
 VerdanturfTown_BattleTentLobby_EventScript_AskEnterChallenge::

@@ -42,7 +42,6 @@ FallarborTown_BattleTentLobby_EventScript_WonChallenge::
 	msgbox FallarborTown_BattleTentLobby_Text_BeatThreeTrainers, MSGBOX_DEFAULT
 	message FallarborTown_BattleTentLobby_Text_WaitWhileSaveGame
 	waitmessage
-	fallarbortent_setrandomprize
 	frontier_set FRONTIER_DATA_LVL_MODE, FRONTIER_LVL_50
 	fallarbortent_save 0
 	playse SE_SAVE
@@ -50,7 +49,7 @@ FallarborTown_BattleTentLobby_EventScript_WonChallenge::
 
 FallarborTown_BattleTentLobby_EventScript_GivePrize::
 	msgbox FallarborTown_BattleTentLobby_Text_PresentYouWithPrize, MSGBOX_DEFAULT
-	fallarbortent_giveprize
+	fallarbortent_giveprize FALSE
 	switch VAR_RESULT
 	case FALSE, FallarborTown_BattleTentLobby_EventScript_NoRoomForPrize
 	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
@@ -60,17 +59,36 @@ FallarborTown_BattleTentLobby_EventScript_GivePrize::
 	waitfanfare
 	msgbox FallarborTown_BattleTentLobby_Text_AwaitAnotherChallenge2, MSGBOX_DEFAULT
 	closemessage
+	fallarbortent_setprizeheld FALSE
 	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
 
 FallarborTown_BattleTentLobby_EventScript_NoRoomForPrize::
-	msgbox FallarborTown_BattleTentLobby_Text_BagFullReturnForPrize, MSGBOX_DEFAULT
-	waitmessage
-	closemessage
+	msgbox FallarborTown_BattleTentLobby_Text_BagFullWantToKeep, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, FallarborTown_BattleTentLobby_EventScript_RefusedToClaimPrize
+	msgbox FallarborTown_BattleTentLobby_Text_HoldingOntoPrize, MSGBOX_DEFAULT
+	fallarbortent_setprizeheld TRUE
 	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	releaseall
 	end
+
+FallarborTown_BattleTentLobby_EventScript_RefusedToClaimPrize::
+	fallarbortent_giveprize TRUE
+	call_if_eq VAR_RESULT, TRUE, FallarborTown_BattleTentLobby_EventScript_ClaimPartialPrize
+	msgbox FallarborTown_BattleTentLobby_Text_RefusedToClaimPrize, MSGBOX_DEFAULT
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
+	msgbox FallarborTown_BattleTentLobby_Text_AwaitAnotherChallenge2, MSGBOX_DEFAULT
+	closemessage
+	fallarbortent_setprizeheld FALSE
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	releaseall
+	end
+
+FallarborTown_BattleTentLobby_EventScript_ClaimPartialPrize::
+	msgbox BattleTentLobby_Text_ClaimedPartialPrize, MSGBOX_DEFAULT
+	closemessage
+	return
 
 FallarborTown_BattleTentLobby_EventScript_PrizeWaiting::
 	lockall
@@ -106,8 +124,8 @@ FallarborTown_BattleTentLobby_EventScript_ResumeChallenge::
 FallarborTown_BattleTentLobby_EventScript_Attendant::
 	lock
 	faceplayer
-	fallarbortent_getprize
-	goto_if_ne VAR_RESULT, ITEM_NONE, FallarborTown_BattleTentLobby_EventScript_PrizeWaiting
+	fallarbortent_getprize_held
+	goto_if_eq VAR_RESULT, TRUE, FallarborTown_BattleTentLobby_EventScript_PrizeWaiting
 	special SavePlayerParty
 	msgbox FallarborTown_BattleTentLobby_Text_WelcomeToBattleTent, MSGBOX_DEFAULT
 FallarborTown_BattleTentLobby_EventScript_AskEnterChallenge::

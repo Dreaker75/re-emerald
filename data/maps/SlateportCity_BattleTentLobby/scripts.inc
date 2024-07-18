@@ -40,14 +40,13 @@ SlateportCity_BattleTentLobby_EventScript_WonChallenge::
 	lockall
 	message SlateportCity_BattleTentLobby_Text_WonThreeMatchesReturnMons
 	waitmessage
-	slateporttent_setrandomprize
 	frontier_set FRONTIER_DATA_LVL_MODE, FRONTIER_LVL_50
 	slateporttent_save 0
 	playse SE_SAVE
 	waitse
 SlateportCity_BattleTentLobby_EventScript_GivePrize::
 	msgbox SlateportCity_BattleTentLobby_Text_AwardYouThisPrize, MSGBOX_DEFAULT
-	slateporttent_giveprize
+	slateporttent_giveprize FALSE
 	switch VAR_RESULT
 	case FALSE, SlateportCity_BattleTentLobby_EventScript_NoRoomForPrize
 	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
@@ -58,8 +57,27 @@ SlateportCity_BattleTentLobby_EventScript_GivePrize::
 	goto SlateportCity_BattleTentLobby_EventScript_EndGivePrize
 
 SlateportCity_BattleTentLobby_EventScript_NoRoomForPrize::
-	msgbox SlateportCity_BattleTentLobby_Text_NoRoomInBagMakeRoom, MSGBOX_DEFAULT
+	msgbox SlateportCity_BattleTentLobby_Text_BagFullWantToKeep, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SlateportCity_BattleTentLobby_EventScript_RefusedToClaimPrize
+	msgbox SlateportCity_BattleTentLobby_Text_HoldingOntoPrize, MSGBOX_DEFAULT
+	slateporttent_setprizeheld TRUE
+	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	releaseall
+	end
+
+SlateportCity_BattleTentLobby_EventScript_RefusedToClaimPrize::
+	slateporttent_giveprize TRUE
+	call_if_eq VAR_RESULT, TRUE, SlateportCity_BattleTentLobby_EventScript_ClaimPartialPrize
+	msgbox SlateportCity_BattleTentLobby_Text_RefusedToClaimPrize, MSGBOX_DEFAULT
+	closemessage
+	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
 	goto SlateportCity_BattleTentLobby_EventScript_EndGivePrize
+	end
+
+SlateportCity_BattleTentLobby_EventScript_ClaimPartialPrize::
+	msgbox BattleTentLobby_Text_ClaimedPartialPrize, MSGBOX_DEFAULT
+	closemessage
+	return
 
 SlateportCity_BattleTentLobby_EventScript_LostChallenge::
 	lockall
@@ -71,6 +89,7 @@ SlateportCity_BattleTentLobby_EventScript_LostChallenge::
 	waitse
 
 SlateportCity_BattleTentLobby_EventScript_EndGivePrize::
+	slateporttent_setprizeheld FALSE
 	msgbox SlateportCity_BattleTentLobby_Text_LookForwardToNextVisit, MSGBOX_DEFAULT
 	closemessage
 	setvar VAR_TEMP_CHALLENGE_STATUS, 255
@@ -92,8 +111,8 @@ SlateportCity_BattleTentLobby_EventScript_ResumeChallenge::
 SlateportCity_BattleTentLobby_EventScript_Attendant::
 	lock
 	faceplayer
-	slateporttent_getprize
-	goto_if_ne VAR_RESULT, ITEM_NONE, SlateportCity_BattleTentLobby_EventScript_GivePrize
+	slateporttent_getprize_held
+	goto_if_eq VAR_RESULT, TRUE, SlateportCity_BattleTentLobby_EventScript_GivePrize
 	special SavePlayerParty
 	msgbox SlateportCity_BattleTentLobby_Text_WelcomeToBattleTent, MSGBOX_DEFAULT
 SlateportCity_BattleTentLobby_EventScript_AskEnterChallenge::
