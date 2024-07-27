@@ -15,6 +15,7 @@ BattleFrontier_ScottsHouse_EventScript_Scott::
 
 BattleFrontier_ScottsHouse_EventScript_CheckGiveItems::
 	goto_if_unset FLAG_SCOTT_GIVES_BATTLE_POINTS, BattleFrontier_ScottsHouse_EventScript_WelcomeToFrontier
+	goto_if_unset FLAG_SCOTT_GIVES_CHOICE_BAND, BattleFrontier_ScottsHouse_EventScript_CheckChoiceBand
 	goto_if_unset FLAG_COLLECTED_ALL_SILVER_SYMBOLS, BattleFrontier_ScottsHouse_EventScript_CheckSilverSymbols
 	goto_if_unset FLAG_COLLECTED_ALL_GOLD_SYMBOLS, BattleFrontier_ScottsHouse_EventScript_CheckGoldSymbols
 	goto BattleFrontier_ScottsHouse_EventScript_CheckGiveShield
@@ -153,33 +154,33 @@ BattleFrontier_ScottsHouse_EventScript_WelcomeToFrontier::
 	applymovement LOCALID_SCOTT, Common_Movement_FacePlayer
 	waitmovement 0
 	msgbox BattleFrontier_ScottsHouse_Text_HaveThisAsMementoOfOurPathsCrossing, MSGBOX_DEFAULT
-	goto_if_eq VAR_SCOTT_STATE, 13, BattleFrontier_ScottsHouse_EventScript_Give4BattlePoints
-	goto_if_ge VAR_SCOTT_STATE, 9, BattleFrontier_ScottsHouse_EventScript_Give3BattlePoints
-	goto_if_ge VAR_SCOTT_STATE, 6, BattleFrontier_ScottsHouse_EventScript_Give2BattlePoints
-	goto BattleFrontier_ScottsHouse_EventScript_Give1BattlePoint
+	goto_if_eq VAR_SCOTT_STATE, 13, BattleFrontier_ScottsHouse_EventScript_Give20BattlePoints
+	goto_if_ge VAR_SCOTT_STATE, 9, BattleFrontier_ScottsHouse_EventScript_Give15BattlePoints
+	goto_if_ge VAR_SCOTT_STATE, 6, BattleFrontier_ScottsHouse_EventScript_Give10BattlePoints
+	goto BattleFrontier_ScottsHouse_EventScript_Give5BattlePoint
 	end
 
-BattleFrontier_ScottsHouse_EventScript_Give4BattlePoints::
-	buffernumberstring STR_VAR_1, 4
-	setvar VAR_0x8004, 4
+BattleFrontier_ScottsHouse_EventScript_Give20BattlePoints::
+	buffernumberstring STR_VAR_1, 20
+	setvar VAR_0x8004, 20
 	goto BattleFrontier_ScottsHouse_EventScript_GiveBattlePoints
 	end
 
-BattleFrontier_ScottsHouse_EventScript_Give3BattlePoints::
-	buffernumberstring STR_VAR_1, 3
-	setvar VAR_0x8004, 3
+BattleFrontier_ScottsHouse_EventScript_Give15BattlePoints::
+	buffernumberstring STR_VAR_1, 15
+	setvar VAR_0x8004, 15
 	goto BattleFrontier_ScottsHouse_EventScript_GiveBattlePoints
 	end
 
-BattleFrontier_ScottsHouse_EventScript_Give2BattlePoints::
-	buffernumberstring STR_VAR_1, 2
-	setvar VAR_0x8004, 2
+BattleFrontier_ScottsHouse_EventScript_Give10BattlePoints::
+	buffernumberstring STR_VAR_1, 10
+	setvar VAR_0x8004, 10
 	goto BattleFrontier_ScottsHouse_EventScript_GiveBattlePoints
 	end
 
-BattleFrontier_ScottsHouse_EventScript_Give1BattlePoint::
-	buffernumberstring STR_VAR_1, 1
-	setvar VAR_0x8004, 1
+BattleFrontier_ScottsHouse_EventScript_Give5BattlePoint::
+	buffernumberstring STR_VAR_1, 5
+	setvar VAR_0x8004, 5
 	goto BattleFrontier_ScottsHouse_EventScript_GiveBattlePoints
 	end
 
@@ -188,7 +189,23 @@ BattleFrontier_ScottsHouse_EventScript_GiveBattlePoints::
 	msgbox BattleFrontier_ScottsHouse_Text_ObtainedXBattlePoints, MSGBOX_GETPOINTS
 	msgbox BattleFrontier_ScottsHouse_Text_ExplainBattlePoints, MSGBOX_DEFAULT
 	setflag FLAG_SCOTT_GIVES_BATTLE_POINTS
+	goto_if_eq VAR_SCOTT_STATE, 13, BattleFrontier_ScottsHouse_EventScript_CheckChoiceBand
+	setflag FLAG_SCOTT_GIVES_CHOICE_BAND	@ Scott won't give the player the Choice Band if not met 13 times
 	setflag FLAG_TEMP_2
+	release
+	end
+
+BattleFrontier_ScottsHouse_EventScript_CheckChoiceBand::
+	msgbox BattleFrontier_ScottsHouse_Text_ScottGiveExtraReward, MSGBOX_DEFAULT
+	giveitem ITEM_CHOICE_BAND
+	goto_if_eq VAR_RESULT, FALSE, BattleFrontier_ScottsHouse_EventScript_BagPocketFull
+	setflag FLAG_SCOTT_GIVES_CHOICE_BAND
+	setflag FLAG_TEMP_2
+	release
+	end
+
+BattleFrontier_ScottsHouse_EventScript_BagPocketFull::
+	msgbox BattleFrontier_ScottsHouse_Text_BagPocketStuffed, MSGBOX_DEFAULT
 	release
 	end
 
@@ -250,6 +267,15 @@ BattleFrontier_ScottsHouse_Text_ExplainBattlePoints:
 	.string "Points you will collect.\p"
 	.string "Use your Battle Points the way you\n"
 	.string "see fit, like trading them for items.$"
+
+BattleFrontier_ScottsHouse_Text_ScottGiveExtraReward:
+	.string "SCOTT: It feels like we've been\n"
+	.string "through a lot.\p"
+	.string "I still remember the first time\n"
+	.string "we've met in Petalburg Town\l"
+	.string "like it was yesterday.\p"
+	.string "So I want you to have this. I'm\n"
+	.string "sure it will prove useful to you.$"
 
 BattleFrontier_ScottsHouse_Text_ExpectingGreatThings:
 	.string "I'm expecting great things from you!$"
@@ -324,6 +350,10 @@ BattleFrontier_ScottsHouse_Text_SoGladIBroughtYouHere:
 
 BattleFrontier_ScottsHouse_Text_BerryPocketStuffed:
 	.string "Your BERRY POCKET seems to\n"
+	.string "be stuffed.$"
+
+BattleFrontier_ScottsHouse_Text_BagPocketStuffed:
+	.string "Your ITEMS POCKET seems to\n"
 	.string "be stuffed.$"
 
 BattleFrontier_ScottsHouse_Text_Beat50TrainersInARow:

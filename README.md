@@ -81,6 +81,25 @@
     - Slateport Tent: 2x sets of Vitamins (HP Up, Protein, Iron, Calcium, Zinc, Carbos)
     - Vendarturf Tent: 5x Rare Candies
     - Fallarbor Tent: 12x PP Up
+    
+### Battle Frontier
+ - Increased the amount of BP you get from every Facility. The points awarded now increase infinitely while the streak goes on (Up to the maximum amount of BPs)
+ - All costs for items in the Battle Frontier shop and all Tutor Moves from the Battle Frontier have been singificantly reduced
+ - New items have been added to the Battle Frontier shop:
+    - Red Tent
+    - Blue Tent
+    - Regirock Doll
+    - Regice Doll
+    - Registeel Doll
+    - PP Max
+    - Rare Candy
+    - Exp. Share
+    - Macho Brace
+    - Master Ball
+    - Soul Dew
+    - All vitamins are now given in packs of 5 for 1BP
+ - The amount of BP Scott gives you upon first arriving in the Battle Frontier has been changed. It now gives 5, 10, 15 or 20 BP depending on how many times you've talked to him before arriving.
+    - If you talk to Scott all 13 times before talking to him in the Battle Frontier, he will give you a Choice Band as an extra gift
 
 ## Map changes:
  - Added a Rock Smash and a Strength Boulder to Route 115 that allows for easier backtracking to Meteor Falls
@@ -108,6 +127,7 @@
       - 3 numbers match: PP Max
       - 4 numbers match: Leftovers
       - 5 numbers match: Master Ball
+ - The Lotad and Seedot Dolls have been added to the Game Corner Shop
  - Move Pokemon and Item options in the PC now appear before Withdraw and Deposit Pokemon like in newer games
  - Removed the second save confirmation popup, the game will now save after the first one. The warning for saving when a different file exists was left untouched.
  - Removed Wally's tutorial battle and the PokeNav's tutorial call to Mr. Stone

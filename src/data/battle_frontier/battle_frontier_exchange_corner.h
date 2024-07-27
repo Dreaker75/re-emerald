@@ -20,6 +20,11 @@ static const u16 sFrontierExchangeCorner_Decor2[] =
     DECOR_VENUSAUR_DOLL,
     DECOR_CHARIZARD_DOLL,
     DECOR_BLASTOISE_DOLL,
+    DECOR_REGIROCK_DOLL,
+    DECOR_REGICE_DOLL,
+    DECOR_REGISTEEL_DOLL,
+    DECOR_BLUE_TENT,
+    DECOR_RED_TENT,
     ITEM_LIST_END
 };
 
@@ -31,20 +36,26 @@ static const u16 sFrontierExchangeCorner_Vitamins[] =
     ITEM_ZINC,
     ITEM_CARBOS,
     ITEM_HP_UP,
+    ITEM_PP_MAX,
+    ITEM_RARE_CANDY,
+    ITEM_EXP_SHARE,
+    ITEM_MACHO_BRACE,
+    ITEM_MASTER_BALL,
     ITEM_LIST_END
 };
 
 static const u16 sFrontierExchangeCorner_HoldItems[] =
 {
+    ITEM_KINGS_ROCK,
     ITEM_LEFTOVERS,
     ITEM_WHITE_HERB,
     ITEM_QUICK_CLAW,
     ITEM_MENTAL_HERB,
     ITEM_BRIGHT_POWDER,
     ITEM_CHOICE_BAND,
-    ITEM_KINGS_ROCK,
     ITEM_FOCUS_BAND,
     ITEM_SCOPE_LENS,
+    ITEM_SOUL_DEW,
     ITEM_LIST_END
 };
 
@@ -70,6 +81,11 @@ static const u8 *const sFrontierExchangeCorner_Decor2Descriptions[] =
     BattleFrontier_ExchangeServiceCorner_Text_LargeDollDesc,
     BattleFrontier_ExchangeServiceCorner_Text_LargeDollDesc,
     BattleFrontier_ExchangeServiceCorner_Text_LargeDollDesc,
+    BattleFrontier_ExchangeServiceCorner_Text_LargeDollDesc,
+    BattleFrontier_ExchangeServiceCorner_Text_LargeDollDesc,
+    BattleFrontier_ExchangeServiceCorner_Text_LargeDollDesc,
+    BattleFrontier_ExchangeServiceCorner_Text_BlueTentDesc,
+    BattleFrontier_ExchangeServiceCorner_Text_RedTentDesc,
     gText_Exit
 };
 
@@ -81,19 +97,25 @@ static const u8 *const sFrontierExchangeCorner_VitaminsDescriptions[] =
     BattleFrontier_ExchangeServiceCorner_Text_ZincDesc,
     BattleFrontier_ExchangeServiceCorner_Text_CarbosDesc,
     BattleFrontier_ExchangeServiceCorner_Text_HPUpDesc,
+    BattleFrontier_ExchangeServiceCorner_Text_PPMaxDesc,
+    BattleFrontier_ExchangeServiceCorner_Text_RareCandyDesc,
+    BattleFrontier_ExchangeServiceCorner_Text_ExpShareDesc,
+    BattleFrontier_ExchangeServiceCorner_Text_MachoBraceDesc,
+    BattleFrontier_ExchangeServiceCorner_Text_MasterBallDesc,
     gText_Exit
 };
 
 static const u8 *const sFrontierExchangeCorner_HoldItemsDescriptions[] =
 {
+    BattleFrontier_ExchangeServiceCorner_Text_KingsRockDesc,
     BattleFrontier_ExchangeServiceCorner_Text_LeftoversDesc,
     BattleFrontier_ExchangeServiceCorner_Text_WhiteHerbDesc,
     BattleFrontier_ExchangeServiceCorner_Text_QuickClawDesc,
     BattleFrontier_ExchangeServiceCorner_Text_MentalHerbDesc,
     BattleFrontier_ExchangeServiceCorner_Text_BrightpowderDesc,
     BattleFrontier_ExchangeServiceCorner_Text_ChoiceBandDesc,
-    BattleFrontier_ExchangeServiceCorner_Text_KingsRockDesc,
     BattleFrontier_ExchangeServiceCorner_Text_FocusBandDesc,
     BattleFrontier_ExchangeServiceCorner_Text_ScopeLensDesc,
+    BattleFrontier_ExchangeServiceCorner_Text_SoulDewDesc,
     gText_Exit
 };
