@@ -3663,7 +3663,32 @@ static void PrintMovePowerAndAccuracy(u16 moveIndex)
 
         if (gMovesInfo[moveIndex].power < 2)
         {
-            text = gText_ThreeDashes;
+            if(moveIndex == MOVE_HIDDEN_POWER)
+            {
+                u8 powerBits = ((GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_HP_IV) & 2) >> 1)
+                             | ((GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_ATK_IV) & 2) << 0)
+                             | ((GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_DEF_IV) & 2) << 1)
+                             | ((GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPEED_IV) & 2) << 2)
+                             | ((GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPATK_IV) & 2) << 3)
+                             | ((GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPDEF_IV) & 2) << 4);
+
+                ConvertIntToDecimalStringN(gStringVar1, (40 * powerBits) / 63 + 30, STR_CONV_MODE_RIGHT_ALIGN, 3);
+                text = gStringVar1;
+            }
+            else if (moveIndex == MOVE_RETURN)
+            {                
+                ConvertIntToDecimalStringN(gStringVar1, 10 * (GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_FRIENDSHIP)) / 25, STR_CONV_MODE_RIGHT_ALIGN, 3);
+                text = gStringVar1;
+            }
+            else if (moveIndex == MOVE_FRUSTRATION)
+            {
+                ConvertIntToDecimalStringN(gStringVar1, 10 * (MAX_FRIENDSHIP - GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_FRIENDSHIP)) / 25, STR_CONV_MODE_RIGHT_ALIGN, 3);
+                text = gStringVar1;
+            }
+            else
+            {
+                text = gText_ThreeDashes;
+            }
         }
         else
         {
@@ -3764,7 +3789,7 @@ static void PrintMoveDetails(u16 move)
         {
             moveEffect = gMovesInfo[move].effect;
             if (B_SHOW_CATEGORY_ICON == TRUE)
-                ShowCategoryIcon(GetBattleMoveCategory(move));
+                ShowCategoryIcon(GetBattleMoveCategoryInSummary(move, &sMonSummaryScreen->currentMon));
             PrintMovePowerAndAccuracy(move);
 
             if (moveEffect != EFFECT_PLACEHOLDER)
@@ -3957,7 +3982,20 @@ static void SetMoveTypeIcons(void)
     {
         if (summary->moves[i] != MOVE_NONE)
         {
-            SetTypeSpritePosAndPal(gMovesInfo[summary->moves[i]].type, 85, 32 + (i * 16), i + SPRITE_ARR_ID_TYPE);
+            if (summary->moves[i] == MOVE_HIDDEN_POWER)
+            {
+                SetTypeSpritePosAndPal(GetHiddenPowerType(GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_HP_IV),
+                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_ATK_IV),
+                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_DEF_IV),
+                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPEED_IV),
+                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPATK_IV),
+                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPDEF_IV)),
+                                                          85, 32 + (i * 16), i + SPRITE_ARR_ID_TYPE);
+            }
+            else
+            {
+                SetTypeSpritePosAndPal(gMovesInfo[summary->moves[i]].type, 85, 32 + (i * 16), i + SPRITE_ARR_ID_TYPE);
+            }
         }
         else
             SetSpriteInvisibility(i + SPRITE_ARR_ID_TYPE, TRUE);
@@ -3986,7 +4024,22 @@ static void SetNewMoveTypeIcon(void)
     else
     {
         if (sMonSummaryScreen->currPageIndex == PSS_PAGE_BATTLE_MOVES)
-            SetTypeSpritePosAndPal(gMovesInfo[sMonSummaryScreen->newMove].type, 85, 96, SPRITE_ARR_ID_TYPE + 4);
+        {
+            if (sMonSummaryScreen->newMove == MOVE_HIDDEN_POWER)
+            {
+                SetTypeSpritePosAndPal(GetHiddenPowerType(GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_HP_IV),
+                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_ATK_IV),
+                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_DEF_IV),
+                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPEED_IV),
+                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPATK_IV),
+                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPDEF_IV)),
+                                                           85, 96, SPRITE_ARR_ID_TYPE + 4);
+            }
+            else
+            {
+                SetTypeSpritePosAndPal(gMovesInfo[sMonSummaryScreen->newMove].type, 85, 96, SPRITE_ARR_ID_TYPE + 4);
+            }
+        }
         else
             SetTypeSpritePosAndPal(NUMBER_OF_MON_TYPES + gMovesInfo[sMonSummaryScreen->newMove].contestCategory, 85, 96, SPRITE_ARR_ID_TYPE + 4);
     }

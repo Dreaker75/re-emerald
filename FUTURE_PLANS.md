@@ -10,9 +10,7 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Give an option to make the text display instant
  - Change Hidden and PokeBall items found throughout the game to be more useful
  - Cut down on the Pokemon Center Dialogue
- - Update Hidden Power display to show the type it will be
- - Update Hidden Power, Return and Frustration to show their current power on screen
- - Make Soul Dew obtainable once from Southern Island, even after defeating/releasing the Lati@s from there
+ - Update Hidden Power to show its real type in battle
 
 ## Features for Beta release
  - Either turn off PokeNav calls completely or make it an in-game toggle
@@ -36,12 +34,14 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Add stuff to Slateport Museum to make it useful to visit after Team Aqua has been defeated
  - Add a prize for beating the Cycling Road record the first time, and a lesser prize for every time it's beaten afterwards
  - Add trainers and other things to Seafloor Cavern post-game, kind of like Mt. Chimney after the Team Aqua vs Team Magma face off
- - Display the Pokemon's EVs and IVs in the status screen
+ - Display the Pokemon's EVs, IVs and Friendship in the status screen
  - Improve berry planting by making the berry yields 2-5 berries (depending on type) minimum, with more being given when watered during growth. Also make the fully grown berry plants remain harvestable until they're claimed
  - Add ability to change the Pokemon's PokeBall (old PokeBall is lost)
  - Remove the beeps when Pokemon is low on HP
  - Rework the Soot System to have better UI (and maybe be faster). Add more items exchangeable for Soot?
  - Make the Lilycove clear-out sale easier to activate or permanent on specific days/times
+ - Add a way to see a move's power, accuracy and effect from the battle menu
+ - Color the types in the battle menu green, yellow or red for super effective, not very effective and ineffective moves, respectively
  
 ## Features for Base Version release
  - Roaming mechanic Revamp to make it less tedious

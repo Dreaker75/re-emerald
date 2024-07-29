@@ -338,7 +338,7 @@ bool32 MovesWithCategoryUnusable(u32 attacker, u32 target, u32 category)
     {
         if (moves[i] != MOVE_NONE
             && moves[i] != MOVE_UNAVAILABLE
-            && GetBattleMoveCategory(moves[i]) == category
+            && GetBattleMoveCategoryInBattle(moves[i], attacker) == category
             && !(unusable & gBitTable[i]))
         {
             SetTypeBeforeUsingMove(moves[i], attacker);
@@ -1722,7 +1722,7 @@ bool32 HasOnlyMovesWithCategory(u32 battlerId, u32 category, bool32 onlyOffensiv
     {
         if (onlyOffensive && IS_MOVE_STATUS(moves[i]))
             continue;
-        if (moves[i] != MOVE_NONE && moves[i] != MOVE_UNAVAILABLE && GetBattleMoveCategory(moves[i]) != category)
+        if (moves[i] != MOVE_NONE && moves[i] != MOVE_UNAVAILABLE && GetBattleMoveCategoryInBattle(moves[i], battlerId) != category)
             return FALSE;
     }
 
@@ -1736,7 +1736,7 @@ bool32 HasMoveWithCategory(u32 battler, u32 category)
 
     for (i = 0; i < MAX_MON_MOVES; i++)
     {
-        if (moves[i] != MOVE_NONE && moves[i] != MOVE_UNAVAILABLE && GetBattleMoveCategory(moves[i]) == category)
+        if (moves[i] != MOVE_NONE && moves[i] != MOVE_UNAVAILABLE && GetBattleMoveCategoryInBattle(moves[i], battler) == category)
             return TRUE;
     }
     return FALSE;
