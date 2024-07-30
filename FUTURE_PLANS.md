@@ -10,7 +10,6 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Give an option to make the text display instant
  - Change Hidden and PokeBall items found throughout the game to be more useful
  - Cut down on the Pokemon Center Dialogue
- - Update Hidden Power to show its real type in battle
 
 ## Features for Beta release
  - Either turn off PokeNav calls completely or make it an in-game toggle

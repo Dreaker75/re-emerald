@@ -1752,6 +1752,17 @@ static void MoveSelectionDisplayMoveType(u32 battler)
         else
             type = gMovesInfo[MOVE_IVY_CUDGEL].type;
     }
+    else if (moveInfo->moves[gMoveSelectionCursor[battler]] == MOVE_HIDDEN_POWER)
+    {
+        mon = &GetSideParty(GetBattlerSide(battler))[gBattlerPartyIndexes[battler]];
+        type = GetHiddenPowerType(GetMonData(mon, MON_DATA_HP_IV),
+                                  GetMonData(mon, MON_DATA_ATK_IV),
+                                  GetMonData(mon, MON_DATA_DEF_IV),
+                                  GetMonData(mon, MON_DATA_SPATK_IV),
+                                  GetMonData(mon, MON_DATA_SPDEF_IV),
+                                  GetMonData(mon, MON_DATA_SPEED_IV)
+                                 );
+    }
     else
         type = gMovesInfo[moveInfo->moves[gMoveSelectionCursor[battler]]].type;
 

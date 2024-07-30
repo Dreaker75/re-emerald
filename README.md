@@ -129,7 +129,7 @@
       - 5 numbers match: Master Ball
  - The Lotad and Seedot Dolls have been added to the Game Corner Shop
  - Return, Frustration and Hidden Power now show their real power in the Pokemon Summary
- - Hidden Power now shows its real type and category in the Pokemon Summary
+ - Hidden Power now shows its real type and category in the Pokemon Summary and the in-battle menu
  - Move Pokemon and Item options in the PC now appear before Withdraw and Deposit Pokemon like in newer games
  - Removed the second save confirmation popup, the game will now save after the first one. The warning for saving when a different file exists was left untouched.
  - Removed Wally's tutorial battle and the PokeNav's tutorial call to Mr. Stone
