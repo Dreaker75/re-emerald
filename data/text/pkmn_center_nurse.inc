@@ -1,18 +1,10 @@
 gText_WouldYouLikeToRestYourPkmn::
-	.string "Hello, and welcome to\n"
-	.string "the POKéMON CENTER.\p"
-	.string "We restore your tired POKéMON\n"
-	.string "to full health.\p"
+	.string "Welcome to the POKéMON CENTER.\n"
 	.string "Would you like to rest your POKéMON?$"
 
 gText_IllTakeYourPkmn::
 	.string "Okay, I'll take your POKéMON\n"
 	.string "for a few seconds.$"
-
-gText_RestoredPkmnToFullHealth::
-	.string "Thank you for waiting.\p"
-	.string "We've restored your POKéMON\n"
-	.string "to full health.$"
 
 gText_WeHopeToSeeYouAgain::
 	.string "We hope to see you again!$"
@@ -37,15 +29,7 @@ gText_NoticesGoldCard::
 	.string "the honor of resting your POKéMON!$"
 
 gText_YouWantTheUsual::
-	.string "I'm delighted to see you, {PLAYER}!\n"
-	.string "You want the usual, am I right?$"
-
-gText_IllTakeYourPkmn2::
-	.string "Okay, I'll take your POKéMON\n"
-	.string "for a few seconds.$"
+	.string "Hello, {PLAYER}! You want the usual?$"
 
 gText_ThankYouForWaiting::
 	.string "Thank you for waiting.$"
-
-gText_WeHopeToSeeYouAgain2::
-	.string "We hope to see you again!$"

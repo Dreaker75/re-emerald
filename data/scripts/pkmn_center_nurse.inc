@@ -17,7 +17,6 @@ EventScript_PkmnCenterNurse_Goodbye::
 EventScript_PkmnCenterNurse_HealPkmn::
 	incrementgamestat GAME_STAT_USED_POKECENTER
 	call_if_eq VAR_0x8004, 0, EventScript_PkmnCenterNurse_IllTakeYourPkmn
-	call_if_eq VAR_0x8004, 1, EventScript_PkmnCenterNurse_IllTakeYourPkmn2
 	waitmessage
 	call EventScript_PkmnCenterNurse_TakeAndHealPkmn
 	goto_if_unset FLAG_POKERUS_EXPLAINED, EventScript_PkmnCenterNurse_CheckPokerus
@@ -26,10 +25,6 @@ EventScript_PkmnCenterNurse_HealPkmn::
 
 EventScript_PkmnCenterNurse_IllTakeYourPkmn::
 	message gText_IllTakeYourPkmn
-	return
-
-EventScript_PkmnCenterNurse_IllTakeYourPkmn2::
-	message gText_IllTakeYourPkmn2
 	return
 
 EventScript_PkmnCenterNurse_TakeAndHealPkmn::
@@ -54,24 +49,22 @@ EventScript_PkmnCenterNurse_CheckTrainerHillAndUnionRoom::
 @ VAR_0x8004 is 1 when player has Gold Card
 EventScript_PkmnCenterNurse_ReturnPkmn::
 	goto_if_eq VAR_0x8004, 1, EventScript_PkmnCenterNurse_ReturnPkmn2
-	message gText_RestoredPkmnToFullHealth
-	waitmessage
 	applymovement VAR_0x800B, Movement_PkmnCenterNurse_Bow
 	waitmovement 0
 	message gText_WeHopeToSeeYouAgain
+	waitmessage
+	applymovement OBJ_EVENT_ID_PLAYER, Movement_Player_LookDown
 	return
 
 EventScript_PkmnCenterNurse_ReturnPkmn2::
-	message gText_ThankYouForWaiting
-	waitmessage
 	applymovement VAR_0x800B, Movement_PkmnCenterNurse_Bow
 	waitmovement 0
-	message gText_WeHopeToSeeYouAgain2
+	applymovement OBJ_EVENT_ID_PLAYER, Movement_Player_LookDown
 	return
 
 EventScript_PkmnCenterNurse_PlayerWaitingInUnionRoom::
 	goto_if_set FLAG_NURSE_UNION_ROOM_REMINDER, EventScript_PkmnCenterNurse_ReturnPkmn
-	msgbox gText_RestoredPkmnToFullHealth, MSGBOX_DEFAULT
+	msgbox gText_ThankYouForWaiting, MSGBOX_DEFAULT
 	setflag FLAG_NURSE_UNION_ROOM_REMINDER
 	message CableClub_Text_PlayerIsWaiting
 	waitmessage
@@ -102,13 +95,11 @@ EventScript_PkmnCenterNurse_GoldCard::
 	waitmovement 0
 	msgbox gText_NoticesGoldCard, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, EventScript_PkmnCenterNurse_GoldCardHealPkmn
-	message gText_WeHopeToSeeYouAgain2
 	return
 
 EventScript_PkmnCenterNurse_AskForUsual::
 	msgbox gText_YouWantTheUsual, MSGBOX_YESNO
 	goto_if_eq VAR_RESULT, YES, EventScript_PkmnCenterNurse_GoldCardHealPkmn
-	message gText_WeHopeToSeeYouAgain2
 	return
 
 EventScript_PkmnCenterNurse_GoldCardHealPkmn::
@@ -119,4 +110,8 @@ EventScript_PkmnCenterNurse_GoldCardHealPkmn::
 Movement_PkmnCenterNurse_Bow:
 	nurse_joy_bow
 	delay_4
+	step_end
+
+Movement_Player_LookDown::
+	walk_in_place_faster_down
 	step_end

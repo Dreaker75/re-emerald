@@ -130,6 +130,9 @@
  - The Lotad and Seedot Dolls have been added to the Game Corner Shop
  - Return, Frustration and Hidden Power now show their real power in the Pokemon Summary
  - Hidden Power now shows its real type and category in the Pokemon Summary and the in-battle menu
+ - The Pokemon Center Nurses' dialogue now has less dialogue and animations for healing your Pokemon. Getting all 4 Trainer Stars also reduces the dialogue further like in vanilla Emerald
+ - The player automatically faces down after healing at a Pokemon Center.
+ - The NPC at the rest house on Route 111 no longer asks you if you want to keep resting until you say no.
  - Move Pokemon and Item options in the PC now appear before Withdraw and Deposit Pokemon like in newer games
  - Removed the second save confirmation popup, the game will now save after the first one. The warning for saving when a different file exists was left untouched.
  - Removed Wally's tutorial battle and the PokeNav's tutorial call to Mr. Stone
