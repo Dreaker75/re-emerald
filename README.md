@@ -110,6 +110,7 @@
  - Made some slight tweaks to some of the Seafloor Cavern rooms
 
 ## Other changes:
+ - Added an extra text speed option that display all the text instantly, which is turned on by default
  - All trade evolutions now have an extra evolution method
    - Pokemon that evolve by trade while holding an item now also evolve by levelling up while holding said item
    - Pokemon that evolve by trade without an item now evolve by levelling up when knowing a specific move:
@@ -144,3 +145,4 @@
 
 # Credits
 Based off RHH's pokeemerald-expansion v1.8.0 https://github.com/rh-hideout/pokeemerald-expansion/
+This post by ellabrella on PokeCommunity, for help setting up the Instant Text option https://www.pokecommunity.com/threads/simple-modifications-directory.416647/post-10400198

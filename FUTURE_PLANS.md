@@ -7,7 +7,6 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Add version number on the Main Menu
  - Make Fly usable from the PokeNav map and allow flying to every location, not just towns
  - Make Teleport work like the old Fly
- - Give an option to make the text display instant
  - Change Hidden and PokeBall items found throughout the game to be more useful
 
 ## Features for Beta release
