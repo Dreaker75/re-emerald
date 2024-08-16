@@ -119,7 +119,7 @@ u8 GetMapTypeByWarpData(struct WarpData *warp);
 u8 GetCurrentMapType(void);
 u8 GetLastUsedWarpMapType(void);
 bool8 IsMapTypeOutdoors(u8 mapType);
-bool8 Overworld_MapTypeAllowsTeleportAndFly(u8 mapType);
+bool8 Overworld_MapTypeAllowsFly(u8 mapType);
 bool8 IsMapTypeIndoors(u8 mapType);
 u8 GetSavedWarpRegionMapSectionId(void);
 u8 GetCurrentRegionMapSectionId(void);

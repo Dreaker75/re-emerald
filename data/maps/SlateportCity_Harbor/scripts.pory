@@ -206,6 +206,7 @@ SlateportCity_Harbor_EventScript_Lilycove::
 	setvar VAR_SS_TIDAL_STATE, SS_TIDAL_BOARD_SLATEPORT
 	call SlateportCity_Harbor_EventScript_BoardFerry
 	warp MAP_SS_TIDAL_CORRIDOR, 1, 10
+	clearflag FLAG_CAN_TELEPORT
 	waitstate
 	release
 	end

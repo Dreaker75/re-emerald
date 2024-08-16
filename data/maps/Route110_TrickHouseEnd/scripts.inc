@@ -25,6 +25,7 @@ Route110_TrickHouseEnd_EventScript_SetTrickMasterPos::
 	addobject LOCALID_TRICK_MASTER
 	showobjectat LOCALID_TRICK_MASTER, MAP_ROUTE110_TRICK_HOUSE_END
 	turnobject LOCALID_TRICK_MASTER, DIR_EAST
+	clearflag FLAG_CAN_TELEPORT
 	end
 
 Route110_TrickHouseEnd_OnFrame:

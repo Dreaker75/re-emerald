@@ -3976,11 +3976,8 @@ static void CursorCb_FieldMove(u8 taskId)
                 ChooseMonForSoftboiled(taskId);
                 break;
             case FIELD_MOVE_TELEPORT:
-                mapHeader = Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->lastHealLocation.mapGroup, gSaveBlock1Ptr->lastHealLocation.mapNum);
-                GetMapNameGeneric(gStringVar1, mapHeader->regionMapSectionId);
-                StringExpandPlaceholders(gStringVar4, gText_ReturnToHealingSpot);
-                DisplayFieldMoveExitAreaMessage(taskId);
-                sPartyMenuInternal->data[0] = fieldMove;
+                gPartyMenu.exitCallback = CB2_OpenTeleportMap;
+                Task_ClosePartyMenu(taskId);
                 break;
             case FIELD_MOVE_DIG:
                 mapHeader = Overworld_GetMapHeaderByGroupAndId(gSaveBlock1Ptr->escapeWarp.mapGroup, gSaveBlock1Ptr->escapeWarp.mapNum);
@@ -4116,7 +4113,7 @@ static void DisplayCantUseSurfMessage(void)
 
 static bool8 SetUpFieldMove_Fly(void)
 {
-    if (Overworld_MapTypeAllowsTeleportAndFly(gMapHeader.mapType) == TRUE)
+    if (Overworld_MapTypeAllowsFly(gMapHeader.mapType) == TRUE)
         return TRUE;
     else
         return FALSE;

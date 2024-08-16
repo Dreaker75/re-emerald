@@ -1067,7 +1067,7 @@ static bool32 CheckMatchCallChance(void)
 
 static bool32 MapAllowsMatchCall(void)
 {
-    if (!Overworld_MapTypeAllowsTeleportAndFly(gMapHeader.mapType) || gMapHeader.regionMapSectionId == MAPSEC_SAFARI_ZONE)
+    if (!Overworld_MapTypeAllowsFly(gMapHeader.mapType) || gMapHeader.regionMapSectionId == MAPSEC_SAFARI_ZONE)
         return FALSE;
 
     if (gMapHeader.regionMapSectionId == MAPSEC_SOOTOPOLIS_CITY

@@ -254,7 +254,7 @@
 #define FLAG_RECEIVED_TM_ROAR                0xE7
 #define FLAG_RECEIVED_TM_GIGA_DRAIN          0xE8
 
-#define FLAG_UNUSED_0x0E9                    0xE9 // Unused Flag
+#define FLAG_CAN_TELEPORT                    0xE9 // ADDED: Used to prevent the player from teleporting while doing Battle Frontier challenges and other things
 
 #define FLAG_RECEIVED_TM_REST                0xEA
 #define FLAG_RECEIVED_TM_ATTRACT             0xEB

@@ -70,6 +70,7 @@
     - The speed of the Flash raidus expanding has been increased to triple its speed to accomodate for the change
     - Flash will now reduce the encounter chance of wild Pokemon on areas where it has been used by a whooping 1/5
     - A message is displayed the first time you enter a dark cave in each area asking if you want to use Flash
+ - Teleport has been updated and now works like the old Fly HM, with the addition that it can be used indoors too! (Except in certain locations where it could break the game, like the Elite Four or the Battle Facilities). It still does NOT need a badge to be used, so you can now effectively Fly as soon as you get a Pokemon that can learn Teleport (Like Ralts or Abra)!
 
 ## Facilities changes:
  - Though the Contests themselves remain entirely untouched, a few of the mechanics surrounding them have been changed:

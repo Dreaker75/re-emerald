@@ -5,11 +5,11 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
 
 ## Features for Alpha release
  - Add version number on the Main Menu
- - Make Fly usable from the PokeNav map and allow flying to every location, not just towns
- - Make Teleport work like the old Fly
+ - Update Fly to be able to land in both towns/cities and routes (like in ORAS)
  - Change Hidden and PokeBall items found throughout the game to be more useful
 
 ## Features for Beta release
+ - Make Fly and Teleport usable from the PokeNav map
  - Either turn off PokeNav calls completely or make it an in-game toggle
  - Make it possible to buy Coins in any amount in the Game Corner
  - Add a counter for buying PokeBlocks in the Lillycove Department Store, like Platinum
@@ -39,6 +39,7 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Make the Lilycove clear-out sale easier to activate or permanent on specific days/times
  - Add a way to see a move's power, accuracy and effect from the battle menu
  - Color the types in the battle menu green, yellow or red for super effective, not very effective and ineffective moves, respectively
+ - Make all the Trick House puzzles revisitable after finishing the last one (And improve the items found there)
  
 ## Features for Base Version release
  - Roaming mechanic Revamp to make it less tedious
@@ -60,6 +61,7 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Add a way to earn all missing Ribbons
  - Pressing L on the overworld will bring out a list of registered items (up to 10)
  - Pressing R on the overworld will bring out a list of useful things (toggle auto run, Sweet Scent (If an appropiate mon exists in party), consumables like Repels, etc)
+ - Add the Ruby-exclusive Trick House puzzle based on Mossdeep City Gym and change the strength one to use the Japanese version?
 
 ## Backlog
 Features here are things I'd like to add once everything else above has been implemented. Still debating whether to make these part of the base Re:Emerald or do it under a new name, as these are features that will significantly change the base of Pokemon Emerald.

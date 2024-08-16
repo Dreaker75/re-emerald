@@ -35,6 +35,7 @@ BattleFrontier_BattlePikeLobby_EventScript_QuitWithoutSaving::
 	pike_set PIKE_DATA_WIN_STREAK_ACTIVE, FALSE
 	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
 	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	setflag FLAG_CAN_TELEPORT
 	releaseall
 	end
 
@@ -68,6 +69,7 @@ BattleFrontier_BattlePikeLobby_EventScript_GiveBattlePoints::
 	msgbox BattleFrontier_BattlePikeLobby_Text_LookForwardToSeeingYou, MSGBOX_DEFAULT
 	closemessage
 	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	setflag FLAG_CAN_TELEPORT
 	releaseall
 	end
 
@@ -87,6 +89,7 @@ BattleFrontier_BattlePikeLobby_EventScript_LostChallenge::
 	msgbox BattleFrontier_BattlePikeLobby_Text_LookForwardToSeeingYou, MSGBOX_DEFAULT
 	closemessage
 	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	setflag FLAG_CAN_TELEPORT
 	releaseall
 	end
 
@@ -157,6 +160,7 @@ BattleFrontier_BattlePikeLobby_EventScript_SaveBeforeChallenge::
 	call BattleFrontier_BattlePike_EventScript_CloseCurtain
 	warpsilent MAP_BATTLE_FRONTIER_BATTLE_PIKE_CORRIDOR, 6, 7
 	setvar VAR_TEMP_CHALLENGE_STATUS, 0
+	clearflag FLAG_CAN_TELEPORT
 	waitstate
 	end
 

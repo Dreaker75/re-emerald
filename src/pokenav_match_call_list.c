@@ -356,7 +356,7 @@ const u8 *GetMatchCallMessageText(int index, bool8 *newRematchRequest)
 {
     struct Pokenav_MatchCallMenu *state = GetSubstructPtr(POKENAV_SUBSTRUCT_MATCH_CALL_MAIN);
     *newRematchRequest = FALSE;
-    if (!Overworld_MapTypeAllowsTeleportAndFly(gMapHeader.mapType))
+    if (!Overworld_MapTypeAllowsFly(gMapHeader.mapType))
         return gText_CallCantBeMadeHere;
 
     if (!state->matchCallEntries[index].isSpecialTrainer)

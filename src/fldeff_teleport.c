@@ -1,4 +1,5 @@
 #include "global.h"
+#include "event_data.h"
 #include "field_effect.h"
 #include "field_player_avatar.h"
 #include "fldeff.h"
@@ -12,13 +13,14 @@ static void StartTeleportFieldEffect(void);
 
 bool8 SetUpFieldMove_Teleport(void)
 {
-    if (Overworld_MapTypeAllowsTeleportAndFly(gMapHeader.mapType) == TRUE)
+    if (VarGet(VAR_ELITE_4_STATE) != 0 || !FlagGet(FLAG_CAN_TELEPORT))
     {
-        gFieldCallback2 = FieldCallback_PrepareFadeInFromMenu;
-        gPostMenuFieldCallback = FieldCallback_Teleport;
-        return TRUE;
+        return FALSE;
     }
-    return FALSE;
+
+    gFieldCallback2 = FieldCallback_PrepareFadeInFromMenu;
+    gPostMenuFieldCallback = FieldCallback_Teleport;
+    return TRUE;
 }
 
 static void FieldCallback_Teleport(void)

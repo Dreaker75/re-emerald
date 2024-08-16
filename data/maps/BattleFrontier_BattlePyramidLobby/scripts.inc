@@ -39,6 +39,7 @@ BattleFrontier_BattlePyramidLobby_EventScript_QuitWithoutSaving::
 	pyramid_set PYRAMID_DATA_WIN_STREAK_ACTIVE, FALSE
 	frontier_set FRONTIER_DATA_CHALLENGE_STATUS, 0
 	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	setflag FLAG_CAN_TELEPORT
 	releaseall
 	end
 
@@ -75,6 +76,7 @@ BattleFrontier_BattlePyramidLobby_EventScript_GiveBattlePoints::
 	msgbox BattleFrontier_BattlePyramidLobby_Text_LookForwardToNextChallenge, MSGBOX_DEFAULT
 	closemessage
 	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	setflag FLAG_CAN_TELEPORT
 	releaseall
 	end
 
@@ -97,6 +99,7 @@ BattleFrontier_BattlePyramidLobby_EventScript_LostChallenge::
 	msgbox BattleFrontier_BattlePyramidLobby_Text_LookForwardToNextChallenge, MSGBOX_DEFAULT
 	closemessage
 	setvar VAR_TEMP_CHALLENGE_STATUS, 255
+	setflag FLAG_CAN_TELEPORT
 	releaseall
 	end
 
@@ -160,6 +163,7 @@ BattleFrontier_BattlePyramidLobby_EventScript_SaveBeforeChallenge::
 	setvar VAR_TEMP_CHALLENGE_STATUS, 255
 	goto_if_eq VAR_RESULT, 0, BattleFrontier_BattlePyramidLobby_EventScript_CancelChallengeSaveFailed
 BattleFrontier_BattlePyramidLobby_EventScript_EnterChallenge::
+	clearflag FLAG_CAN_TELEPORT
 	special SavePlayerParty
 	frontier_setpartyorder FRONTIER_PARTY_SIZE
 	msgbox BattleFrontier_BattlePyramidLobby_Text_ShowYouIntoPyramid, MSGBOX_DEFAULT
