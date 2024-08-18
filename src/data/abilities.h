@@ -12,7 +12,7 @@ const struct Ability gAbilitiesInfo[ABILITIES_COUNT] =
     [ABILITY_STENCH] =
     {
         .name = _("STENCH"),
-#if B_STENCH_EFFECT < GEN_5:
+#if B_STENCH_EFFECT < GEN_5
         .description = COMPOUND_STRING("Helps repel wild POKéMON."),
 #else
         .description = COMPOUND_STRING("May cause a foe to flinch."),
