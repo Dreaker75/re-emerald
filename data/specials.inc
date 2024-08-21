@@ -505,7 +505,9 @@ gSpecials::
 	def_special ShouldDoBrailleRegicePuzzle
 	def_special EnableNationalPokedex
 	def_special ScriptMenu_CreateLilycoveSSTidalMultichoice
+	def_special ScriptMenu_CreateFossilRevivalMultichoice
 	def_special GetLilycoveSSTidalSelection
+	def_special GetFossilRevivalSelection
 	def_special TurnOnTVScreen
 	def_special SetMewAboveGrass
 	def_special ShouldDistributeEonTicket

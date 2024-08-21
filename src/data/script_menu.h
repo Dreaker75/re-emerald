@@ -599,13 +599,6 @@ static const struct MenuAction MultichoiceList_UnusedSSTidal4[] =
     {gText_Exit},
 };
 
-static const struct MenuAction MultichoiceList_Fossil[] =
-{
-    {gText_ClawFossil},
-    {gText_RootFossil},
-    {gText_Exit},
-};
-
 static const struct MenuAction MultichoiceList_YesNo[] =
 {
     {gText_Yes},
@@ -885,7 +878,7 @@ static const struct MultichoiceListStruct sMultichoiceLists[] =
     [MULTI_UNUSED_SSTIDAL_2]           = MULTICHOICE(MultichoiceList_UnusedSSTidal2),
     [MULTI_UNUSED_SSTIDAL_3]           = MULTICHOICE(MultichoiceList_UnusedSSTidal3),
     [MULTI_UNUSED_SSTIDAL_4]           = MULTICHOICE(MultichoiceList_UnusedSSTidal4),
-    [MULTI_FOSSIL]                     = MULTICHOICE(MultichoiceList_Fossil),
+    [MULTI_FOSSIL]                     = MULTICHOICE(MultichoiceList_Exit),
     [MULTI_YESNO]                      = MULTICHOICE(MultichoiceList_YesNo),
     [MULTI_FRONTIER_RULES]             = MULTICHOICE(MultichoiceList_FrontierRules),
     [MULTI_BATTLE_ARENA_RULES]         = MULTICHOICE(MultichoiceList_BattleArenaRules),
@@ -970,6 +963,16 @@ static const u8 *const sLilycoveSSTidalDestinations[SSTIDAL_SELECTION_COUNT] =
     [SSTIDAL_SELECTION_BIRTH_ISLAND]    = gText_BirthIsland,
     [SSTIDAL_SELECTION_FARAWAY_ISLAND]  = gText_FarawayIsland,
     [SSTIDAL_SELECTION_EXIT]            = gText_Exit,
+};
+
+static const u8 *const sFossilSelection[FOSSIL_SELECTION_COUNT] =
+{
+    [FOSSIL_SELECTION_HELIX]     = gText_HelixFossil,
+    [FOSSIL_SELECTION_DOME]      = gText_DomeFossil,
+    [FOSSIL_SELECTION_OLD_AMBER] = gText_OldAmber,
+    [FOSSIL_SELECTION_ROOT]      = gText_RootFossil,
+    [FOSSIL_SELECTION_CLAW]      = gText_ClawFossil,
+    [FOSSIL_SELECTION_EXIT]      = gText_Exit,
 };
 
 static const u8 *const sCableClubOptions_WithRecordMix[] =

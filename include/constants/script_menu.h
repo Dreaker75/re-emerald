@@ -124,6 +124,15 @@
 #define MULTI_TAG_MATCH_TYPE               113
 #define MULTI_BERRY_PLOT                   114
 
+// Fossil revival Multichoice Selections
+#define FOSSIL_SELECTION_DOME              0
+#define FOSSIL_SELECTION_HELIX             1
+#define FOSSIL_SELECTION_OLD_AMBER         2
+#define FOSSIL_SELECTION_ROOT              3
+#define FOSSIL_SELECTION_CLAW              4
+#define FOSSIL_SELECTION_EXIT              5
+#define FOSSIL_SELECTION_COUNT             6
+
 // Lilycove SS Tidal Multichoice Selections
 #define SSTIDAL_SELECTION_SLATEPORT        0
 #define SSTIDAL_SELECTION_BATTLE_FRONTIER  1

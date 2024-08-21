@@ -140,6 +140,7 @@
  - Removed Wally's tutorial battle and the PokeNav's tutorial call to Mr. Stone
  - Petalburg Gym's doors can now be opened just by walking like the rest of the doors
  - Fixed the bug that caused the Mart Employee in Oldale Town to walk through the Shop's wall and into a tree under certain circumstances
+ - Scientist in Devon Corp that revives the Fossils can now revive Kanto Fossils, and no longer requires talking to someone else or leaving the room to claim the Pokemon.
 
 # Future changes
  - To see the future changes planned for this romhack, check out [ToDoList.md](https://github.com/Dreaker75/re-emerald/blob/main/FUTURE_PLANS.md)
