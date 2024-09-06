@@ -38,6 +38,7 @@ static void SetBagItemQuantity(u16 *quantity, u16 newValue)
     *quantity =  newValue ^ gSaveBlock2Ptr->encryptionKey;
 }
 
+#if I_STORE_SYSTEM == GEN_3
 static u16 GetPCItemQuantity(u16 *quantity)
 {
     return *quantity;
@@ -47,6 +48,7 @@ static void SetPCItemQuantity(u16 *quantity, u16 newValue)
 {
     *quantity = newValue;
 }
+#endif
 
 void ApplyNewEncryptionKeyToBagItems(u32 newKey)
 {
@@ -177,7 +179,7 @@ u32 GetFreeSpaceForItemInBag(u16 itemId)
 #if I_STORE_SYSTEM == GEN_3
     u32 spaceForItem = 0;
 #else
-    u8 emptySpaceFound;   
+    u8 emptySpaceFound = FALSE;   
 #endif
 
     if (ItemId_GetPocket(itemId) == POCKET_NONE)
