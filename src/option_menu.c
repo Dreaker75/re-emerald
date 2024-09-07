@@ -426,7 +426,7 @@ static u8 TextSpeed_ProcessInput(u8 selection)
 static void TextSpeed_DrawChoices(u8 selection)
 {
     u8 styles[4];
-    s32 widthSlow, widthMid, widthFast, widthInstant, xNumbersWidth;
+    s32 widthMid, widthFast, xNumbersWidth;
 
     styles[0] = 0;
     styles[1] = 0;
@@ -438,10 +438,8 @@ static void TextSpeed_DrawChoices(u8 selection)
 
     xNumbersWidth = GetStringRightAlignXOffset(FONT_NORMAL, gText_TextSpeedInstant, 198) - 104;
 
-    widthSlow = GetStringWidth(FONT_NORMAL, gText_TextSpeedSlow, 0);
     widthMid = GetStringWidth(FONT_NORMAL, gText_TextSpeedMid, 0);
     widthFast = GetStringWidth(FONT_NORMAL, gText_TextSpeedFast, 0);
-    widthInstant = GetStringWidth(FONT_NORMAL, gText_TextSpeedInstant, 0);
 
     DrawOptionMenuChoice(gText_TextSpeedMid, 104 + xNumbersWidth / 2 - widthMid, YPOS_TEXTSPEED, styles[1]);
     DrawOptionMenuChoice(gText_TextSpeedFast, 104 + xNumbersWidth - widthFast * 2, YPOS_TEXTSPEED, styles[2]);
