@@ -65,8 +65,8 @@
       "x": 50,
       "y": 36,
       "elevation": 3,
-      "item": "ITEM_HP_UP",
-      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_127_HP_UP"
+      "item": "ITEM_MAX_ELIXIR",
+      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_127_MAX_ELIXIR"
     },
     {
       "type": "hidden_item",

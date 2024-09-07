@@ -39,8 +39,8 @@
       "x": 42,
       "y": 51,
       "elevation": 0,
-      "item": "ITEM_CARBOS",
-      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_124_CARBOS"
+      "item": "ITEM_STARDUST",
+      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_124_STARDUST"
     },
     {
       "type": "hidden_item",
@@ -55,8 +55,8 @@
       "x": 66,
       "y": 34,
       "elevation": 3,
-      "item": "ITEM_PEARL",
-      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_124_PEARL"
+      "item": "ITEM_STAR_PIECE",
+      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_124_STAR_PIECE"
     },
     {
       "type": "hidden_item",
@@ -79,8 +79,8 @@
       "x": 42,
       "y": 5,
       "elevation": 3,
-      "item": "ITEM_CALCIUM",
-      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_124_CALCIUM"
+      "item": "ITEM_PP_UP",
+      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_124_PP_UP"
     },
     {
       "type": "hidden_item",

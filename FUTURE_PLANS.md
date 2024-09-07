@@ -6,7 +6,6 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
 ## Features for Alpha release
  - Add version number on the Main Menu
  - Update Fly to be able to land in both towns/cities and routes (like in ORAS)
- - Change Hidden and PokeBall items found throughout the game to be more useful
 
 ## Features for Beta release
  - Make Fly and Teleport usable from the PokeNav map
@@ -32,6 +31,7 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Add a prize for beating the Cycling Road record the first time, and a lesser prize for every time it's beaten afterwards
  - Add trainers and other things to Seafloor Cavern post-game, kind of like Mt. Chimney after the Team Aqua vs Team Magma face off
  - Display the Pokemon's EVs, IVs and Friendship in the status screen
+ - Add the stat-reducing berries to a shop in the Flower Shop after beating the game
  - Improve berry planting by making the berry yields 2-5 berries (depending on type) minimum, with more being given when watered during growth. Also make the fully grown berry plants remain harvestable until they're claimed
  - Add ability to change the Pokemon's PokeBall (old PokeBall is lost)
  - Remove the beeps when Pokemon is low on HP
@@ -40,6 +40,7 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Add a way to see a move's power, accuracy and effect from the battle menu
  - Color the types in the battle menu green, yellow or red for super effective, not very effective and ineffective moves, respectively
  - Make all the Trick House puzzles revisitable after finishing the last one (And improve the items found there)
+ - Make it possible to buy multiples of any Secret Base item in one transaction
  
 ## Features for Base Version release
  - Roaming mechanic Revamp to make it less tedious
@@ -47,17 +48,17 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
  - Add the Enigma Berry to the game as well as a way to change between all the versions
  - Add new maps for the Legendary Trainers
  - Add events for all Legendary Pokemon
- - Make Ganlon-Petaya berries obtainable from the Berry Master wife after beating the Elite Four
  - Improve Secret Bases to allow for more than 16 decorations per base
  - Modify Altering Cave to give all the types of Unown on rotation
  - Sky Pillar will have a second wild encounter table for the Post-Game, which will include non-Hoenn Pokemon
- - The Meteorite Key Item now allows to Forme change Deoxys (It can no longer be turned in to Professor Kozmo)
+ - The Meteorite Key Item now allows to Forme change Deoxys (Professor Kozmo will give it back after researching it a bit)
  - Make a second encounter table for Route 123 to have one for the sea of the route and one for the pond
  - Make a second encounter table for Route 134, to vary between surfing/fishing from Slateport or Pacifidlog
  - Add a pocket in the bag for Medicine, Held Items and Evolution Items
  - Bag expansion: Make it possible to store at least 1 of each item in the bag (Currently at 93, need to be 139 in total between the new pockets added)
  - Allow player to change name or gender/sprite at any point
  - Defeating a Trainer in a Secret Base will give the player a reward
+ - Add a random set of special trainers that can appear with their own secret bases in a game that hasn't mixed records?
  - Add a way to earn all missing Ribbons
  - Pressing L on the overworld will bring out a list of registered items (up to 10)
  - Pressing R on the overworld will bring out a list of useful things (toggle auto run, Sweet Scent (If an appropiate mon exists in party), consumables like Repels, etc)

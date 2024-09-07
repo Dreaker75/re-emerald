@@ -4185,6 +4185,7 @@ static const struct TrainerMon sParty_Calvin5[] = {
     .iv = TRAINER_PARTY_IVS(4, 4, 4, 4, 4, 4),
     .lvl = 36,
     .species = SPECIES_MIGHTYENA,
+    .heldItem = ITEM_BLACKGLASSES,
     }
 };
 

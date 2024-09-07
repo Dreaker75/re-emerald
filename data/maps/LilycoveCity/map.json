@@ -164,9 +164,9 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_MAX_REPEL",
+      "trainer_sight_or_berry_tree_id": "ITEM_STARDUST",
       "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_LILYCOVE_CITY_MAX_REPEL"
+      "flag": "FLAG_ITEM_LILYCOVE_CITY_STARDUST"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_AQUA_MEMBER_M",
@@ -517,8 +517,8 @@
       "x": 64,
       "y": 31,
       "elevation": 0,
-      "item": "ITEM_POKE_BALL",
-      "flag": "FLAG_HIDDEN_ITEM_LILYCOVE_CITY_POKE_BALL"
+      "item": "ITEM_NET_BALL",
+      "flag": "FLAG_HIDDEN_ITEM_LILYCOVE_CITY_NET_BALL"
     }
   ]
 }

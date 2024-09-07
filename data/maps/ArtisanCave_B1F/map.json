@@ -20,12 +20,12 @@
       "y": 38,
       "elevation": 3,
       "movement_type": "MOVEMENT_TYPE_LOOK_AROUND",
-      "movement_range_x": 1,
+      "movement_range_x": 2,
       "movement_range_y": 1,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_HP_UP",
+      "trainer_sight_or_berry_tree_id": "ITEM_RARE_CANDY",
       "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_ARTISAN_CAVE_B1F_HP_UP"
+      "flag": "FLAG_ITEM_ARTISAN_CAVE_B1F_RARE_CANDY"
     }
   ],
   "warp_events": [
@@ -53,32 +53,32 @@
       "x": 32,
       "y": 29,
       "elevation": 0,
-      "item": "ITEM_ZINC",
-      "flag": "FLAG_HIDDEN_ITEM_ARTISAN_CAVE_B1F_ZINC"
+      "item": "ITEM_SACRED_ASH",
+      "flag": "FLAG_HIDDEN_ITEM_ARTISAN_CAVE_B1F_SACRED_ASH"
     },
     {
       "type": "hidden_item",
       "x": 27,
       "y": 8,
       "elevation": 0,
-      "item": "ITEM_CALCIUM",
-      "flag": "FLAG_HIDDEN_ITEM_ARTISAN_CAVE_B1F_CALCIUM"
+      "item": "ITEM_PP_MAX",
+      "flag": "FLAG_HIDDEN_ITEM_ARTISAN_CAVE_B1F_PP_MAX"
     },
     {
       "type": "hidden_item",
       "x": 7,
       "y": 5,
       "elevation": 0,
-      "item": "ITEM_PROTEIN",
-      "flag": "FLAG_HIDDEN_ITEM_ARTISAN_CAVE_B1F_PROTEIN"
+      "item": "ITEM_OLD_AMBER",
+      "flag": "FLAG_HIDDEN_ITEM_ARTISAN_CAVE_B1F_OLD_AMBER"
     },
     {
       "type": "hidden_item",
       "x": 19,
       "y": 43,
       "elevation": 0,
-      "item": "ITEM_IRON",
-      "flag": "FLAG_HIDDEN_ITEM_ARTISAN_CAVE_B1F_IRON"
+      "item": "ITEM_STAR_PIECE",
+      "flag": "FLAG_HIDDEN_ITEM_ARTISAN_CAVE_B1F_STAR_PIECE"
     }
   ]
 }

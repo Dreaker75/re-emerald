@@ -23,9 +23,9 @@
       "movement_range_x": 0,
       "movement_range_y": 0,
       "trainer_type": "TRAINER_TYPE_NONE",
-      "trainer_sight_or_berry_tree_id": "ITEM_MAX_POTION",
+      "trainer_sight_or_berry_tree_id": "ITEM_FULL_RESTORE",
       "script": "Common_EventScript_FindItem",
-      "flag": "FLAG_ITEM_MT_PYRE_EXTERIOR_MAX_POTION"
+      "flag": "FLAG_ITEM_MT_PYRE_EXTERIOR_FULL_RESTORE"
     },
     {
       "graphics_id": "OBJ_EVENT_GFX_ITEM_BALL",
@@ -117,16 +117,16 @@
       "x": 9,
       "y": 8,
       "elevation": 0,
-      "item": "ITEM_ULTRA_BALL",
-      "flag": "FLAG_HIDDEN_ITEM_MT_PYRE_EXTERIOR_ULTRA_BALL"
+      "item": "ITEM_SPELL_TAG",
+      "flag": "FLAG_HIDDEN_ITEM_MT_PYRE_EXTERIOR_SPELL_TAG"
     },
     {
       "type": "hidden_item",
       "x": 16,
       "y": 22,
       "elevation": 0,
-      "item": "ITEM_MAX_ETHER",
-      "flag": "FLAG_HIDDEN_ITEM_MT_PYRE_EXTERIOR_MAX_ETHER"
+      "item": "ITEM_MAX_ELIXIR",
+      "flag": "FLAG_HIDDEN_ITEM_MT_PYRE_EXTERIOR_MAX_ELIXIR"
     }
   ]
 }

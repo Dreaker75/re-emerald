@@ -14,7 +14,9 @@ Route110_TrickHouseEntrance_MapScripts::
 	@ 3: Trick Master still making next puzzle
 	@ 4: Finished final puzzle
 	@ 5: Completed previous challenge
-	@ 6: 'Trick Master' mechadoll ready to give Tent reward from final challenge (if bag was full)
+	@ 6: 'Trick Master' mechadoll ready to give Red Tent reward from final challenge (if bag was full)
+	@ 7: 'Trick Master' mechadoll ready to give Blue Tent reward from final challenge (if bag was full)
+	@ 8: All Tents given
 
 Route110_TrickHouseEntrance_OnTransition:
 	setflag FLAG_LANDMARK_TRICK_HOUSE
@@ -39,7 +41,12 @@ Route110_TrickHouseEntrance_EventScript_SetReadyToGiveReward::
 	end
 
 Route110_TrickHouseEntrance_EventScript_ReadyToGiveTentReward::
+	goto_if_set FLAG_TRICK_HOUSE_RECEIVED_RED_TENT, Route110_TrickHouseEntrance_EventScript_ReadyToGiveBlueTentReward
 	setvar VAR_TRICK_HOUSE_ENTRANCE_STATE, 6
+	end
+
+Route110_TrickHouseEntrance_EventScript_ReadyToGiveBlueTentReward::
+	setvar VAR_TRICK_HOUSE_ENTRANCE_STATE, 7
 	end
 
 Route110_TrickHouseEntrance_EventScript_EnterFromCorridor::
@@ -125,6 +132,7 @@ Route110_TrickHouseEntrance_OnWarp:
 	map_script_2 VAR_TRICK_HOUSE_ENTRANCE_STATE, 4, Route110_TrickHouseEntrance_EventScript_RemoveTrickMaster
 	map_script_2 VAR_TRICK_HOUSE_ENTRANCE_STATE, 5, Route110_TrickHouseEntrance_EventScript_RemoveTrickMaster
 	map_script_2 VAR_TRICK_HOUSE_ENTRANCE_STATE, 6, Route110_TrickHouseEntrance_EventScript_SetTrickMasterInFrontOfDoor
+	map_script_2 VAR_TRICK_HOUSE_ENTRANCE_STATE, 7, Route110_TrickHouseEntrance_EventScript_SetTrickMasterInFrontOfDoor
 	.2byte 0
 
 Route110_TrickHouseEntrance_EventScript_TrickMasterFound::
@@ -229,6 +237,7 @@ Route110_TrickHouseEntrance_EventScript_TrickMaster::
 	case 2, Route110_TrickHouseEntrance_EventScript_GiveReward
 	case 3, Route110_TrickHouseEntrance_EventScript_StillMakingPuzzle
 	case 6, Route110_TrickHouseEntrance_EventScript_MechadollReward
+	case 7, Route110_TrickHouseEntrance_EventScript_MechadollReward
 	end
 
 Route110_TrickHouseEntrance_EventScript_FoundTrickMaster::
@@ -407,26 +416,28 @@ Route110_TrickHouseEntrance_EventScript_MechadollReward::
 	applymovement LOCALID_TRICK_MASTER, Common_Movement_FacePlayer
 	waitmovement 0
 	msgbox Route110_TrickHouseEntrance_Text_MechadollWhichTent, MSGBOX_DEFAULT
-	call Route110_TrickHouseEntrance_EventScript_ChooseTent
-	goto_if_eq VAR_RESULT, TRUE, Route110_TrickHouseEntrance_EventScript_ReceivedTent
+	goto_if_unset FLAG_TRICK_HOUSE_RECEIVED_RED_TENT, Route110_TrickHouseEntrance_EventScript_GiveRedTent
+	call Route110_TrickHouseEntrance_EventScript_GiveBlueTent
+	releaseall
+	end
+
+Route110_TrickHouseEntrance_EventScript_GiveRedTent::
+	givedecoration DECOR_RED_TENT
+	goto_if_eq VAR_RESULT, TRUE, Route110_TrickHouseEntrance_EventScript_GiveBlueTent
 	call_if_eq VAR_RESULT, FALSE, Common_EventScript_NoRoomForDecor
 	msgbox Route110_TrickHouseEntrance_Text_PCFullAgain, MSGBOX_DEFAULT
 	releaseall
 	end
 
-Route110_TrickHouseEntrance_EventScript_ChooseTent::
-	multichoice 0, 0, MULTI_TENT, TRUE
-	switch VAR_RESULT
-	case 0, Route110_TrickHouseEntrance_EventScript_GiveRedTent
-	goto Route110_TrickHouseEntrance_EventScript_GiveBlueTent
-
-Route110_TrickHouseEntrance_EventScript_GiveRedTent::
-	givedecoration DECOR_RED_TENT
-	return
-
 Route110_TrickHouseEntrance_EventScript_GiveBlueTent::
+	setflag FLAG_TRICK_HOUSE_RECEIVED_RED_TENT
+	setvar VAR_TRICK_HOUSE_ENTRANCE_STATE, 7
 	givedecoration DECOR_BLUE_TENT
-	return
+	goto_if_eq VAR_RESULT, TRUE, Route110_TrickHouseEntrance_EventScript_ReceivedTent
+	call_if_eq VAR_RESULT, FALSE, Common_EventScript_NoRoomForDecor
+	msgbox Route110_TrickHouseEntrance_Text_PCFullAgain, MSGBOX_DEFAULT
+	releaseall
+	end
 
 Route110_TrickHouseEntrance_EventScript_ReceivedTent::
 	msgbox Route110_TrickHouseEntrance_Text_ThenFarewell, MSGBOX_DEFAULT
@@ -802,8 +813,7 @@ Route110_TrickHouseEntrance_Text_MechadollWhichTent:
 	.string "MECHADOLL 5 I AM!\n"
 	.string "IF REWARD IS NOT TAKEN BY YOU,\l"
 	.string "THEN TRICK MASTER YOU CANNOT FOLLOW.\p"
-	.string "RED TENT OR BLUE TENT,\n"
-	.string "WHICH DO YOU PREFER?$"
+	.string "TAKE THIS TENT.$"
 
 Route110_TrickHouseEntrance_Text_ThenFarewell:
 	.string "THEN FAREWELL.$"

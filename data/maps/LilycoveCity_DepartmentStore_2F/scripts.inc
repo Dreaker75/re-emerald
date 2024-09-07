@@ -13,34 +13,134 @@ LilycoveCity_DepartmentStore_2F_EventScript_Sailor::
 	msgbox LilycoveCity_DepartmentStore_2F_Text_StockUpOnItems, MSGBOX_NPC
 	end
 
-LilycoveCity_DepartmentStore_2F_EventScript_ClerkLeft::
+LilycoveCity_DepartmentStore_2F_EventScript_ClerkPokeball::
 	lock
 	faceplayer
 	message gText_HowMayIServeYou
 	waitmessage
-	pokemart LilycoveCity_DepartmentStore_2F_Pokemart1
+	pokemart LilycoveCity_DepartmentStore_2F_PokeballMart
 	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
 	release
 	end
 
 	.align 2
-LilycoveCity_DepartmentStore_2F_Pokemart1:
+LilycoveCity_DepartmentStore_2F_PokeballMart:
 	.2byte ITEM_POKE_BALL
 	.2byte ITEM_GREAT_BALL
 	.2byte ITEM_ULTRA_BALL
-	.2byte ITEM_ESCAPE_ROPE
+	.2byte ITEM_TIMER_BALL
+	.2byte ITEM_REPEAT_BALL
+	.2byte ITEM_NEST_BALL
+	.2byte ITEM_NET_BALL
+	.2byte ITEM_DIVE_BALL
+	.2byte ITEM_NONE
+	release
+	end
+
+LilycoveCity_DepartmentStore_2F_EventScript_ClerkHealing::
+	lock
+	faceplayer
+	message gText_HowMayIServeYou
+	waitmessage
+	call_if_unset FLAG_SYS_GAME_CLEAR, LilycoveCity_DepartmentStore_2F_EventScript_ClerkHealingBeforeE4
+	call_if_set FLAG_SYS_GAME_CLEAR, LilycoveCity_DepartmentStore_2F_EventScript_ClerkHealingAfterE4
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_DepartmentStore_2F_EventScript_ClerkHealingBeforeE4::
+	pokemart LilycoveCity_DepartmentStore_2F_HealingMart
+	return
+
+LilycoveCity_DepartmentStore_2F_EventScript_ClerkHealingAfterE4::
+	pokemart LilycoveCity_DepartmentStore_2F_HealingMartAfterE4
+	return
+
+	.align 2
+LilycoveCity_DepartmentStore_2F_HealingMart:
+	.2byte ITEM_POTION
+	.2byte ITEM_SUPER_POTION
+	.2byte ITEM_HYPER_POTION
+	.2byte ITEM_MAX_POTION
 	.2byte ITEM_FULL_HEAL
 	.2byte ITEM_ANTIDOTE
 	.2byte ITEM_PARALYZE_HEAL
 	.2byte ITEM_BURN_HEAL
 	.2byte ITEM_ICE_HEAL
 	.2byte ITEM_AWAKENING
+	.2byte ITEM_REVIVE
+	.2byte ITEM_ETHER
+	.2byte ITEM_MAX_ETHER
+	.2byte ITEM_NONE
+	release
+	end
+
+	.align 2
+LilycoveCity_DepartmentStore_2F_HealingMartAfterE4:
+	.2byte ITEM_POTION
+	.2byte ITEM_SUPER_POTION
+	.2byte ITEM_HYPER_POTION
+	.2byte ITEM_MAX_POTION
+	.2byte ITEM_FULL_RESTORE
+	.2byte ITEM_FULL_HEAL
+	.2byte ITEM_ANTIDOTE
+	.2byte ITEM_PARALYZE_HEAL
+	.2byte ITEM_BURN_HEAL
+	.2byte ITEM_ICE_HEAL
+	.2byte ITEM_AWAKENING
+	.2byte ITEM_REVIVE
+	.2byte ITEM_MAX_REVIVE
+	.2byte ITEM_ETHER
+	.2byte ITEM_MAX_ETHER
+	.2byte ITEM_ELIXIR
+	.2byte ITEM_MAX_ELIXIR
+	.2byte ITEM_NONE
+	release
+	end
+
+LilycoveCity_DepartmentStore_2F_EventScript_ClerkItems::
+	lock
+	faceplayer
+	message gText_HowMayIServeYou
+	waitmessage
+	call_if_unset FLAG_SYS_GAME_CLEAR, LilycoveCity_DepartmentStore_2F_EventScript_ClerkItemsBeforeE4
+	call_if_set FLAG_SYS_GAME_CLEAR, LilycoveCity_DepartmentStore_2F_EventScript_ClerkItemsAfterE4
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
+	release
+	end
+
+LilycoveCity_DepartmentStore_2F_EventScript_ClerkItemsBeforeE4::
+	pokemart LilycoveCity_DepartmentStore_2F_ItemsMart
+	return
+
+LilycoveCity_DepartmentStore_2F_EventScript_ClerkItemsAfterE4::
+	pokemart LilycoveCity_DepartmentStore_2F_ItemsMartAfterE4
+	return
+
+	.align 2
+LilycoveCity_DepartmentStore_2F_ItemsMart:
+	.2byte ITEM_ESCAPE_ROPE
+	.2byte ITEM_REPEL
+	.2byte ITEM_SUPER_REPEL
+	.2byte ITEM_MAX_REPEL
 	.2byte ITEM_FLUFFY_TAIL
 	.2byte ITEM_NONE
 	release
 	end
 
-LilycoveCity_DepartmentStore_2F_EventScript_ClerkRight::
+	.align 2
+LilycoveCity_DepartmentStore_2F_ItemsMartAfterE4:
+	.2byte ITEM_ESCAPE_ROPE
+	.2byte ITEM_REPEL
+	.2byte ITEM_SUPER_REPEL
+	.2byte ITEM_MAX_REPEL
+	.2byte ITEM_FLUFFY_TAIL
+	.2byte ITEM_POKE_DOLL
+	.2byte ITEM_NONE
+	release
+	end
+
+LilycoveCity_DepartmentStore_2F_EventScript_ClerkMail::
 	lock
 	faceplayer
 	message gText_HowMayIServeYou
@@ -52,16 +152,18 @@ LilycoveCity_DepartmentStore_2F_EventScript_ClerkRight::
 
 	.align 2
 LilycoveCity_DepartmentStore_2F_Pokemart2:
-	.2byte ITEM_POTION
-	.2byte ITEM_SUPER_POTION
-	.2byte ITEM_HYPER_POTION
-	.2byte ITEM_MAX_POTION
-	.2byte ITEM_REVIVE
-	.2byte ITEM_REPEL
-	.2byte ITEM_SUPER_REPEL
-	.2byte ITEM_MAX_REPEL
-	.2byte ITEM_WAVE_MAIL
+	.2byte ITEM_ORANGE_MAIL
+	.2byte ITEM_HARBOR_MAIL
+	.2byte ITEM_GLITTER_MAIL
 	.2byte ITEM_MECH_MAIL
+	.2byte ITEM_WOOD_MAIL
+	.2byte ITEM_WAVE_MAIL
+	.2byte ITEM_BEAD_MAIL
+	.2byte ITEM_SHADOW_MAIL
+	.2byte ITEM_TROPIC_MAIL
+	.2byte ITEM_DREAM_MAIL
+	.2byte ITEM_FAB_MAIL
+	.2byte ITEM_RETRO_MAIL
 	.2byte ITEM_NONE
 	release
 	end

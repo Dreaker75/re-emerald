@@ -54,7 +54,7 @@
 #define MULTI_MACH_BIKE_INFO               43
 #define MULTI_ACRO_BIKE_INFO               44
 #define MULTI_SATISFACTION                 45
-#define MULTI_STERN_DEEPSEA                46
+#define MULTI_UNUSED                       46 // CHANGED: Old Scanner trade. Player now receives both DeepSea items for the Scanner
 #define MULTI_UNUSED_ASH_VENDOR            47 // Replaced by scrollable multichoice
 #define MULTI_GAME_CORNER_DOLLS            48
 #define MULTI_GAME_CORNER_COINS            49

@@ -53,8 +53,8 @@
       "x": 69,
       "y": 18,
       "elevation": 3,
-      "item": "ITEM_PEARL",
-      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_128_PEARL"
+      "item": "ITEM_PP_UP",
+      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_128_PP_UP"
     }
   ]
 }

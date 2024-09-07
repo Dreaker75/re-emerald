@@ -1104,6 +1104,11 @@
 #define PHRASE_OVERWHELMING_LATIAS  3
 #define PHRASE_COOL_LATIOS          4
 #define PHRASE_SUPER_HUSTLE         5
+#define PHRASE_BEAUTIFUL_HO_OH      6
+#define PHRASE_SMART_DEOXYS         7
+#define PHRASE_COOL_KYOGRE          8
+#define PHRASE_CUTE_MEW             9
+#define PHRASE_TOUGH_GROUDON        10
 
 #define EC_NUM_ALPHABET_GROUPS 27 // 26 (1 for each letter) + 1 (Others)
 

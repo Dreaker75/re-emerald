@@ -178,8 +178,8 @@
       "x": 28,
       "y": 6,
       "elevation": 3,
-      "item": "ITEM_EVERSTONE",
-      "flag": "FLAG_HIDDEN_ITEM_GRANITE_CAVE_B2F_EVERSTONE_1"
+      "item": "ITEM_PP_UP",
+      "flag": "FLAG_HIDDEN_ITEM_GRANITE_CAVE_B2F_PP_UP"
     },
     {
       "type": "hidden_item",
@@ -187,7 +187,7 @@
       "y": 11,
       "elevation": 3,
       "item": "ITEM_EVERSTONE",
-      "flag": "FLAG_HIDDEN_ITEM_GRANITE_CAVE_B2F_EVERSTONE_2"
+      "flag": "FLAG_HIDDEN_ITEM_GRANITE_CAVE_B2F_EVERSTONE"
     }
   ]
 }

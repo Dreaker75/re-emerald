@@ -1053,7 +1053,7 @@ static u16 GetPrizeItemId(void)
         prizeItem = ITEM_CHOICE_BAND;
         break;
     default:
-        prizeItem = ITEM_PP_MAX;
+        prizeItem = ITEM_LUCKY_EGG;
         break;
     }
     

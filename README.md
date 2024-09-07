@@ -24,6 +24,9 @@
  - All the changes implemented can be found on the [wild encounters](https://github.com/Dreaker75/re-emerald/blob/main/src/data/wild_encounters.json) file
  - The Feebas mechanic has been reworked. Feebas will still only appear in specific tiles of Route 119 50% of the time, but said tiles are no longer random. Instead, they're based on Feebas' Emerald Pokedex entry.
 
+## Item changes:
+ - Items have been changed all over with some maps having extra items added, some NPCs giving different items and some shops having more items added to them. Check out the comprehensive list of all the item-specific changes [here](https://github.com/Dreaker75/re-emerald/blob/main/ITEM_CHANGES.md).
+
 ### Wild held items changes:
  - Amulet Coin: Meowth (5% - Not currently available in the wild)
  - Berry Juice: Shuckle (100% - No longer holds Oran Berry)
@@ -76,7 +79,7 @@
  - Though the Contests themselves remain entirely untouched, a few of the mechanics surrounding them have been changed:
     - Pokemon can now continue eating PokeBlocks after reaching max Sheen, allowing to easily reach max stats on all five contest stats like ORAS
     - Beating a Contest Rank now unlocks the next tier for all Pokemon, much like ORAS
-    - Winning a Contest will also award the Ribbons for the lower ranks, and an amount Luxury Balls depending on the Rank won (The Luxury Balls are awarded regardless of whether the Pokemon got a Ribbon for that Rank)
+    - Winning a Contest will also award the Ribbons for the lower ranks, and an amount of Luxury Balls depending on the Rank won (The Luxury Balls are awarded regardless of whether the Pokemon got a Ribbon for that Rank)
  - The Trainer Hill now gives more battle-related items and does not require beating the mode in under a certain time to get them.
  - The prizes for all Battle Tents have been updated, and you can now choose whether you want to claim them or discard them if your bag is full. If you choose to discard them, you will automatically claim as many of the items as you have room for in your bag (Note: These rewards are opened for rebalancing later on if they seem too good/bad):
     - Slateport Tent: 2x sets of Vitamins (HP Up, Protein, Iron, Calcium, Zinc, Carbos)
@@ -143,7 +146,7 @@
  - Scientist in Devon Corp that revives the Fossils can now revive Kanto Fossils, and no longer requires talking to someone else or leaving the room to claim the Pokemon.
 
 # Future changes
- - To see the future changes planned for this romhack, check out [ToDoList.md](https://github.com/Dreaker75/re-emerald/blob/main/FUTURE_PLANS.md)
+ - To see the future changes planned for this romhack, check out [FUTURE_PLANS.md](https://github.com/Dreaker75/re-emerald/blob/main/FUTURE_PLANS.md)
 
 # Credits
 Based off RHH's pokeemerald-expansion v1.8.0 https://github.com/rh-hideout/pokeemerald-expansion/
