@@ -75,7 +75,7 @@
       "y": 36,
       "elevation": 3,
       "item": "ITEM_BIG_PEARL",
-      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_126_BIG_PEARL"
+      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_126_BIG_PEARL_1"
     },
     {
       "type": "hidden_item",
@@ -99,7 +99,7 @@
       "y": 60,
       "elevation": 3,
       "item": "ITEM_BIG_PEARL",
-      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_126_BIG_PEARL"
+      "flag": "FLAG_HIDDEN_ITEM_UNDERWATER_126_BIG_PEARL_2"
     },
     {
       "type": "hidden_item",
