@@ -218,6 +218,7 @@ Exterior:
 1F:
  - PP Up -> TM24 - Flamethrower
  - Ultra Ball -> Full Restore
+
 B2F:
  - Full Heal -> Dragon Fang
  - Elixir -> Max Revive
