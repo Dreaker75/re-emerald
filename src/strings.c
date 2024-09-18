@@ -181,6 +181,7 @@ const u8 gText_BirchInTrouble[] = _("PROF. BIRCH is in trouble!\nRelease a POKé
 const u8 gText_ConfirmStarterChoice[] = _("Do you choose this POKéMON?");
 const u8 gText_Pokemon4[] = _("POKéMON"); // Unused
 const u8 gText_FlyToWhere[] = _("FLY to where?");
+const u8 gText_TeleportToWhere[] = _("TELEPORT to where?");
 const u8 gText_AskToUseFlash[] = _("Would you like to use FLASH?");
 const u8 gMenuText_Use[] = _("USE");
 const u8 gMenuText_Toss[] = _("TOSS");

@@ -1,5 +1,12 @@
 Route133_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, Route133_OnTransition
 	.byte 0
+
+
+Route133_OnTransition::
+	setflag FLAG_VISITED_ROUTE_133
+	return
+
 
 Route133_EventScript_Franklin::
 	trainerbattle_single TRAINER_FRANKLIN, Route133_Text_FranklinIntro, Route133_Text_FranklinDefeat

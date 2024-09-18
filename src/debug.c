@@ -2795,6 +2795,17 @@ static void DebugAction_FlagsVars_ToggleFlyFlags(u8 taskId)
         FlagClear(FLAG_VISITED_EVER_GRANDE_CITY);
         FlagClear(FLAG_LANDMARK_POKEMON_LEAGUE);
         FlagClear(FLAG_LANDMARK_BATTLE_FRONTIER);
+        FlagClear(FLAG_VISITED_ROUTE_108);
+        FlagClear(FLAG_VISITED_ROUTE_120);
+        FlagClear(FLAG_VISITED_ROUTE_121);
+        FlagClear(FLAG_VISITED_ROUTE_122);
+        FlagClear(FLAG_VISITED_ROUTE_123);
+        FlagClear(FLAG_VISITED_ROUTE_125);
+        FlagClear(FLAG_VISITED_ROUTE_126);
+        FlagClear(FLAG_VISITED_ROUTE_128);
+        FlagClear(FLAG_VISITED_ROUTE_130);
+        FlagClear(FLAG_VISITED_ROUTE_131);
+        FlagClear(FLAG_VISITED_ROUTE_133);
     }
     else
     {
@@ -2817,6 +2828,17 @@ static void DebugAction_FlagsVars_ToggleFlyFlags(u8 taskId)
         FlagSet(FLAG_VISITED_EVER_GRANDE_CITY);
         FlagSet(FLAG_LANDMARK_POKEMON_LEAGUE);
         FlagSet(FLAG_LANDMARK_BATTLE_FRONTIER);
+	    FlagSet(FLAG_VISITED_ROUTE_108);
+	    FlagSet(FLAG_VISITED_ROUTE_120);
+	    FlagSet(FLAG_VISITED_ROUTE_121);
+	    FlagSet(FLAG_VISITED_ROUTE_122);
+	    FlagSet(FLAG_VISITED_ROUTE_123);
+	    FlagSet(FLAG_VISITED_ROUTE_125);
+	    FlagSet(FLAG_VISITED_ROUTE_126);
+	    FlagSet(FLAG_VISITED_ROUTE_128);
+	    FlagSet(FLAG_VISITED_ROUTE_130);
+	    FlagSet(FLAG_VISITED_ROUTE_131);
+	    FlagSet(FLAG_VISITED_ROUTE_133);
     }
 }
 

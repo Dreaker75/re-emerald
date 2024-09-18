@@ -74,12 +74,14 @@ static EWRAM_DATA struct {
     u16 state;
     u16 mapSecId;
     struct RegionMap regionMap;
-    u8 tileBuffer[0x1c0];
+    // TODO: Need to expand this to have more fly icons, but there isn't enough room removing nameBuffer, so I'll need more memory (64 x 8)?
+    u8 tileBuffer[0x200];
     u8 nameBuffer[0x26]; // never read
     bool8 choseFlyLocation;
 } *sFlyMap = NULL;
 
 static bool32 sDrawFlyDestTextWindow;
+static bool8 sIsFlying;
 
 static u8 ProcessRegionMapInput_Full(void);
 static u8 MoveRegionMapCursor_Full(void);
@@ -306,37 +308,37 @@ static const u8 sMapHealLocations[][3] =
     [MAPSEC_EVER_GRANDE_CITY] = {MAP_GROUP(EVER_GRANDE_CITY), MAP_NUM(EVER_GRANDE_CITY), HEAL_LOCATION_EVER_GRANDE_CITY},
     [MAPSEC_ROUTE_101] = {MAP_GROUP(ROUTE101), MAP_NUM(ROUTE101), HEAL_LOCATION_NONE},
     [MAPSEC_ROUTE_102] = {MAP_GROUP(ROUTE102), MAP_NUM(ROUTE102), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_103] = {MAP_GROUP(ROUTE103), MAP_NUM(ROUTE103), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_104] = {MAP_GROUP(ROUTE104), MAP_NUM(ROUTE104), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_103] = {MAP_GROUP(ROUTE103), MAP_NUM(ROUTE103), HEAL_LOCATION_ROUTE_103},
+    [MAPSEC_ROUTE_104] = {MAP_GROUP(ROUTE104), MAP_NUM(ROUTE104), HEAL_LOCATION_ROUTE_104},
     [MAPSEC_ROUTE_105] = {MAP_GROUP(ROUTE105), MAP_NUM(ROUTE105), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_106] = {MAP_GROUP(ROUTE106), MAP_NUM(ROUTE106), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_106] = {MAP_GROUP(ROUTE106), MAP_NUM(ROUTE106), HEAL_LOCATION_ROUTE_106},
     [MAPSEC_ROUTE_107] = {MAP_GROUP(ROUTE107), MAP_NUM(ROUTE107), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_108] = {MAP_GROUP(ROUTE108), MAP_NUM(ROUTE108), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_108] = {MAP_GROUP(ROUTE108), MAP_NUM(ROUTE108), HEAL_LOCATION_ROUTE_108},
     [MAPSEC_ROUTE_109] = {MAP_GROUP(ROUTE109), MAP_NUM(ROUTE109), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_110] = {MAP_GROUP(ROUTE110), MAP_NUM(ROUTE110), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_111] = {MAP_GROUP(ROUTE111), MAP_NUM(ROUTE111), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_112] = {MAP_GROUP(ROUTE112), MAP_NUM(ROUTE112), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_113] = {MAP_GROUP(ROUTE113), MAP_NUM(ROUTE113), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_114] = {MAP_GROUP(ROUTE114), MAP_NUM(ROUTE114), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_115] = {MAP_GROUP(ROUTE115), MAP_NUM(ROUTE115), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_110] = {MAP_GROUP(ROUTE110), MAP_NUM(ROUTE110), HEAL_LOCATION_ROUTE_110},
+    [MAPSEC_ROUTE_111] = {MAP_GROUP(ROUTE111), MAP_NUM(ROUTE111), HEAL_LOCATION_ROUTE_111},
+    [MAPSEC_ROUTE_112] = {MAP_GROUP(ROUTE112), MAP_NUM(ROUTE112), HEAL_LOCATION_ROUTE_112},
+    [MAPSEC_ROUTE_113] = {MAP_GROUP(ROUTE113), MAP_NUM(ROUTE113), HEAL_LOCATION_ROUTE_113},
+    [MAPSEC_ROUTE_114] = {MAP_GROUP(ROUTE114), MAP_NUM(ROUTE114), HEAL_LOCATION_ROUTE_114},
+    [MAPSEC_ROUTE_115] = {MAP_GROUP(ROUTE115), MAP_NUM(ROUTE115), HEAL_LOCATION_ROUTE_115},
     [MAPSEC_ROUTE_116] = {MAP_GROUP(ROUTE116), MAP_NUM(ROUTE116), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_117] = {MAP_GROUP(ROUTE117), MAP_NUM(ROUTE117), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_117] = {MAP_GROUP(ROUTE117), MAP_NUM(ROUTE117), HEAL_LOCATION_ROUTE_117},
     [MAPSEC_ROUTE_118] = {MAP_GROUP(ROUTE118), MAP_NUM(ROUTE118), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_119] = {MAP_GROUP(ROUTE119), MAP_NUM(ROUTE119), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_120] = {MAP_GROUP(ROUTE120), MAP_NUM(ROUTE120), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_121] = {MAP_GROUP(ROUTE121), MAP_NUM(ROUTE121), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_122] = {MAP_GROUP(ROUTE122), MAP_NUM(ROUTE122), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_123] = {MAP_GROUP(ROUTE123), MAP_NUM(ROUTE123), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_119] = {MAP_GROUP(ROUTE119), MAP_NUM(ROUTE119), HEAL_LOCATION_ROUTE_119},
+    [MAPSEC_ROUTE_120] = {MAP_GROUP(ROUTE120), MAP_NUM(ROUTE120), HEAL_LOCATION_ROUTE_120},
+    [MAPSEC_ROUTE_121] = {MAP_GROUP(ROUTE121), MAP_NUM(ROUTE121), HEAL_LOCATION_ROUTE_121},
+    [MAPSEC_ROUTE_122] = {MAP_GROUP(ROUTE122), MAP_NUM(ROUTE122), HEAL_LOCATION_ROUTE_122},
+    [MAPSEC_ROUTE_123] = {MAP_GROUP(ROUTE123), MAP_NUM(ROUTE123), HEAL_LOCATION_ROUTE_123},
     [MAPSEC_ROUTE_124] = {MAP_GROUP(ROUTE124), MAP_NUM(ROUTE124), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_125] = {MAP_GROUP(ROUTE125), MAP_NUM(ROUTE125), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_126] = {MAP_GROUP(ROUTE126), MAP_NUM(ROUTE126), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_125] = {MAP_GROUP(ROUTE125), MAP_NUM(ROUTE125), HEAL_LOCATION_ROUTE_125},
+    [MAPSEC_ROUTE_126] = {MAP_GROUP(ROUTE126), MAP_NUM(ROUTE126), HEAL_LOCATION_ROUTE_126},
     [MAPSEC_ROUTE_127] = {MAP_GROUP(ROUTE127), MAP_NUM(ROUTE127), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_128] = {MAP_GROUP(ROUTE128), MAP_NUM(ROUTE128), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_128] = {MAP_GROUP(ROUTE128), MAP_NUM(ROUTE128), HEAL_LOCATION_ROUTE_128},
     [MAPSEC_ROUTE_129] = {MAP_GROUP(ROUTE129), MAP_NUM(ROUTE129), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_130] = {MAP_GROUP(ROUTE130), MAP_NUM(ROUTE130), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_131] = {MAP_GROUP(ROUTE131), MAP_NUM(ROUTE131), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_130] = {MAP_GROUP(ROUTE130), MAP_NUM(ROUTE130), HEAL_LOCATION_ROUTE_130},
+    [MAPSEC_ROUTE_131] = {MAP_GROUP(ROUTE131), MAP_NUM(ROUTE131), HEAL_LOCATION_ROUTE_131},
     [MAPSEC_ROUTE_132] = {MAP_GROUP(ROUTE132), MAP_NUM(ROUTE132), HEAL_LOCATION_NONE},
-    [MAPSEC_ROUTE_133] = {MAP_GROUP(ROUTE133), MAP_NUM(ROUTE133), HEAL_LOCATION_NONE},
+    [MAPSEC_ROUTE_133] = {MAP_GROUP(ROUTE133), MAP_NUM(ROUTE133), HEAL_LOCATION_ROUTE_133},
     [MAPSEC_ROUTE_134] = {MAP_GROUP(ROUTE134), MAP_NUM(ROUTE134), HEAL_LOCATION_NONE},
 };
 
@@ -483,6 +485,18 @@ static const union AnimCmd sFlyDestIcon_Anim_RedOutline[] =
     ANIMCMD_END
 };
 
+static const union AnimCmd sFlyDestIcon_Anim_8x8CanFlyRoute[] =
+{
+    ANIMCMD_FRAME(14, 5),
+    ANIMCMD_END
+};
+
+static const union AnimCmd sFlyDestIcon_Anim_8x8CantFlyRoute[] =
+{
+    ANIMCMD_FRAME(15, 5),
+    ANIMCMD_END
+};
+
 static const union AnimCmd *const sFlyDestIcon_Anims[] =
 {
     [SPRITE_SHAPE(8x8)]       = sFlyDestIcon_Anim_8x8CanFly,
@@ -491,7 +505,9 @@ static const union AnimCmd *const sFlyDestIcon_Anims[] =
     [SPRITE_SHAPE(8x8)  + 3]  = sFlyDestIcon_Anim_8x8CantFly,
     [SPRITE_SHAPE(16x8) + 3]  = sFlyDestIcon_Anim_16x8CantFly,
     [SPRITE_SHAPE(8x16) + 3]  = sFlyDestIcon_Anim_8x16CantFly,
-    [FLYDESTICON_RED_OUTLINE] = sFlyDestIcon_Anim_RedOutline
+    [FLYDESTICON_RED_OUTLINE] = sFlyDestIcon_Anim_RedOutline,
+    [SPRITE_SHAPE(8x8) + 7]  = sFlyDestIcon_Anim_8x8CanFlyRoute,
+    [SPRITE_SHAPE(8x8) + 8]  = sFlyDestIcon_Anim_8x8CantFlyRoute,
 };
 
 static const struct SpriteTemplate sFlyDestIconSpriteTemplate =
@@ -1213,9 +1229,53 @@ static u8 GetMapsecType(u16 mapSecId)
     case MAPSEC_BATTLE_FRONTIER:
         return FlagGet(FLAG_LANDMARK_BATTLE_FRONTIER) ? MAPSECTYPE_BATTLE_FRONTIER : MAPSECTYPE_NONE;
     case MAPSEC_SOUTHERN_ISLAND:
-        return FlagGet(FLAG_LANDMARK_SOUTHERN_ISLAND) ? MAPSECTYPE_ROUTE : MAPSECTYPE_NONE;
+        return FlagGet(FLAG_LANDMARK_SOUTHERN_ISLAND) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_NONE;
+    case MAPSEC_ROUTE_103:
+        return FlagGet(FLAG_VISITED_PETALBURG_CITY) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_104:
+        return FlagGet(FLAG_VISITED_RUSTBORO_CITY) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_106:
+        return FlagGet(FLAG_VISITED_SLATEPORT_CITY) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_108:
+        return FlagGet(FLAG_VISITED_ROUTE_108) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_110:
+        return FlagGet(FLAG_VISITED_MAUVILLE_CITY) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_111:
+        return FlagGet(FLAG_VISITED_FALLARBOR_TOWN) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_112:
+        return FlagGet(FLAG_VISITED_FALLARBOR_TOWN) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_113:
+        return FlagGet(FLAG_VISITED_FALLARBOR_TOWN) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_114:
+        return FlagGet(FLAG_VISITED_LAVARIDGE_TOWN) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_115:
+        return FlagGet(FLAG_VISITED_LAVARIDGE_TOWN) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_117:
+        return FlagGet(FLAG_VISITED_MAUVILLE_CITY) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_119:
+        return FlagGet(FLAG_VISITED_FORTREE_CITY) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_120:
+        return FlagGet(FLAG_VISITED_ROUTE_120) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_121:
+        return FlagGet(FLAG_VISITED_ROUTE_121) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_122:
+        return FlagGet(FLAG_VISITED_ROUTE_122) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_123:
+        return FlagGet(FLAG_VISITED_ROUTE_123) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_125:
+        return FlagGet(FLAG_VISITED_ROUTE_125) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_126:
+        return FlagGet(FLAG_VISITED_ROUTE_126) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_128:
+        return FlagGet(FLAG_VISITED_ROUTE_128) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_130:
+        return FlagGet(FLAG_VISITED_ROUTE_130) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_131:
+        return FlagGet(FLAG_VISITED_ROUTE_131) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
+    case MAPSEC_ROUTE_133:
+        return FlagGet(FLAG_VISITED_ROUTE_133) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
     default:
-        return MAPSECTYPE_ROUTE;
+        return MAPSECTYPE_NONE;
     }
 }
 
@@ -1649,97 +1709,17 @@ bool32 IsEventIslandMapSecId(u8 mapSecId)
 
 void CB2_OpenTeleportMap(void)
 {
-    switch (gMain.state)
-    {
-    case 0:
-        SetVBlankCallback(NULL);
-        SetGpuReg(REG_OFFSET_DISPCNT, 0);
-        SetGpuReg(REG_OFFSET_BG0HOFS, 0);
-        SetGpuReg(REG_OFFSET_BG0VOFS, 0);
-        SetGpuReg(REG_OFFSET_BG1HOFS, 0);
-        SetGpuReg(REG_OFFSET_BG1VOFS, 0);
-        SetGpuReg(REG_OFFSET_BG2VOFS, 0);
-        SetGpuReg(REG_OFFSET_BG2HOFS, 0);
-        SetGpuReg(REG_OFFSET_BG3HOFS, 0);
-        SetGpuReg(REG_OFFSET_BG3VOFS, 0);
-        sFlyMap = Alloc(sizeof(*sFlyMap));
-        if (sFlyMap == NULL)
-        {
-            SetMainCallback2(CB2_ReturnToFieldWithOpenMenu);
-        }
-        else
-        {
-            ResetPaletteFade();
-            ResetSpriteData();
-            FreeSpriteTileRanges();
-            FreeAllSpritePalettes();
-            gMain.state++;
-        }
-        break;
-    case 1:
-        ResetBgsAndClearDma3BusyFlags(0);
-        InitBgsFromTemplates(1, sFlyMapBgTemplates, ARRAY_COUNT(sFlyMapBgTemplates));
-        gMain.state++;
-        break;
-    case 2:
-        InitWindows(sFlyMapWindowTemplates);
-        DeactivateAllTextPrinters();
-        gMain.state++;
-        break;
-    case 3:
-        LoadUserWindowBorderGfx(0, 0x65, BG_PLTT_ID(13));
-        ClearScheduledBgCopiesToVram();
-        gMain.state++;
-        break;
-    case 4:
-        InitRegionMap(&sFlyMap->regionMap, FALSE);
-        CreateRegionMapCursor(TAG_CURSOR, TAG_CURSOR);
-        CreateRegionMapPlayerIcon(TAG_PLAYER_ICON, TAG_PLAYER_ICON);
-        sFlyMap->mapSecId = sFlyMap->regionMap.mapSecId;
-        StringFill(sFlyMap->nameBuffer, CHAR_SPACE, MAP_NAME_LENGTH);
-        sDrawFlyDestTextWindow = TRUE;
-        DrawFlyDestTextWindow();
-        gMain.state++;
-        break;
-    case 5:
-        LZ77UnCompVram(sRegionMapFrameGfxLZ, (u16 *)BG_CHAR_ADDR(3));
-        gMain.state++;
-        break;
-    case 6:
-        LZ77UnCompVram(sRegionMapFrameTilemapLZ, (u16 *)BG_SCREEN_ADDR(30));
-        gMain.state++;
-        break;
-    case 7:
-        LoadPalette(sRegionMapFramePal, BG_PLTT_ID(1), sizeof(sRegionMapFramePal));
-        PutWindowTilemap(WIN_FLY_TO_WHERE);
-        FillWindowPixelBuffer(WIN_FLY_TO_WHERE, PIXEL_FILL(0));
-        AddTextPrinterParameterized(WIN_FLY_TO_WHERE, FONT_NORMAL, gText_FlyToWhere, 0, 1, 0, NULL);
-        ScheduleBgCopyTilemapToVram(0);
-        gMain.state++;
-        break;
-    case 8:
-        LoadFlyDestIcons();
-        gMain.state++;
-        break;
-    case 9:
-        BlendPalettes(PALETTES_ALL, 16, 0);
-        SetVBlankCallback(VBlankCB_FlyMap);
-        gMain.state++;
-        break;
-    case 10:
-        SetGpuReg(REG_OFFSET_BLDCNT, 0);
-        SetGpuRegBits(REG_OFFSET_DISPCNT, DISPCNT_OBJ_1D_MAP | DISPCNT_OBJ_ON);
-        ShowBg(0);
-        ShowBg(1);
-        ShowBg(2);
-        SetFlyMapCallback(CB_FadeInFlyMap);
-        SetMainCallback2(CB2_FlyMap);
-        gMain.state++;
-        break;
-    }
+    sIsFlying = FALSE;
+    OpenFastTravelMap();
 }
 
 void CB2_OpenFlyMap(void)
+{
+    sIsFlying = TRUE;
+    OpenFastTravelMap();
+}
+
+void OpenFastTravelMap(void)
 {
     switch (gMain.state)
     {
@@ -1805,7 +1785,7 @@ void CB2_OpenFlyMap(void)
         LoadPalette(sRegionMapFramePal, BG_PLTT_ID(1), sizeof(sRegionMapFramePal));
         PutWindowTilemap(WIN_FLY_TO_WHERE);
         FillWindowPixelBuffer(WIN_FLY_TO_WHERE, PIXEL_FILL(0));
-        AddTextPrinterParameterized(WIN_FLY_TO_WHERE, FONT_NORMAL, gText_FlyToWhere, 0, 1, 0, NULL);
+        AddTextPrinterParameterized(WIN_FLY_TO_WHERE, FONT_NORMAL, sIsFlying ? gText_FlyToWhere : gText_TeleportToWhere, 0, 1, 0, NULL);
         ScheduleBgCopyTilemapToVram(0);
         gMain.state++;
         break;
@@ -1858,7 +1838,8 @@ static void DrawFlyDestTextWindow(void)
     bool32 namePrinted;
     const u8 *name;
 
-    if (sFlyMap->regionMap.mapSecType > MAPSECTYPE_NONE && sFlyMap->regionMap.mapSecType < NUM_MAPSEC_TYPES)
+    if (sFlyMap->regionMap.mapSecType > MAPSECTYPE_NONE && sFlyMap->regionMap.mapSecType < NUM_MAPSEC_TYPES &&
+        (sIsFlying == TRUE || sFlyMap->regionMap.mapSecType > MAPSECTYPE_ROUTE_CANTFLY))
     {
         namePrinted = FALSE;
         for (i = 0; i < ARRAY_COUNT(sMultiNameFlyDestinations); i++)
@@ -1971,6 +1952,131 @@ static void CreateFlyDestIcons(void)
         }
         canFlyFlag++;
     }
+
+    if (!sIsFlying)
+        return;
+
+    for (mapSecId = MAPSEC_ROUTE_101; mapSecId <= MAPSEC_ROUTE_134; mapSecId++)
+    {
+        x = gRegionMapEntries[mapSecId].x;
+        y = gRegionMapEntries[mapSecId].y;
+
+        switch (mapSecId)
+        {
+        case MAPSEC_ROUTE_101:
+        case MAPSEC_ROUTE_102:
+        case MAPSEC_ROUTE_105:
+        case MAPSEC_ROUTE_107:
+        case MAPSEC_ROUTE_109:
+        case MAPSEC_ROUTE_116:
+        case MAPSEC_ROUTE_118:
+        case MAPSEC_ROUTE_124:
+        case MAPSEC_ROUTE_127:
+        case MAPSEC_ROUTE_129:
+        case MAPSEC_ROUTE_132:
+        case MAPSEC_ROUTE_134:
+            continue;
+        case MAPSEC_ROUTE_103:
+            canFlyFlag = FLAG_VISITED_PETALBURG_CITY;
+            x += 2;
+            break;
+        case MAPSEC_ROUTE_104:
+            canFlyFlag = FLAG_VISITED_RUSTBORO_CITY;
+            break;
+        case MAPSEC_ROUTE_106:
+            canFlyFlag = FLAG_VISITED_SLATEPORT_CITY;
+            x += 1;
+            break;
+        case MAPSEC_ROUTE_108:
+            canFlyFlag = FLAG_VISITED_ROUTE_108;
+            break;
+        case MAPSEC_ROUTE_110:
+            canFlyFlag = FLAG_VISITED_MAUVILLE_CITY;
+            y += 2;
+            break;
+        case MAPSEC_ROUTE_112:
+        case MAPSEC_ROUTE_113:
+            x += 1;
+        case MAPSEC_ROUTE_111:
+            canFlyFlag = FLAG_VISITED_FALLARBOR_TOWN;
+            break;
+        case MAPSEC_ROUTE_114:
+            canFlyFlag = FLAG_VISITED_LAVARIDGE_TOWN;
+            y += 2;
+            break;
+        case MAPSEC_ROUTE_115:
+            canFlyFlag = FLAG_VISITED_LAVARIDGE_TOWN;
+            y += 1;
+            break;
+        case MAPSEC_ROUTE_117:
+            canFlyFlag = FLAG_VISITED_MAUVILLE_CITY;
+            x += 2;
+            break;
+        case MAPSEC_ROUTE_119:
+            canFlyFlag = FLAG_VISITED_FORTREE_CITY;
+            y += 1;
+            break;
+        case MAPSEC_ROUTE_120:
+            canFlyFlag = FLAG_VISITED_ROUTE_120;
+            y += 3;
+            break;
+        case MAPSEC_ROUTE_121:
+            canFlyFlag = FLAG_VISITED_ROUTE_121;
+            x += 2;
+            break;
+        case MAPSEC_ROUTE_122:
+            canFlyFlag = FLAG_VISITED_ROUTE_122;
+            y += 1;
+            break;
+        case MAPSEC_ROUTE_123:
+            canFlyFlag = FLAG_VISITED_ROUTE_123;
+            break;
+        case MAPSEC_ROUTE_125:
+            canFlyFlag = FLAG_VISITED_ROUTE_125;
+            y += 1;
+            break;
+        case MAPSEC_ROUTE_126:
+            canFlyFlag = FLAG_VISITED_ROUTE_126;
+            x += 1;
+            break;
+        case MAPSEC_ROUTE_128:
+            canFlyFlag = FLAG_VISITED_ROUTE_128;
+            x += 1;
+            break;
+        case MAPSEC_ROUTE_130:
+            canFlyFlag = FLAG_VISITED_ROUTE_130;
+            x += 1;
+            break;
+        case MAPSEC_ROUTE_131:
+            canFlyFlag = FLAG_VISITED_ROUTE_131;
+            x += 2;
+            break;
+        case MAPSEC_ROUTE_133:
+            canFlyFlag = FLAG_VISITED_ROUTE_133;
+            x += 1;
+            break;
+        }
+
+        x = (x + MAPCURSOR_X_MIN) * 8 + 4;
+        y = (y + MAPCURSOR_Y_MIN) * 8 + 4;
+
+
+        shape = SPRITE_SHAPE(8x8);
+
+        spriteId = CreateSprite(&sFlyDestIconSpriteTemplate, x, y, 10);
+        if (spriteId != MAX_SPRITES)
+        {
+            gSprites[spriteId].oam.shape = shape;
+
+            if (FlagGet(canFlyFlag))
+                gSprites[spriteId].callback = SpriteCB_FlyDestIcon;
+            else
+                shape += 1;
+
+            StartSpriteAnim(&gSprites[spriteId], shape +  7);
+            gSprites[spriteId].sIconMapSec = mapSecId;
+        }
+    }
 }
 
 // Draw a red outline box on the mapsec if its corresponding flag has been set
@@ -2057,7 +2163,7 @@ static void CB_HandleFlyMapInput(void)
             DrawFlyDestTextWindow();
             break;
         case MAP_INPUT_A_BUTTON:
-            if (sFlyMap->regionMap.mapSecType == MAPSECTYPE_CITY_CANFLY || sFlyMap->regionMap.mapSecType == MAPSECTYPE_BATTLE_FRONTIER)
+            if (sFlyMap->regionMap.mapSecType == MAPSECTYPE_CITY_CANFLY || (sIsFlying == TRUE && sFlyMap->regionMap.mapSecType == MAPSECTYPE_ROUTE_CANFLY) || sFlyMap->regionMap.mapSecType == MAPSECTYPE_BATTLE_FRONTIER)
             {
                 m4aSongNumStart(SE_SELECT);
                 sFlyMap->choseFlyLocation = TRUE;
@@ -2067,6 +2173,9 @@ static void CB_HandleFlyMapInput(void)
         case MAP_INPUT_B_BUTTON:
             m4aSongNumStart(SE_SELECT);
             sFlyMap->choseFlyLocation = FALSE;
+            // Reset the callback variables to avoid a bug where it would still use the Teleport animation when choosing Teleport first, but then changing over to Fly
+            gFieldCallback2 = NULL;
+            gPostMenuFieldCallback = NULL;
             SetFlyMapCallback(CB_ExitFlyMap);
             break;
         }

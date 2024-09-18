@@ -1,5 +1,7 @@
-raw `
-Route122_MapScripts::
-	.byte 0
+mapscripts Route122_MapScripts {
+	MAP_SCRIPT_ON_TRANSITION: Route122_OnTransition
+}
 
-`
+script Route122_OnTransition {
+	setflag(FLAG_VISITED_ROUTE_122)
+}

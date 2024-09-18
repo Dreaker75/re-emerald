@@ -1,6 +1,11 @@
 raw `
 Route108_MapScripts::
+	map_script MAP_SCRIPT_ON_TRANSITION, Route108_OnTransition
 	.byte 0
+
+Route108_OnTransition:
+	setflag FLAG_VISITED_ROUTE_108
+	end
 
 Route108_EventScript_Jerome::
 	trainerbattle_single TRAINER_JEROME, Route108_Text_JeromeIntro, Route108_Text_JeromeDefeated

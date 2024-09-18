@@ -5,7 +5,6 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
 
 ## Features for Alpha release
  - Add version number on the Main Menu
- - Update Fly to be able to land in both towns/cities and routes (like in ORAS)
 
 ## Features for Beta release
  - Make Fly and Teleport usable from the PokeNav map

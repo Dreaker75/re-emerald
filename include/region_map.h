@@ -18,7 +18,8 @@ enum
 
 enum {
     MAPSECTYPE_NONE,
-    MAPSECTYPE_ROUTE,
+    MAPSECTYPE_ROUTE_CANFLY,
+    MAPSECTYPE_ROUTE_CANTFLY,
     MAPSECTYPE_CITY_CANFLY,
     MAPSECTYPE_CITY_CANTFLY,
     MAPSECTYPE_BATTLE_FRONTIER,
@@ -110,6 +111,7 @@ u16 CorrectSpecialMapSecId(u16 mapSecId);
 void ShowRegionMapForPokedexAreaScreen(struct RegionMap *regionMap);
 void PokedexAreaScreen_UpdateRegionMapVariablesAndVideoRegs(s16 x, s16 y);
 void CB2_OpenFlyMap(void);
+void OpenFastTravelMap(void);
 void CB2_OpenTeleportMap(void);
 bool8 IsRegionMapZoomed(void);
 void TrySetPlayerIconBlink(void);

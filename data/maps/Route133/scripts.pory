@@ -1,7 +1,13 @@
-raw `
-Route133_MapScripts::
-	.byte 0
 
+mapscripts Route133_MapScripts {
+	MAP_SCRIPT_ON_TRANSITION: Route133_OnTransition
+}
+
+script Route133_OnTransition {
+	setflag(FLAG_VISITED_ROUTE_133)
+}
+
+raw `
 Route133_EventScript_Franklin::
 	trainerbattle_single TRAINER_FRANKLIN, Route133_Text_FranklinIntro, Route133_Text_FranklinDefeat
 	msgbox Route133_Text_FranklinPostBattle, MSGBOX_AUTOCLOSE

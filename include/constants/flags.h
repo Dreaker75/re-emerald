@@ -1386,17 +1386,20 @@
 #define FLAG_VISITED_MOSSDEEP_CITY                  (SYSTEM_FLAGS + 0x1C)
 #define FLAG_VISITED_SOOTOPOLIS_CITY                (SYSTEM_FLAGS + 0x1D)
 #define FLAG_VISITED_EVER_GRANDE_CITY               (SYSTEM_FLAGS + 0x1E)
+#define FLAG_VISITED_ROUTE_108                      (SYSTEM_FLAGS + 0x21) // ADDED: Flags to allow flying to every Route
+#define FLAG_VISITED_ROUTE_120                      (SYSTEM_FLAGS + 0x22) //  - Some Routes (like 101) will be unlocked together with the respective city (Oldale Town) 
+#define FLAG_VISITED_ROUTE_121                      (SYSTEM_FLAGS + 0x23) //  - since there's no way to avoid going through them before getting Fly normally
+#define FLAG_VISITED_ROUTE_122                      (SYSTEM_FLAGS + 0x24) // 
+#define FLAG_VISITED_ROUTE_123                      (SYSTEM_FLAGS + 0x25) // 
+#define FLAG_VISITED_ROUTE_125                      (SYSTEM_FLAGS + 0x26) // 
+#define FLAG_VISITED_ROUTE_126                      (SYSTEM_FLAGS + 0x27) // 
+#define FLAG_VISITED_ROUTE_128                      (SYSTEM_FLAGS + 0x2E) // 
+#define FLAG_VISITED_ROUTE_130                      (SYSTEM_FLAGS + 0x2F) // 
+#define FLAG_VISITED_ROUTE_131                      (SYSTEM_FLAGS + 0x96) // 
+#define FLAG_VISITED_ROUTE_133                      (SYSTEM_FLAGS + 0x97) // 
 
 #define FLAG_IS_CHAMPION                            (SYSTEM_FLAGS + 0x1F) // Seems to be related to linking.
 #define FLAG_NURSE_UNION_ROOM_REMINDER              (SYSTEM_FLAGS + 0x20)
-
-#define FLAG_UNUSED_0x881                           (SYSTEM_FLAGS + 0x21) // Unused Flag
-#define FLAG_UNUSED_0x882                           (SYSTEM_FLAGS + 0x22) // Unused Flag
-#define FLAG_UNUSED_0x883                           (SYSTEM_FLAGS + 0x23) // Unused Flag
-#define FLAG_UNUSED_0x884                           (SYSTEM_FLAGS + 0x24) // Unused Flag
-#define FLAG_UNUSED_0x885                           (SYSTEM_FLAGS + 0x25) // Unused Flag
-#define FLAG_UNUSED_0x886                           (SYSTEM_FLAGS + 0x26) // Unused Flag
-#define FLAG_UNUSED_0x887                           (SYSTEM_FLAGS + 0x27) // Unused Flag
 
 #define FLAG_SYS_USE_FLASH                          (SYSTEM_FLAGS + 0x28)
 #define FLAG_SYS_USE_STRENGTH                       (SYSTEM_FLAGS + 0x29)
@@ -1404,9 +1407,6 @@
 #define FLAG_SYS_CYCLING_ROAD                       (SYSTEM_FLAGS + 0x2B)
 #define FLAG_SYS_SAFARI_MODE                        (SYSTEM_FLAGS + 0x2C)
 #define FLAG_SYS_CRUISE_MODE                        (SYSTEM_FLAGS + 0x2D)
-
-#define FLAG_UNUSED_0x88E                           (SYSTEM_FLAGS + 0x2E) // Unused Flag
-#define FLAG_UNUSED_0x88F                           (SYSTEM_FLAGS + 0x2F) // Unused Flag
 
 #define FLAG_SYS_TV_HOME                            (SYSTEM_FLAGS + 0x30)
 #define FLAG_SYS_TV_WATCH                           (SYSTEM_FLAGS + 0x31)
@@ -1527,8 +1527,6 @@
 #define FLAG_CAUGHT_RAYQUAZA                        (SYSTEM_FLAGS + 0x93)
 #define FLAG_CAUGHT_JIRACHI                         (SYSTEM_FLAGS + 0x94)
 #define FLAG_CAUGHT_DEOXYS                          (SYSTEM_FLAGS + 0x95)
-#define FLAG_UNUSED_0x8F6                           (SYSTEM_FLAGS + 0x96) // Unused Flag
-#define FLAG_UNUSED_0x8F7                           (SYSTEM_FLAGS + 0x97) // Unused Flag
 #define FLAG_UNUSED_0x8F8                           (SYSTEM_FLAGS + 0x98) // Unused Flag
 #define FLAG_UNUSED_0x8F9                           (SYSTEM_FLAGS + 0x99) // Unused Flag
 #define FLAG_UNUSED_0x8FA                           (SYSTEM_FLAGS + 0x9A) // Unused Flag
