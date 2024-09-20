@@ -145,11 +145,14 @@
  - Petalburg Gym's doors can now be opened just by walking like the rest of the doors
  - Fixed the bug that caused the Mart Employee in Oldale Town to walk through the Shop's wall and into a tree under certain circumstances
  - Scientist in Devon Corp that revives the Fossils can now revive Kanto Fossils, and no longer requires talking to someone else or leaving the room to claim the Pokemon.
+ - ADDED VERSION NUMBER TO THE MAIN MENU TO EASILY KNOW THE CURRENT VERSION OF THE GAME
 
 # Future changes
  - To see the future changes planned for this romhack, check out [FUTURE_PLANS.md](https://github.com/Dreaker75/re-emerald/blob/main/FUTURE_PLANS.md)
 
 # Credits
 Based off RHH's pokeemerald-expansion v1.8.0 https://github.com/rh-hideout/pokeemerald-expansion/
+
 This post by ellabrella on PokeCommunity, for help setting up the Instant Text option https://www.pokecommunity.com/threads/simple-modifications-directory.416647/post-10400198
+
 Bassoonian's commit on the fix for the bug that didn't allow you to enter any facility if any Pokemon Generation was disabled: https://github.com/rh-hideout/pokeemerald-expansion/commit/9ff30ee87ae5c0af11d33206c4f8f4eaa77c7447

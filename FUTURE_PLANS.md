@@ -3,9 +3,6 @@ Here, you can check out what my future plans are for this romhack. Stuff here wi
 
 ### Important: Keep in mind that everything in this file is subject to change at any point. A feature being here doesn't mean it's guaranteed to happen.
 
-## Features for Alpha release
- - Add version number on the Main Menu
-
 ## Features for Beta release
  - Make Fly and Teleport usable from the PokeNav map
  - Either turn off PokeNav calls completely or make it an in-game toggle

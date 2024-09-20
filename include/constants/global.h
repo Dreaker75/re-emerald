@@ -2,6 +2,7 @@
 #define GUARD_CONSTANTS_GLOBAL_H
 
 #include "config/battle.h"
+#include "config/custom.h"
 #include "config/debug.h"
 #include "config/item.h"
 #include "config/level_caps.h"

@@ -84,6 +84,7 @@ enum
 bool8 (*gMenuCallback)(void);
 
 // EWRAM
+EWRAM_DATA static u8 sGameVersionWindowId = 0;
 EWRAM_DATA static u8 sSafariBallsWindowId = 0;
 EWRAM_DATA static u8 sBattlePyramidFloorWindowId = 0;
 EWRAM_DATA static u8 sStartMenuCursorPos = 0;
@@ -142,6 +143,16 @@ static void SaveGameTask(u8 taskId);
 static void Task_SaveAfterLinkBattle(u8 taskId);
 static void Task_WaitForBattleTowerLinkSave(u8 taskId);
 static bool8 FieldCB_ReturnToFieldStartMenu(void);
+
+static const struct WindowTemplate sWindowTemplate_GameVersion = {
+    .bg = 0,
+    .tilemapLeft = 10,
+    .tilemapTop = 15,
+    .width = 9,
+    .height = 4,
+    .paletteNum = 15,
+    .baseBlock = 0x48
+};
 
 static const struct WindowTemplate sWindowTemplate_SafariBalls = {
     .bg = 0,
@@ -253,6 +264,7 @@ static void BuildUnionRoomStartMenu(void);
 static void BuildBattlePikeStartMenu(void);
 static void BuildBattlePyramidStartMenu(void);
 static void BuildMultiPartnerRoomStartMenu(void);
+static void ShowGameVersionWindow(void);
 static void ShowSafariBallsWindow(void);
 static void ShowPyramidFloorWindow(void);
 static void RemoveExtraStartMenuWindows(void);
@@ -434,6 +446,17 @@ static void BuildMultiPartnerRoomStartMenu(void)
     AddStartMenuAction(MENU_ACTION_EXIT);
 }
 
+static void ShowGameVersionWindow(void)
+{
+    sGameVersionWindowId = AddWindow(&sWindowTemplate_GameVersion);
+    PutWindowTilemap(sGameVersionWindowId);
+    DrawStdWindowFrame(sGameVersionWindowId, FALSE);
+    StringCopy(gStringVar1, C_GAME_VERSION);
+    StringExpandPlaceholders(gStringVar4, gText_GameVersion);
+    AddTextPrinterParameterized(sGameVersionWindowId, FONT_NORMAL, gStringVar4, 0, 1, TEXT_SKIP_DRAW, NULL);
+    CopyWindowToVram(sGameVersionWindowId, COPYWIN_GFX);
+}
+
 static void ShowSafariBallsWindow(void)
 {
     sSafariBallsWindowId = AddWindow(&sWindowTemplate_SafariBalls);
@@ -473,6 +496,9 @@ static void RemoveExtraStartMenuWindows(void)
         ClearStdWindowAndFrameToTransparent(sBattlePyramidFloorWindowId, FALSE);
         RemoveWindow(sBattlePyramidFloorWindowId);
     }
+    
+    ClearStdWindowAndFrameToTransparent(sGameVersionWindowId, FALSE);
+    RemoveWindow(sGameVersionWindowId);
 }
 
 static bool32 PrintStartMenuActions(s8 *pIndex, u32 count)
@@ -530,6 +556,7 @@ static bool32 InitStartMenuStep(void)
             ShowSafariBallsWindow();
         if (InBattlePyramid())
             ShowPyramidFloorWindow();
+        ShowGameVersionWindow();
         sInitStartMenuData[0]++;
         break;
     case 4:
