@@ -156,3 +156,5 @@ Based off RHH's pokeemerald-expansion v1.8.0 https://github.com/rh-hideout/pokee
 This post by ellabrella on PokeCommunity, for help setting up the Instant Text option https://www.pokecommunity.com/threads/simple-modifications-directory.416647/post-10400198
 
 Bassoonian's commit on the fix for the bug that didn't allow you to enter any facility if any Pokemon Generation was disabled: https://github.com/rh-hideout/pokeemerald-expansion/commit/9ff30ee87ae5c0af11d33206c4f8f4eaa77c7447
+
+damon-murdoch's commit that fixed an error when disabling the Debug menus: https://github.com/rh-hideout/pokeemerald-expansion/pull/4372/files/6904bcd56c52f775797032c64f3541ccb4ad5d77
