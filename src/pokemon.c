@@ -5238,6 +5238,29 @@ u8 CanLearnTeachableMove(u16 species, u16 move)
     }
 }
 
+u8 CanLearnLevelUpMove(u16 species, u16 move)
+{
+    if (species == SPECIES_EGG)
+    {
+        return FALSE;
+    }
+    else if (species == SPECIES_MEW)
+    {
+        return TRUE;
+    }
+    else
+    {
+        u32 i;
+        const struct LevelUpMove *levelUpLearnset = GetSpeciesLevelUpLearnset(species);
+        for (i = 0; i < MAX_LEVEL_UP_MOVES && levelUpLearnset[i].move != LEVEL_UP_MOVE_END; i++)
+        {
+            if (levelUpLearnset[i].move == move)
+                return TRUE;
+        }
+        return FALSE;
+    }
+}
+
 u8 GetMoveRelearnerMoves(struct Pokemon *mon, u16 *moves)
 {
     u16 learnedMoves[4];
