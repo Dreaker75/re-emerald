@@ -3987,9 +3987,9 @@ static void SetMoveTypeIcons(void)
                 SetTypeSpritePosAndPal(GetHiddenPowerType(GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_HP_IV),
                                                           GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_ATK_IV),
                                                           GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_DEF_IV),
-                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPEED_IV),
                                                           GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPATK_IV),
-                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPDEF_IV)),
+                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPDEF_IV),
+                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPEED_IV)),
                                                           85, 32 + (i * 16), i + SPRITE_ARR_ID_TYPE);
             }
             else
@@ -4030,9 +4030,9 @@ static void SetNewMoveTypeIcon(void)
                 SetTypeSpritePosAndPal(GetHiddenPowerType(GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_HP_IV),
                                                           GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_ATK_IV),
                                                           GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_DEF_IV),
-                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPEED_IV),
                                                           GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPATK_IV),
-                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPDEF_IV)),
+                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPDEF_IV),
+                                                          GetMonData(&sMonSummaryScreen->currentMon, MON_DATA_SPEED_IV)),
                                                            85, 96, SPRITE_ARR_ID_TYPE + 4);
             }
             else
