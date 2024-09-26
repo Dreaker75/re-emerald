@@ -24,7 +24,7 @@ Added 2 more shop clerk NPCs to the first floor and more items. The shop also ad
  - Regirock Doll
  - Regice Doll
  - Registeel Doll
- - PP Max
+ - PP Up
  - Rare Candy
  - Exp. Share
  - Macho Brace
@@ -65,7 +65,7 @@ Added 2 more shop clerk NPCs to the first floor and more items. The shop also ad
   - Kiki in Sootopolis City now gives any berry between Figy and Iapapa at random as the second berry, rather than only those 2.
   - A Choice Band will be given by Scott in the Battle Frontier if the player talked to him 13 different times before then.
 
-## Held Items:
+## Wild Held Items:
  - Amulet Coin: Meowth (5% - Not currently available in the wild)
  - Berry Juice: Shuckle (100% - No longer holds Oran Berry)
  - BlackGlasses: Held by Youngster Calvin's Mightyena starting from the 5th rematch (Route 102) 

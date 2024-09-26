@@ -2456,7 +2456,7 @@ static const u8 *const sScrollableMultichoiceOptions[][MAX_SCROLL_MULTI_LENGTH] 
         gText_Zinc1BP,
         gText_Carbos1BP,
         gText_HpUp1BP,
-        gText_PPMax4BP,
+        gText_PPUp1BP,
         gText_RareCandy8BP,
         gText_ExpShare8BP,
         gText_MachoBrace8BP,

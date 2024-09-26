@@ -85,24 +85,12 @@
  - The prizes for all Battle Tents have been updated, and you can now choose whether you want to claim them or discard them if your bag is full. If you choose to discard them, you will automatically claim as many of the items as you have room for in your bag (Note: These rewards are opened for rebalancing later on if they seem too good/bad):
     - Slateport Tent: 2x sets of Vitamins (HP Up, Protein, Iron, Calcium, Zinc, Carbos)
     - Vendarturf Tent: 5x Rare Candies
-    - Fallarbor Tent: 12x PP Up
+    - Fallarbor Tent: 4x PP Max
     
 ### Battle Frontier
  - Increased the amount of BP you get from every Facility. The points awarded now increase infinitely while the streak goes on (Up to the maximum amount of BPs)
  - All costs for items in the Battle Frontier shop and all Tutor Moves from the Battle Frontier have been singificantly reduced
- - New items have been added to the Battle Frontier shop:
-    - Red Tent
-    - Blue Tent
-    - Regirock Doll
-    - Regice Doll
-    - Registeel Doll
-    - PP Max
-    - Rare Candy
-    - Exp. Share
-    - Macho Brace
-    - Master Ball
-    - Soul Dew
-    - All vitamins are now given in packs of 5 for 1BP
+ - New items have been added to the Battle Frontier shop (check [ITEM_CHANGES.md](https://github.com/Dreaker75/re-emerald/blob/main/ITEM_CHANGES.md) for the full list)
  - The amount of BP Scott gives you upon first arriving in the Battle Frontier has been changed. It now gives 5, 10, 15 or 20 BP depending on how many times you've talked to him before arriving.
     - If you talk to Scott all 13 times before talking to him in the Battle Frontier, he will give you a Choice Band as an extra gift
 

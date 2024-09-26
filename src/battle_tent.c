@@ -79,8 +79,8 @@ void static (*const sFallarborTentFuncs[])(void) =
     [FALLARBOR_TENT_FUNC_GET_OPPONENT_NAME] = BufferFallarborTentTrainerName
 };
 
-static const u16 sFallarborTentReward = ITEM_PP_UP;
-static const u8 sFallarborTentRewardAmount = 12;
+static const u16 sFallarborTentReward = ITEM_PP_MAX;
+static const u8 sFallarborTentRewardAmount = 4;
 
 void static (*const sSlateportTentFuncs[])(void) =
 {
