@@ -5262,7 +5262,7 @@ static void TryUseItemOnMove(u8 taskId)
             PlaySE(SE_SELECT);
             DisplayPartyMenuMessage(gText_WontHaveEffect, TRUE);
             ScheduleBgCopyTilemapToVram(2);
-            gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+            gTasks[taskId].func = Task_ReturnToChooseMonAfterText;
         }
         else
         {
@@ -5274,7 +5274,7 @@ static void TryUseItemOnMove(u8 taskId)
             GetMedicineItemEffectMessage(item, 0);
             DisplayPartyMenuMessage(gStringVar4, TRUE);
             ScheduleBgCopyTilemapToVram(2);
-            gTasks[taskId].func = Task_ClosePartyMenuAfterText;
+            gTasks[taskId].func = Task_ReturnToChooseMonAfterText;
         }
     }
 }
