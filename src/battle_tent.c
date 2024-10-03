@@ -160,7 +160,7 @@ static void GiveVerdanturfTentPrize(void)
 
     if (AddBagItem(sVerdanturfTentReward, amountToGive) == TRUE)
     {
-        CopyItemName(sVerdanturfTentReward, gStringVar1);
+        CopyItemNameHandlePlural(sVerdanturfTentReward, gStringVar1, sVerdanturfTentRewardAmount);
         gSpecialVar_Result = TRUE;
     }
     else
@@ -218,7 +218,7 @@ static void GiveFallarborTentPrize(void)
 
     if (AddBagItem(sFallarborTentReward, amountToGive) == TRUE)
     {
-        CopyItemName(sFallarborTentReward, gStringVar1);
+        CopyItemNameHandlePlural(sFallarborTentReward, gStringVar1, sFallarborTentRewardAmount);
         gSpecialVar_Result = TRUE;
     }
     else
