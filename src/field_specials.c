@@ -2465,13 +2465,13 @@ static const u8 *const sScrollableMultichoiceOptions[][MAX_SCROLL_MULTI_LENGTH] 
     },
     [SCROLL_MULTI_BF_EXCHANGE_CORNER_HOLD_ITEM_VENDOR] =
     {
+        gText_KingsRock1BP,
         gText_Leftovers4BP,
         gText_WhiteHerb4BP,
         gText_QuickClaw4BP,
         gText_MentalHerb4BP,
         gText_BrightPowder8BP,
         gText_ChoiceBand8BP,
-        gText_KingsRock1BP,
         gText_FocusBand8BP,
         gText_ScopeLens8BP,
         gText_SoulDew128BP,
