@@ -13,12 +13,18 @@ Added 2 more shop clerk NPCs to the first floor and more items. The shop also ad
    - PokeDoll
 
 ### Mauville Game Corner:
+Removed all TMs and added the following items:
  - Silk Scarf
  - Miracle Seed
  - Charcoal
  - Mystic Water
 
+Added the following PokeDolls to the PokeDoll price exchange:
+ - Lotad Doll
+ - Seedot Doll
+
 ### Battle Frontier:
+Added the following items:
  - Red Tent
  - Blue Tent
  - Regirock Doll
@@ -33,14 +39,14 @@ Added 2 more shop clerk NPCs to the first floor and more items. The shop also ad
 
 ## Facility Reward items:
  - The Trainer Hill now gives more battle-related items and does not require beating the mode in under a certain time to get them. The new prizes are as follows:
-   - Lucky Egg - Normal Mode
-   - Mental Herb - Variety Mode
-   - Scope Lens - Unique Mode
-   - Choice Band - Expert Mode
+   - Normal Mode - Lucky Egg
+   - Variety Mode - Mental Herb
+   - Unique Mode - Scope Lens
+   - Expert Mode - Choice Band
  - Battle Tents all over Hoenn now give different rewards:
    - Slateport - 2 sets of Vitamins (HP Up, Protein, Iron, Calcium, Zinc, Carbos)
    - Vendarturf - 5x Rare Candies
-   - Fallarbor - 12x PP Up
+   - Fallarbor - 4x PP Max
  - Lilycove Department Store's Lottery:
       - 1 number matches - Max Revive
       - 2 numbers match - Rare Candy
@@ -66,6 +72,7 @@ Added 2 more shop clerk NPCs to the first floor and more items. The shop also ad
   - A Choice Band will be given by Scott in the Battle Frontier if the player talked to him 13 different times before then.
 
 ## Wild Held Items:
+Only items changed are listed here. Any item that isn't mentioned remains the same as vanilla Emerald:
  - Amulet Coin: Meowth (5% - Not currently available in the wild)
  - Berry Juice: Shuckle (100% - No longer holds Oran Berry)
  - BlackGlasses: Held by Youngster Calvin's Mightyena starting from the 5th rematch (Route 102) 
