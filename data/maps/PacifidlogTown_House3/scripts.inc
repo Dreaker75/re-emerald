@@ -1,3 +1,5 @@
+.set LOCALID_TRADE_NPC, 2
+
 PacifidlogTown_House3_MapScripts::
 	.byte 0
 
@@ -5,7 +7,7 @@ PacifidlogTown_House3_EventScript_Trader::
 	lock
 	faceplayer
 	goto_if_set FLAG_PACIFIDLOG_NPC_TRADE_COMPLETED, PacifidlogTown_House3_EventScript_TradeCompleted
-	setvar VAR_0x8008, INGAME_TRADE_HORSEA
+	setvar VAR_0x8008, INGAME_TRADE_CLAMPERL
 	copyvar VAR_0x8004, VAR_0x8008
 	specialvar VAR_RESULT, GetInGameTradeSpeciesInfo
 	copyvar VAR_0x8009, VAR_RESULT
@@ -26,6 +28,8 @@ PacifidlogTown_House3_EventScript_Trader::
 	waitstate
 	bufferspeciesname STR_VAR_1, VAR_0x8009
 	msgbox PacifidlogTown_House3_Text_ItsSubtlyDifferentThankYou, MSGBOX_DEFAULT
+	applymovement LOCALID_TRADE_NPC, Common_Movement_QuestionMark
+	msgbox PacifidlogTown_House3_Text_ItsMyGiftToYou, MSGBOX_DEFAULT
 	setflag FLAG_PACIFIDLOG_NPC_TRADE_COMPLETED
 	release
 	end
@@ -42,7 +46,7 @@ PacifidlogTown_House3_EventScript_NotRequestedMon::
 	end
 
 PacifidlogTown_House3_EventScript_TradeCompleted::
-	msgbox PacifidlogTown_House3_Text_ReallyWantedToGetBagon, MSGBOX_DEFAULT
+	msgbox PacifidlogTown_House3_Text_ReallyWantedToGetSpheal, MSGBOX_DEFAULT
 	release
 	end
 
@@ -75,11 +79,17 @@ PacifidlogTown_House3_Text_NotDesperateOrAnything:
 	.string "That's cool. I'm not desperate to make\n"
 	.string "a trade or anything.$"
 
-PacifidlogTown_House3_Text_ReallyWantedToGetBagon:
+PacifidlogTown_House3_Text_ReallyWantedToGetSpheal:
 	.string "I know I could go looking for one\n"
 	.string "on my own, but…\p"
-	.string "But I really wanted to get a BAGON\n"
+	.string "But I really wanted to get a SPHEAL\n"
 	.string "that another TRAINER caught…$"
+
+PacifidlogTown_House3_Text_ItsMyGiftToYou:
+	.string "Huh? Your Clamperl evolved?\n"
+	.string "Yeah, I made it hold a\l"
+	.string "DEEPSEASCALE before the trade.\p"
+	.string "It's my gift to you for helping me out.$"
 
 PacifidlogTown_House3_Text_IsThatAPokedex:
 	.string "Is that a POKéDEX?\p"

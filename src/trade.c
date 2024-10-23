@@ -150,6 +150,7 @@ enum {
 struct InGameTrade {
     u8 nickname[POKEMON_NAME_LENGTH + 1];
     u16 species;
+    u8 level;
     u8 ivs[NUM_STATS];
     u8 abilityNum;
     u32 otId;
@@ -4534,6 +4535,11 @@ static void CreateInGameTradePokemonInternal(u8 whichPlayerMon, u8 whichInGameTr
     u8 metLocation = METLOC_IN_GAME_TRADE;
     u8 mailNum;
     struct Pokemon *pokemon = &gEnemyParty[0];
+
+    // The traded Pokemon will have a minimum level
+    if (level < inGameTrade->level){
+        level = inGameTrade->level;
+    }
 
     CreateMon(pokemon, inGameTrade->species, level, USE_RANDOM_IVS, TRUE, inGameTrade->personality, OT_ID_PRESET, inGameTrade->otId);
 

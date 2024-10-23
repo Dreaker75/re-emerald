@@ -14,6 +14,9 @@ These are listed in no particular order
  - Add icon to show the stat being increased and decreased from the nature (in addition to the red and blue color)
  - Add ability to change the Pokemon's PokeBall (old PokeBall is lost)
  - Add an NPC to Devon Corp that will change a Pokemon's IVs in exchange for some Stardust or Star Pieces
+ - Add move tutors to allow Pokemon to learn moves they could obtain from other games, like Move Tutors in FRLG, Colosseum, XD, level up moves in FRLG, etc.
+  - Shadow Pokemon moves will require extra attention, as these are incompatible with a Pokemon's breeding moves normally
+  - Special Event moves from Pokemon distribution are no longer obtainable today unless you got that specific Pokemon back in the day, so I'm debating whether to include these moves in the list.
 
 ## Shop upgrades
  - Make it possible to buy Coins in any amount in the Game Corner
@@ -48,7 +51,7 @@ These are listed in no particular order
  - Add a mechanic to make all Fossil Pokemon appear in the wild after being revived
  - Add a final Rival fight on Route 103 after beating the Elite Four. After winning, the player receives an egg of the rival's starter Pokemon
  - Modify Altering Cave to give all the types of Unown on rotation?
- - Update trades: Make all current trades in the game more useful and add new ones for non-Hoenn Pokemon
+ - Add new trades for non-Hoenn Pokemon
  - Add the Old Sea Map
  - Add the Eon Ticket
  - Add the Mystic Ticket and its related events

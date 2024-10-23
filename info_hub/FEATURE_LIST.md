@@ -37,7 +37,7 @@
  - The Roaming Legendary is now guaranteed to be the first encounter in the route if it's there
 
 # Pokemon changes
- - Pokemon that evolve through trading now also evolve when leveling up while knowing a specific move:
+ - Pokemon that evolve through trading now also evolve by leveling up while knowing a specific move:
    - Kadabra: Psychic
    - Machoke: DynamicPunch
    - Graveler: Earthquake
@@ -62,8 +62,8 @@
  - Breeding Nidoran♂ or Volbeat with a Ditto can now produce Nidoran♀ or Illumise eggs, respectively
  - Breeding parents can now pass down the PokeBall to the children, like in Gen VII+
  - When breeding, the male parent won't pass down TM moves to the child, like in Gen VI+ (TMs are reusable, anyways)
- - The female parent can also pass down Egg Moves
- - The Eversonte now passes down natures 100% of the time regardless of who holds it, like in Gen V+
+ - The female parent can also pass down Egg Moves (This might be revisited later, as it may allow certain Pokemon to get moves they normally couldn't in Emerald)
+ - The Eversonte now passes down natures 100% of the time regardless of which parent holds it, like in Gen V+
 
 # Field move changes:
  - Rock Smash rocks have been divided in two sub-types:
@@ -95,7 +95,7 @@
  - Increased the amount of BP you get from every Facility. The points awarded now increase infinitely while the streak goes on (Up to the maximum amount of BPs)
  - All costs for items in the Battle Frontier shop and all Tutor Moves from the Battle Frontier have been singificantly reduced
  - New items have been added to the Battle Frontier shop (check [ITEM_CHANGES.md](https://github.com/Dreaker75/re-emerald/blob/main/info_hub/ITEM_CHANGES.md#battle-frontier) for the full list)
- - The amount of BP Scott gives you upon first arriving in the Battle Frontier has been changed. It now gives 5, 10, 15 or 20 BP depending on how many times you've talked to him before arriving.
+ - The amount of BP Scott gives you upon first arriving in the Battle Frontier has been changed. He now gives 5, 10, 15 or 20 BP depending on how many times you've talked to him before arriving.
     - If you talk to Scott all 13 times before talking to him in the Battle Frontier, he will give you a Choice Band as an extra gift
 
 # Map changes:

@@ -984,94 +984,183 @@ static const union AffineAnimCmd *const sAffineAnims_CrossingMonPics[] =
 
 static const struct InGameTrade sIngameTrades[] =
 {
-    [INGAME_TRADE_SEEDOT] =
+    [INGAME_TRADE_MAKUHITA] =
     {
-        .nickname = _("DOTS"),
-        .species = SPECIES_SEEDOT,
-        .ivs = {5, 4, 5, 4, 4, 4},
+        .nickname = _("MAKIT"),
+        .species = SPECIES_MAKUHITA,
+        .level = 9,
+        .ivs = {15, 15, 10, 5, 10, 5},
         .abilityNum = 1,
         .otId = 38726,
-        .conditions = {30, 5, 5, 5, 5},
-        .personality = 0x84,
-        .heldItem = ITEM_CHESTO_BERRY,
-        .mailNum = -1,
+        .conditions = {50, 25, 0, 0, 25},
+        .personality = 0x80,    // Adamant nature
+        .heldItem = ITEM_FAB_MAIL,
+        .mailNum = 0,
         .otName = _("KOBE"),
         .otGender = MALE,
-        .sheen = 10,
+        .sheen = 25,
         .requestedSpecies = SPECIES_RALTS
     },
-    [INGAME_TRADE_PLUSLE] =
+    [INGAME_TRADE_RHYHORN] =
     {
-        .nickname = _("PLUSES"),
-        .species = SPECIES_PLUSLE,
-        .ivs = {4, 4, 4, 5, 5, 4},
+        .nickname = _("RHYRHY"),
+        .species = SPECIES_RHYHORN,
+        .level = 29,
+        .ivs = {10, 15, 15, 5, 5, 10},
         .abilityNum = 0,
         .otId = 73996,
-        .conditions = {5, 5, 30, 5, 5},
-        .personality = 0x6F,
+        .conditions = {25, 0, 0, 25, 50},
+        .personality = 0x6C,    // Impish nature
         .heldItem = ITEM_WOOD_MAIL,
-        .mailNum = 0,
+        .mailNum = 1,
         .otName = _("ROMAN"),
         .otGender = MALE,
-        .sheen = 10,
-        .requestedSpecies = SPECIES_VOLBEAT
+        .sheen = 25,
+        .requestedSpecies = SPECIES_SHROOMISH
     },
-    [INGAME_TRADE_HORSEA] =
+    [INGAME_TRADE_CLAMPERL] =
     {
-        .nickname = _("SEASOR"),
-        .species = SPECIES_HORSEA,
-        .ivs = {5, 4, 4, 4, 5, 4},
+        .nickname = _("CLAMPS"),
+        .species = SPECIES_CLAMPERL,
+        .level = 35,
+        .ivs = {5, 10, 15, 15, 10, 5},
         .abilityNum = 0,
         .otId = 46285,
-        .conditions = {5, 5, 5, 5, 30},
-        .personality = 0x7F,
-        .heldItem = ITEM_WAVE_MAIL,
-        .mailNum = 1,
+        .conditions = {25, 50, 25, 0, 0},
+        .personality = 0x8E,    // Quiet nature
+        .heldItem = ITEM_DEEP_SEA_SCALE,
+        .mailNum = -1,
         .otName = _("SKYLAR"),
-        .otGender = MALE,
-        .sheen = 10,
-        .requestedSpecies = SPECIES_BAGON
+        .otGender = FEMALE,
+        .sheen = 25,
+        .requestedSpecies = SPECIES_SPHEAL
     },
     [INGAME_TRADE_MEOWTH] =
     {
         .nickname = _("MEOWOW"),
         .species = SPECIES_MEOWTH,
-        .ivs = {4, 5, 4, 5, 4, 4},
+        .level = 25,
+        .ivs = {5, 10, 5, 10, 15, 15},
         .abilityNum = 0,
         .otId = 91481,
-        .conditions = {5, 5, 5, 30, 5},
-        .personality = 0x8B,
+        .conditions = {0, 0, 25, 50, 25},
+        .personality = 0x92,    // Gentle nature
         .heldItem = ITEM_RETRO_MAIL,
         .mailNum = 2,
         .otName = _("ISIS"),
         .otGender = FEMALE,
-        .sheen = 10,
+        .sheen = 25,
         .requestedSpecies = SPECIES_SKITTY
+    },
+    [INGAME_TRADE_FARFETCHD] =
+    {
+        .nickname = _("CH'DING"),
+        .species = SPECIES_FARFETCHD,
+        .level = 45,
+        .ivs = {20, 31, 20, 20, 20, 31},
+        .abilityNum = 0,
+        .otId = 8810,
+        .conditions = {0, 0, 0, 0, 0},
+        .personality = 0x67,    // Adamant nature, check to see if this makes it shiny
+        .heldItem = ITEM_STICK,
+        .mailNum = -1,
+        .otName = _("ELYSSA"),
+        .otGender = FEMALE,
+        .sheen = 0,
+        .requestedSpecies = SPECIES_SUDOWOODO
+    },
+    [INGAME_TRADE_LICKITUNG] =
+    {
+        .nickname = _("TULICK"),
+        .species = SPECIES_LICKITUNG,
+        .level = 35,
+        .ivs = {20, 20, 31, 20, 20, 20},
+        .abilityNum = 0,
+        .otId = 1239,
+        .conditions = {50, 0, 0, 50, 100},
+        .personality = 0x9D,    // Relaxed nature, check to see if this makes it shiny
+        .heldItem = ITEM_RETRO_MAIL,
+        .mailNum = 2,
+        .otName = _("HADEN"),
+        .otGender = MALE,
+        .sheen = 50,
+        .requestedSpecies = SPECIES_SKITTY
+    },
+    [INGAME_TRADE_MR_MIME] =
+    {
+        .nickname = _("MIMIEN"),
+        .species = SPECIES_MR_MIME,
+        .level = 30,
+        .ivs = {20, 20, 20, 20, 31, 20},
+        .abilityNum = 0,
+        .otId = 1985,
+        .conditions = {0, 0, 0, 0, 0},
+        .personality = 0x91,    // Calm nature, check to see if this makes it shiny
+        .heldItem = ITEM_RARE_CANDY,
+        .mailNum = -1,
+        .otName = _("REYLEY"),
+        .otGender = MALE,
+        .sheen = 0,
+        .requestedSpecies = SPECIES_GIRAFARIG   // TODO: Ideally with max condition as a requirement
+    },
+    [INGAME_TRADE_SNORLAX] =
+    {
+        .nickname = _("LAXY"),
+        .species = SPECIES_SNORLAX,
+        .level = 30,
+        .ivs = {20, 22, 16, 18, 24, 15},
+        .abilityNum = 1,
+        .otId = 10024,
+        .conditions = {0, 50, 100, 50, 0},
+        .personality = 0x8B,    // Naive nature, check to see if this makes it shiny
+        .heldItem = ITEM_POKE_DOLL,
+        .mailNum = -1,
+        .otName = _("MAYA"),
+        .otGender = FEMALE,
+        .sheen = 50,
+        .requestedSpecies = SPECIES_SLAKING
+    },
+    [INGAME_TRADE_HITMONTOP] =
+    {
+        .nickname = _("HITOP"),
+        .species = SPECIES_HITMONTOP,
+        .level = 30,
+        .ivs = {20, 31, 20, 20, 20, 20},
+        .abilityNum = 0,
+        .otId = 74536,
+        .conditions = {0, 0, 0, 0, 0},
+        .personality = 0x8A,    // Jolly nature, check to see if this makes it shiny
+        .heldItem = ITEM_KINGS_ROCK,
+        .mailNum = -1,
+        .otName = _("JACLEE"),
+        .otGender = FEMALE,
+        .sheen = 0,
+        .requestedSpecies = SPECIES_MEDICHAM
     }
 };
 
 static const u16 sIngameTradeMail[][MAIL_WORDS_COUNT + 1] =
 {
     {
+        EC_POKEMON(RALTS),
+        EC_WORD_CUTENESS,
+        EC_WORD_IS,
+        EC_WORD_OVERWHELMING,
+        EC_WORD_EXCL,
+        EC_WORD_TAKE,
+        EC_WORD_CARE,
+        EC_WORD_OF,
+        EC_POKEMON(MAKUHITA)
+    }, {
         EC_WORD_BE,
         EC_WORD_NICE,
         EC_WORD_TO,
-        EC_POKEMON(PLUSLE),
+        EC_POKEMON(RHYHORN),
         EC_WORD_EXCL,
-        EC_POKEMON(VOLBEAT),
+        EC_POKEMON(SHROOMISH),
         EC_WORD_WILL,
         EC_WORD_BE,
         EC_WORD_FANTASTIC
-    }, {
-        EC_WORD_I,
-        EC_WORD_WILL,
-        EC_WORD_MAKE,
-        EC_POKEMON(BAGON),
-        EC_WORD_TOUGH,
-        EC_WORD_PLEASE,
-        EC_WORD_TRAIN,
-        EC_POKEMON(HORSEA),
-        EC_WORD_WELL
     }, {
         EC_WORD_THANK_YOU,
         EC_WORD_FOR,
