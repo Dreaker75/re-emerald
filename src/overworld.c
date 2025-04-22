@@ -57,6 +57,7 @@
 #include "trainer_pokemon_sprites.h"
 #include "tv.h"
 #include "scanline_effect.h"
+#include "swarms.h"
 #include "wild_encounter.h"
 #include "vs_seeker.h"
 #include "frontier_util.h"
@@ -1767,6 +1768,9 @@ void CB2_ContinueSavedGame(void)
         InitTrainerHillMap();
     else
         InitMapFromSavedGame();
+
+    // Count how many swarms have been activated so far (Only done here since once it's loaded, the variable is usable for the remaining session)
+    UpdateSwarmsActivated();
 
     PlayTimeCounter_Start();
     ScriptContext_Init();

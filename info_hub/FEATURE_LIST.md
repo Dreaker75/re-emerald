@@ -47,13 +47,18 @@
  - Legendary Pokemon will have at least 3 perfect IVs
  - The maximum amount of EV a Pokemon can have in a single stat is now 252, instead of 255, like in Gen VI+
 
-## Location changes:
+## Wild encounters changes:
  - Table slots and slot % have been tweaked all around (The lowest chance a Pokemon will have to appear is now 5%, although usually they're 10% or higher)
  - All RS exclusive Pokemon have been re-added to the wild in their respective locations and the encounters in those places have been tweaked accordingly
  - A focus has been put on Emerald being the "shared version" and now, all previous RS version exclusives will have the same chance to appear in their respective location (ex. Lotad and Seedot, Zangoose and Seviper, etc)
  - Non-Hoenn mons have been added to many post-game areas, although only a few have been added at the moment. Some examples include Diglett in Desert Underpass or Unown in Altering Cave
- - All the changes implemented can be found on the [wild_encounters.json](https://github.com/Dreaker75/re-emerald/blob/main/src/data/wild_encounters.json) file
+ - Encounter tables for a few locations have been changed to add more variety, such as Seafloor Cavern, Magma Hideout and Cave of Origin.
  - The Feebas mechanic has been reworked. Feebas will still only appear in specific tiles of Route 119 50% of the time, but said tiles are no longer random. Instead, they're based on Feebas' Emerald Pokedex entry.
+ - All the changes implemented can be found on the [wild_encounters.json](https://github.com/Dreaker75/re-emerald/blob/main/src/data/wild_encounters.json) file
+
+## Swarm mechanic:
+ - Every day after beating the Elite Four for the first time, a new Pokemon family will be permanently added to the wild. Each Pokemon is added in a specific area, and replaces the Pokemon in one of the encounter slots of said area.
+ - If a Pokemon and any of its evolutions are swarm Pokemon, all of them are added on the same day. For example, if Pidgey is the Swarm Pokemon of the day, then Pidgey, Pidgeotto and Pidgeot are all added to the wild.
 
 ## Missing Pokemon:
  - Check [POKEMON_LIST.md](https://github.com/Dreaker75/re-emerald/blob/main/info_hub/POKEMON_LIST.md) to see a list of all the Pokemon changes in Re:Emerald as of version 0.1.0 and which ones are left to add. If a Pokemon is not mentioned, then it can be found in the same way as vanilla Emerald.
@@ -89,7 +94,7 @@
     - Beating a Contest Rank now unlocks the next tier for all Pokemon, much like ORAS
     - Winning a Contest will also award the Ribbons for the lower ranks, and an amount of Luxury Balls depending on the Rank won (The Luxury Balls are awarded regardless of whether the Pokemon got a Ribbon for that Rank)
  - The Trainer Hill now gives more battle-related items and does not require beating the mode in under a certain time to get them. Full list on [ITEM_CHANGES.md](https://github.com/Dreaker75//info_hub/ITEM_CHANGES.md#facility-reward-items)
- - The prizes for all Battle Tents have been updated, and you can now choose whether you want to claim them or discard them if your bag is full. If you choose to discard them, you will automatically claim as many of the items as you have room for in your bag (Note: These rewards are opened for rebalancing later on if they seem too good/bad). Full list on [ITEM_CHANGES.md](https://github.com/Dreaker75/re-emerald/blob/main/info_hub/ITEM_CHANGES.md#facility-reward-items).
+ - The prizes for all Battle Tents have been updated, and you can now choose whether you want to claim them or discard them if your bag is full. If you choose to discard them, you will automatically claim as many of the items as you have room for in your bag (Note: These rewards are open for rebalancing later on if they seem too good/bad). Full list on [ITEM_CHANGES.md](https://github.com/Dreaker75/re-emerald/blob/main/info_hub/ITEM_CHANGES.md#facility-reward-items).
     
 ## Battle Frontier
  - Increased the amount of BP you get from every Facility. The points awarded now increase infinitely while the streak goes on (Up to the maximum amount of BPs)

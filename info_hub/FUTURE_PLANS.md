@@ -38,6 +38,7 @@ These are listed in no particular order
  - Bag sorting
  - Show Bag pocket icons in the menu to more easily tell whether to scroll right or left
  - Add a way to know which Pokemon can use Rock Smash, Strength, Surf, Waterfall and Dive from the menu (without having to reasort to trying to teach the move)
+  - Current idea: Have an extra menu option in the Pokemon menu to see the rest of the usable HMs.
  - Change EXP. Share to be the Gen 6+ version? (Still debating)
  - Add a way to move items between Pokemon from the party (like future gens)
  - Quickly switch Pokemon in the Party using Select
@@ -45,9 +46,14 @@ These are listed in no particular order
  - Display or add a way to see the Pokemon's stat stages, weather, etc during battle
  - Show the PPs of a move when using a PP-restoring item
  - Show the amount of PP boosts used on a move when using a PP-increasing item
+ - Add a popup after finishing an encounter using Sweet Scent to trigger it again, similarly to the Repel popup. Also, look into speeding up the Sweet Scent animation?
+ - Add a placeholder list of Pokemon found on each area until an Area Dex is implemented?
 
 ## Pokemon additions
  - Add Swarm mechanic to make all non-Legendary Pokemon available
+  - Fix the Pokedex Area list to update in real time when a new Swarm Pokemon is added to the wild
+  - Add events from Birch in the Pokemon Lab that will add the base form of the newly added Swarm Pokemon to the Pokedex, so the player can know where they appear.
+  - Make the Swarm update a call instead, so the player doesn't have to visit the lab?
  - Add a mechanic to make all Fossil Pokemon appear in the wild after being revived
  - Add a final Rival fight on Route 103 after beating the Elite Four. After winning, the player receives an egg of the rival's starter Pokemon
  - Modify Altering Cave to give all the types of Unown on rotation?
@@ -97,6 +103,9 @@ These are listed in no particular order
  - Sky Pillar will have a second wild encounter table for the Post-Game, which will include non-Hoenn Pokemon
  - Make a second encounter table for Route 123 to have one for the sea of the route and one for the pond
  - Make a second encounter table for Route 134, to vary between surfing/fishing from Slateport or Pacifidlog
+ - Make the entrance to Cave of Origin no longer close after waking up Rayquaza (to accomodate for the new encounters there)
+   - Fix the visual bugs on Cave of Origin's bottom floor
+   - Possibly bring back the scrapped floors from Ruby (Still to be debated)
 
 ## New maps & areas
  - Three new "Secret Bases" that will be home to 3 powerful trainers. These secret bases are special, as they behave like regular maps in their specific locations and can't be deleted by mixing records.
@@ -108,6 +117,7 @@ These are listed in no particular order
  - Add a random set of special trainers that can appear with their own secret bases in a game that hasn't mixed records
  - Defeating a Trainer in a Secret Base will give the player a reward
  - Add new features to the secret base, like an option to heal the mons or access the storage pc
+ - Add virtual fights to the Secret Base for EV training and levelling
 
 ## Updated mechanics
  - Change Synchronize to force Wild Pokemon to have the same nature as the Pokemon with Synchronize 100% of the time?
@@ -139,3 +149,10 @@ Features here are things I'd like to add once everything else above has been imp
  - Add an AreaDex that will show everything available in an area, from Pokemon and Items to trades and gift the player has not yet received
  - Add Achievements that will be akin to B2W2 Medals
  - Add the Fame Checker into the game
+ - New Game+, letting you play through the story again while keeping all your items, Pokemon, etc. You could either play with your overpowered mons, or start from scratch again but with all the post-game benefits like Swarm Pokemon intact, for a new experience. New Game+ would reset:
+    - Badges
+    - Fly Points
+    - Key items for progression (Letter, Devon Goods, etc)
+    - All Stroy-related events
+    - All trainer, items and hidden items
+    - All Static and Legendary Pokemon (This will be the only way to get more than 1 of each Legendary Pokemon in the same file)

@@ -30,6 +30,7 @@ extern const struct WildPokemonHeader gWildMonHeaders[];
 extern bool8 gIsFishingEncounter;
 extern bool8 gIsSurfingEncounter;
 
+u16 GetSwarmSpeciesInSlot(u8 slot, u8 area);  // Used to get the swarming species on a route, if they have appeared already
 void DisableWildEncounters(bool8 disabled);
 u8 PickWildMonNature(void);
 bool8 StandardWildEncounter(u16 currMetaTileBehavior, u16 previousMetaTileBehavior);

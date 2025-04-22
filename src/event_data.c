@@ -3,6 +3,7 @@
 #include "pokedex.h"
 #include "field_specials.h"
 #include "lottery_corner.h"
+#include "swarms.h"
 
 #define SPECIAL_FLAGS_SIZE  (NUM_SPECIAL_FLAGS / 8)  // 8 flags per byte
 #define TEMP_FLAGS_SIZE     (NUM_TEMP_FLAGS / 8)
@@ -64,6 +65,12 @@ void ClearDailyFlags(void)
 
     // Generate a new ID for the lottery
     SetRandomLotteryNumber();
+
+    // Check if all swarms have been activated && if the game has been beaten
+    if (GetSwarmsDone() == FALSE && FlagGet(FLAG_SYS_GAME_CLEAR))
+    {
+        ActivateNewSwarm();
+    }
 
     // Reset the defeated flags for any Legendary Pokemon that hasn't been caught yet
     FlagClear(FLAG_DEFEATED_SUDOWOODO);

@@ -652,52 +652,57 @@
 #define FLAG_HIDDEN_ITEM_ROUTE_123_RARE_CANDY                (FLAG_HIDDEN_ITEMS_START + 0x6E)
 #define FLAG_HIDDEN_ITEM_ROUTE_105_BIG_PEARL                 (FLAG_HIDDEN_ITEMS_START + 0x6F)
 
-#define FLAG_UNUSED_0x264  0x264 // Unused Flag
-#define FLAG_UNUSED_0x265  0x265 // Unused Flag
-#define FLAG_UNUSED_0x266  0x266 // Unused Flag
-#define FLAG_UNUSED_0x267  0x267 // Unused Flag
-#define FLAG_UNUSED_0x268  0x268 // Unused Flag
-#define FLAG_UNUSED_0x269  0x269 // Unused Flag
-#define FLAG_UNUSED_0x26A  0x26A // Unused Flag
-#define FLAG_UNUSED_0x26B  0x26B // Unused Flag
-#define FLAG_UNUSED_0x26C  0x26C // Unused Flag
-#define FLAG_UNUSED_0x26D  0x26D // Unused Flag
-#define FLAG_UNUSED_0x26E  0x26E // Unused Flag
-#define FLAG_UNUSED_0x26F  0x26F // Unused Flag
-#define FLAG_UNUSED_0x270  0x270 // Unused Flag
-#define FLAG_UNUSED_0x271  0x271 // Unused Flag
-#define FLAG_UNUSED_0x272  0x272 // Unused Flag
-#define FLAG_UNUSED_0x273  0x273 // Unused Flag
-#define FLAG_UNUSED_0x274  0x274 // Unused Flag
-#define FLAG_UNUSED_0x275  0x275 // Unused Flag
-#define FLAG_UNUSED_0x276  0x276 // Unused Flag
-#define FLAG_UNUSED_0x277  0x277 // Unused Flag
-#define FLAG_UNUSED_0x278  0x278 // Unused Flag
-#define FLAG_UNUSED_0x279  0x279 // Unused Flag
-#define FLAG_UNUSED_0x27A  0x27A // Unused Flag
-#define FLAG_UNUSED_0x27B  0x27B // Unused Flag
-#define FLAG_UNUSED_0x27C  0x27C // Unused Flag
-#define FLAG_UNUSED_0x27D  0x27D // Unused Flag
-#define FLAG_UNUSED_0x27E  0x27E // Unused Flag
-#define FLAG_UNUSED_0x27F  0x27F // Unused Flag
-#define FLAG_UNUSED_0x280  0x280 // Unused Flag
-#define FLAG_UNUSED_0x281  0x281 // Unused Flag
-#define FLAG_UNUSED_0x282  0x282 // Unused Flag
-#define FLAG_UNUSED_0x283  0x283 // Unused Flag
-#define FLAG_UNUSED_0x284  0x284 // Unused Flag
-#define FLAG_UNUSED_0x285  0x285 // Unused Flag
-#define FLAG_UNUSED_0x286  0x286 // Unused Flag
-#define FLAG_UNUSED_0x287  0x287 // Unused Flag
-#define FLAG_UNUSED_0x288  0x288 // Unused Flag
-#define FLAG_UNUSED_0x289  0x289 // Unused Flag
-#define FLAG_UNUSED_0x28A  0x28A // Unused Flag
-#define FLAG_UNUSED_0x28B  0x28B // Unused Flag
-#define FLAG_UNUSED_0x28C  0x28C // Unused Flag
-#define FLAG_UNUSED_0x28D  0x28D // Unused Flag
-#define FLAG_UNUSED_0x28E  0x28E // Unused Flag
-#define FLAG_UNUSED_0x28F  0x28F // Unused Flag
-#define FLAG_UNUSED_0x290  0x290 // Unused Flag
-#define FLAG_UNUSED_0x291  0x291 // Unused Flag
+#define FLAG_SWARMS_START                                   0x264
+#define FLAG_CATERPIE_SPECIES_SWARMING                      (FLAG_SWARMS_START + 0x00)
+#define FLAG_WEEDLE_SPECIES_SWARMING                        (FLAG_CATERPIE_SPECIES_SWARMING + 0x1)
+#define FLAG_PIDGEY_SPECIES_SWARMING                        (FLAG_WEEDLE_SPECIES_SWARMING + 0x1)
+#define FLAG_RATTATA_SPECIES_SWARMING                       (FLAG_PIDGEY_SPECIES_SWARMING + 0x1)
+#define FLAG_SPEAROW_SPECIES_SWARMING                       (FLAG_RATTATA_SPECIES_SWARMING + 0x1)
+#define FLAG_EKANS_SPECIES_SWARMING                         (FLAG_SPEAROW_SPECIES_SWARMING + 0x1)
+#define FLAG_NIDORAN_SPECIES_SWARMING                       (FLAG_EKANS_SPECIES_SWARMING + 0x1)
+#define FLAG_CLEFAIRY_SPECIES_SWARMING                      (FLAG_NIDORAN_SPECIES_SWARMING + 0x1)
+#define FLAG_MEOWTH_SPECIES_SWARMING                        (FLAG_CLEFAIRY_SPECIES_SWARMING + 0x1)  // Also a trade
+#define FLAG_MANKEY_SPECIES_SWARMING                        (FLAG_MEOWTH_SPECIES_SWARMING + 0x1)
+#define FLAG_GROWLITHE_SPECIES_SWARMING                     (FLAG_MANKEY_SPECIES_SWARMING + 0x1)
+#define FLAG_POLIWAG_SPECIES_SWARMING                       (FLAG_GROWLITHE_SPECIES_SWARMING + 0x1)
+#define FLAG_BELLSPROUT_SPECIES_SWARMING                    (FLAG_POLIWAG_SPECIES_SWARMING + 0x1)
+#define FLAG_PONYTA_SPECIES_SWARMING                        (FLAG_BELLSPROUT_SPECIES_SWARMING + 0x1)
+#define FLAG_SLOWPOKE_SPECIES_SWARMING                      (FLAG_PONYTA_SPECIES_SWARMING + 0x1)
+#define FLAG_SEEL_SPECIES_SWARMING                          (FLAG_SLOWPOKE_SPECIES_SWARMING + 0x1)
+#define FLAG_SHELLDER_SPECIES_SWARMING                      (FLAG_SEEL_SPECIES_SWARMING + 0x1)
+#define FLAG_GASTLY_SPECIES_SWARMING                        (FLAG_SHELLDER_SPECIES_SWARMING + 0x1)
+#define FLAG_ONIX_SPECIES_SWARMING                          (FLAG_GASTLY_SPECIES_SWARMING + 0x1)
+#define FLAG_DROWZEE_SPECIES_SWARMING                       (FLAG_ONIX_SPECIES_SWARMING + 0x1)
+#define FLAG_KRABBY_SPECIES_SWARMING                        (FLAG_DROWZEE_SPECIES_SWARMING + 0x1)
+#define FLAG_EXEGGCUTE_SPECIES_SWARMING                     (FLAG_KRABBY_SPECIES_SWARMING + 0x1)
+#define FLAG_CUBONE_SPECIES_SWARMING                        (FLAG_EXEGGCUTE_SPECIES_SWARMING + 0x1)
+#define FLAG_LICKITUNG_SPECIES_SWARMING                     (FLAG_CUBONE_SPECIES_SWARMING + 0x1)
+#define FLAG_CHANSEY_SPECIES_SWARMING                       (FLAG_LICKITUNG_SPECIES_SWARMING + 0x1)
+#define FLAG_TANGELA_SPECIES_SWARMING                       (FLAG_CHANSEY_SPECIES_SWARMING + 0x1)
+#define FLAG_KANGASKHAN_SPECIES_SWARMING                    (FLAG_TANGELA_SPECIES_SWARMING + 0x1)
+#define FLAG_SCYTHER_SPECIES_SWARMING                       (FLAG_KANGASKHAN_SPECIES_SWARMING + 0x1)
+#define FLAG_JYNX_SPECIES_SWARMING                          (FLAG_SCYTHER_SPECIES_SWARMING + 0x1)
+#define FLAG_ELECTABUZZ_SPECIES_SWARMING                    (FLAG_JYNX_SPECIES_SWARMING + 0x1)
+#define FLAG_MAGMAR_SPECIES_SWARMING                        (FLAG_ELECTABUZZ_SPECIES_SWARMING + 0x1)
+#define FLAG_LAPRAS_SPECIES_SWARMING                        (FLAG_MAGMAR_SPECIES_SWARMING + 0x1)
+#define FLAG_DRATINI_SPECIES_SWARMING                       (FLAG_LAPRAS_SPECIES_SWARMING + 0x1)
+#define FLAG_SENTRET_SPECIES_SWARMING                       (FLAG_DRATINI_SPECIES_SWARMING + 0x1)
+#define FLAG_HOOTHOOT_SPECIES_SWARMING                      (FLAG_SENTRET_SPECIES_SWARMING + 0x1)
+#define FLAG_LEDYBA_SPECIES_SWARMING                        (FLAG_HOOTHOOT_SPECIES_SWARMING + 0x1)
+#define FLAG_SPINARAK_SPECIES_SWARMING                      (FLAG_LEDYBA_SPECIES_SWARMING + 0x1)
+#define FLAG_MAREEP_SPECIES_SWARMING                        (FLAG_SPINARAK_SPECIES_SWARMING + 0x1)  // Also in Safari Zone
+#define FLAG_HOPPIP_SPECIES_SWARMING                        (FLAG_MAREEP_SPECIES_SWARMING + 0x1)
+#define FLAG_MURKROW_SPECIES_SWARMING                       (FLAG_HOPPIP_SPECIES_SWARMING + 0x1)
+#define FLAG_MISDREAVUS_SPECIES_SWARMING                    (FLAG_MURKROW_SPECIES_SWARMING + 0x1)
+#define FLAG_DUNSPARCE_SPECIES_SWARMING                     (FLAG_MISDREAVUS_SPECIES_SWARMING + 0x1)
+#define FLAG_GLIGAR_SPECIES_SWARMING                        (FLAG_DUNSPARCE_SPECIES_SWARMING + 0x1) // Was in Safari Zone before
+#define FLAG_SNEASEL_SPECIES_SWARMING                       (FLAG_GLIGAR_SPECIES_SWARMING + 0x1)
+#define FLAG_REMORAID_SPECIES_SWARMING                      (FLAG_SNEASEL_SPECIES_SWARMING + 0x1)  // Also in Safari Zone
+#define FLAG_MANTINE_SPECIES_SWARMING                       (FLAG_REMORAID_SPECIES_SWARMING + 0x1)
+#define FLAG_HOUNDOUR_SPECIES_SWARMING                      (FLAG_MANTINE_SPECIES_SWARMING + 0x1)  // Was in Safari Zone before
+#define FLAG_SWARMS_END                                     FLAG_HOUNDOUR_SPECIES_SWARMING
+#define NUM_SWARMS_FLAGS                                    (FLAG_SWARMS_END - FLAG_SWARMS_START + 1)
+
 #define FLAG_UNUSED_0x292  0x292 // Unused Flag
 #define FLAG_UNUSED_0x293  0x293 // Unused Flag
 #define FLAG_UNUSED_0x294  0x294 // Unused Flag
