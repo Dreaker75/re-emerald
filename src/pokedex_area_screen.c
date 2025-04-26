@@ -14,6 +14,7 @@
 #include "roamer.h"
 #include "sound.h"
 #include "string_util.h"
+#include "swarms.h"
 #include "trig.h"
 #include "pokedex_area_region_map.h"
 #include "wild_encounter.h"
@@ -97,8 +98,8 @@ static void BuildAreaGlowTilemap(void);
 static void SetAreaHasMon(u16, u16);
 static void SetSpecialMapHasMon(u16, u16);
 static u16 GetRegionMapSectionId(u8, u8);
-static bool8 MapHasSpecies(const struct WildPokemonHeader *, u16);
-static bool8 MonListHasSpecies(const struct WildPokemonInfo *, u16, u16);
+static bool8 MapHasSpecies(const struct WildPokemonHeader *, const struct WildPokemonHeader *, u16);
+static bool8 MonListHasSpecies(const struct WildPokemonInfo *, const struct WildPokemonInfo *, u16, u16);
 static void DoAreaGlow(void);
 static void Task_ShowPokedexAreaScreen(u8);
 static void CreateAreaMarkerSprites(void);
@@ -244,6 +245,7 @@ static bool8 DrawAreaGlow(void)
 
 static void FindMapsWithMon(u16 species)
 {
+    bool8 doesMapHaveSwarm, isMapSwarm;
     u16 i;
     struct Roamer *roamer;
 
@@ -290,7 +292,21 @@ static void FindMapsWithMon(u16 species)
         // Add regular species to the area map
         for (i = 0; gWildMonHeaders[i].mapGroup != MAP_GROUP(UNDEFINED); i++)
         {
-            if (MapHasSpecies(&gWildMonHeaders[i], species))
+            // Boolean to know whether this area has a swarm group
+            doesMapHaveSwarm = (gWildMonHeaders[i].mapGroup == gWildMonHeaders[i + 1].mapGroup && gWildMonHeaders[i].mapNum == gWildMonHeaders[i + 1].mapNum);
+            // Boolean to know whether this area is a swarm group
+            isMapSwarm = (i == 0 || doesMapHaveSwarm ? FALSE : gWildMonHeaders[i].mapGroup == gWildMonHeaders[i - 1].mapGroup && gWildMonHeaders[i].mapNum == gWildMonHeaders[i - 1].mapNum);
+
+            // If this group has a swarm group and all swarms have been activated, ignore this map
+            if (GetSwarmsDone() && doesMapHaveSwarm)
+                continue;
+            // If this group is a Swarm group and there are still swarms to be activated, ignore this map
+            if (!GetSwarmsDone() && isMapSwarm)
+                continue;
+
+            // MapHasSpecies will receive a map with a swarm group as a normal map if all swarms have been activated, otherwise it will pass said map as a swarm and check it manually
+            // If the map doesn't have a swarm, pass NULL. Otherwise, pass the next header as well (which holds the swarm group)
+            if (MapHasSpecies(&gWildMonHeaders[i], doesMapHaveSwarm ? &gWildMonHeaders[i + 1] : NULL, species))
             {
                 switch (gWildMonHeaders[i].mapGroup)
                 {
@@ -378,7 +394,7 @@ static u16 GetRegionMapSectionId(u8 mapGroup, u8 mapNum)
     return Overworld_GetMapHeaderByGroupAndId(mapGroup, mapNum)->regionMapSectionId;
 }
 
-static bool8 MapHasSpecies(const struct WildPokemonHeader *info, u16 species)
+static bool8 MapHasSpecies(const struct WildPokemonHeader *info, const struct WildPokemonHeader *swarm, u16 species)
 {
     // If this is a header for Altering Cave, skip it if it's not the current Altering Cave encounter set
     if (GetRegionMapSectionId(info->mapGroup, info->mapNum) == MAPSEC_ALTERING_CAVE)
@@ -388,32 +404,44 @@ static bool8 MapHasSpecies(const struct WildPokemonHeader *info, u16 species)
             return FALSE;
     }
 
-    if (MonListHasSpecies(info->landMonsInfo, species, LAND_WILD_COUNT))
+    if (MonListHasSpecies(info->landMonsInfo, swarm == NULL ? NULL : swarm->landMonsInfo, species, LAND_WILD_COUNT))
         return TRUE;
-    if (MonListHasSpecies(info->waterMonsInfo, species, WATER_WILD_COUNT))
+    if (MonListHasSpecies(info->waterMonsInfo, swarm == NULL ? NULL : swarm->waterMonsInfo, species, WATER_WILD_COUNT))
         return TRUE;
 // When searching the fishing encounters, this incorrectly uses the size of the land encounters.
 // As a result it's reading out of bounds of the fishing encounters tables.
 #ifdef BUGFIX
-    if (MonListHasSpecies(info->fishingMonsInfo, species, FISH_WILD_COUNT))
+    if (MonListHasSpecies(info->fishingMonsInfo, swarm == NULL ? NULL : swarm->fishingMonsInfo, species, FISH_WILD_COUNT))
 #else
-    if (MonListHasSpecies(info->fishingMonsInfo, species, LAND_WILD_COUNT))
+    if (MonListHasSpecies(info->fishingMonsInfo, swarm == NULL ? NULL : swarm->fishingMonsInfo, species, LAND_WILD_COUNT))
 #endif
         return TRUE;
-    if (MonListHasSpecies(info->rockSmashMonsInfo, species, ROCK_WILD_COUNT))
+    if (MonListHasSpecies(info->rockSmashMonsInfo, swarm == NULL ? NULL : swarm->rockSmashMonsInfo, species, ROCK_WILD_COUNT))
         return TRUE;
     return FALSE;
 }
 
-static bool8 MonListHasSpecies(const struct WildPokemonInfo *info, u16 species, u16 size)
+static bool8 MonListHasSpecies(const struct WildPokemonInfo *info, const struct WildPokemonInfo *swarm, u16 species, u16 size)
 {
     u16 i;
     if (info != NULL)
     {
         for (i = 0; i < size; i++)
         {
+            // If the Pokemon was found in the non-swarm version
             if (info->wildPokemon[i].species == species)
-                return TRUE;
+            {
+                // We need to check if it hasn't been replaced by a swarm Pokemon. If it hasn't, the Pokemon can be found in this area
+                if (swarm == NULL || swarm->wildPokemon[i].species == species || !HasSpeciesSwarmHappened(swarm->wildPokemon[i].species))
+                    return TRUE;
+            }
+            // If the Pokemon wasn't found in the map, we need to check if it's a swarm Pokemon
+            else
+            {
+                // If the area has a swarm encounter, the Pokemon is found there, and its swarm has been activated, then it can be found in this area
+                if (swarm != NULL && swarm->wildPokemon[i].species == species && HasSpeciesSwarmHappened(swarm->wildPokemon[i].species))
+                    return TRUE;
+            }
         }
     }
     return FALSE;

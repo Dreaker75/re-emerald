@@ -51,7 +51,6 @@ These are listed in no particular order
 
 ## Pokemon additions
  - Add Swarm mechanic to make all non-Legendary Pokemon available
-  - Fix the Pokedex Area list to update in real time when a new Swarm Pokemon is added to the wild
   - Add events from Birch in the Pokemon Lab that will add the base form of the newly added Swarm Pokemon to the Pokedex, so the player can know where they appear.
   - Make the Swarm update a call instead, so the player doesn't have to visit the lab?
  - Add a mechanic to make all Fossil Pokemon appear in the wild after being revived

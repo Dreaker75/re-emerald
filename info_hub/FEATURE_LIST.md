@@ -57,7 +57,7 @@
  - All the changes implemented can be found on the [wild_encounters.json](https://github.com/Dreaker75/re-emerald/blob/main/src/data/wild_encounters.json) file
 
 ## Swarm mechanic:
- - Every day after beating the Elite Four for the first time, a new Pokemon family will be permanently added to the wild. Each Pokemon is added in a specific area, and replaces the Pokemon in one of the encounter slots of said area.
+ - Every day after beating the Elite Four for the first time, a new Pokemon family will be permanently added to the wild. Each Pokemon is added in a specific area, and replaces a Pokemon in a specific encounter slot of said area.
  - If a Pokemon and any of its evolutions are swarm Pokemon, all of them are added on the same day. For example, if Pidgey is the Swarm Pokemon of the day, then Pidgey, Pidgeotto and Pidgeot are all added to the wild.
 
 ## Missing Pokemon:

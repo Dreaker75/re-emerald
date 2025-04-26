@@ -36,11 +36,11 @@ bool8 GetSwarmsDone(void)
 
 void UpdateSwarmsActivated(void)
 {
+    swarmsActivated = 0;
+
     // Swarms are activated after beating the game, so no need to check otherwise
     if (!FlagGet(FLAG_SYS_GAME_CLEAR))
         return;
-
-    swarmsActivated = 0;
 
     for (u8 i = 0; i < NUM_SWARMS_FLAGS; i++)
     {
