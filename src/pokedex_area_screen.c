@@ -298,10 +298,10 @@ static void FindMapsWithMon(u16 species)
             isMapSwarm = (i == 0 || doesMapHaveSwarm ? FALSE : gWildMonHeaders[i].mapGroup == gWildMonHeaders[i - 1].mapGroup && gWildMonHeaders[i].mapNum == gWildMonHeaders[i - 1].mapNum);
 
             // If this group has a swarm group and all swarms have been activated, ignore this map
-            if (GetSwarmsDone() && doesMapHaveSwarm)
+            if (AreSwarmsDone() && doesMapHaveSwarm)
                 continue;
             // If this group is a Swarm group and there are still swarms to be activated, ignore this map
-            if (!GetSwarmsDone() && isMapSwarm)
+            if (!AreSwarmsDone() && isMapSwarm)
                 continue;
 
             // MapHasSpecies will receive a map with a swarm group as a normal map if all swarms have been activated, otherwise it will pass said map as a swarm and check it manually

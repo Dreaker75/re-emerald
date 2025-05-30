@@ -31,6 +31,7 @@ LittlerootTown_ProfessorBirchsLab_OnTransition:
 	call ProfBirch_EventScript_UpdateLocation
 	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 6, LittlerootTown_ProfessorBirchsLab_EventScript_SetAfterJohtoStarterLayout
 	goto_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 4, LittlerootTown_ProfessorBirchsLab_EventScript_SetJohtoStarterLayout
+	call_if_ge VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 1, LittlerootTown_ProfessorBirchsLab_EventScript_SetSwarmLayout
 	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 3, LittlerootTown_ProfessorBirchsLab_EventScript_CheckReadyForJohtoStarter
 	end
 
@@ -44,6 +45,10 @@ LittlerootTown_ProfessorBirchsLab_EventScript_CheckReadyForJohtoStarter::
 LittlerootTown_ProfessorBirchsLab_EventScript_SetReadyForJohtoStarter::
 	setvar VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 4
 	goto LittlerootTown_ProfessorBirchsLab_EventScript_SetJohtoStarterLayout
+
+LittlerootTown_ProfessorBirchsLab_EventScript_SetSwarmLayout::
+	setmaplayoutindex LAYOUT_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_WITH_SWARM_RESEARCH
+	return
 
 LittlerootTown_ProfessorBirchsLab_EventScript_SetJohtoStarterLayout::
 	setmaplayoutindex LAYOUT_LITTLEROOT_TOWN_PROFESSOR_BIRCHS_LAB_WITH_TABLE
@@ -202,13 +207,19 @@ LittlerootTown_ProfessorBirchsLab_EventScript_UpgradeToNationalDex::
 	waitfanfare
 	setflag FLAG_SYS_NATIONAL_DEX
 	special EnableNationalPokedex
-	msgbox LittlerootTown_ProfessorBirchsLab_Text_GrassyPatchWaiting2, MSGBOX_DEFAULT
-	closemessage
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BIRCH
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_RIVAL
 	setvar VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 2
 	setvar VAR_SCOTT_BF_CALL_STEP_COUNTER, 0
 	setflag FLAG_SCOTT_CALL_BATTLE_FRONTIER
+	waitbuttonpress
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_NewPokemonSpotted, MSGBOX_DEFAULT
+	applymovement LOCALID_BIRCH, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_NotebookTrackstTheNewSpecies, MSGBOX_DEFAULT
+	applymovement LOCALID_BIRCH, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_GiveItARead, MSGBOX_DEFAULT
 	releaseall
 	end
 
@@ -655,6 +666,28 @@ LittlerootTown_ProfessorBirchsLab_EventScript_Book::
 	msgbox LittlerootTown_ProfessorBirchsLab_Text_BookTooHardToRead, MSGBOX_SIGN
 	end
 
+LittlerootTown_ProfessorBirchsLab_EventScript_SwarmNotes::
+	goto_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 0, LittlerootTown_ProfessorBirchsLab_EventScript_SwarmResearchNotStarted
+	special ScriptMenu_CreateSwarmInfoGridDisplay
+	waitstate
+LittlerootTown_ProfessorBirchsLab_EventScript_SwarmNotesCheckForNewPokemon::
+	special GetUnshownSwarmPokemon
+	goto_if_ne VAR_RESULT, SPECIES_NONE, LittlerootTown_ProfessorBirchsLab_EventScript_SwarmNotesRegisterNewPokemon
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_SwarmNotesRegisterNewPokemon::
+	bufferspeciesname STR_VAR_1, VAR_RESULT
+	showmonpic VAR_RESULT, 10, 3
+	special SetSwarmPokemonDexSeen
+	msgbox LittlerootTown_ProfessorBirchsLab_Text_RegisteredNewPokemon, MSGBOX_DEFAULT
+	hidemonpic
+	closemessage
+	goto LittlerootTown_ProfessorBirchsLab_EventScript_SwarmNotesCheckForNewPokemon
+	end
+
+LittlerootTown_ProfessorBirchsLab_EventScript_SwarmResearchNotStarted::
+	end
+
 LittlerootTown_ProfessorBirchsLab_EventScript_ScottAboardSSTidalCall::
 	lockall
 	pokenavcall LittlerootTown_ProfessorBirchsLab_Text_ScottAboardSSTidalCall
@@ -859,6 +892,22 @@ LittlerootTown_ProfessorBirchsLab_Text_OkayAllDone:
 LittlerootTown_ProfessorBirchsLab_Text_PokedexUpgradedToNational:
 	.string "{PLAYER}'s POKéDEX was upgraded\n"
 	.string "to the NATIONAL Mode!$"
+
+LittlerootTown_ProfessorBirchsLab_Text_NewPokemonSpotted:
+	.string "PROF. BIRCH: New POKéMON keep coming\n"
+	.string "to the HOENN region even now.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_NotebookTrackstTheNewSpecies:
+	.string "I track all the new species found\n"
+	.string "on that notebook over there.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_GiveItARead:
+	.string "Give it a read and use the new\n"
+	.string "POKéDEX to help you find them.$"
+
+LittlerootTown_ProfessorBirchsLab_Text_RegisteredNewPokemon:
+	.string "Registered {STR_VAR_1} in the\n"
+	.string "POKéDEX.$"
 
 LittlerootTown_ProfessorBirchsLab_Text_GrassyPatchWaiting2:
 	.string "PROF. BIRCH: But listen.\n"

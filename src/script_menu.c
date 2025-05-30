@@ -11,6 +11,7 @@
 #include "sound.h"
 #include "string_util.h"
 #include "strings.h"
+#include "swarms.h"
 #include "task.h"
 #include "text.h"
 #include "list_menu.h"
@@ -53,6 +54,7 @@ static void Task_HandleScrollingMultichoiceInput(u8 taskId);
 static void Task_HandleMultichoiceInput(u8 taskId);
 static void Task_HandleYesNoInput(u8 taskId);
 static void Task_HandleMultichoiceGridInput(u8 taskId);
+static void Task_HandleSequentialMessageInput(u8 taskId);
 static void DrawMultichoiceMenuDynamic(u8 left, u8 top, u8 argc, struct ListMenuItem *items, bool8 ignoreBPress, u32 initialRow, u8 maxBeforeScroll, u32 callbackSet);
 static void DrawMultichoiceMenu(u8 left, u8 top, u8 multichoiceId, bool8 ignoreBPress, u8 cursorPos);
 static void InitMultichoiceCheckWrap(bool8 ignoreBPress, u8 count, u8 windowId, u8 multichoiceId);
@@ -60,6 +62,8 @@ static void DrawLinkServicesMultichoiceMenu(u8 multichoiceId);
 static void CreatePCMultichoice(void);
 static void CreateLilycoveSSTidalMultichoice(void);
 static void CreateFossilMultichoice(void);
+void CreateSwarmInfoGridDisplay(void);
+u8 ShowSwarmPage(u8 currPage, u8 windowId, u32 pixelWidth);
 static bool8 IsPicboxClosed(void);
 static void MultichoiceDynamicEventDebug_OnInit(struct DynamicListMenuEventArgs *eventArgs);
 static void MultichoiceDynamicEventDebug_OnSelectionChanged(struct DynamicListMenuEventArgs *eventArgs);
@@ -482,6 +486,73 @@ static void InitMultichoiceCheckWrap(bool8 ignoreBPress, u8 count, u8 windowId, 
     DrawLinkServicesMultichoiceMenu(multichoiceId);
 }
 
+#define tCurrPage       data[4]
+#define tPixelWidth     data[5]
+
+// Task that creates a set of messages that advance with A and close with B
+static void InitSquentialMenu(bool8 ignoreBPress, u8 currPage, u32 pixelWidth, u8 windowId)
+{
+    u8 taskId;
+    sProcessInputDelay = 2;
+
+    taskId = CreateTask(Task_HandleSequentialMessageInput, 80);
+
+    gTasks[taskId].tIgnoreBPress = ignoreBPress;
+    gTasks[taskId].tCurrPage = currPage;
+    gTasks[taskId].tPixelWidth = pixelWidth;
+    gTasks[taskId].tWindowId = windowId;
+}
+
+static void Task_HandleSequentialMessageInput(u8 taskId)
+{
+    s8 selection;
+    s16 *data = gTasks[taskId].data;
+
+    if (!gPaletteFade.active)
+    {
+        if (sProcessInputDelay)
+        {
+            sProcessInputDelay--;
+        }
+        else
+        {
+            // Grabs the input for the sequential menu
+            selection = Menu_ProcessInputSequentialMessages();
+
+            if (selection != MENU_NOTHING_CHOSEN)
+            {
+                // Pressing B exits the sequential message early
+                if (selection == MENU_B_PRESSED)
+                {
+                    if (tIgnoreBPress)
+                        return;
+                    PlaySE(SE_SELECT);
+                    gSpecialVar_Result = MULTI_B_PRESSED;
+                }
+                // selection can only be 1, for A press
+                else if (selection == 1)
+                {
+                    gSpecialVar_Result = selection;
+                    // Show the next page (and grabs the total number of pages)
+                    u8 numPages = ShowSwarmPage(++gTasks[taskId].tCurrPage, gTasks[taskId].tWindowId, gTasks[taskId].tPixelWidth);
+                    // Displays the page
+                    CopyWindowToVram(gTasks[taskId].tWindowId, COPYWIN_FULL);
+
+                    // If there is more pages in the sequential message, don't destroy the task yet
+                    if (gTasks[taskId].tCurrPage < numPages)
+                        return;
+                }
+                ClearToTransparentAndRemoveWindow(tWindowId);
+                DestroyTask(taskId);
+                ScriptContext_Enable();
+            }
+        }
+    }
+}
+
+#undef tCurrPage
+#undef tPixelWidth
+
 static void Task_HandleScrollingMultichoiceInput(u8 taskId)
 {
     bool32 done = FALSE;
@@ -646,6 +717,7 @@ bool8 ScriptMenu_MultichoiceGrid(u8 left, u8 top, u8 multichoiceId, bool8 ignore
 
         for (i = 0; i < sMultichoiceLists[multichoiceId].count; i++)
         {
+            // Gets the maximum width of all the choices, so they're all aligned
             width = DisplayTextAndGetWidth(sMultichoiceLists[multichoiceId].list[i].text, width);
         }
 
@@ -1028,6 +1100,132 @@ void GetFossilRevivalSelection(void)
     {
         gSpecialVar_Result = sFossilSelections[gSpecialVar_Result];
     }
+}
+
+
+bool8 ScriptMenu_CreateSwarmInfoGridDisplay(void)
+{
+    if (FuncIsActiveTask(Task_HandleSequentialMessageInput) == TRUE)
+    {
+        return FALSE;
+    }
+    else
+    {
+        gSpecialVar_Result = 0xFF;
+        CreateSwarmInfoGridDisplay();
+        return TRUE;
+    }
+}
+
+void CreateSwarmInfoGridDisplay(void)
+{
+    u8 top = 0, columnCount = 3, rowCount = 4, left = 0, width = 0;
+    u32 pixelWidth = 0;
+    u8 windowId;
+    int i;
+
+    for (i = 0; i < NUM_SWARMS_FLAGS; i++)
+    {
+        if (FlagGet(FLAG_SWARMS_START + i))
+        {
+            // Gets the maximum width of all the choices, so they're all aligned
+            pixelWidth = DisplayTextAndGetWidth(gSpeciesInfo[GetSpeciesFromSwarmFlag(FLAG_SWARMS_START + i)].speciesName, pixelWidth);
+
+            // If the Nidoran family is swarming
+            if (FLAG_SWARMS_START + i == FLAG_NIDORAN_SPECIES_SWARMING)
+            {
+                // Show NidoranM too
+                pixelWidth = DisplayTextAndGetWidth(gSpeciesInfo[SPECIES_NIDORAN_M].speciesName, pixelWidth);
+            }
+            
+        }
+    }
+
+    // +1 for extra space between words
+    pixelWidth++;
+    
+    // Using Convert To Tile Width has a limitation of MAX_CHOICE_WIDTH
+    width = (((pixelWidth + 9) / 8) + 1);
+
+    windowId = CreateWindowFromRect(left, top, columnCount * width, rowCount * 2);
+    PutWindowTilemap(windowId);
+    DrawStdWindowFrame(windowId, FALSE);
+
+    ShowSwarmPage(0, windowId, pixelWidth);
+    
+    CopyWindowToVram(windowId, COPYWIN_FULL);
+    InitSquentialMenu(FALSE, 0, pixelWidth, windowId);
+}
+
+u8 ShowSwarmPage(u8 currPage, u8 windowId, u32 pixelWidth)
+{
+    u8 columnCount = 3, rowCount = 4;
+
+    u8 x = 8;
+    int i;
+    u8 swarmsActive[NUM_SWARMS_FLAGS];
+    u8 firstSwarm = currPage * columnCount * rowCount;
+    u8 swarmsActiveCount = 0;
+    
+    for (i = 0; i < NUM_SWARMS_FLAGS; i++)
+    {
+        if (FlagGet(FLAG_SWARMS_START + i))
+        {
+            swarmsActive[swarmsActiveCount++] = i;
+
+            if (FLAG_SWARMS_START + i == FLAG_NIDORAN_SPECIES_SWARMING)
+            {
+                // Account for Nidoran M
+                swarmsActive[swarmsActiveCount++] = i;
+            }
+        }
+    }
+
+    // Clear the window
+    FillWindowPixelBuffer(windowId, PIXEL_FILL(1));
+
+    bool8 nidoranMShown = FALSE;
+
+    // If Nidoran F's swarm is active && the first swarm being checked is after it
+    if (HasSpeciesSwarmHappened(SPECIES_NIDORAN_F) && FLAG_SWARMS_START + swarmsActive[firstSwarm] > FLAG_NIDORAN_SPECIES_SWARMING)
+    {
+        // Nidoran M was already displayed
+        nidoranMShown = TRUE;
+    }
+    
+
+    for (u8 row = 0; row < rowCount; row++)
+    {
+        if (row * columnCount + firstSwarm >= swarmsActiveCount)
+            break;
+        
+        for (u8 col = 0; col < columnCount; col++)
+        {
+            if (row * columnCount + col + firstSwarm >= swarmsActiveCount)
+                break;
+
+            // If Nidoran M was not added to the display && this is not the first Swarm to be checked
+            if (nidoranMShown == FALSE && (row > 0 || col > 0))
+            {
+                // Check if the previous swarm displayed was Nidoran F
+                if (FLAG_SWARMS_START + swarmsActive[firstSwarm + row * columnCount + col - 1] == FLAG_NIDORAN_SPECIES_SWARMING)
+                {
+                    // If it was, display Nidoran M now
+                    AddTextPrinterParameterized(windowId, FONT_NORMAL, gSpeciesInfo[SPECIES_NIDORAN_M].speciesName, x + (pixelWidth + 10) * col, 1 + 16 * row, TEXT_SKIP_DRAW, NULL);
+                    // 
+                    nidoranMShown = TRUE;
+
+                    continue;
+                }
+            }
+            
+            // pixelWidth + 10 for spacing between the Pokemon
+            AddTextPrinterParameterized(windowId, FONT_NORMAL, gSpeciesInfo[GetSpeciesFromSwarmFlag(FLAG_SWARMS_START + swarmsActive[firstSwarm + row * columnCount + col])].speciesName, x + (pixelWidth + 10) * col, 1 + 16 * row, TEXT_SKIP_DRAW, NULL);
+        }
+    }
+
+    // -1 to account for the completely full pages, since the division would be exact and give an extra page
+    return (swarmsActiveCount - 1) / (columnCount * rowCount) + 1;
 }
 
 #define tState       data[0]

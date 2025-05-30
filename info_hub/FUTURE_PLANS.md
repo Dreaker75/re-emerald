@@ -50,9 +50,6 @@ These are listed in no particular order
  - Add a placeholder list of Pokemon found on each area until an Area Dex is implemented?
 
 ## Pokemon additions
- - Add Swarm mechanic to make all non-Legendary Pokemon available
-  - Add events from Birch in the Pokemon Lab that will add the base form of the newly added Swarm Pokemon to the Pokedex, so the player can know where they appear.
-  - Make the Swarm update a call instead, so the player doesn't have to visit the lab?
  - Add a mechanic to make all Fossil Pokemon appear in the wild after being revived
  - Add a final Rival fight on Route 103 after beating the Elite Four. After winning, the player receives an egg of the rival's starter Pokemon
  - Modify Altering Cave to give all the types of Unown on rotation?
@@ -117,6 +114,7 @@ These are listed in no particular order
  - Defeating a Trainer in a Secret Base will give the player a reward
  - Add new features to the secret base, like an option to heal the mons or access the storage pc
  - Add virtual fights to the Secret Base for EV training and levelling
+ - Lanette will give a PC Decoration for the Secret Base instead of the Dolls. This PC will have the same functionality as any PC from the Pokemon Centers, with possibly some extra, secret base-exclusive features.
 
 ## Updated mechanics
  - Change Synchronize to force Wild Pokemon to have the same nature as the Pokemon with Synchronize 100% of the time?

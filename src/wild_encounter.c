@@ -329,7 +329,7 @@ static u16 GetCurrentMapWildMonHeaderId(void)
             // Check if this group has a Swarm group and all swarms have been activated
             else if (gWildMonHeaders[i].mapGroup == gWildMonHeaders[i + 1].mapGroup &&
                      gWildMonHeaders[i].mapNum == gWildMonHeaders[i + 1].mapNum &&
-                     GetSwarmsDone() == TRUE){
+                     AreSwarmsDone() == TRUE){
                 i++;
             }
 
@@ -377,7 +377,7 @@ u8 PickWildMonNature(void)
 // Returns the species that appears in the specified slot if they have been added already
 u16 GetSwarmSpeciesInSlot(u8 slot, u8 area)
 {
-    if (GetSwarmsDone())
+    if (AreSwarmsDone())
         return SPECIES_NONE;
 
     u16 id = GetCurrentMapWildMonHeaderId();

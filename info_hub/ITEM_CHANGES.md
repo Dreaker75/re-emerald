@@ -19,7 +19,7 @@ Removed all TMs and added the following items:
  - Charcoal
  - Mystic Water
 
-Added the following PokeDolls to the PokeDoll price exchange:
+Added the following PokeDolls to the PokeDoll prize exchange:
  - Lotad Doll
  - Seedot Doll
 
@@ -61,7 +61,7 @@ Added the following items:
     - Lanette was changed and now gives both the Lotad Doll and the Seedot Doll when visiting her house
  - The Pacifidlog NPC that gave the Return and Frustration TMs now just gifts Frustration to the player without having to show a Pokemon or wait a week (Return is obtained by giving the Meteorite to Proferssor Kozmo as normal)
  - The Berry NPC in Route 120 now gives a random berry from those between Figy and Iapapa every day (No longer uses the trainer's ID to decide which berry to give)
- - The Berry Master's wife on Route 123 now gives the special berries multiple times (still limited to 1 berry per day), and will not give the player the following berries if the player uses the specific phrase:
+ - The Berry Master's wife on Route 123 now gives the special berries multiple times (still limited to 1 berry per day), and will now give the player the following berries if the player uses the specific phrase:
    - BEAUTIFUL HO-OH - Apicot Berry (UNOBTAINABLE IN THE CURRENT VERSION AS NO ACCESS TO HO-OH)
    - SMART DEOXYS - Salac Berry (UNOBTAINABLE IN THE CURRENT VERSION AS NO ACCESS TO DEOXYS)
    - COOL KYOGRE - Petaya Berry
@@ -73,7 +73,7 @@ Added the following items:
 
 ## Wild Held Items:
 Only items changed are listed here. Any item that isn't mentioned remains the same as vanilla Emerald:
- - Amulet Coin: Meowth (5% - Not currently available in the wild)
+ - Amulet Coin: Meowth (5%)
  - Berry Juice: Shuckle (100% - No longer holds Oran Berry)
  - BlackGlasses: Held by Youngster Calvin's Mightyena starting from the 5th rematch (Route 102) 
  - Blue Shard: Clamperl (50%)
@@ -81,7 +81,7 @@ Only items changed are listed here. Any item that isn't mentioned remains the sa
  - Green Shard: Relicanth (50%)
  - DeepSeaScale: Chinchou, Lanturn, Relicanth (5%)
  - DeepSeaTooth: Carvanha, Sharpedo (5%)
- - Lucky Punch: Chansey (50% - Not currently available in the wild)
+ - Lucky Punch: Chansey (50%)
  - Magnet: Magnemite, Magneton (50%)
  - NeverMeltIce: Snorunt (5%)
  - Red Shard: Corsola (50%)

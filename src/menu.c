@@ -1041,6 +1041,25 @@ s8 Menu_ProcessInputNoWrap(void)
     return MENU_NOTHING_CHOSEN;
 }
 
+// Menu for Sequential Messages
+// - A Button: Next message
+// - B Button: Exit
+s8 Menu_ProcessInputSequentialMessages(void)
+{
+    if (JOY_NEW(A_BUTTON))
+    {
+        if (!sMenu.APressMuted)
+            PlaySE(SE_SELECT);
+        return 1;
+    }
+    else if (JOY_NEW(B_BUTTON))
+    {
+        return MENU_B_PRESSED;
+    }
+
+    return MENU_NOTHING_CHOSEN;
+}
+
 s8 ProcessMenuInput_other(void)
 {
     if (JOY_NEW(A_BUTTON))

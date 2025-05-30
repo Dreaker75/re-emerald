@@ -67,7 +67,7 @@ void ClearDailyFlags(void)
     SetRandomLotteryNumber();
 
     // Check if all swarms have been activated && if the game has been beaten
-    if (GetSwarmsDone() == FALSE && FlagGet(FLAG_SYS_GAME_CLEAR))
+    if (AreSwarmsDone() == FALSE && FlagGet(FLAG_SYS_GAME_CLEAR))
     {
         ActivateNewSwarm();
     }
@@ -267,6 +267,17 @@ bool32 CanResetRTC(void)
         return TRUE;
     else
         return FALSE;
+}
+
+void GetUnshownSwarmPokemon(void)
+{
+    gSpecialVar_Result = GetNextUnshowSpecies();
+}
+
+// Called right after GetUnshownSwarmPokemon to set the Pokedex of the Pokemon returned as Seen
+void SetSwarmPokemonDexSeen(void)
+{
+    GetSetPokedexFlag(gSpecialVar_Result, FLAG_SET_SEEN);
 }
 
 u16 *GetVarPointer(u16 id)

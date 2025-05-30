@@ -508,6 +508,7 @@ gSpecials::
 	def_special ScriptMenu_CreateFossilRevivalMultichoice
 	def_special GetLilycoveSSTidalSelection
 	def_special GetFossilRevivalSelection
+	def_special ScriptMenu_CreateSwarmInfoGridDisplay
 	def_special TurnOnTVScreen
 	def_special SetMewAboveGrass
 	def_special ShouldDistributeEonTicket
@@ -555,3 +556,5 @@ gSpecials::
 	def_special Script_GetChosenMonDefensiveIVs
 	def_special ClearDailyFlags
 	def_special SetUpFieldMove_Flash
+	def_special GetUnshownSwarmPokemon
+	def_special SetSwarmPokemonDexSeen

@@ -17,6 +17,8 @@ void ClearMysteryGiftFlags(void);
 void ClearMysteryGiftVars(void);
 void DisableResetRTC(void);
 void EnableResetRTC(void);
+void GetUnshownSwarmPokemon(void);
+void SetSwarmPokemonDexSeen(void);
 bool32 CanResetRTC(void);
 u16 *GetVarPointer(u16 id);
 u16 VarGet(u16 id);

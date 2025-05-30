@@ -59,6 +59,7 @@
 ## Swarm mechanic:
  - Every day after beating the Elite Four for the first time, a new Pokemon family will be permanently added to the wild. Each Pokemon is added in a specific area, and replaces a Pokemon in a specific encounter slot of said area.
  - If a Pokemon and any of its evolutions are swarm Pokemon, all of them are added on the same day. For example, if Pidgey is the Swarm Pokemon of the day, then Pidgey, Pidgeotto and Pidgeot are all added to the wild.
+ - There is a book on Birch's Lab that shows you which Swarms have alread spawned, as well as register any Pokemon you're missing as seen in your Pokedex. (This only adds the base Pokemon to the Pokedex, not any evolutions)
 
 ## Missing Pokemon:
  - Check [POKEMON_LIST.md](https://github.com/Dreaker75/re-emerald/blob/main/info_hub/POKEMON_LIST.md) to see a list of all the Pokemon changes in Re:Emerald as of version 0.1.0 and which ones are left to add. If a Pokemon is not mentioned, then it can be found in the same way as vanilla Emerald.
