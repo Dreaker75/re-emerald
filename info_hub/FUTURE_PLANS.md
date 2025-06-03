@@ -46,6 +46,7 @@ These are listed in no particular order
  - Display or add a way to see the Pokemon's stat stages, weather, etc during battle
  - Show the PPs of a move when using a PP-restoring item
  - Show the amount of PP boosts used on a move when using a PP-increasing item
+ - Let the Pokedex continue to scroll by holding left or right
  - Add a popup after finishing an encounter using Sweet Scent to trigger it again, similarly to the Repel popup. Also, look into speeding up the Sweet Scent animation?
  - Add a placeholder list of Pokemon found on each area until an Area Dex is implemented?
 

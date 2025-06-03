@@ -292,17 +292,31 @@ static void FindMapsWithMon(u16 species)
         // Add regular species to the area map
         for (i = 0; gWildMonHeaders[i].mapGroup != MAP_GROUP(UNDEFINED); i++)
         {
-            // Boolean to know whether this area has a swarm group
-            doesMapHaveSwarm = (gWildMonHeaders[i].mapGroup == gWildMonHeaders[i + 1].mapGroup && gWildMonHeaders[i].mapNum == gWildMonHeaders[i + 1].mapNum);
-            // Boolean to know whether this area is a swarm group
-            isMapSwarm = (i == 0 || doesMapHaveSwarm ? FALSE : gWildMonHeaders[i].mapGroup == gWildMonHeaders[i - 1].mapGroup && gWildMonHeaders[i].mapNum == gWildMonHeaders[i - 1].mapNum);
+            
+            // Altering Cave is not a swarm group, nor does it have one
+            if (gWildMonHeaders[i].mapGroup == MAP_GROUP(ALTERING_CAVE) && gWildMonHeaders[i].mapNum == MAP_NUM(ALTERING_CAVE))
+            {
+                doesMapHaveSwarm = FALSE;
+            }
+            else
+            {
+                // Boolean to know whether this area has a swarm group
+                doesMapHaveSwarm = gWildMonHeaders[i].mapGroup == gWildMonHeaders[i + 1].mapGroup && gWildMonHeaders[i].mapNum == gWildMonHeaders[i + 1].mapNum;
+                // Boolean to know whether this area is a swarm group
+                isMapSwarm = FALSE;
 
-            // If this group has a swarm group and all swarms have been activated, ignore this map
-            if (AreSwarmsDone() && doesMapHaveSwarm)
-                continue;
-            // If this group is a Swarm group and there are still swarms to be activated, ignore this map
-            if (!AreSwarmsDone() && isMapSwarm)
-                continue;
+                if (i != 0 && !doesMapHaveSwarm)
+                {
+                    isMapSwarm = gWildMonHeaders[i].mapGroup == gWildMonHeaders[i - 1].mapGroup && gWildMonHeaders[i].mapNum == gWildMonHeaders[i - 1].mapNum;
+                }
+
+                // If this group has a swarm group and all swarms have been activated, ignore this map
+                if (AreSwarmsDone() && doesMapHaveSwarm)
+                    continue;
+                // If this group is a Swarm group and there are still swarms to be activated, ignore this map
+                if (!AreSwarmsDone() && isMapSwarm)
+                    continue;
+            }
 
             // MapHasSpecies will receive a map with a swarm group as a normal map if all swarms have been activated, otherwise it will pass said map as a swarm and check it manually
             // If the map doesn't have a swarm, pass NULL. Otherwise, pass the next header as well (which holds the swarm group)
