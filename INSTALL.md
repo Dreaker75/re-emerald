@@ -1,6 +1,6 @@
 # Instructions
 
-These instructions explain how to set up the tools required to build **pokeemerald Expansion**, which assembles the source files into a ROM (pokeemerald.gba).
+These instructions explain how to set up the tools required to build **pokeemerald Expansion**, which assembles the source files into a ROM (re-emerald.gba).
 
 These instructions come with notes which can be expanded by clicking the "<i>Note...</i>" text.
 In general, you should not need to open these unless if you get an error or if you need additional clarification.
@@ -506,11 +506,11 @@ If you aren't in the pokeemerald-expansion directory already, then **change dire
 ```bash
 cd pokeemerald-expansion
 ```
-To build **pokeemerald.gba** (Note: to speed up builds, see [Parallel builds](#parallel-builds)):
+To build **re-emerald.gba** (Note: to speed up builds, see [Parallel builds](#parallel-builds)):
 ```bash
 make
 ```
-If it has built successfully you will have the output file **pokeemerald.gba** in your project folder.
+If it has built successfully you will have the output file **re-emerald.gba** in your project folder.
 <details>
 <summary>Note for Windows...</summary>
 > If you switched terminals since the last build (e.g. from msys2 to WSL1), you must run `make clean-tools` once before any subsequent `make` commands.

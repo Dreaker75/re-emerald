@@ -65,9 +65,9 @@ if (-Not (Test-Path $env:DEVKITARM))
     exit
 }
 
-if (-Not (Test-Path ".\pokeemerald.gba"))
+if (-Not (Test-Path ".\re-emerald.gba"))
 {
-    Write-Host "File 'pokeemerald.gba' not found."
+    Write-Host "File 're-emerald.gba' not found."
     Write-Host $help
     exit
 }
@@ -112,5 +112,5 @@ $start_str = "0x$Start"
 Write-Host "$start_str - $end_str"
 $objdump = Join-Path -Path $env:DEVKITARM -ChildPath "arm-none-eabi\bin\objdump.exe"
 &$objdump -D -bbinary -marmv4t -Mforce-thumb --start-address="$start_str" --stop-address="$end_str" .\baserom.gba > .\baserom.dump
-&$objdump -D -bbinary -marmv4t -Mforce-thumb --start-address="$start_str" --stop-address="$end_str" .\pokeemerald.gba > .\pokeemerald.dump
-Invoke-Expression "$DiffTool .\baserom.dump .\pokeemerald.dump"
+&$objdump -D -bbinary -marmv4t -Mforce-thumb --start-address="$start_str" --stop-address="$end_str" .\re-emerald.gba > .\re-emerald.dump
+Invoke-Expression "$DiffTool .\baserom.dump .\re-emerald.dump"
