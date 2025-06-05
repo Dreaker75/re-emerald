@@ -78,6 +78,7 @@
  - Cut trees will stay cut even after reloading the map
  - Strength boulders will now stay in place when moved onto the appropiate switches (If it reset after being placed in a switch, it's because the puzzle wouldn't be solvable and it needs to be placed in another switch)
  - HMs and field moves can be used by any Pokemon that can learn them, regardless of whether they currently know it (Badges are still needed for HMs). Smeargle is the exception, being the only Pokemon that still needs to know the move to be able to use it.
+    - Moves that usually don't require to be used from the menu are now in an extra list. This is to help with knowing if a certain Pokemon can Surf, Dive, etc without having to actually try. This also allows the use of Rock Smash for the Regirock Puzzle
  - HMs can now be replaced just like any other moves
  - Field moves show less messages when used
  - Waterfall is now automatically used when you try to scale a Waterfall (No more having to stand in front of it and press A)

@@ -377,6 +377,7 @@ const u8 gText_SendOut[] = _("SEND OUT");
 const u8 gText_Switch2[] = _("SWITCH");
 const u8 gText_Summary5[] = _("SUMMARY");
 const u8 gText_UseMove[] = _("USE A MOVE"); // CHANGED: Menu for choosing a Field Move when more than 4 exist
+const u8 gText_OtherMoves[] = _("OTHER MOVES"); // ADDED: Menu for showing Field Moves that don't usually need to be used from the menu
 const u8 gText_Enter[] = _("ENTER");
 const u8 gText_NoEntry[] = _("NO ENTRY");
 const u8 gText_Take2[] = _("TAKE");

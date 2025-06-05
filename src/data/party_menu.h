@@ -708,6 +708,7 @@ struct
     [MENU_SWITCH] = {gText_Switch2, CursorCb_Switch},
     [MENU_CANCEL1] = {gText_Cancel2, CursorCb_Cancel1},
     [MENU_USE_MOVE] = {gText_UseMove, CursorCb_UseAMove},
+    [MENU_OTHER_MOVES] = {gText_OtherMoves, CursorCb_OtherMoves},
     [MENU_ITEM] = {gText_Item, CursorCb_Item},
     [MENU_GIVE] = {gMenuText_Give, CursorCb_Give},
     [MENU_TAKE_ITEM] = {gText_Take, CursorCb_TakeItem},
@@ -815,16 +816,27 @@ static const u16 sFieldMoves[FIELD_MOVES_COUNT + 1] =
 
 // ADDED: List of field moves that have to be used from the menu. Added to simplify code.
 // - Cut is here because of the grass cutting effect
-// - Flash is here because it's needed for one for the Regis' puzzles
 static const u16 sMenuExclusiveFieldMoves[] = {
     FIELD_MOVE_CUT,
-    FIELD_MOVE_FLASH,
     FIELD_MOVE_FLY,
     FIELD_MOVE_TELEPORT,
     FIELD_MOVE_DIG,
     FIELD_MOVE_MILK_DRINK,
     FIELD_MOVE_SOFT_BOILED,
     FIELD_MOVE_SWEET_SCENT,
+};
+
+// ADDED: List of field moves that don't need to be selected from the menu to be used. Used to show all the field moves a Pokemon can learn
+// - Flash can be used from the move, but the new popup means you'll rarely have to
+// - Rock Smash is required for one of the Regis' puzzles, but doesn't need to be manually selected otherwise
+static const u16 sFieldUsableFieldMoves[] = {
+    FIELD_MOVE_FLASH,
+    FIELD_MOVE_ROCK_SMASH,
+    FIELD_MOVE_STRENGTH,
+    FIELD_MOVE_SURF,
+    FIELD_MOVE_DIVE,
+    FIELD_MOVE_WATERFALL,
+    FIELD_MOVE_SECRET_POWER,
 };
 
 struct

@@ -86,6 +86,7 @@ enum {
     MENU_SWITCH,
     MENU_CANCEL1,
     MENU_USE_MOVE,
+    MENU_OTHER_MOVES,
     MENU_ITEM,
     MENU_GIVE,
     MENU_TAKE_ITEM,
@@ -126,6 +127,7 @@ enum {
     ACTIONS_ITEM,
     ACTIONS_MAIL,
     ACTIONS_USE_MOVE,
+    ACTIONS_OTHER_MOVES,
     ACTIONS_REGISTER,
     ACTIONS_TRADE,
     ACTIONS_SPIN_TRADE,
@@ -213,10 +215,11 @@ struct PartyMenuInternal
     u32 spriteIdCancelPokeball:7;
     u32 messageId:14;
     u8 windowId[3];
-    u8 actions[9];      // CHANGED: Added a 9th slot to display all 8 Field Moves and the Cancel option in a submenu
+    u8 actions[8];      // This needs to be fieldMoves size + 1 for Cancel
     u8 numActions;
-    u8 fieldMoves[8];   // ADDED: Used to hold the Field Moves the Pokemon can learn when it has more than 4 (If it has 4 or less, they're stored in actions like normal)
-    u8 numFieldMoves;   // ADDED: Number of Field Moves the Pokemon can learn (Minimum 4, maximum 8)
+    u8 fieldMoves[7];   // ADDED: Used to hold the Field Moves the Pokemon can learn when it has more than 3? (If it has 3 or less, they're stored in actions like normal)
+                      // NOTE: If it has some extra moves, then maximum number of field moves in the actions list is 3, if it doesn't then it's 4.
+    u8 numFieldMoves;    // ADDED: Number of Field Moves the Pokemon can learn (Minimum 3, maximum 7)
     // In vanilla Emerald, only the first 0xB0 hwords (0x160 bytes) are actually used.
     // However, a full 0x100 hwords (0x200 bytes) are allocated.
     // It is likely that the 0x160 value used below is a constant defined by
@@ -358,6 +361,8 @@ static void Task_CancelParticipationYesNo(u8);
 static void Task_HandleCancelParticipationYesNoInput(u8);
 static bool8 ShouldUseChooseMonText(void);
 static void SetPartyMonFieldSelectionActions(struct Pokemon *, u8);
+static void FillMenuFieldMovesList(struct Pokemon *mons, u8 slotId);
+static void FillNonMenuFieldMovesList(struct Pokemon *mons, u8 slotId);
 static u8 GetPartyMenuActionsTypeInBattle(struct Pokemon *);
 static u8 GetPartySlotEntryStatus(s8);
 static void Task_UpdateHeldItemSprite(u8);
@@ -485,6 +490,7 @@ static void CursorCb_Summary(u8);
 static void CursorCb_Switch(u8);
 static void CursorCb_Cancel1(u8);
 static void CursorCb_UseAMove(u8);
+static void CursorCb_OtherMoves(u8);
 static void CursorCb_Item(u8);
 static void CursorCb_Give(u8);
 static void CursorCb_TakeItem(u8);
@@ -567,7 +573,7 @@ static void InitPartyMenu(u8 menuType, u8 layout, u8 partyAction, bool8 keepCurs
     }
 }
 
-static void RefreshPartyMenu(void) //Refreshes the party menu without restarting tasks
+static void RefreshPartyMenu(void) // Refreshes the party menu without restarting tasks
 {
     u16 i;
     for (i = 0; i < ARRAY_COUNT(sPartyMenuInternal->data); i++)
@@ -1337,7 +1343,7 @@ static u8 GetPartyBoxPaletteFlags(u8 slot, u8 animNum)
         if (slot == gPartyMenu.slotId || slot == gPartyMenu.slotId2)
             palFlags |= PARTY_PAL_TO_SWITCH;
     }
-    if (gPartyMenu.action == PARTY_ACTION_SOFTBOILED && slot == gPartyMenu.slotId )
+    if (gPartyMenu.action == PARTY_ACTION_SOFTBOILED && slot == gPartyMenu.slotId)
         palFlags |= PARTY_PAL_TO_SOFTBOIL;
 
     return palFlags;
@@ -2146,7 +2152,6 @@ static bool16 IsMonAllowedInPokemonJump(struct Pokemon *mon)
     return FALSE;
 }
 
-
 static bool16 IsMonAllowedInDodrioBerryPicking(struct Pokemon *mon)
 {
     if (GetMonData(mon, MON_DATA_IS_EGG) != TRUE && GetMonData(mon, MON_DATA_SPECIES) == SPECIES_DODRIO)
@@ -2721,6 +2726,7 @@ static u8 DisplaySelectionWindow(u8 windowType)
         window = sMailReadTakeWindowTemplate;
         break;
     case SELECTWINDOW_USE_A_MOVE:
+    case SELECTWINDOW_OTHER_MOVES:
         SetWindowTemplateFields(&window, 2, 18, 19 - ((sPartyMenuInternal->numFieldMoves + 1) * 2), 10, (sPartyMenuInternal->numFieldMoves + 1) * 2, 14, 0x2E9);
         break;
     case SELECTWINDOW_CATALOG:
@@ -2795,9 +2801,18 @@ static void SetPartyMonSelectionActions(struct Pokemon *mons, u8 slotId, u8 acti
     {
         SetPartyMonFieldSelectionActions(mons, slotId);
     }
-    else if (action == ACTIONS_USE_MOVE){
+    else if (action == ACTIONS_USE_MOVE || action == ACTIONS_OTHER_MOVES)
+    {
+        if (action == ACTIONS_USE_MOVE)
+        {
+            FillMenuFieldMovesList(mons, slotId);
+        }
+        else
+        {
+            FillNonMenuFieldMovesList(mons, slotId);
+        }
+
         sPartyMenuInternal->numActions = sPartyMenuInternal->numFieldMoves + 1;
-        // Add the field moves to the new submenu created
         for (i = 0; i < sPartyMenuInternal->numFieldMoves; i++)
             sPartyMenuInternal->actions[i] = sPartyMenuInternal->fieldMoves[i];
         // Add the Cancel option at the end
@@ -2814,26 +2829,30 @@ static void SetPartyMonSelectionActions(struct Pokemon *mons, u8 slotId, u8 acti
 static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
 {
     u8 i;
+    bool8 hasOtherMoves = FALSE;
 
     sPartyMenuInternal->numActions = 0;
     sPartyMenuInternal->numFieldMoves = 0;
 
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_SUMMARY);
 
-    // Add field moves to field moves list
-    for (i = 0; i < sizeof(sMenuExclusiveFieldMoves) / sizeof(sMenuExclusiveFieldMoves[0]); i++)
+    // Checks to see if this Pokemon will need the extra list of moves
+    for (i = 0; i < sizeof(sFieldUsableFieldMoves) / sizeof(sFieldUsableFieldMoves[0]); i++)
     {
-        if (MonKnowsMove(&mons[slotId], sFieldMoves[sMenuExclusiveFieldMoves[i]]) == TRUE || 
-            CanLearnTeachableMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sMenuExclusiveFieldMoves[i]]) == TRUE ||
-            CanLearnLevelUpMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sMenuExclusiveFieldMoves[i]]) == TRUE
-            )
+        if (MonKnowsMove(&mons[slotId], sFieldMoves[sFieldUsableFieldMoves[i]]) == TRUE ||
+            CanLearnTeachableMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sFieldUsableFieldMoves[i]]) == TRUE ||
+            CanLearnLevelUpMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sFieldUsableFieldMoves[i]]) == TRUE)
         {
-            AppendToList(sPartyMenuInternal->fieldMoves, &sPartyMenuInternal->numFieldMoves, sMenuExclusiveFieldMoves[i] + MENU_FIELD_MOVES);
+            hasOtherMoves = TRUE;
+            break;
         }
     }
 
-    // If the Pokemon knows 4 or less menu Field Moves, add them to the list like normal
-    if (sPartyMenuInternal->numFieldMoves <= 4)
+    // Add field moves to field moves list
+    FillMenuFieldMovesList(mons, slotId);
+
+    // If the Pokemon knows 3 or less menu Field Moves, or if it knows 4 or less but knows no field-usable moves, add them to the list like normal
+    if (sPartyMenuInternal->numFieldMoves < 3 || (!hasOtherMoves && sPartyMenuInternal->numFieldMoves == 4))
     {
         for (i = 0; i < sPartyMenuInternal->numFieldMoves; i++)
         {
@@ -2841,8 +2860,14 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
         }
     }
     // Otherwise, add the option for opening the new submenu
-    else {
+    else
+    {
         AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_USE_MOVE);
+    }
+
+    if (hasOtherMoves)
+    {
+        AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_OTHER_MOVES);
     }
 
     if (!InBattlePike())
@@ -2855,6 +2880,40 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
             AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_ITEM);
     }
     AppendToList(sPartyMenuInternal->actions, &sPartyMenuInternal->numActions, MENU_CANCEL1);
+}
+
+// Fills the field move list with all the moves that can't usually be used from the overworld
+static void FillMenuFieldMovesList(struct Pokemon *mons, u8 slotId)
+{
+    sPartyMenuInternal->numFieldMoves = 0;
+
+    // Add all the field-usable moves the Pokemon can use to the actions list
+    for (u8 i = 0; i < sizeof(sMenuExclusiveFieldMoves) / sizeof(sMenuExclusiveFieldMoves[0]); i++)
+    {
+        if (MonKnowsMove(&mons[slotId], sFieldMoves[sMenuExclusiveFieldMoves[i]]) == TRUE ||
+            CanLearnTeachableMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sMenuExclusiveFieldMoves[i]]) == TRUE ||
+            CanLearnLevelUpMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sMenuExclusiveFieldMoves[i]]) == TRUE)
+        {
+            AppendToList(sPartyMenuInternal->fieldMoves, &sPartyMenuInternal->numFieldMoves, sMenuExclusiveFieldMoves[i] + MENU_FIELD_MOVES);
+        }
+    }
+}
+
+// Fills the field move list with all the moves that can usually be used from the overworld
+static void FillNonMenuFieldMovesList(struct Pokemon *mons, u8 slotId)
+{
+    sPartyMenuInternal->numFieldMoves = 0;
+
+    // Add all the field-usable moves the Pokemon can use to the actions list
+    for (u8 i = 0; i < sizeof(sFieldUsableFieldMoves) / sizeof(sFieldUsableFieldMoves[0]); i++)
+    {
+        if (MonKnowsMove(&mons[slotId], sFieldMoves[sFieldUsableFieldMoves[i]]) == TRUE ||
+            CanLearnTeachableMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sFieldUsableFieldMoves[i]]) == TRUE ||
+            CanLearnLevelUpMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sFieldUsableFieldMoves[i]]) == TRUE)
+        {
+            AppendToList(sPartyMenuInternal->fieldMoves, &sPartyMenuInternal->numFieldMoves, sFieldUsableFieldMoves[i] + MENU_FIELD_MOVES);
+        }
+    }
 }
 
 static u8 GetPartyMenuActionsType(struct Pokemon *mon)
@@ -3114,7 +3173,6 @@ static bool8 TryMovePartySlot(s16 x, s16 width, u8 *leftMove, u8 *newX, u8 *newW
             *newWidth = 32 - x;
         else
             *newWidth = width;
-
     }
     return TRUE;
 }
@@ -3317,6 +3375,18 @@ static void CursorCb_UseAMove(u8 taskId)
     PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
     SetPartyMonSelectionActions(gPlayerParty, gPartyMenu.slotId, ACTIONS_USE_MOVE);
     DisplaySelectionWindow(SELECTWINDOW_USE_A_MOVE);
+    DisplayPartyMenuStdMessage(PARTY_MSG_CHOOSE_A_MOVE_TO_USE);
+    gTasks[taskId].data[0] = 0xFF;
+    gTasks[taskId].func = Task_HandleSelectionMenuInput;
+}
+
+static void CursorCb_OtherMoves(u8 taskId)
+{
+    PlaySE(SE_SELECT);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[0]);
+    PartyMenuRemoveWindow(&sPartyMenuInternal->windowId[1]);
+    SetPartyMonSelectionActions(gPlayerParty, gPartyMenu.slotId, ACTIONS_OTHER_MOVES);
+    DisplaySelectionWindow(SELECTWINDOW_OTHER_MOVES);
     DisplayPartyMenuStdMessage(PARTY_MSG_CHOOSE_A_MOVE_TO_USE);
     gTasks[taskId].data[0] = 0xFF;
     gTasks[taskId].func = Task_HandleSelectionMenuInput;
@@ -6430,7 +6500,7 @@ static void Task_TryItemUseFormChange(u8 taskId)
     case 6:
         if (!IsPartyMenuTextPrinterActive())
         {
-            if (gSpecialVar_ItemId == ITEM_ROTOM_CATALOG) //only for rotom currently
+            if (gSpecialVar_ItemId == ITEM_ROTOM_CATALOG) // only for rotom currently
             {
                 u32 i;
                 for (i = 0; i < ARRAY_COUNT(sRotomFormChangeMoves); i++)
