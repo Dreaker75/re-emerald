@@ -157,9 +157,7 @@ BerryTree_EventScript_CheckBerryFullyGrown::
 .if OW_BERRY_MUTATIONS == TRUE
 	goto_if_eq VAR_RESULT, TRUE, BerryTree_EventScript_CheckBerryFullyGrown_Mutation
 .endif
-	msgbox BerryTree_Text_WantToPick, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, YES, BerryTree_EventScript_PickBerry
-	goto_if_eq VAR_RESULT, NO, BerryTree_EventScript_CancelPickingBerry
+	goto BerryTree_EventScript_PickBerry
 
 .set BERRY_NORMAL_BAG_FULL, 0
 .set BERRY_NORMAL_SPACE_IN_BAG, 1
@@ -188,13 +186,6 @@ BerryTree_EventScript_PickBerry::
 
 BerryTree_EventScript_BerryPocketFull::
 	message BerryTree_Text_BerryPocketFull
-	waitmessage
-	waitbuttonpress
-	release
-	end
-
-BerryTree_EventScript_CancelPickingBerry::
-	message BerryTree_Text_BerryLeftUnpicked
 	waitmessage
 	waitbuttonpress
 	release
@@ -308,27 +299,16 @@ BerryTree_Text_CareAdverbPoor:
 BerryTree_Text_CareAdverbGood:
 	.string "prettily$"
 
-BerryTree_Text_WantToPick:
-	.string "You found {STR_VAR_2} {STR_VAR_1}!\p"
-	.string "Do you want to pick the\n"
-	.string "{STR_VAR_1}?$"
-
 BerryTree_Text_PickedTheBerry:
 	.string "{PLAYER} picked the {STR_VAR_2} {STR_VAR_1}.$"
 
 BerryTree_Text_PutAwayBerry:
 	.string "{PLAYER} put away the {STR_VAR_1}\n"
-	.string "in the BAG's BERRIES POCKET.\p"
-	.string "The soil returned to its soft and\n"
-	.string "loamy state.$"
+	.string "in the BAG's BERRIES POCKET.$"
 
 BerryTree_Text_BerryPocketFull:
-	.string "The BAG's BERRIES POCKET is full.\p"
+	.string "The BAG's BERRIES POCKET is full.\n"
 	.string "The {STR_VAR_1} couldn't be taken.$"
-
-BerryTree_Text_BerryLeftUnpicked:
-	.string "{PLAYER} left the {STR_VAR_1}\n"
-	.string "unpicked.$"
 
 BerryTree_Text_WantToWater:
 	.string "Want to water the {STR_VAR_1} with the\n"

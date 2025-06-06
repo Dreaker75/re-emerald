@@ -133,4 +133,7 @@
  - Fixed the bug that caused the Mart Employee in Oldale Town to walk through the Shop's wall and into a tree under certain circumstances
  - Scientist in Devon Corp that revives the Fossils can now revive Kanto Fossils, and no longer requires talking to someone else or leaving the room to claim the Pokemon.
  - Using a PP Up or PP Max no longer returns you to the bag after using them or when trying to use them in a move with maxed out PP.
+ - Shortened the amount of messages when picking up a berry
+ - When using SHIFT style, it now only shows a single message when asking if you want to change Pokemon, so you can still see what Pokemon the opponent will send out.
+ - Changed the field of view of the Gentleman in Route 121 so you can reach the item through the grass without having to fight him
  - ADDED VERSION NUMBER TO THE MAIN MENU TO EASILY KNOW THE CURRENT VERSION OF THE GAME

@@ -8,6 +8,10 @@
 - Increased the variety of wild Pokemon in some areas
 - Added a list to the Pokemon's menu that shows any field moves it can use that can be used from the overworld.
     - This fixes the issue that made Regirock unobtainable due to being locked behind Rock Smash.
+- Changed the line of sight of the Gentleman in Route 121. Now you can reach the item without fighting him or without going through the grass
+- Shortened the messages when picking up a berry.
+- When asked to change Pokemon, you can still see what Pokemon the opponent will send out.
+- Fixed the capitalization and name of some items and descriptions.
 
 ## 0.1.0
 - Initial game release
