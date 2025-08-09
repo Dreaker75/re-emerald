@@ -55,6 +55,7 @@ void CopyPartyAndObjectsToSave(void);
 void CopyPartyAndObjectsFromSave(void);
 void LoadPlayerBag(void);
 void SavePlayerBag(void);
+void ApplyNewEncryptionKeyToByte(u8 *byte, u32 newKey);
 void ApplyNewEncryptionKeyToHword(u16 *hWord, u32 newKey);
 void ApplyNewEncryptionKeyToWord(u32 *word, u32 newKey);
 

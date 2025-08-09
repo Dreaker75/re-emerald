@@ -4,6 +4,7 @@
 #include "battle_controllers.h"
 #include "battle_pyramid.h"
 #include "frontier_util.h"
+#include "bag.h"
 #include "battle_pyramid_bag.h"
 #include "berry_tag_screen.h"
 #include "bg.h"
@@ -17,7 +18,6 @@
 #include "graphics.h"
 #include "gpu_regs.h"
 #include "international_string_util.h"
-#include "item.h"
 #include "item_menu_icons.h"
 #include "item_use.h"
 #include "lilycove_lady.h"
@@ -878,14 +878,13 @@ static void AllocateBagItemListBuffers(void)
 static void LoadBagItemListBuffers(u8 pocketId)
 {
     u16 i;
-    struct BagPocket *pocket = &gBagPockets[pocketId];
     struct ListMenuItem *subBuffer;
 
     if (!gBagMenu->hideCloseBagText)
     {
         for (i = 0; i < gBagMenu->numItemStacks[pocketId] - 1; i++)
         {
-            GetItemName(sListBuffer2->name[i], pocket->itemSlots[i].itemId);
+            GetItemName(sListBuffer2->name[i], BagGetItemIdByPocketPosition(pocketId + 1, i));
             subBuffer = sListBuffer1->subBuffers;
             subBuffer[i].name = sListBuffer2->name[i];
             subBuffer[i].id = i;
@@ -899,7 +898,7 @@ static void LoadBagItemListBuffers(u8 pocketId)
     {
         for (i = 0; i < gBagMenu->numItemStacks[pocketId]; i++)
         {
-            GetItemName(sListBuffer2->name[i], pocket->itemSlots[i].itemId);
+            GetItemName(sListBuffer2->name[i], BagGetItemIdByPocketPosition(pocketId + 1, i));
             subBuffer = sListBuffer1->subBuffers;
             subBuffer[i].name = sListBuffer2->name[i];
             subBuffer[i].id = i;
@@ -1128,23 +1127,18 @@ static void Task_CloseBagMenu(u8 taskId)
 
 void UpdatePocketItemList(u8 pocketId)
 {
-    u16 i;
-    struct BagPocket *pocket = &gBagPockets[pocketId];
     switch (pocketId)
     {
     case TMHM_POCKET:
     case BERRIES_POCKET:
-        SortBerriesOrTMHMs(pocket);
+        SortPocket(pocketId + 1);
         break;
     default:
-        CompactItemsInBagPocket(pocket);
+        CompactItemsInBagPocket(pocketId + 1);
         break;
     }
 
-    gBagMenu->numItemStacks[pocketId] = 0;
-
-    for (i = 0; i < pocket->capacity && pocket->itemSlots[i].itemId; i++)
-        gBagMenu->numItemStacks[pocketId]++;
+    gBagMenu->numItemStacks[pocketId] = GetNumItemStacks(pocketId + 1);
 
     if (!gBagMenu->hideCloseBagText)
         gBagMenu->numItemStacks[pocketId]++;
@@ -1521,7 +1515,7 @@ static void DoItemSwap(u8 taskId)
     }
     else
     {
-        MoveItemSlotInList(gBagPockets[gBagPosition.pocket].itemSlots, tListPosition, realPos);
+        MoveItemSlotInList(gBagPosition.pocket + 1, tListPosition, realPos);
         gBagMenu->toSwapPos = NOT_SWAPPING;
         DestroyListMenuTask(tListTaskId, scrollPos, cursorPos);
         if (tListPosition < realPos)
@@ -2332,8 +2326,8 @@ static void PrepareBagForWallyTutorial(void)
         sTempWallyBag->cursorPosition[i] = gBagPosition.cursorPosition[i];
         sTempWallyBag->scrollPosition[i] = gBagPosition.scrollPosition[i];
     }
-    ClearItemSlots(gSaveBlock1Ptr->bagPocket_Items, BAG_ITEMS_COUNT);
-    ClearItemSlots(gSaveBlock1Ptr->bagPocket_PokeBalls, BAG_POKEBALLS_COUNT);
+    ClearPocket(POCKET_ITEMS);
+    ClearPocket(POCKET_POKE_BALLS);
     ResetBagScrollPositions();
 }
 

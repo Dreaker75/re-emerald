@@ -1,8 +1,6 @@
 #ifndef GUARD_SWARMS_H
 #define GUARD_SWARMS_H
 
-// #include "constants/swarms.h"
-
 bool8 AreSwarmsDone(void);
 // This is called upon loading a game, to count the amount of flags that have been activated
 void UpdateSwarmsActivated(void);

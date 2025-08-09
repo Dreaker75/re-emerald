@@ -21,12 +21,12 @@ static void ApplyNewEncryptionKeyToAllEncryptedData(u32 encryptionKey);
 
 struct LoadedSaveData
 {
- /*0x0000*/ struct ItemSlot items[BAG_ITEMS_COUNT];
- /*0x0078*/ struct ItemSlot keyItems[BAG_KEYITEMS_COUNT];
- /*0x00F0*/ struct ItemSlot pokeBalls[BAG_POKEBALLS_COUNT];
- /*0x0130*/ struct ItemSlot TMsHMs[BAG_TMHM_COUNT];
- /*0x0230*/ struct ItemSlot berries[BAG_BERRIES_COUNT];
- /*0x02E8*/ struct Mail mail[MAIL_COUNT];
+    /*0x0130*/ u8 TMsHMs[BAG_TMHM_COUNT];
+    /*0x0078*/ u16 keyItems[BAG_KEYITEMS_COUNT];
+    /*0x0000*/ struct ItemSlot items[BAG_ITEMS_COUNT];
+    /*0x00F0*/ struct ItemSlot pokeBalls[BAG_POKEBALLS_COUNT];
+    /*0x0230*/ struct ItemSlot berries[BAG_BERRIES_COUNT];
+    /*0x02E8*/ struct Mail mail[MAIL_COUNT];
 };
 
 // EWRAM DATA
@@ -287,6 +287,12 @@ void SavePlayerBag(void)
     gSaveBlock2Ptr->encryptionKey = gLastEncryptionKey;
     ApplyNewEncryptionKeyToBagItems(encryptionKeyBackup);
     gSaveBlock2Ptr->encryptionKey = encryptionKeyBackup; // updated twice?
+}
+
+void ApplyNewEncryptionKeyToByte(u8 *byte, u32 newKey)
+{
+    *byte ^= gSaveBlock2Ptr->encryptionKey;
+    *byte ^= newKey;
 }
 
 void ApplyNewEncryptionKeyToHword(u16 *hWord, u32 newKey)

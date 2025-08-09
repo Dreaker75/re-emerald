@@ -9,6 +9,7 @@
 #include "battle_setup.h"
 #include "battle_tv.h"
 #include "battle_z_move.h"
+#include "bag.h"
 #include "bg.h"
 #include "data.h"
 #include "item.h"
@@ -202,49 +203,6 @@ static void CompleteOnBattlerSpritePosX_0(u32 battler)
         PlayerBufferExecCompleted(battler);
 }
 
-static u16 GetPrevBall(u16 ballId)
-{
-    u16 ballPrev;
-    s32 i, j;
-    CompactItemsInBagPocket(&gBagPockets[BALLS_POCKET]);
-    for (i = 0; i < gBagPockets[BALLS_POCKET].capacity; i++)
-    {
-        if (ballId == gBagPockets[BALLS_POCKET].itemSlots[i].itemId)
-        {
-            if (i <= 0)
-            {
-                for (j = gBagPockets[BALLS_POCKET].capacity - 1; j >= 0; j--)
-                {
-                    ballPrev = gBagPockets[BALLS_POCKET].itemSlots[j].itemId;
-                    if (ballPrev != ITEM_NONE)
-                        return ballPrev;
-                }
-            }
-            i--;
-            break;
-        }
-    }
-    return gBagPockets[BALLS_POCKET].itemSlots[i].itemId;
-}
-
-static u32 GetNextBall(u32 ballId)
-{
-    u32 ballNext = ITEM_NONE;
-    s32 i;
-    CompactItemsInBagPocket(&gBagPockets[BALLS_POCKET]);
-    for (i = 1; i < gBagPockets[BALLS_POCKET].capacity; i++)
-    {
-        if (ballId == gBagPockets[BALLS_POCKET].itemSlots[i-1].itemId)
-        {
-            ballNext = gBagPockets[BALLS_POCKET].itemSlots[i].itemId;
-            break;
-        }
-    }
-    if (ballNext == ITEM_NONE)
-        return gBagPockets[BALLS_POCKET].itemSlots[0].itemId; // Zeroth slot
-    else
-        return ballNext;
-}
 
 static void HandleInputChooseAction(u32 battler)
 {
@@ -274,7 +232,7 @@ static void HandleInputChooseAction(u32 battler)
         if (JOY_HELD(B_LAST_USED_BALL_BUTTON) && (JOY_NEW(DPAD_DOWN) || JOY_NEW(DPAD_RIGHT)))
         {
             bool8 sameBall = FALSE;
-            u16 nextBall = GetNextBall(gBallToDisplay);
+            u16 nextBall = GetNextItem(gBallToDisplay);
             sBallSwapped = TRUE;
             if (gBallToDisplay == nextBall)
                 sameBall = TRUE;
@@ -286,7 +244,7 @@ static void HandleInputChooseAction(u32 battler)
         else if (JOY_HELD(B_LAST_USED_BALL_BUTTON) && (JOY_NEW(DPAD_UP) || JOY_NEW(DPAD_LEFT)))
         {
             bool8 sameBall = FALSE;
-            u16 prevBall = GetPrevBall(gBallToDisplay);
+            u16 prevBall = GetPreviousItem(gBallToDisplay);
             sBallSwapped = TRUE;
             if (gBallToDisplay == prevBall)
                 sameBall = TRUE;

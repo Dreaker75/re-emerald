@@ -12,6 +12,8 @@
 - Shortened the messages when picking up a berry.
 - When asked to change Pokemon, you can still see what Pokemon the opponent will send out.
 - Fixed the capitalization and name of some items and descriptions.
+- Expanded the bag to hold 1 of every item at the same time.
+- Changed Exp. Share to work like in Gen VI
 
 ## 0.1.0
 - Initial game release

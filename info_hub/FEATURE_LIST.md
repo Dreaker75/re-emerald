@@ -12,6 +12,7 @@
 
 # Items changes
  - Items were added and moved around in the game to provide ways to get some previously unobtainable items, as well as repeatable methods for items that didn't previously have them (Check the [ITEM_CHANGES.md](https://github.com/Dreaker75/re-emerald/blob/main/info_hub/ITEM_CHANGES.md) for the full details)
+ - The Exp. Share has been changed to work like in Gen VI onwards, becoming a Key Item.
  - Vitamins no longer have a limit of being usable until 100 EVs in the corresponding stat, like in Gen 8+
  - The player receives a Premier Ball for every 10 of any Poke Ball bought in one purchase, like in LGPE+
  - TMs have infinite uses like in Gen V-VIII and their locations have been changed to accomodate for this change:
@@ -20,9 +21,9 @@
     - All TMs in the Game Corner have been replaced by type-held items: Silk Scarf, Charcoal, Mystic Water and Miracle Seed
  - Modified the Item storage system to work like Gen 4:
     - The PC Item storage has been removed (The slots form here have been moved to the bag) 
-    - The Bag capacity has been modified to allow for storing 1 of each item in all Pockets except the main items pocket
+    - The Bag capacity has been modified to allow for storing 1 of each item in all Pockets
     - Each item can only have 1 slot in the bag. If the maximum amount (x999) is reached, no more of that item can be obtained, even if the bag has a free slot
-    - The main item pocket can now store up to 93 different items (this is still not enough to fit all different items, as there are 139 in Emerald. To add the missing 46 slots I'll have to mess around with the save memory a lot more, which I'll leave for a later time)
+    - The main item pocket can now store up to 138 different items. This accounts for all obtainable items in Emerald, excluding the Exp. Share, which has been converted to a Key Item like from Gen VI onwards.
  - Once a Repel runs out, a pop-up will appear asking which Repel you would like to use, if any
 
 # Gameplay changes

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "bag.h"
 #include "bg.h"
 #include "data.h"
 #include "decompress.h"

@@ -1,4 +1,5 @@
 #include "global.h"
+#include "bag.h"
 #include "berry.h"
 #include "event_data.h"
 #include "event_object_movement.h"
@@ -2221,7 +2222,7 @@ void ObjectEventInteractionClearBerryPests(void)
 
 bool8 PlayerHasBerries(void)
 {
-    return IsBagPocketNonEmpty(POCKET_BERRIES);
+    return IsBagPocketEmpty(POCKET_BERRIES) == FALSE;
 }
 
 bool8 ObjectEventInteractionBerryHasWeed(void)

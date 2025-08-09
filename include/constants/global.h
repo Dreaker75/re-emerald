@@ -61,13 +61,13 @@
 #define POKE_NEWS_COUNT 16
 #if I_STORE_SYSTEM == GEN_4
 #define PC_ITEMS_COUNT 0
-#define BAG_ITEMS_COUNT 93  // 139 required to fit 1 of each
+#define BAG_ITEMS_COUNT 138  // 138 required to fit 1 of each (Exp Share turned into a Key Item)
 #else
 #define PC_ITEMS_COUNT 50
 #define BAG_ITEMS_COUNT 30
 #endif
 
-#define BAG_KEYITEMS_COUNT 30
+#define BAG_KEYITEMS_COUNT 29
 #if I_STORE_SYSTEM == GEN_4
 #define BAG_POKEBALLS_COUNT 12
 #define BAG_TMHM_COUNT 58

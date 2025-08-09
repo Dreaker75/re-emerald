@@ -4,6 +4,7 @@
 #include "constants/item.h"
 #include "constants/items.h"
 #include "constants/tms_hms.h"
+#include "bag.h"
 
 typedef void (*ItemUseFunc)(u8);
 
@@ -25,29 +26,17 @@ struct Item
     u8 flingPower;
 };
 
-struct BagPocket
-{
-    struct ItemSlot *itemSlots;
-    u8 capacity;
-};
-
 extern const struct Item gItemsInfo[];
-extern struct BagPocket gBagPockets[];
+extern struct Bag gBag;
 
 void ApplyNewEncryptionKeyToBagItems(u32 newKey);
 void ApplyNewEncryptionKeyToBagItems_(u32 newKey);
 void SetBagItemsPointers(void);
 void CopyItemName(u16 itemId, u8 *dst);
 void CopyItemNameHandlePlural(u16 itemId, u8 *dst, u32 quantity);
-bool8 IsBagPocketNonEmpty(u8 pocket);
-bool8 CheckBagHasItem(u16 itemId, u16 count);
 bool8 HasAtLeastOneBerry(void);
 bool8 CheckBagHasSpace(u16 itemId, u16 count);
-u32 GetFreeSpaceForItemInBag(u16 itemId);
-bool8 AddBagItem(u16 itemId, u16 count);
-bool8 RemoveBagItem(u16 itemId, u16 count);
 u8 GetPocketByItemId(u16 itemId);
-void ClearItemSlots(struct ItemSlot *itemSlots, u8 itemCount);
 u8 CountUsedPCItemSlots(void);
 #if I_STORE_SYSTEM == GEN_3
 bool8 CheckPCHasItem(u16 itemId, u16 count);
@@ -56,15 +45,6 @@ void RemovePCItem(u8 index, u16 count);
 #endif
 void CompactPCItems(void);
 void SwapRegisteredBike(void);
-u16 BagGetItemIdByPocketPosition(u8 pocketId, u16 pocketPos);
-u16 BagGetQuantityByPocketPosition(u8 pocketId, u16 pocketPos);
-void CompactItemsInBagPocket(struct BagPocket *bagPocket);
-void SortBerriesOrTMHMs(struct BagPocket *bagPocket);
-void MoveItemSlotInList(struct ItemSlot* itemSlots_, u32 from, u32 to_);
-void ClearBag(void);
-u16 CountTotalItemQuantityInBag(u16 itemId);
-bool8 AddPyramidBagItem(u16 itemId, u16 count);
-bool8 RemovePyramidBagItem(u16 itemId, u16 count);
 const u8 *ItemId_GetName(u16 itemId);
 u32 ItemId_GetPrice(u16 itemId);
 const u8 *ItemId_GetEffect(u32 itemId);

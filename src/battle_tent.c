@@ -1,4 +1,5 @@
 #include "global.h"
+#include "bag.h"
 #include "battle_tent.h"
 #include "overworld.h"
 #include "event_data.h"
