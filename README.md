@@ -9,7 +9,7 @@
  - [Feature list](https://github.com/Dreaker75/re-emerald/blob/main/info_hub/FEATURE_LIST.md)
  - [Pokemon changes list](https://github.com/Dreaker75/re-emerald/blob/main/info_hub/POKEMON_LIST.md)
  - [Item changes list](https://github.com/Dreaker75/re-emerald/blob/main/info_hub/ITEM_CHANGES.md)
- - [Changelog](https://github.com/Dreaker75/re-emerald/blob/main/CHANGELOG.md)
+ - [Changelog](https://github.com/Dreaker75/re-emerald/blob/development/CHANGELOG.md)
    - Here, you'll be able to see all the features I'm working on as I finish them.
    - IMPORTANT: These features will be added to the NEXT version release, you won't be able to play with these features until a new release is made. (My idea is to make new releases once enough features have been added and I feel like the new version would improve the gameplay significantly.)
 
