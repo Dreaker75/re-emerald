@@ -72,6 +72,19 @@
  - The female parent can also pass down Egg Moves (This might be revisited later, as it may allow certain Pokemon to get moves they normally couldn't in Emerald)
  - The Eversonte now passes down natures 100% of the time regardless of which parent holds it, like in Gen V+
 
+# Berry changes
+ - Shortened the amount of messages when picking up a berry
+ - Fully grown berry plants no longer disappear or start growing again if you don't pick them up after a certain time
+ - Changed the way extra berries are generated when watering berry plants. Now, for every stage of the berry plant that is watered, the final yield increases by a set amount ((Maximum Yield - Minimum Shield) * Number of stages watered / Number of stages)
+ - Changed the minimum and maximum berry yield of every berry (Berry: Min/Max):
+   - Cheri-Persim Berries: 10/20
+   - Sitrus-Pinap Berries: 8/16
+   - Pomeg-Tamato Berries: 6/12
+   - Lum Berry:            5/10
+   - Cornn-Belue Berries:  4/8
+   - Liechi-Starf Berries: 3/6
+   - Enigma Berry:         2/4
+
 # Field move changes:
  - Rock Smash rocks have been divided in two sub-types:
    - Rocks that block the path in some way will now never generate an encounter, and they will not respawn upon leaving the area.
@@ -134,7 +147,6 @@
  - Fixed the bug that caused the Mart Employee in Oldale Town to walk through the Shop's wall and into a tree under certain circumstances
  - Scientist in Devon Corp that revives the Fossils can now revive Kanto Fossils, and no longer requires talking to someone else or leaving the room to claim the Pokemon.
  - Using a PP Up or PP Max no longer returns you to the bag after using them or when trying to use them in a move with maxed out PP.
- - Shortened the amount of messages when picking up a berry
  - When using SHIFT style, it now only shows a single message when asking if you want to change Pokemon, so you can still see what Pokemon the opponent will send out.
  - Changed the field of view of the Gentleman in Route 121 so you can reach the item through the grass without having to fight him
  - ADDED VERSION NUMBER TO THE MAIN MENU TO EASILY KNOW THE CURRENT VERSION OF THE GAME

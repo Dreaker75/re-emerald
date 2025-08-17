@@ -66,7 +66,6 @@ These are listed in no particular order
  - Add a second team for the Elite Four rematches
 
 ## Berry features
- - Improve berry planting by making the berry yields 2-5 berries (depending on type) minimum, with more being given when watered during growth. Also make the fully grown berry plants remain harvestable until they're claimed
  - Add the Enigma Berry to the game as well as a way to change between all the versions
  - The Starf and Lansat Berries will no longer be given by Scott upon getting all corresponding symbols. They will be found in the parties of powerful trainers to steal instead.
 
