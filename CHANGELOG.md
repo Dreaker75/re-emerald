@@ -24,10 +24,11 @@
 - Expanded the bag to hold 1 of every item at the same time.
 - Changed Exp. Share to work like in Gen VI
 
-**Update 10**
+**Update 10-11**
 - Berry plants no longer disappear or start growing again after raching the fully grown stage
 - The formula for calculating the extra berry yields was changed and is no longer random
 - The minimum and maximum yield for all berries were changed
+- Changed some dialogues from berry NPCs to be more in line with the new behavior.
 
 ## 0.1.0
 - Initial game release
