@@ -25,7 +25,7 @@ These are listed in no particular order
  - Rework the Soot System to have better UI (and maybe be faster). Add more items exchangeable for Soot?
  - Make the Lilycove clear-out sale easier to activate or permanent on specific days/times
  - Add the stat-reducing berries to a shop in the Flower Shop after beating the game
- - Add a counter for buying PokeBlocks in the Lillycove Department Store, similar to  Platinum
+ - Add a counter for buying PokeBlocks in the Lilycove Department Store, similar to  Platinum
 
 ## QoL upgrades
  - Make Fly and Teleport usable from the PokeNav map
@@ -51,7 +51,6 @@ These are listed in no particular order
  - Add a final Rival fight on Route 103 after beating the Elite Four. After winning, the player receives an egg of the rival's starter Pokemon
  - Modify Altering Cave to give all the types of Unown on rotation?
  - Add new trades for non-Hoenn Pokemon
- - Add the Old Sea Map
  - Add the Eon Ticket
  - Add the Mystic Ticket and its related events
  - Add the Aurora Ticket and its related events
@@ -70,18 +69,18 @@ These are listed in no particular order
  - The Starf and Lansat Berries will no longer be given by Scott upon getting all corresponding symbols. They will be found in the parties of powerful trainers to steal instead.
 
 ## New events for Pokemon and items
- - New sidequests after calming down Kyogre and Groudon that will see you face Archie and Maxie one last time and will end up giving the Red and Blue Orbs upon finishing (these will be required to actually face Groudon and Kyogre in the post-game now)
+ - New sidequests after calming down Kyogre and Groudon that will see you face Archie and Maxie one last time and will end up giving the Red and Blue Orbs upon finishing (these will be required to actually face Groudon and Kyogre in the post-game now). Another idea is to make a final double battle against both of them in Mt. Pyre.
  - New sidequest in New Mauville for Zapdos & Raikou
  - New sidequest involving Mt. Chimney and Scorched Slab for Moltres and Entei
  - New sidequest involving a new cave in Route 128 for Articuno
  - New sidequest for Suicune all throughout Hoenn (similar to Crystal/HGSS)
  - New events in Petalburg Woods for Celebi
  - New events in Mossdeep City for Jirachi
- - New events to obtain the Eon, Mystic and Aurora Tickets, as well as the Old Sea Map.
+ - New events to obtain the Eon, Mystic and Aurora Tickets.
  - Add new story event after beating the game (this will be a requirement to get one of the Legendary Pokemon)?
 
 ## Add content to existing areas
- - Add a prize for beating the Cycling Road record the first time, and a lesser prize for every time it's beaten afterwards
+ - Add a prize for beating the Cycling Road record the first time, and a lesser prize for every time it's beaten afterwards (X Speed, Carbos, BrightPowder, etc)
  - Make rest houses on the Safari Zone more interesting by giving items, pokeblocks or other things
  - Add stuff to Slateport Museum to make it useful to visit after Team Aqua has been defeated (Fossil-related)
  - Expand Scorched Slab (similarly to ORAS) to add Entei here in the post-game, after its respective events are done
@@ -90,7 +89,7 @@ These are listed in no particular order
 ## Maps & areas rework
  - Add trainers and other things to Seafloor Cavern post-game, kind of like Mt. Chimney after the Team Aqua vs Team Magma face off (Fossil-related)
  - Make all the Trick House puzzles revisitable after finishing the last one (And improve the items found there)
- - Add the Ruby-exclusive Trick House puzzle based on Mossdeep City Gym as an extra puzzle
+ - Add the Ruby-exclusive Trick House puzzle based on Mossdeep City Gym as an extra puzzle (Might rework as a post-Steven or post-Elite Four Rematch puzzle where you can get the AuroraTicket)
  - Sky Pillar will have a second wild encounter table for the Post-Game, which will include non-Hoenn Pokemon
  - Make a second encounter table for Route 123 to have one for the sea of the route and one for the pond
  - Make a second encounter table for Route 134, to vary between surfing/fishing from Slateport or Pacifidlog
@@ -126,6 +125,7 @@ These are listed in no particular order
  - Make it possible to have both bikes at once (With a small sidequest like ORAS)
    - After revamping the Registered Items system, the player will instead have a single Bike that will have both functions, swapped by using Select.
  - Allow player to change name or gender/sprite at any point
+ - Change the rewards from showing big Pokemon to be more useful?
  - Scott will now have a new reward for getting all Silver and Gold Symbols in the Battle Frontier. This is to make it easier to catch Celebi by having the berries elsewhere, but also serves as a boost to get players started on Shiny Hunting. The rewards now will be:
     - All Silver Symbols: A Shiny of the starter chosen
     - All Gold Symbols: A Shiny Ditto

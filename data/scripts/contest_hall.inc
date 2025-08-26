@@ -1111,7 +1111,7 @@ ContestHall_EventScript_GivePrizeIfWinner::
 ContestHall_EventScript_GiveContestPrizes::
 	call_if_eq VAR_CONTEST_TYPE, CONTEST_TYPE_NPC_SUPER, ContestHall_EventScript_SetSketchFlag
 	specialvar VAR_RESULT, HasMonWonThisContestBefore
-	goto_if_eq VAR_RESULT, FALSE, ContestHall_EventScript_ReceiveContestRibbon
+	call_if_eq VAR_RESULT, FALSE, ContestHall_EventScript_ReceiveContestRibbon
 	call ContestHall_EventScript_GiveLuxuryBall
 	lockall
 	msgbox ContestHall_Text_CongratsPleaseCompeteAgain, MSGBOX_DEFAULT

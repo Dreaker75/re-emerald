@@ -123,6 +123,11 @@ LilycoveCity_LilycoveMuseum_2F_EventScript_GiveGlassOrnament::
 	msgbox LilycoveCity_LilycoveMuseum_2F_Text_TokenOfGratitude, MSGBOX_DEFAULT
 	givedecoration DECOR_GLASS_ORNAMENT
 	goto_if_eq VAR_RESULT, FALSE, LilycoveCity_LilycoveMuseum_2F_EventScript_NoRoomForGlassOrnament
+	msgbox LilycoveCity_LilycoveMuseum_2F_Text_TakeThisToo, MSGBOX_DEFAULT
+	giveitem ITEM_OLD_SEA_MAP
+	setflag FLAG_ENABLE_SHIP_FARAWAY_ISLAND
+	setflag FLAG_RECEIVED_OLD_SEA_MAP
+	msgbox LilycoveCity_LilycoveMuseum_2F_Text_RumorsOfASpecialPokemon, MSGBOX_DEFAULT
 	setflag FLAG_RECEIVED_GLASS_ORNAMENT
 	closemessage
 	releaseall
@@ -280,6 +285,16 @@ LilycoveCity_LilycoveMuseum_2F_Text_TokenOfGratitude:
 LilycoveCity_LilycoveMuseum_2F_Text_KeepThisForYou:
 	.string "I will keep this for you until we\n"
 	.string "meet again.$"
+
+LilycoveCity_LilycoveMuseum_2F_Text_TakeThisToo:
+	.string "Oh yes, take this too!$"
+
+LilycoveCity_LilycoveMuseum_2F_Text_RumorsOfASpecialPokemon:
+	.string "This map should take you to a far\n"
+	.string "away island. I heard rumors of a\l"
+	.string "special POKéMON living there.\p"
+	.string "I'm no POKéMON trainer, so I'm\n"
+	.string "sure you can put it to better use.$"
 
 LilycoveCity_LilycoveMuseum_2F_Text_HonorToHaveYouVisit:
 	.string "Ah, so good to see you, {PLAYER}!\p"

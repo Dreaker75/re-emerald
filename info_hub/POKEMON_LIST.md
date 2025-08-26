@@ -1,5 +1,6 @@
 # Pokemon added
 These are the Pokemon that have been added to, or changed locations in, Re:Emerald (Pokemon that appear in the same location as vanilla Emerald won't be listed)
+
 ## Ruby/Sapphire exclusives
 The RS exclusives have mostly been added to the same locations as their Ruby/Sapphire ones
 - Surskit -> Masquerain
@@ -7,6 +8,7 @@ The RS exclusives have mostly been added to the same locations as their Ruby/Sap
 - Roselia
 - Zangoose
 - Lunatone
+
 ## Post-Game areas
 - Paras/Parasect: Safari Zone NorthEast Area/Area 6
 - Venonat/Venomoth: Safari Zone SouthEast Area/Area 5
@@ -16,6 +18,10 @@ The RS exclusives have mostly been added to the same locations as their Ruby/Sap
 - Yanma: Safari Zone SouthEast Area/Area 5
 - Qwilfish: Safari Zone SouthEast Area/Area 5 (Super Rod)
 - Larvitar/Pupitar: Meteor Falls in Steven's Cave
+
+## Legendary Pokemon
+- Mew: Faraway Island (Old Sea Map from the Artist in the Lilycove Museum after earning the Contest Trainer Star)
+
 ## Swarm Pokemon
 These Pokemon start appearing as regular wild Pokemon after beating the Elite Four (Only 1 family is added to the Wild encounters each day until all of them are added)
 - Caterpie: Route 104
@@ -46,7 +52,7 @@ These Pokemon start appearing as regular wild Pokemon after beating the Elite Fo
 - Slowbro: Route 103, 115, 132, 133, 134, Slateport City, Pacifidlog Town & EverGrande City (Super Rod)
 - Seel: Shoal Cave (Walking & Surfing)
 - Dewgong: Shoal Cave (Walking)
-- Shellder: Lillycove City (Super Rod)
+- Shellder: Lilycove City (Super Rod)
 - Gastly: Mt. Pyre
 - Haunter: Mt. Pyre
 - Onix: Victory Road
@@ -121,7 +127,6 @@ These Pokemon have yet to be added to Re:Emerald:
 - Zapdos
 - Moltres
 - Mewtwo
-- Mew
 - Togepi -> Togetic
 - Swinub -> Piloswine
 - Delibird

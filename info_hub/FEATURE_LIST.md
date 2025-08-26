@@ -127,8 +127,9 @@
  - Made some slight tweaks to some of the Seafloor Cavern rooms
 
 # Other changes
+ - **Added version number to the main menu to easily know the current version of the game**
  - Added an extra text speed option that display all the text instantly, which is turned on by default
- - Defeating the Elite Four now resets a few daily events like gifts and the Lillycove lottery
+ - Defeating the Elite Four now resets a few daily events like gifts and the Lilycove lottery
  - All Legendary Pokemon (Including the roamer) will now respawn the following day if they are defeated (This is also affected by defeating the Elite Four)
  - Sudowoodo will respawn every day whether it was defeated or caught
  - Releasing a Legendary Pokemon will allow them to be caught again starting the following day
@@ -149,4 +150,3 @@
  - Using a PP Up or PP Max no longer returns you to the bag after using them or when trying to use them in a move with maxed out PP.
  - When using SHIFT style, it now only shows a single message when asking if you want to change Pokemon, so you can still see what Pokemon the opponent will send out.
  - Changed the field of view of the Gentleman in Route 121 so you can reach the item through the grass without having to fight him
- - ADDED VERSION NUMBER TO THE MAIN MENU TO EASILY KNOW THE CURRENT VERSION OF THE GAME

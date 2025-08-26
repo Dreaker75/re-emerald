@@ -4023,6 +4023,15 @@ static void DebugAction_Give_Pokemon_ComplexCreateMon(u8 taskId) //https://githu
 
     SetMonData(&mon, MON_DATA_ABILITY_NUM, &abilityNum);
 
+    // ADDED: Give max contest stats to all mons created with Complex Version (Easy hack instead of having to add an extra option)
+    u8 contestStat = 255;
+    SetMonData(&mon, MON_DATA_COOL, &contestStat);
+    SetMonData(&mon, MON_DATA_SMART, &contestStat);
+    SetMonData(&mon, MON_DATA_BEAUTY, &contestStat);
+    SetMonData(&mon, MON_DATA_TOUGH, &contestStat);
+    SetMonData(&mon, MON_DATA_CUTE, &contestStat);
+    SetMonData(&mon, MON_DATA_SHEEN, &contestStat);
+
     //Update mon stats before giving it to the player
     CalculateMonStats(&mon);
 
