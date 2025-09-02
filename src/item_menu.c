@@ -62,8 +62,10 @@
 #define MAX_POCKET_ITEMS  ((max(BAG_TMHM_COUNT,              \
                             max(BAG_BERRIES_COUNT,           \
                             max(BAG_ITEMS_COUNT,             \
+                            max(BAG_MEDICINE_COUNT,          \
+                            max(BAG_BATTLE_ITEMS_COUNT,      \
                             max(BAG_KEYITEMS_COUNT,          \
-                                BAG_POKEBALLS_COUNT))))) + 1)
+                                BAG_POKEBALLS_COUNT))))))) + 1)
 
 // Up to 8 item slots can be visible at a time
 #define MAX_ITEMS_SHOWN 8
@@ -113,6 +115,7 @@ struct ListBuffer2 {
 };
 
 struct TempWallyBag {
+    // NOTE: This would no longer work with the adition of the new pockets
     struct ItemSlot bagPocket_Items[BAG_ITEMS_COUNT];
     struct ItemSlot bagPocket_PokeBalls[BAG_POKEBALLS_COUNT];
     u16 cursorPosition[POCKETS_COUNT];
@@ -158,7 +161,7 @@ static void DoItemSwap(u8);
 static void CancelItemSwap(u8);
 static void PrintTMHMMoveData(u16);
 static void PrintContextMenuItems(u8);
-static void PrintContextMenuItemGrid(u8, u8, u8);
+static void PrintContextMenuItemGrid(u8, u8, u8, u8);
 static void Task_ItemContext_SingleRow(u8);
 static void Task_ItemContext_MultipleRows(u8);
 static bool8 IsValidContextMenuPos(s8);
@@ -178,11 +181,6 @@ static void RemoveMoneyWindow(void);
 static void Task_ChooseHowManyToSell(u8);
 static void SellItem(u8);
 static void WaitAfterItemSell(u8);
-#if I_STORE_SYSTEM == GEN_3
-static void TryDepositItem(u8);
-static void Task_ChooseHowManyToDeposit(u8 taskId);
-static void WaitDepositErrorMessage(u8);
-#endif
 static void CB2_ApprenticeExitBagMenu(void);
 static void CB2_FavorLadyExitBagMenu(void);
 static void CB2_QuizLadyExitBagMenu(void);
@@ -206,9 +204,6 @@ static void ItemMenu_ConfirmQuizLady(u8);
 static void Task_ItemContext_Normal(u8);
 static void Task_ItemContext_GiveToParty(u8);
 static void Task_ItemContext_Sell(u8);
-#if I_STORE_SYSTEM == GEN_3
-static void Task_ItemContext_Deposit(u8);
-#endif
 static void Task_ItemContext_GiveToPC(u8);
 static void ConfirmToss(u8);
 static void CancelToss(u8);
@@ -351,9 +346,6 @@ static const TaskFunc sContextMenuFuncs[] = {
     [ITEMMENULOCATION_SHOP] =                   Task_ItemContext_Sell,
     [ITEMMENULOCATION_BERRY_TREE] =             Task_FadeAndCloseBagMenu,
     [ITEMMENULOCATION_BERRY_BLENDER_CRUSH] =    Task_ItemContext_Normal,
-#if I_STORE_SYSTEM == GEN_3
-    [ITEMMENULOCATION_ITEMPC] =                 Task_ItemContext_Deposit,
-#endif
     [ITEMMENULOCATION_FAVOR_LADY] =             Task_ItemContext_Normal,
     [ITEMMENULOCATION_QUIZ_LADY] =              Task_ItemContext_Normal,
     [ITEMMENULOCATION_APPRENTICE] =             Task_ItemContext_Normal,
@@ -602,13 +594,6 @@ void CB2_GoToSellMenu(void)
     GoToBagMenu(ITEMMENULOCATION_SHOP, POCKETS_COUNT, CB2_ExitSellMenu);
 }
 
-#if I_STORE_SYSTEM == GEN_3
-void CB2_GoToItemDepositMenu(void)
-{
-    GoToBagMenu(ITEMMENULOCATION_ITEMPC, POCKETS_COUNT, CB2_PlayerPCExitBagMenu);
-}
-#endif
-
 void ApprenticeOpenBagMenu(void)
 {
     GoToBagMenu(ITEMMENULOCATION_APPRENTICE, POCKETS_COUNT, CB2_ApprenticeExitBagMenu);
@@ -757,6 +742,9 @@ static bool8 SetupBagMenu(void)
     case 13:
         PrintPocketNames(gPocketNamesStringsTable[gBagPosition.pocket], 0);
         CopyPocketNameToWindow(0);
+        // TODO: The folowwing 2 indicators can be deleted if the Bag sprite is edited to have 7 squares instead of 5. This requires editing the tilemap file
+        DrawPocketIndicatorSquare(ITEMS_POCKET, FALSE);
+        DrawPocketIndicatorSquare(KEYITEMS_POCKET, FALSE);
         DrawPocketIndicatorSquare(gBagPosition.pocket, TRUE);
         gMain.state++;
         break;
@@ -1426,9 +1414,9 @@ static void DrawItemListBgRow(u8 y)
 static void DrawPocketIndicatorSquare(u8 x, bool8 isCurrentPocket)
 {
     if (!isCurrentPocket)
-        FillBgTilemapBufferRect_Palette0(2, 0x1017, x + 5, 3, 1, 1);
+        FillBgTilemapBufferRect_Palette0(2, 0x1017, x + 4, 3, 1, 1);
     else
-        FillBgTilemapBufferRect_Palette0(2, 0x102B, x + 5, 3, 1, 1);
+        FillBgTilemapBufferRect_Palette0(2, 0x102B, x + 4, 3, 1, 1);
     ScheduleBgCopyTilemapToVram(2);
 }
 
@@ -1605,9 +1593,6 @@ static void OpenContextMenu(u8 taskId)
     case ITEMMENULOCATION_PARTY:
     case ITEMMENULOCATION_SHOP:
     case ITEMMENULOCATION_BERRY_TREE:
-#if I_STORE_SYSTEM == GEN_3
-    case ITEMMENULOCATION_ITEMPC:
-#endif
     case ITEMMENULOCATION_BERRY_TREE_MULCH:
     default:
         if (MenuHelpers_IsLinkActive() == TRUE || InUnionRoom() == TRUE)
@@ -1646,6 +1631,14 @@ static void OpenContextMenu(u8 taskId)
                         gBagMenu->contextMenuItemsBuffer[0] = ACTION_WALK;
                 }
                 break;
+            case MEDICINE_POCKET:
+                gBagMenu->contextMenuItemsPtr = sContextMenuItems_ItemsPocket;
+                gBagMenu->contextMenuNumItems = ARRAY_COUNT(sContextMenuItems_ItemsPocket);
+                break;
+            case BATTLE_ITEMS_POCKET:
+                gBagMenu->contextMenuItemsPtr = sContextMenuItems_BallsPocket;
+                gBagMenu->contextMenuNumItems = ARRAY_COUNT(sContextMenuItems_BallsPocket);
+                break;
             case BALLS_POCKET:
                 gBagMenu->contextMenuItemsPtr = sContextMenuItems_BallsPocket;
                 gBagMenu->contextMenuNumItems = ARRAY_COUNT(sContextMenuItems_BallsPocket);
@@ -1681,9 +1674,9 @@ static void OpenContextMenu(u8 taskId)
     else if (gBagMenu->contextMenuNumItems == 2)
         PrintContextMenuItems(BagMenu_AddWindow(ITEMWIN_1x2));
     else if (gBagMenu->contextMenuNumItems == 4)
-        PrintContextMenuItemGrid(BagMenu_AddWindow(ITEMWIN_2x2), 2, 2);
+        PrintContextMenuItemGrid(BagMenu_AddWindow(ITEMWIN_2x2), 2, 2, 0);
     else
-        PrintContextMenuItemGrid(BagMenu_AddWindow(ITEMWIN_2x3), 2, 3);
+        PrintContextMenuItemGrid(BagMenu_AddWindow(ITEMWIN_2x3), 2, 3, (gBagPosition.pocket == BERRIES_POCKET ? 2 : 0));
 }
 
 static void PrintContextMenuItems(u8 windowId)
@@ -1692,10 +1685,10 @@ static void PrintContextMenuItems(u8 windowId)
     InitMenuInUpperLeftCornerNormal(windowId, gBagMenu->contextMenuNumItems, 0);
 }
 
-static void PrintContextMenuItemGrid(u8 windowId, u8 columns, u8 rows)
+static void PrintContextMenuItemGrid(u8 windowId, u8 columns, u8 rows, u8 initialCursorPos)
 {
     PrintMenuActionGrid(windowId, FONT_NARROW, 8, 1, 56, columns, rows, sItemMenuActions, gBagMenu->contextMenuItemsPtr);
-    InitMenuActionGrid(windowId, 56, columns, rows, 0);
+    InitMenuActionGrid(windowId, 56, columns, rows, initialCursorPos);
 }
 
 static void Task_ItemContext_Normal(u8 taskId)
@@ -2218,93 +2211,6 @@ static void WaitAfterItemSell(u8 taskId)
         CloseItemMessage(taskId);
     }
 }
-
-#if I_STORE_SYSTEM == GEN_3
-static void Task_ItemContext_Deposit(u8 taskId)
-{
-    s16 *data = gTasks[taskId].data;
-
-    tItemCount = 1;
-    if (tQuantity == 1)
-    {
-        TryDepositItem(taskId);
-    }
-    else
-    {
-        CopyItemName(gSpecialVar_ItemId, gStringVar1);
-        StringExpandPlaceholders(gStringVar4, gText_DepositHowManyVar1);
-        FillWindowPixelBuffer(WIN_DESCRIPTION, PIXEL_FILL(0));
-        BagMenu_Print(WIN_DESCRIPTION, FONT_NORMAL, gStringVar4, 3, 1, 0, 0, 0, COLORID_NORMAL);
-        AddItemQuantityWindow(ITEMWIN_QUANTITY);
-        gTasks[taskId].func = Task_ChooseHowManyToDeposit;
-    }
-}
-
-static void Task_ChooseHowManyToDeposit(u8 taskId)
-{
-    s16 *data = gTasks[taskId].data;
-
-    if (AdjustQuantityAccordingToDPadInput(&tItemCount, tQuantity) == TRUE)
-    {
-        PrintItemQuantity(gBagMenu->windowIds[ITEMWIN_QUANTITY], tItemCount);
-    }
-    else if (JOY_NEW(A_BUTTON))
-    {
-        PlaySE(SE_SELECT);
-        BagMenu_RemoveWindow(ITEMWIN_QUANTITY);
-        TryDepositItem(taskId);
-    }
-    else if (JOY_NEW(B_BUTTON))
-    {
-        PlaySE(SE_SELECT);
-        PrintItemDescription(tListPosition);
-        BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
-        BagMenu_RemoveWindow(ITEMWIN_QUANTITY);
-        ReturnToItemList(taskId);
-    }
-}
-
-static void TryDepositItem(u8 taskId)
-{
-    s16 *data = gTasks[taskId].data;
-
-    FillWindowPixelBuffer(WIN_DESCRIPTION, PIXEL_FILL(0));
-    if (ItemId_GetImportance(gSpecialVar_ItemId))
-    {
-        // Can't deposit important items
-        BagMenu_Print(WIN_DESCRIPTION, FONT_NORMAL, gText_CantStoreImportantItems, 3, 1, 0, 0, 0, COLORID_NORMAL);
-        gTasks[taskId].func = WaitDepositErrorMessage;
-    }
-    else if (AddPCItem(gSpecialVar_ItemId, tItemCount) == TRUE)
-    {
-        // Successfully deposited
-        CopyItemName(gSpecialVar_ItemId, gStringVar1);
-        ConvertIntToDecimalStringN(gStringVar2, tItemCount, STR_CONV_MODE_LEFT_ALIGN, MAX_ITEM_DIGITS);
-        StringExpandPlaceholders(gStringVar4, gText_DepositedVar2Var1s);
-        BagMenu_Print(WIN_DESCRIPTION, FONT_NORMAL, gStringVar4, 3, 1, 0, 0, 0, COLORID_NORMAL);
-        gTasks[taskId].func = Task_RemoveItemFromBag;
-    }
-    else
-    {
-        // No room to deposit
-        BagMenu_Print(WIN_DESCRIPTION, FONT_NORMAL, gText_NoRoomForItems, 3, 1, 0, 0, 0, COLORID_NORMAL);
-        gTasks[taskId].func = WaitDepositErrorMessage;
-    }
-}
-
-static void WaitDepositErrorMessage(u8 taskId)
-{
-    s16 *data = gTasks[taskId].data;
-
-    if (JOY_NEW(A_BUTTON | B_BUTTON))
-    {
-        PlaySE(SE_SELECT);
-        PrintItemDescription(tListPosition);
-        BagMenu_PrintCursor(tListTaskId, COLORID_NORMAL);
-        ReturnToItemList(taskId);
-    }
-}
-#endif
 
 static bool8 IsWallysBag(void)
 {

@@ -59,24 +59,14 @@
 #define MAIL_COUNT (10 + PARTY_SIZE)
 #define SECRET_BASES_COUNT 20
 #define POKE_NEWS_COUNT 16
-#if I_STORE_SYSTEM == GEN_4
 #define PC_ITEMS_COUNT 0
-#define BAG_ITEMS_COUNT 138  // 138 required to fit 1 of each (Exp Share turned into a Key Item)
-#else
-#define PC_ITEMS_COUNT 50
-#define BAG_ITEMS_COUNT 30
-#endif
-
+#define BAG_ITEMS_COUNT 46  // 138 required to fit 1 of each (Exp Share turned into a Key Item), split into 3 pockets
+#define BAG_BATTLE_ITEMS_COUNT 52  //
+#define BAG_MEDICINE_COUNT 40  // 
 #define BAG_KEYITEMS_COUNT 29
-#if I_STORE_SYSTEM == GEN_4
 #define BAG_POKEBALLS_COUNT 12
 #define BAG_TMHM_COUNT 58
 #define BAG_BERRIES_COUNT 43
-#else
-#define BAG_POKEBALLS_COUNT 16
-#define BAG_TMHM_COUNT 64
-#define BAG_BERRIES_COUNT 46
-#endif
 #define OBJECT_EVENT_TEMPLATES_COUNT 64
 #define DECOR_MAX_SECRET_BASE 16
 #define DECOR_MAX_PLAYERS_HOUSE 12

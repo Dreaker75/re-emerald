@@ -4,6 +4,8 @@
 struct Bag
 {
     struct ItemSlot *itemSlots;
+    struct ItemSlot *medicineSlots;
+    struct ItemSlot *battleItemSlots;
     struct ItemSlot *pokeballSlots;
     struct ItemSlot *berrySlots;
     // u8 to save space, will need to cast from itemId to a 1-58 id every time (base 1 to account for empty slots when 0). Code has 100 TMs, so when accessing HMs, a -50 offset is needed
@@ -14,7 +16,6 @@ struct Bag
 bool8 IsBagPocketEmpty(u8 pocket);
 u32 GetFreeSpaceForItemInBag(u16 itemId);
 u8 GetNumItemStacks(u8 pocketId);
-u8 GetPocketCapacity(u8 pocketId);
 bool8 CheckBagHasItem(u16 itemId, u16 count);
 bool8 AddBagItem(u16 itemId, u16 count);
 bool8 RemoveBagItem(u16 itemId, u16 count);

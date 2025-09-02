@@ -1,6 +1,10 @@
 # Re:Emerald Changelog
 
 ## In-development
+**Update 13**
+- Added the Medicine and Battle Items pockets to the bag
+- Added a Potion to the bag when starting a new game, to replace the one that used to be in the PC storage
+
 **Update 12**
 - Made the Old Sea Map obtainable
 - Removed the "can only be taught once" warning from all Move Tutors

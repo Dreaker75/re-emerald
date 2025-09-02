@@ -24,6 +24,8 @@ struct LoadedSaveData
     /*0x0130*/ u8 TMsHMs[BAG_TMHM_COUNT];
     /*0x0078*/ u16 keyItems[BAG_KEYITEMS_COUNT];
     /*0x0000*/ struct ItemSlot items[BAG_ITEMS_COUNT];
+    /*0x0000*/ struct ItemSlot medicine[BAG_MEDICINE_COUNT];
+    /*0x0000*/ struct ItemSlot battleItems[BAG_BATTLE_ITEMS_COUNT];
     /*0x00F0*/ struct ItemSlot pokeBalls[BAG_POKEBALLS_COUNT];
     /*0x0230*/ struct ItemSlot berries[BAG_BERRIES_COUNT];
     /*0x02E8*/ struct Mail mail[MAIL_COUNT];
@@ -231,6 +233,14 @@ void LoadPlayerBag(void)
     for (i = 0; i < BAG_ITEMS_COUNT; i++)
         gLoadedSaveData.items[i] = gSaveBlock1Ptr->bagPocket_Items[i];
 
+    // load player medicine.
+    for (i = 0; i < BAG_MEDICINE_COUNT; i++)
+        gLoadedSaveData.medicine[i] = gSaveBlock1Ptr->bagPocket_Medicine[i];
+
+    // load player battle items.
+    for (i = 0; i < BAG_BATTLE_ITEMS_COUNT; i++)
+        gLoadedSaveData.battleItems[i] = gSaveBlock1Ptr->bagPocket_BattleItems[i];
+
     // load player key items.
     for (i = 0; i < BAG_KEYITEMS_COUNT; i++)
         gLoadedSaveData.keyItems[i] = gSaveBlock1Ptr->bagPocket_KeyItems[i];
@@ -262,6 +272,14 @@ void SavePlayerBag(void)
     // save player items.
     for (i = 0; i < BAG_ITEMS_COUNT; i++)
         gSaveBlock1Ptr->bagPocket_Items[i] = gLoadedSaveData.items[i];
+
+    // save player medicine.
+    for (i = 0; i < BAG_MEDICINE_COUNT; i++)
+        gSaveBlock1Ptr->bagPocket_Medicine[i] = gLoadedSaveData.medicine[i];
+
+    // save player battle items.
+    for (i = 0; i < BAG_BATTLE_ITEMS_COUNT; i++)
+        gSaveBlock1Ptr->bagPocket_BattleItems[i] = gLoadedSaveData.battleItems[i];
 
     // save player key items.
     for (i = 0; i < BAG_KEYITEMS_COUNT; i++)

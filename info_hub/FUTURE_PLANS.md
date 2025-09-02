@@ -33,7 +33,6 @@ These are listed in no particular order
  - Color the types in the battle menu green, yellow or red for super effective, not very effective and ineffective moves, respectively
  - Add a way to see a move's power, accuracy and effect from the battle menu
  - Automatically put items picked up by Pick Up in the bag, and make it possible to pick up items even while the Pokemon is already holding an item
- - Add a pocket in the bag for Medicine, Held Items and Evolution Items
  - Bag sorting
  - Show Bag pocket icons in the menu to more easily tell whether to scroll right or left
  - Add a way to move items between Pokemon from the party (like future gens)

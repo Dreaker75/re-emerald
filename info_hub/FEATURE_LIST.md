@@ -23,7 +23,8 @@
     - The PC Item storage has been removed (The slots form here have been moved to the bag) 
     - The Bag capacity has been modified to allow for storing 1 of each item in all Pockets
     - Each item can only have 1 slot in the bag. If the maximum amount (x999) is reached, no more of that item can be obtained, even if the bag has a free slot
-    - The main item pocket can now store up to 138 different items. This accounts for all obtainable items in Emerald, excluding the Exp. Share, which has been converted to a Key Item like from Gen VI onwards.
+ - The bag now has enough room to store 1 stack of every item (except Key Items).
+ - Added 2 extra pockets to the bag: Medicine and Battle Items
  - Once a Repel runs out, a pop-up will appear asking which Repel you would like to use, if any
 
 # Gameplay changes

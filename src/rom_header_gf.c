@@ -80,6 +80,9 @@ struct GFRomHeader
     u32 gameClearFlag;
     u32 ribbonFlag;
     u8 bagCountItems;
+    // NOTE: This could cause issues because of moving memory
+    u8 bagCountMedicine;
+    u8 bagCountBattleItems;
     u8 bagCountKeyItems;
     u8 bagCountPokeballs;
     u8 bagCountTMHMs;
@@ -163,14 +166,12 @@ static const struct GFRomHeader sGFRomHeader = {
     .gameClearFlag = FLAG_SYS_GAME_CLEAR,
     .ribbonFlag = FLAG_SYS_RIBBON_GET,
     .bagCountItems = BAG_ITEMS_COUNT,
+    .bagCountMedicine = BAG_MEDICINE_COUNT,
+    .bagCountBattleItems = BAG_BATTLE_ITEMS_COUNT,
     .bagCountKeyItems = BAG_KEYITEMS_COUNT,
     .bagCountPokeballs = BAG_POKEBALLS_COUNT,
     .bagCountTMHMs = BAG_TMHM_COUNT,
     .bagCountBerries = BAG_BERRIES_COUNT,
-#if I_STORE_SYSTEM == GEN_3
-    .pcItemsCount = PC_ITEMS_COUNT,
-    .pcItemsOffset = offsetof(struct SaveBlock1, pcItems),
-#endif
     .giftRibbonsOffset = offsetof(struct SaveBlock1, giftRibbons),
 #if FREE_ENIGMA_BERRY == FALSE
     .enigmaBerryOffset = offsetof(struct SaveBlock1, enigmaBerry),
