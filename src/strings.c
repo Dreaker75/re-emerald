@@ -1197,7 +1197,6 @@ const u8 gText_Carbos1BP[] = _("5x CARBOS{CLEAR_TO 0x64}1BP");
 const u8 gText_HpUp1BP[] = _("5x HP UP{CLEAR_TO 0x64}1BP");
 const u8 gText_PPUp1BP[] = _("PP UP{CLEAR_TO 0x64}1BP");
 const u8 gText_RareCandy8BP[] = _("RARE CANDY{CLEAR_TO 0x64}8BP");
-const u8 gText_ExpShare8BP[] = _("EXP. SHARE{CLEAR_TO 0x64}8BP");
 const u8 gText_MachoBrace8BP[] = _("MACHO BRACE{CLEAR_TO 0x64}8BP");
 const u8 gText_MasterBall256BP[] = _("MASTER BALL{CLEAR_TO 0x64}256BP");
 const u8 gText_KingsRock1BP[] = _("KING'S ROCK{CLEAR_TO 0x5E}1BP");

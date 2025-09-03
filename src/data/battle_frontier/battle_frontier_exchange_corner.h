@@ -38,7 +38,6 @@ static const u16 sFrontierExchangeCorner_Vitamins[] =
     ITEM_HP_UP,
     ITEM_PP_UP,
     ITEM_RARE_CANDY,
-    ITEM_EXP_SHARE,
     ITEM_MACHO_BRACE,
     ITEM_MASTER_BALL,
     ITEM_LIST_END
@@ -99,7 +98,6 @@ static const u8 *const sFrontierExchangeCorner_VitaminsDescriptions[] =
     BattleFrontier_ExchangeServiceCorner_Text_HPUpDesc,
     BattleFrontier_ExchangeServiceCorner_Text_PPUpDesc,
     BattleFrontier_ExchangeServiceCorner_Text_RareCandyDesc,
-    BattleFrontier_ExchangeServiceCorner_Text_ExpShareDesc,
     BattleFrontier_ExchangeServiceCorner_Text_MachoBraceDesc,
     BattleFrontier_ExchangeServiceCorner_Text_MasterBallDesc,
     gText_Exit

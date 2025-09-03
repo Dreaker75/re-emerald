@@ -32,7 +32,6 @@ Added the following items:
  - Registeel Doll
  - PP Up
  - Rare Candy
- - Exp. Share
  - Macho Brace
  - Master Ball
  - Soul Dew

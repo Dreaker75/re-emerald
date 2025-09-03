@@ -311,10 +311,9 @@ BattleFrontier_ExchangeServiceCorner_EventScript_ChooseVitamin::
 	case 5, BattleFrontier_ExchangeServiceCorner_EventScript_HPUp
 	case 6, BattleFrontier_ExchangeServiceCorner_EventScript_PPUp
 	case 7, BattleFrontier_ExchangeServiceCorner_EventScript_RareCandy
-	case 8, BattleFrontier_ExchangeServiceCorner_EventScript_ExpShare
-	case 9, BattleFrontier_ExchangeServiceCorner_EventScript_MachoBrace
-	case 10, BattleFrontier_ExchangeServiceCorner_EventScript_MasterBall
-	case 11, BattleFrontier_ExchangeServiceCorner_EventScript_ClerkGoodbye
+	case 8, BattleFrontier_ExchangeServiceCorner_EventScript_MachoBrace
+	case 9, BattleFrontier_ExchangeServiceCorner_EventScript_MasterBall
+	case 10, BattleFrontier_ExchangeServiceCorner_EventScript_ClerkGoodbye
 	case MULTI_B_PRESSED, BattleFrontier_ExchangeServiceCorner_EventScript_ClerkGoodbye
 	end
 
@@ -385,14 +384,6 @@ BattleFrontier_ExchangeServiceCorner_EventScript_RareCandy::
 	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseVitamin
 	setvar VAR_0x8008, 8
 	setvar VAR_0x8009, ITEM_RARE_CANDY
-	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
-	end
-
-BattleFrontier_ExchangeServiceCorner_EventScript_ExpShare::
-	msgbox BattleFrontier_ExchangeServiceCorner_Text_ConfirmExpShare, MSGBOX_YESNO
-	goto_if_eq VAR_RESULT, NO, BattleFrontier_ExchangeServiceCorner_EventScript_ChooseVitamin
-	setvar VAR_0x8008, 8
-	setvar VAR_0x8009, ITEM_EXP_SHARE
 	goto BattleFrontier_ExchangeServiceCorner_EventScript_TryPurchasePrize
 	end
 
@@ -657,10 +648,6 @@ BattleFrontier_ExchangeServiceCorner_Text_ConfirmRareCandy:
 	.string "You've chosen the RARE CANDY.\n"
 	.string "Is that correct?$"
 
-BattleFrontier_ExchangeServiceCorner_Text_ConfirmExpShare:
-	.string "You've chosen the EXP. SHARE.\n"
-	.string "Is that correct?$"
-
 BattleFrontier_ExchangeServiceCorner_Text_ConfirmMachoBrace:
 	.string "You've chosen the MACHO BRACE.\n"
 	.string "Is that correct?$"
@@ -843,10 +830,6 @@ BattleFrontier_ExchangeServiceCorner_Text_PPUpDesc::
 BattleFrontier_ExchangeServiceCorner_Text_RareCandyDesc::
 	.string "Raises the level of a\n"
 	.string "Pokémon by one.$"
-
-BattleFrontier_ExchangeServiceCorner_Text_ExpShareDesc::
-	.string "A hold item that gets\n"
-	.string "Exp. points from battles.$"
 
 BattleFrontier_ExchangeServiceCorner_Text_MachoBraceDesc::
 	.string "A hold item that promotes\n"

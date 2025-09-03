@@ -709,7 +709,6 @@ extern const u8 gText_Carbos1BP[];
 extern const u8 gText_HpUp1BP[];
 extern const u8 gText_PPUp1BP[];
 extern const u8 gText_RareCandy8BP[];
-extern const u8 gText_ExpShare8BP[];
 extern const u8 gText_MachoBrace8BP[];
 extern const u8 gText_MasterBall256BP[];
 
@@ -884,7 +883,6 @@ extern const u8 BattleFrontier_ExchangeServiceCorner_Text_CarbosDesc[];
 extern const u8 BattleFrontier_ExchangeServiceCorner_Text_HPUpDesc[];
 extern const u8 BattleFrontier_ExchangeServiceCorner_Text_PPUpDesc[];
 extern const u8 BattleFrontier_ExchangeServiceCorner_Text_RareCandyDesc[];
-extern const u8 BattleFrontier_ExchangeServiceCorner_Text_ExpShareDesc[];
 extern const u8 BattleFrontier_ExchangeServiceCorner_Text_MachoBraceDesc[];
 extern const u8 BattleFrontier_ExchangeServiceCorner_Text_MasterBallDesc[];
 extern const u8 BattleFrontier_ExchangeServiceCorner_Text_KingsRockDesc[];
