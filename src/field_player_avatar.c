@@ -129,14 +129,9 @@ static u8 Fishing_WaitBeforeDots(struct Task *);
 static u8 Fishing_InitDots(struct Task *);
 static u8 Fishing_ShowDots(struct Task *);
 static u8 Fishing_CheckForBite(struct Task *);
-static u8 Fishing_GotBite(struct Task *);
-static u8 Fishing_WaitForA(struct Task *);
-static u8 Fishing_CheckMoreDots(struct Task *);
 static u8 Fishing_MonOnHook(struct Task *);
 static u8 Fishing_StartEncounter(struct Task *);
 static u8 Fishing_NotEvenNibble(struct Task *);
-static u8 Fishing_GotAway(struct Task *);
-static u8 Fishing_NoMon(struct Task *);
 static u8 Fishing_PutRodAway(struct Task *);
 static u8 Fishing_EndNoMon(struct Task *);
 static void AlignFishingAnimationFrames(void);
@@ -1686,11 +1681,8 @@ static void Task_WaitStopSurfing(u8 taskId)
 
 // Some states are jumped to directly, labeled below
 #define FISHING_START_ROUND 3
-#define FISHING_GOT_BITE 6
-#define FISHING_ON_HOOK 9
-#define FISHING_NO_BITE 11
-#define FISHING_GOT_AWAY 12
-#define FISHING_SHOW_RESULT 13
+#define FISHING_ON_HOOK 6
+#define FISHING_NO_BITE 8
 
 static bool8 (*const sFishingStateFuncs[])(struct Task *) =
 {
@@ -1700,14 +1692,9 @@ static bool8 (*const sFishingStateFuncs[])(struct Task *) =
     Fishing_InitDots,       // FISHING_START_ROUND
     Fishing_ShowDots,
     Fishing_CheckForBite,
-    Fishing_GotBite,        // FISHING_GOT_BITE
-    Fishing_WaitForA,
-    Fishing_CheckMoreDots,
     Fishing_MonOnHook,      // FISHING_ON_HOOK
     Fishing_StartEncounter,
     Fishing_NotEvenNibble,  // FISHING_NO_BITE
-    Fishing_GotAway,        // FISHING_GOT_AWAY
-    Fishing_NoMon,          // FISHING_SHOW_RESULT
     Fishing_PutRodAway,
     Fishing_EndNoMon,
 };
@@ -1781,7 +1768,7 @@ static bool8 Fishing_ShowDots(struct Task *task)
         task->tFrameCounter = 0;
         if (task->tNumDots >= task->tDotsRequired)
         {
-            task->tStep = FISHING_ON_HOOK;
+            task->tStep++;
         }
         else
         {
@@ -1806,51 +1793,6 @@ static bool8 Fishing_CheckForBite(struct Task *task)
         StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], GetFishingBiteDirectionAnimNum(GetPlayerFacingDirection()));
     }
     return TRUE;
-}
-
-static bool8 Fishing_GotBite(struct Task *task)
-{
-    AlignFishingAnimationFrames();
-    AddTextPrinterParameterized(0, FONT_NORMAL, gText_OhABite, 0, 17, 0, NULL);
-    task->tStep++;
-    task->tFrameCounter = 0;
-    return FALSE;
-}
-
-// We have a bite. Now, wait for the player to press A, or the timer to expire.
-static bool8 Fishing_WaitForA(struct Task *task)
-{
-    AlignFishingAnimationFrames();
-    if (JOY_NEW(A_BUTTON))
-        task->tStep++;
-    return FALSE;
-}
-
-// Determine if we're going to play the dot game again
-static bool8 Fishing_CheckMoreDots(struct Task *task)
-{
-    const s16 moreDotsChance[][2] =
-    {
-        [OLD_ROD]   = {0, 0},
-        [GOOD_ROD]  = {40, 10},
-        [SUPER_ROD] = {70, 30}
-    };
-
-    AlignFishingAnimationFrames();
-    task->tStep++;
-    if (task->tRoundsPlayed < task->tMinRoundsRequired)
-    {
-        task->tStep = FISHING_START_ROUND;
-    }
-    else if (task->tRoundsPlayed < 2)
-    {
-        // probability of having to play another round
-        s16 probability = Random() % 100;
-
-        if (moreDotsChance[task->tFishingRod][task->tRoundsPlayed] > probability)
-            task->tStep = FISHING_START_ROUND;
-    }
-    return FALSE;
 }
 
 static bool8 Fishing_MonOnHook(struct Task *task)
@@ -1905,25 +1847,8 @@ static bool8 Fishing_NotEvenNibble(struct Task *task)
     StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], GetFishingNoCatchDirectionAnimNum(GetPlayerFacingDirection()));
     FillWindowPixelBuffer(0, PIXEL_FILL(1));
     AddTextPrinterParameterized2(0, FONT_NORMAL, gText_NotEvenANibble, 1, 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
-    task->tStep = FISHING_SHOW_RESULT;
-    return TRUE;
-}
-
-static bool8 Fishing_GotAway(struct Task *task)
-{
-    AlignFishingAnimationFrames();
-    StartSpriteAnim(&gSprites[gPlayerAvatar.spriteId], GetFishingNoCatchDirectionAnimNum(GetPlayerFacingDirection()));
-    FillWindowPixelBuffer(0, PIXEL_FILL(1));
-    AddTextPrinterParameterized2(0, FONT_NORMAL, gText_ItGotAway, 1, 0, TEXT_COLOR_DARK_GRAY, TEXT_COLOR_WHITE, TEXT_COLOR_LIGHT_GRAY);
     task->tStep++;
     return TRUE;
-}
-
-static bool8 Fishing_NoMon(struct Task *task)
-{
-    AlignFishingAnimationFrames();
-    task->tStep++;
-    return FALSE;
 }
 
 static bool8 Fishing_PutRodAway(struct Task *task)

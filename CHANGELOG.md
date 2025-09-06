@@ -1,6 +1,9 @@
 # Re:Emerald Changelog
 
 ## In-development
+**Update 15**
+- Fixed a bug that caused a bad Pokemon to appear when fishing in a place without encounters
+
 **Update 14**
 - Removed the Exp. Share from the Battle Frontier exchange, since it's now a Key Item
 

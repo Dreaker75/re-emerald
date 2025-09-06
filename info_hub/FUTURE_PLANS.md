@@ -28,6 +28,7 @@ These are listed in no particular order
  - Add a counter for buying PokeBlocks in the Lilycove Department Store, similar to  Platinum
 
 ## QoL upgrades
+ - Add the option to run from a wild encounter without sending out a Pokemon (by pressing B, L or some other button). It would only work if the Pokemon that's being sent out is guaranteed to flee, so as not to make Smoke Ball, Run Away and the flee mechanic completely irrelevant.
  - Make Fly and Teleport usable from the PokeNav map
  - Remove PokeNav calls that serve no purpose
  - Color the types in the battle menu green, yellow or red for super effective, not very effective and ineffective moves, respectively
