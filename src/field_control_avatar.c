@@ -22,11 +22,12 @@
 #include "overworld.h"
 #include "party_menu.h"
 #include "pokemon.h"
+#include "registered_items.h"
 #include "safari_zone.h"
 #include "script.h"
 #include "secret_base.h"
 #include "sound.h"
-#include "start_menu.h"
+#include "sub_menus.h"
 #include "trainer_see.h"
 #include "trainer_hill.h"
 #include "vs_seeker.h"
@@ -240,9 +241,22 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
         ShowStartMenu();
         return TRUE;
     }
-    if (input->pressedSelectButton && UseRegisteredKeyItemOnField() == TRUE)
-        return TRUE;
-
+    
+    if (input->pressedSelectButton)
+    {
+        if (GetAmountOfItemsRegistered() <= 1)
+        {
+            return UseRegisteredKeyItemOnField(GetRegisteredItem(0));
+        }
+        else
+        {
+            PlaySE(SE_WIN_OPEN);
+            // Open the registered items submenu
+            ShowKeyItemsMenu();
+            return TRUE;
+        }
+    }
+    
     // ADDED: Toggles the running shoes' speed
     if (input->pressedRButton == TRUE && FlagGet(FLAG_SYS_B_DASH)){
         FlagToggle(FLAG_SYS_IS_RUNNING_TOGGLED);

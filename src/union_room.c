@@ -35,7 +35,7 @@
 #include "script.h"
 #include "script_pokemon_util.h"
 #include "sound.h"
-#include "start_menu.h"
+#include "sub_menus.h"
 #include "string_util.h"
 #include "strings.h"
 #include "task.h"

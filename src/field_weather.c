@@ -10,7 +10,7 @@
 #include "palette.h"
 #include "random.h"
 #include "script.h"
-#include "start_menu.h"
+#include "sub_menus.h"
 #include "sound.h"
 #include "sprite.h"
 #include "task.h"

@@ -17,7 +17,7 @@
 #include "util.h"
 #include "sound.h"
 #include "task.h"
-#include "start_menu.h"
+#include "sub_menus.h"
 #include "string_util.h"
 #include "trainer_see.h"
 #include "main.h"

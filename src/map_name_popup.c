@@ -8,7 +8,7 @@
 #include "map_name_popup.h"
 #include "palette.h"
 #include "region_map.h"
-#include "start_menu.h"
+#include "sub_menus.h"
 #include "string_util.h"
 #include "task.h"
 #include "text.h"
@@ -200,7 +200,7 @@ static const u8 *const sBattlePyramid_MapHeaderStrings[FRONTIER_STAGES_PER_CHALL
 
 static bool8 UNUSED StartMenu_ShowMapNamePopup(void)
 {
-    HideStartMenu();
+    HideSubMenu(TRUE);
     ShowMapNamePopup();
     return TRUE;
 }

@@ -4,13 +4,17 @@
 extern bool8 (*gMenuCallback)(void);
 
 void ShowReturnToFieldStartMenu(void);
+void ShowReturnToFieldKeyItemsMenu(void);
 void Task_ShowStartMenu(u8 taskId);
 void ShowStartMenu(void);
+void Task_ShowKeyItemsMenu(u8 taskId);
+void ShowKeyItemsMenu(void);
+void ShowSubMenu(TaskFunc currFunc, TaskFunc followupFunc);
 void ShowBattlePyramidStartMenu(void);
 void SaveGame(void);
 void CB2_SetUpSaveAfterLinkBattle(void);
 void SaveForBattleTowerLink(void);
-void HideStartMenu(void);
+void HideSubMenu(bool8 unlockControls);
 void AppendToList(u8 *list, u8 *pos, u8 newEntry);
 
 #endif // GUARD_START_MENU_H

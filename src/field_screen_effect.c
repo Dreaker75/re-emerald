@@ -25,7 +25,7 @@
 #include "scanline_effect.h"
 #include "script.h"
 #include "sound.h"
-#include "start_menu.h"
+#include "sub_menus.h"
 #include "task.h"
 #include "text.h"
 #include "constants/event_object_movement.h"

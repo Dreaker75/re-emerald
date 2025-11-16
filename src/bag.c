@@ -6,6 +6,7 @@
 #include "event_data.h"
 #include "item_menu.h"
 #include "malloc.h"
+#include "registered_items.h"
 #include "secret_base.h"
 
 EWRAM_DATA struct Bag gBag;
@@ -451,6 +452,8 @@ bool8 RemoveKeyItemFromBag(u16 itemId)
     if (BAG_KEYITEMS_COUNT > var && gBag.keyItemSlots[var] == itemId)
     {
         gBag.keyItemSlots[i] = ITEM_NONE;
+        // We tell the Registered Items system to remove this item from the registered list if it was registered
+        RemoveRegisteredItem(itemId);
         return TRUE;
     }
 
@@ -458,6 +461,8 @@ bool8 RemoveKeyItemFromBag(u16 itemId)
     {
         if (gBag.keyItemSlots[i] == itemId)
         {
+            // We tell the Registered Items system to remove this item from the registered list if it was registered
+            RemoveRegisteredItem(itemId);
             gBag.keyItemSlots[i] = ITEM_NONE;
             return TRUE;
         }
@@ -1212,6 +1217,8 @@ void ClearBag(void)
     {
         gBag.keyItemSlots[i] = ITEM_NONE;
     }
+    
+    ClearItemsRegistered();
 }
 
 // Called to show the previous and next PokeBalls during battle, but it could be used for anything

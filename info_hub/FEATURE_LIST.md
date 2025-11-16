@@ -23,9 +23,10 @@
     - The PC Item storage has been removed (The slots form here have been moved to the bag) 
     - The Bag capacity has been modified to allow for storing 1 of each item in all Pockets
     - Each item can only have 1 slot in the bag. If the maximum amount (x999) is reached, no more of that item can be obtained, even if the bag has a free slot
- - The bag now has enough room to store 1 stack of every item (except Key Items).
+ - The bag now has enough room to store 1 stack of every item
  - Added 2 extra pockets to the bag: Medicine and Battle Items
  - Once a Repel runs out, a pop-up will appear asking which Repel you would like to use, if any
+ - Added the ability to register up to 8 Key Items at once
 
 # Gameplay changes
  - Running is allowed indoors, as well as super tall grass and wooden bridges like the ones on Pacifidlog Town
@@ -36,7 +37,12 @@
  - The fishing minigame has been removed for all Rods and using one will now always land a Pokemon
  - Move tutors are no longer a one-time use
  - PokeRus no longer stops being contagius after a few days have passed
- - The Roaming Legendary is now guaranteed to be the first encounter in the route if it's there
+ - Added an extra text speed option that display all the text instantly, which is turned on by default
+ - Defeating the Elite Four now resets a few daily events like gifts and the Lilycove lottery
+ - Return, Frustration and Hidden Power now show their real power in the Pokemon Summary
+ - Hidden Power now shows its real type and category in the Pokemon Summary and the in-battle menu
+ - Removed Wally's tutorial battle and the PokeNav's tutorial call to Mr. Stone
+ - Petalburg Gym's doors can now be opened just by walking like the rest of the doors
 
 # Pokemon changes
  - Pokemon that evolve through trading now also evolve by leveling up while knowing a specific move:
@@ -48,15 +54,21 @@
  - Friendship evolutions now require 160 Friendship to happen, rather than 220
  - Legendary Pokemon will have at least 3 perfect IVs
  - The maximum amount of EV a Pokemon can have in a single stat is now 252, instead of 255, like in Gen VI+
+ - All Legendary Pokemon (Including the roamer) will now respawn the following day if they are defeated (This is also affected by defeating the Elite Four)
+ - Sudowoodo will respawn every day whether it was defeated or caught
+ - Releasing a Legendary Pokemon will allow them to be caught again starting the following day
 
 ## Wild encounters changes:
  - Table slots and slot % have been tweaked all around (The lowest chance a Pokemon will have to appear is now 5%, although usually they're 10% or higher)
  - All RS exclusive Pokemon have been re-added to the wild in their respective locations and the encounters in those places have been tweaked accordingly
  - A focus has been put on Emerald being the "shared version" and now, all previous RS version exclusives will have the same chance to appear in their respective location (ex. Lotad and Seedot, Zangoose and Seviper, etc)
- - Non-Hoenn mons have been added to many post-game areas, although only a few have been added at the moment. Some examples include Diglett in Desert Underpass or Unown in Altering Cave
  - Encounter tables for a few locations have been changed to add more variety, such as Seafloor Cavern, Magma Hideout and Cave of Origin.
  - The Feebas mechanic has been reworked. Feebas will still only appear in specific tiles of Route 119 50% of the time, but said tiles are no longer random. Instead, they're based on Feebas' Emerald Pokedex entry.
+ - Some Non-Hoenn Pokemon have been added as normal encounters in some post-game areas.
  - All the changes implemented can be found on the [wild_encounters.json](https://github.com/Dreaker75/re-emerald/blob/main/src/data/wild_encounters.json) file
+
+## Roaming mechanic:
+ - The Roaming Legendary is now guaranteed to be the first encounter in the route if it's there
 
 ## Swarm mechanic:
  - Every day after beating the Elite Four for the first time, a new Pokemon family will be permanently added to the wild. Each Pokemon is added in a specific area, and replaces a Pokemon in a specific encounter slot of said area.
@@ -127,16 +139,9 @@
  - Added a few respawnable breakable rocks to Victory Road for anyone wanting to grind off of them
  - Made some slight tweaks to some of the Seafloor Cavern rooms
 
-# Other changes
+# Minor changes
  - **Added version number to the main menu to easily know the current version of the game**
- - Added an extra text speed option that display all the text instantly, which is turned on by default
- - Defeating the Elite Four now resets a few daily events like gifts and the Lilycove lottery
- - All Legendary Pokemon (Including the roamer) will now respawn the following day if they are defeated (This is also affected by defeating the Elite Four)
- - Sudowoodo will respawn every day whether it was defeated or caught
- - Releasing a Legendary Pokemon will allow them to be caught again starting the following day
  - The prizes for the Pokemon Lottery Corner have been updated and also give a reward for matching 1 number. Full list on [ITEM_CHANGES.md](https://github.com/Dreaker75/re-emerald/blob/main/info_hub/ITEM_CHANGES.md#facility-reward-items)
- - Return, Frustration and Hidden Power now show their real power in the Pokemon Summary
- - Hidden Power now shows its real type and category in the Pokemon Summary and the in-battle menu
  - The Pokemon Center Nurses now have less dialogue and animations for healing your Pokemon. Getting all 4 Trainer Stars also reduces the dialogue further like in vanilla Emerald
  - The player automatically faces down after healing at a Pokemon Center.
  - The NPC at the rest house on Route 111 no longer asks you if you want to keep resting until you say no.
@@ -144,8 +149,6 @@
  - Pressing B while moving a Pokemon on the PC deposits the Pokemon
  - Added the Japan exclusive wallpapers for the PC Boxes
  - Removed the second save confirmation popup, the game will now save after the first one. The warning for saving when a different file exists was left untouched.
- - Removed Wally's tutorial battle and the PokeNav's tutorial call to Mr. Stone
- - Petalburg Gym's doors can now be opened just by walking like the rest of the doors
  - Fixed the bug that caused the Mart Employee in Oldale Town to walk through the Shop's wall and into a tree under certain circumstances
  - Scientist in Devon Corp that revives the Fossils can now revive Kanto Fossils, and no longer requires talking to someone else or leaving the room to claim the Pokemon.
  - Using a PP Up or PP Max no longer returns you to the bag after using them or when trying to use them in a move with maxed out PP.

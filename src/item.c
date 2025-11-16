@@ -11,6 +11,7 @@
 #include "load_save.h"
 #include "item_use.h"
 #include "battle_pyramid.h"
+#include "registered_items.h"
 #include "constants/battle.h"
 #include "constants/items.h"
 #include "constants/item_effects.h"
@@ -108,15 +109,15 @@ u8 GetPocketByItemId(u16 itemId)
 
 void SwapRegisteredBike(void)
 {
-    switch (gSaveBlock1Ptr->registeredItem)
+    u16 prevBike = CheckBagHasItem(ITEM_MACH_BIKE, 1) ? ITEM_MACH_BIKE : ITEM_ACRO_BIKE;
+    u16 newBike = (prevBike == ITEM_MACH_BIKE) ? ITEM_ACRO_BIKE : ITEM_MACH_BIKE;
+    if (IsItemRegistered(prevBike))
     {
-    case ITEM_MACH_BIKE:
-        gSaveBlock1Ptr->registeredItem = ITEM_ACRO_BIKE;
-        break;
-    case ITEM_ACRO_BIKE:
-        gSaveBlock1Ptr->registeredItem = ITEM_MACH_BIKE;
-        break;
+        SwapRegisteredItems(ITEM_ACRO_BIKE, ITEM_MACH_BIKE);
     }
+    
+    RemoveBagItem(prevBike, 1);
+    AddBagItem(newBike, 1);
 }
 
 

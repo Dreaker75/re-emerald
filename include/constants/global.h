@@ -59,6 +59,7 @@
 #define MAIL_COUNT (10 + PARTY_SIZE)
 #define SECRET_BASES_COUNT 20
 #define POKE_NEWS_COUNT 16
+#define REGISTERED_ITEMS_COUNT 8    // Set it to 8 cause realistically you won't need more, and the menu is already made to work with 8 slots + EXIT 
 #define PC_ITEMS_COUNT 0
 #define BAG_ITEMS_COUNT 46  // 138 required to fit 1 of each (Exp Share turned into a Key Item), split into 3 pockets
 #define BAG_BATTLE_ITEMS_COUNT 52  //

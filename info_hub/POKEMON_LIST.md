@@ -1,4 +1,4 @@
-# Pokemon added
+# Pokemon added (325 Pokemon)
 These are the Pokemon that have been added to, or changed locations in, Re:Emerald (Pokemon that appear in the same location as vanilla Emerald won't be listed)
 
 ## Ruby/Sapphire exclusives
@@ -94,7 +94,7 @@ These Pokemon start appearing as regular wild Pokemon after beating the Elite Fo
 - Houndour: Route 113 (Removed from Safari Zone)
 - Houndoom: Mt. Pyre Exterior
 
-# Choice Pokemon
+# Choice Pokemon (7 Pokemon)
 These Pokemon are available in Re:Emerald, but cannot be obtained in the same file without trading yet.
 - Starter Pokemon:
     - Treecko -> Grovyle -> Sceptile
@@ -104,13 +104,13 @@ These Pokemon are available in Re:Emerald, but cannot be obtained in the same fi
     - Latias
     - Latios
 
-# Trade-only Pokemon
+# Trade-only Pokemon (9 Pokemon)
 Due to being locked behind filling the Hoenn Dex, these Pokemon can only be obtained by trading the missing starters and Lati@s from another Re:Emerald save file at the moment (v 0.1.0). You also get a choice between each of these, so you would need 3 full hoenn dex save files to get all 3:
 - Chikorita -> Bayleef -> Meganium
 - Cyndaquil -> Quilava -> Typhlosion
 - Totodile -> Croconaw -> Feraligatr
 
-# Unavailable Pokemon
+# Unavailable Pokemon (45 Pokemon)
 These Pokemon have yet to be added to Re:Emerald:
 - Bulbasaur -> Ivysaur -> Venusaur
 - Charmander -> Charmeleon -> Charizard

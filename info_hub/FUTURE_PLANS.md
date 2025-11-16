@@ -56,6 +56,7 @@ These are listed in no particular order
  - Add the Aurora Ticket and its related events
  - Make Lugia, Ho-Oh, Groudon and Kyogre only fight the player if they fulfill certain conditions
  - Add Articuno, Zapdos, Moltres, Mewtwo, Raikou, Entei, Suicune, Celebi and Jirachi, and their respective events
+ - Professor Birch will now let you get a copy of a Pokemon you already have (except Legendaries) so no Pokemon is completely missable
 
 ## Trainer features
  - Change the rematch functions for both trainers and Gym Leaders to trigger more often
@@ -118,7 +119,6 @@ These are listed in no particular order
  - The Meteorite Key Item now allows to Forme change Deoxys (Professor Kozmo will give it back after researching it a bit)
  - Add Shiny breeding: Breeding a Shiny Pokemon will increase the chances of the offspring to be Shiny
  - Grab an item held by a defeated wild Pokemon automatically, no need to Thief it or the likes
- - Pressing L on the overworld will bring out a list of registered items (up to 10)
  - Pressing R on the overworld will bring out a list of useful things (toggle auto run, Sweet Scent (If an appropiate mon exists in party), consumables like Repels, etc)
 
 ## Others
@@ -141,6 +141,7 @@ Features here are things I'd like to add once everything else above has been imp
  - Add an AreaDex that will show everything available in an area, from Pokemon and Items to trades and gift the player has not yet received
  - Add Achievements that will be akin to B2W2 Medals
  - Add the Fame Checker into the game
+ - Add a Ribbon tracker for all Pokemon species, which will work similarly to medalist Pokemon in HeartGold & SoulSilver's Pokeathlon. It will save the maximum amount of ribbons a single Pokemon of each species has obtained, and might provide rewards for getting X amount of Ribbon Masters (Pokemon that have obtained all Ribbons), such as Shiny Pokemon
  - New Game+, letting you play through the story again while keeping all your items, Pokemon, etc. You could either play with your overpowered mons, or start from scratch again but with all the post-game benefits like Swarm Pokemon intact, for a new experience. New Game+ would reset:
     - Badges
     - Fly Points

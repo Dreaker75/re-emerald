@@ -49,7 +49,7 @@
 #include "script_pokemon_util.h"
 #include "secret_base.h"
 #include "sound.h"
-#include "start_menu.h"
+#include "sub_menus.h"
 #include "task.h"
 #include "tileset_anims.h"
 #include "time_events.h"

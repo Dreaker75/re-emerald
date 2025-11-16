@@ -60,7 +60,7 @@ static void WindowFunc_DrawStdFrameWithCustomTileAndPalette(u8, u8, u8, u8, u8, 
 static void WindowFunc_ClearStdWindowAndFrameToTransparent(u8, u8, u8, u8, u8, u8);
 static void task_free_buf_after_copying_tile_data_to_vram(u8 taskId);
 
-static EWRAM_DATA u8 sStartMenuWindowId = 0;
+static EWRAM_DATA u8 sSubMenuWindowId = 0;
 static EWRAM_DATA u8 sMapNamePopupWindowId = 0;
 static EWRAM_DATA struct Menu sMenu = {0};
 static EWRAM_DATA u16 sTileNum = 0;
@@ -144,7 +144,7 @@ static const struct MenuInfoIcon sMenuInfoIcons[] =
 void InitStandardTextBoxWindows(void)
 {
     InitWindows(sStandardTextBox_WindowTemplates);
-    sStartMenuWindowId = WINDOW_NONE;
+    sSubMenuWindowId = WINDOW_NONE;
     sMapNamePopupWindowId = WINDOW_NONE;
 }
 
@@ -490,22 +490,29 @@ u8 GetPlayerTextSpeedDelay(void)
 
 u8 AddStartMenuWindow(u8 numActions)
 {
-    if (sStartMenuWindowId == WINDOW_NONE)
-        sStartMenuWindowId = AddWindowParameterized(0, 22, 1, 7, (numActions * 2) + 2, 15, 0x139);
-    return sStartMenuWindowId;
+    if (sSubMenuWindowId == WINDOW_NONE)
+        sSubMenuWindowId = AddWindowParameterized(0, 22, 1, 7, (numActions * 2) + 2, 15, 0x139);
+    return sSubMenuWindowId;
 }
 
-u8 GetStartMenuWindowId(void)
+u8 AddKeyItemsMenuWindow(u8 numActions)
 {
-    return sStartMenuWindowId;
+    if (sSubMenuWindowId == WINDOW_NONE)
+        sSubMenuWindowId = AddWindowParameterized(0, 19, 1, 10, (numActions * 2) + 2, 15, 0x139);
+    return sSubMenuWindowId;
 }
 
-void RemoveStartMenuWindow(void)
+u8 GetSubMenuWindowId(void)
 {
-    if (sStartMenuWindowId != WINDOW_NONE)
+    return sSubMenuWindowId;
+}
+
+void RemoveSubMenuWindow(void)
+{
+    if (sSubMenuWindowId != WINDOW_NONE)
     {
-        RemoveWindow(sStartMenuWindowId);
-        sStartMenuWindowId = WINDOW_NONE;
+        RemoveWindow(sSubMenuWindowId);
+        sSubMenuWindowId = WINDOW_NONE;
     }
 }
 

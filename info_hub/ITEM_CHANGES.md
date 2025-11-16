@@ -69,7 +69,7 @@ Added the following items:
  - The NPC in Slateport City that used to sell the TMs for Hidden Power and Secret Power now sells the Sea and Lax Incenses instead, and is available as soon as the player arrives there.
   - Kiki in Sootopolis City now gives any berry between Figy and Iapapa at random as the second berry, rather than only those 2.
   - A Choice Band will be given by Scott in the Battle Frontier if the player talked to him 13 different times before then.
-  - The Old Sea Map is given by together with the Glass Ornament in the Lilycove Museum after obtaining the Contest Trainer Star
+  - The Old Sea Map is given together with the Glass Ornament in the Lilycove Museum after obtaining the Contest Trainer Star
 
 ## Wild Held Items:
 Only items changed are listed here. Any item that isn't mentioned remains the same as vanilla Emerald:

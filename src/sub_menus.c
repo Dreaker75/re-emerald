@@ -30,12 +30,13 @@
 #include "party_menu.h"
 #include "pokedex.h"
 #include "pokenav.h"
+#include "registered_items.h"
 #include "safari_zone.h"
 #include "save.h"
 #include "scanline_effect.h"
 #include "script.h"
 #include "sound.h"
-#include "start_menu.h"
+#include "sub_menus.h"
 #include "strings.h"
 #include "string_util.h"
 #include "task.h"
@@ -87,10 +88,10 @@ bool8 (*gMenuCallback)(void);
 EWRAM_DATA static u8 sGameVersionWindowId = 0;
 EWRAM_DATA static u8 sSafariBallsWindowId = 0;
 EWRAM_DATA static u8 sBattlePyramidFloorWindowId = 0;
-EWRAM_DATA static u8 sStartMenuCursorPos = 0;
-EWRAM_DATA static u8 sNumStartMenuActions = 0;
-EWRAM_DATA static u8 sCurrentStartMenuActions[9] = {0};
-EWRAM_DATA static s8 sInitStartMenuData[2] = {0};
+EWRAM_DATA static u8 sSubMenuCursorPos = 0;
+EWRAM_DATA static u8 sNumSubMenuActions = 0;
+EWRAM_DATA static u8 sCurrentSubMenuActions[9] = {0};
+EWRAM_DATA static s8 sInitSubMenuData[2] = {0};
 
 EWRAM_DATA static u8 (*sSaveDialogCallback)(void) = NULL;
 EWRAM_DATA static u8 sSaveDialogTimer = 0;
@@ -118,7 +119,9 @@ static bool8 SaveCallback(void);
 static bool8 BattlePyramidRetireStartCallback(void);
 static bool8 BattlePyramidRetireReturnCallback(void);
 static bool8 BattlePyramidRetireCallback(void);
+void HandleSubMenuInput(void);
 static bool8 HandleStartMenuInput(void);
+static bool8 HandleKeyItemsMenuInput(void);
 
 // Save dialog callbacks
 static u8 SaveConfirmSaveCallback(void);
@@ -139,10 +142,12 @@ static u8 BattlePyramidRetireInputCallback(void);
 
 // Task callbacks
 static void StartMenuTask(u8 taskId);
+static void KeyItemsMenuTask(u8 taskId);
 static void SaveGameTask(u8 taskId);
 static void Task_SaveAfterLinkBattle(u8 taskId);
 static void Task_WaitForBattleTowerLinkSave(u8 taskId);
 static bool8 FieldCB_ReturnToFieldStartMenu(void);
+static bool8 FieldCB_ReturnToFieldKeyItemsMenu(void);
 
 static const struct WindowTemplate sWindowTemplate_GameVersion = {
     .bg = 0,
@@ -255,7 +260,8 @@ static const struct WindowTemplate sSaveInfoWindowTemplate = {
 
 // Local functions
 static void BuildStartMenuActions(void);
-static void AddStartMenuAction(u8 action);
+static void BuildKeyItemsMenuActions(void);
+static void AddSubMenuAction(u8 action);
 static void BuildNormalStartMenu(void);
 static void BuildDebugStartMenu(void);
 static void BuildSafariZoneStartMenu(void);
@@ -269,9 +275,11 @@ static void ShowSafariBallsWindow(void);
 static void ShowPyramidFloorWindow(void);
 static void RemoveExtraStartMenuWindows(void);
 static bool32 PrintStartMenuActions(s8 *pIndex, u32 count);
+static bool32 PrintKeyItemsMenuActions(s8 *pIndex, u32 count);
 static bool32 InitStartMenuStep(void);
+static bool32 InitKeyItemsMenuStep(void);
 static void InitStartMenu(void);
-static void CreateStartMenuTask(TaskFunc followupFunc);
+static void CreateSubMenuTask(TaskFunc currFunc, TaskFunc followupFunc);
 static void InitSave(void);
 static u8 RunSaveCallback(void);
 static void ShowSaveMessage(const u8 *message, u8 (*saveCallback)(void));
@@ -286,7 +294,7 @@ static bool32 InitSaveWindowAfterLinkBattle(u8 *par1);
 static void CB2_SaveAfterLinkBattle(void);
 static void ShowSaveInfoWindow(void);
 static void RemoveSaveInfoWindow(void);
-static void HideStartMenuWindow(void);
+static void HideSubMenuWindow(void);
 static void HideStartMenuDebug(void);
 
 void SetDexPokemonPokenavFlags(void) // unused
@@ -298,7 +306,7 @@ void SetDexPokemonPokenavFlags(void) // unused
 
 static void BuildStartMenuActions(void)
 {
-    sNumStartMenuActions = 0;
+    sNumSubMenuActions = 0;
 
     if (IsOverworldLinkActive() == TRUE)
     {
@@ -333,117 +341,122 @@ static void BuildStartMenuActions(void)
     }
 }
 
-static void AddStartMenuAction(u8 action)
+static void BuildKeyItemsMenuActions(void)
 {
-    AppendToList(sCurrentStartMenuActions, &sNumStartMenuActions, action);
+    sNumSubMenuActions = 0;
+}
+
+static void AddSubMenuAction(u8 action)
+{
+    AppendToList(sCurrentSubMenuActions, &sNumSubMenuActions, action);
 }
 
 static void BuildNormalStartMenu(void)
 {
     if (FlagGet(FLAG_SYS_POKEDEX_GET) == TRUE)
     {
-        AddStartMenuAction(MENU_ACTION_POKEDEX);
+        AddSubMenuAction(MENU_ACTION_POKEDEX);
     }
     if (FlagGet(FLAG_SYS_POKEMON_GET) == TRUE)
     {
-        AddStartMenuAction(MENU_ACTION_POKEMON);
+        AddSubMenuAction(MENU_ACTION_POKEMON);
     }
 
-    AddStartMenuAction(MENU_ACTION_BAG);
+    AddSubMenuAction(MENU_ACTION_BAG);
 
     if (FlagGet(FLAG_SYS_POKENAV_GET) == TRUE)
     {
-        AddStartMenuAction(MENU_ACTION_POKENAV);
+        AddSubMenuAction(MENU_ACTION_POKENAV);
     }
 
-    AddStartMenuAction(MENU_ACTION_PLAYER);
-    AddStartMenuAction(MENU_ACTION_SAVE);
-    AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_EXIT);
+    AddSubMenuAction(MENU_ACTION_PLAYER);
+    AddSubMenuAction(MENU_ACTION_SAVE);
+    AddSubMenuAction(MENU_ACTION_OPTION);
+    AddSubMenuAction(MENU_ACTION_EXIT);
 }
 
 static void BuildDebugStartMenu(void)
 {
-    AddStartMenuAction(MENU_ACTION_DEBUG);
+    AddSubMenuAction(MENU_ACTION_DEBUG);
     if (FlagGet(FLAG_SYS_POKEDEX_GET) == TRUE)
-        AddStartMenuAction(MENU_ACTION_POKEDEX);
+        AddSubMenuAction(MENU_ACTION_POKEDEX);
     if (FlagGet(FLAG_SYS_POKEMON_GET) == TRUE)
-        AddStartMenuAction(MENU_ACTION_POKEMON);
-    AddStartMenuAction(MENU_ACTION_BAG);
+        AddSubMenuAction(MENU_ACTION_POKEMON);
+    AddSubMenuAction(MENU_ACTION_BAG);
     if (FlagGet(FLAG_SYS_POKENAV_GET) == TRUE)
-        AddStartMenuAction(MENU_ACTION_POKENAV);
-    AddStartMenuAction(MENU_ACTION_PLAYER);
-    AddStartMenuAction(MENU_ACTION_SAVE);
-    AddStartMenuAction(MENU_ACTION_OPTION);
+        AddSubMenuAction(MENU_ACTION_POKENAV);
+    AddSubMenuAction(MENU_ACTION_PLAYER);
+    AddSubMenuAction(MENU_ACTION_SAVE);
+    AddSubMenuAction(MENU_ACTION_OPTION);
 }
 
 static void BuildSafariZoneStartMenu(void)
 {
-    AddStartMenuAction(MENU_ACTION_RETIRE_SAFARI);
-    AddStartMenuAction(MENU_ACTION_POKEDEX);
-    AddStartMenuAction(MENU_ACTION_POKEMON);
-    AddStartMenuAction(MENU_ACTION_BAG);
-    AddStartMenuAction(MENU_ACTION_PLAYER);
-    AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_EXIT);
+    AddSubMenuAction(MENU_ACTION_RETIRE_SAFARI);
+    AddSubMenuAction(MENU_ACTION_POKEDEX);
+    AddSubMenuAction(MENU_ACTION_POKEMON);
+    AddSubMenuAction(MENU_ACTION_BAG);
+    AddSubMenuAction(MENU_ACTION_PLAYER);
+    AddSubMenuAction(MENU_ACTION_OPTION);
+    AddSubMenuAction(MENU_ACTION_EXIT);
 }
 
 static void BuildLinkModeStartMenu(void)
 {
-    AddStartMenuAction(MENU_ACTION_POKEMON);
-    AddStartMenuAction(MENU_ACTION_BAG);
+    AddSubMenuAction(MENU_ACTION_POKEMON);
+    AddSubMenuAction(MENU_ACTION_BAG);
 
     if (FlagGet(FLAG_SYS_POKENAV_GET) == TRUE)
     {
-        AddStartMenuAction(MENU_ACTION_POKENAV);
+        AddSubMenuAction(MENU_ACTION_POKENAV);
     }
 
-    AddStartMenuAction(MENU_ACTION_PLAYER_LINK);
-    AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_EXIT);
+    AddSubMenuAction(MENU_ACTION_PLAYER_LINK);
+    AddSubMenuAction(MENU_ACTION_OPTION);
+    AddSubMenuAction(MENU_ACTION_EXIT);
 }
 
 static void BuildUnionRoomStartMenu(void)
 {
-    AddStartMenuAction(MENU_ACTION_POKEMON);
-    AddStartMenuAction(MENU_ACTION_BAG);
+    AddSubMenuAction(MENU_ACTION_POKEMON);
+    AddSubMenuAction(MENU_ACTION_BAG);
 
     if (FlagGet(FLAG_SYS_POKENAV_GET) == TRUE)
     {
-        AddStartMenuAction(MENU_ACTION_POKENAV);
+        AddSubMenuAction(MENU_ACTION_POKENAV);
     }
 
-    AddStartMenuAction(MENU_ACTION_PLAYER);
-    AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_EXIT);
+    AddSubMenuAction(MENU_ACTION_PLAYER);
+    AddSubMenuAction(MENU_ACTION_OPTION);
+    AddSubMenuAction(MENU_ACTION_EXIT);
 }
 
 static void BuildBattlePikeStartMenu(void)
 {
-    AddStartMenuAction(MENU_ACTION_POKEDEX);
-    AddStartMenuAction(MENU_ACTION_POKEMON);
-    AddStartMenuAction(MENU_ACTION_PLAYER);
-    AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_EXIT);
+    AddSubMenuAction(MENU_ACTION_POKEDEX);
+    AddSubMenuAction(MENU_ACTION_POKEMON);
+    AddSubMenuAction(MENU_ACTION_PLAYER);
+    AddSubMenuAction(MENU_ACTION_OPTION);
+    AddSubMenuAction(MENU_ACTION_EXIT);
 }
 
 static void BuildBattlePyramidStartMenu(void)
 {
-    AddStartMenuAction(MENU_ACTION_POKEMON);
-    AddStartMenuAction(MENU_ACTION_PYRAMID_BAG);
-    AddStartMenuAction(MENU_ACTION_PLAYER);
-    AddStartMenuAction(MENU_ACTION_REST_FRONTIER);
-    AddStartMenuAction(MENU_ACTION_RETIRE_FRONTIER);
-    AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_EXIT);
+    AddSubMenuAction(MENU_ACTION_POKEMON);
+    AddSubMenuAction(MENU_ACTION_PYRAMID_BAG);
+    AddSubMenuAction(MENU_ACTION_PLAYER);
+    AddSubMenuAction(MENU_ACTION_REST_FRONTIER);
+    AddSubMenuAction(MENU_ACTION_RETIRE_FRONTIER);
+    AddSubMenuAction(MENU_ACTION_OPTION);
+    AddSubMenuAction(MENU_ACTION_EXIT);
 }
 
 static void BuildMultiPartnerRoomStartMenu(void)
 {
-    AddStartMenuAction(MENU_ACTION_POKEMON);
-    AddStartMenuAction(MENU_ACTION_PLAYER);
-    AddStartMenuAction(MENU_ACTION_OPTION);
-    AddStartMenuAction(MENU_ACTION_EXIT);
+    AddSubMenuAction(MENU_ACTION_POKEMON);
+    AddSubMenuAction(MENU_ACTION_PLAYER);
+    AddSubMenuAction(MENU_ACTION_OPTION);
+    AddSubMenuAction(MENU_ACTION_EXIT);
 }
 
 static void ShowGameVersionWindow(void)
@@ -507,18 +520,42 @@ static bool32 PrintStartMenuActions(s8 *pIndex, u32 count)
 
     do
     {
-        if (sStartMenuItems[sCurrentStartMenuActions[index]].func.u8_void == StartMenuPlayerNameCallback)
+        if (sStartMenuItems[sCurrentSubMenuActions[index]].func.u8_void == StartMenuPlayerNameCallback)
         {
-            PrintPlayerNameOnWindow(GetStartMenuWindowId(), sStartMenuItems[sCurrentStartMenuActions[index]].text, 8, (index << 4) + 9);
+            PrintPlayerNameOnWindow(GetSubMenuWindowId(), sStartMenuItems[sCurrentSubMenuActions[index]].text, 8, (index << 4) + 9);
         }
         else
         {
-            StringExpandPlaceholders(gStringVar4, sStartMenuItems[sCurrentStartMenuActions[index]].text);
-            AddTextPrinterParameterized(GetStartMenuWindowId(), FONT_NORMAL, gStringVar4, 8, (index << 4) + 9, TEXT_SKIP_DRAW, NULL);
+            StringExpandPlaceholders(gStringVar4, sStartMenuItems[sCurrentSubMenuActions[index]].text);
+            AddTextPrinterParameterized(GetSubMenuWindowId(), FONT_NORMAL, gStringVar4, 8, (index << 4) + 9, TEXT_SKIP_DRAW, NULL);
         }
 
         index++;
-        if (index >= sNumStartMenuActions)
+        if (index >= sNumSubMenuActions)
+        {
+            *pIndex = index;
+            return TRUE;
+        }
+
+        count--;
+    }
+    while (count != 0);
+
+    *pIndex = index;
+    return FALSE;
+}
+
+static bool32 PrintKeyItemsMenuActions(s8 *pIndex, u32 count)
+{
+    s8 index = *pIndex;
+
+    do
+    {
+        StringExpandPlaceholders(gStringVar4, gItemsInfo[GetRegisteredItem(index)].name);
+        AddTextPrinterParameterized(GetSubMenuWindowId(), FONT_NORMAL, gStringVar4, 8, (index << 4) + 9, TEXT_SKIP_DRAW, NULL);
+
+        index++;
+        if (index >= GetAmountOfItemsRegistered())
         {
             *pIndex = index;
             return TRUE;
@@ -534,22 +571,22 @@ static bool32 PrintStartMenuActions(s8 *pIndex, u32 count)
 
 static bool32 InitStartMenuStep(void)
 {
-    s8 state = sInitStartMenuData[0];
+    s8 state = sInitSubMenuData[0];
 
     switch (state)
     {
     case 0:
-        sInitStartMenuData[0]++;
+        sInitSubMenuData[0]++;
         break;
     case 1:
         BuildStartMenuActions();
-        sInitStartMenuData[0]++;
+        sInitSubMenuData[0]++;
         break;
     case 2:
         LoadMessageBoxAndBorderGfx();
-        DrawStdWindowFrame(AddStartMenuWindow(sNumStartMenuActions), FALSE);
-        sInitStartMenuData[1] = 0;
-        sInitStartMenuData[0]++;
+        DrawStdWindowFrame(AddStartMenuWindow(sNumSubMenuActions), FALSE);
+        sInitSubMenuData[1] = 0;
+        sInitSubMenuData[0]++;
         break;
     case 3:
         if (GetSafariZoneFlag())
@@ -557,15 +594,47 @@ static bool32 InitStartMenuStep(void)
         if (InBattlePyramid())
             ShowPyramidFloorWindow();
         ShowGameVersionWindow();
-        sInitStartMenuData[0]++;
+        sInitSubMenuData[0]++;
         break;
     case 4:
-        if (PrintStartMenuActions(&sInitStartMenuData[1], 2))
-            sInitStartMenuData[0]++;
+        if (PrintStartMenuActions(&sInitSubMenuData[1], 2))
+            sInitSubMenuData[0]++;
         break;
     case 5:
-        sStartMenuCursorPos = InitMenuNormal(GetStartMenuWindowId(), FONT_NORMAL, 0, 9, 16, sNumStartMenuActions, sStartMenuCursorPos);
-        CopyWindowToVram(GetStartMenuWindowId(), COPYWIN_MAP);
+        sSubMenuCursorPos = InitMenuNormal(GetSubMenuWindowId(), FONT_NORMAL, 0, 9, 16, sNumSubMenuActions, sSubMenuCursorPos);
+        CopyWindowToVram(GetSubMenuWindowId(), COPYWIN_MAP);
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+static bool32 InitKeyItemsMenuStep(void)
+{
+    s8 state = sInitSubMenuData[0];
+
+    switch (state)
+    {
+    case 0:
+        sInitSubMenuData[0]++;
+        break;
+    case 1:
+        BuildKeyItemsMenuActions();
+        sInitSubMenuData[0]++;
+        break;
+    case 2:
+        LoadMessageBoxAndBorderGfx();
+        DrawStdWindowFrame(AddKeyItemsMenuWindow(GetAmountOfItemsRegistered()), FALSE);
+        sInitSubMenuData[1] = 0;
+        sInitSubMenuData[0]++;
+        break;
+    case 3:
+        if (PrintKeyItemsMenuActions(&sInitSubMenuData[1], 2))
+            sInitSubMenuData[0]++;
+        break;
+    case 4:
+        sSubMenuCursorPos = InitMenuNormal(GetSubMenuWindowId(), FONT_NORMAL, 0, 9, 16, GetAmountOfItemsRegistered(), sSubMenuCursorPos);
+        CopyWindowToVram(GetSubMenuWindowId(), COPYWIN_MAP);
         return TRUE;
     }
 
@@ -574,8 +643,8 @@ static bool32 InitStartMenuStep(void)
 
 static void InitStartMenu(void)
 {
-    sInitStartMenuData[0] = 0;
-    sInitStartMenuData[1] = 0;
+    sInitSubMenuData[0] = 0;
+    sInitSubMenuData[1] = 0;
     while (!InitStartMenuStep())
         ;
 }
@@ -586,14 +655,20 @@ static void StartMenuTask(u8 taskId)
         SwitchTaskToFollowupFunc(taskId);
 }
 
-static void CreateStartMenuTask(TaskFunc followupFunc)
+static void KeyItemsMenuTask(u8 taskId)
+{
+    if (InitKeyItemsMenuStep() == TRUE)
+        SwitchTaskToFollowupFunc(taskId);
+}
+
+static void CreateSubMenuTask(TaskFunc currFunc, TaskFunc followupFunc)
 {
     u8 taskId;
 
-    sInitStartMenuData[0] = 0;
-    sInitStartMenuData[1] = 0;
-    taskId = CreateTask(StartMenuTask, 0x50);
-    SetTaskFuncWithFollowupFunc(taskId, StartMenuTask, followupFunc);
+    sInitSubMenuData[0] = 0;
+    sInitSubMenuData[1] = 0;
+    taskId = CreateTask(currFunc, 0x50);
+    SetTaskFuncWithFollowupFunc(taskId, currFunc, followupFunc);
 }
 
 static bool8 FieldCB_ReturnToFieldStartMenu(void)
@@ -607,11 +682,29 @@ static bool8 FieldCB_ReturnToFieldStartMenu(void)
     return TRUE;
 }
 
+static bool8 FieldCB_ReturnToFieldKeyItemsMenu(void)
+{
+    if (InitKeyItemsMenuStep() == FALSE)
+    {
+        return FALSE;
+    }
+
+    ReturnToFieldOpenStartMenu();
+    return TRUE;
+}
+
 void ShowReturnToFieldStartMenu(void)
 {
-    sInitStartMenuData[0] = 0;
-    sInitStartMenuData[1] = 0;
+    sInitSubMenuData[0] = 0;
+    sInitSubMenuData[1] = 0;
     gFieldCallback2 = FieldCB_ReturnToFieldStartMenu;
+}
+
+void ShowReturnToFieldKeyItemsMenu(void)
+{
+    sInitSubMenuData[0] = 0;
+    sInitSubMenuData[1] = 0;
+    gFieldCallback2 = FieldCB_ReturnToFieldKeyItemsMenu;
 }
 
 void Task_ShowStartMenu(u8 taskId)
@@ -636,40 +729,76 @@ void Task_ShowStartMenu(u8 taskId)
 
 void ShowStartMenu(void)
 {
+    ShowSubMenu(StartMenuTask, Task_ShowStartMenu);
+}
+
+void Task_ShowKeyItemsMenu(u8 taskId)
+{
+    struct Task *task = &gTasks[taskId];
+
+    switch(task->data[0])
+    {
+    case 0:
+        // TODO: Do I need to block this on the Union Room?
+        // if (InUnionRoom() == TRUE)
+        //     SetUsingUnionRoomStartMenu();
+
+        gMenuCallback = HandleKeyItemsMenuInput;
+        task->data[0]++;
+        break;
+    case 1:
+        if (gMenuCallback() == TRUE)
+            DestroyTask(taskId);
+        break;
+    }
+}
+
+void ShowKeyItemsMenu(void)
+{
+    ShowSubMenu(KeyItemsMenuTask, Task_ShowKeyItemsMenu);
+}
+
+void ShowSubMenu(TaskFunc currFunc, TaskFunc followupFunc)
+{
     if (!IsOverworldLinkActive())
     {
         FreezeObjectEvents();
         PlayerFreeze();
         StopPlayerAvatar();
     }
-    CreateStartMenuTask(Task_ShowStartMenu);
+    CreateSubMenuTask(currFunc, followupFunc);
     LockPlayerFieldControls();
 }
 
-static bool8 HandleStartMenuInput(void)
+void HandleSubMenuInput(void)
 {
     if (JOY_NEW(DPAD_UP))
     {
         PlaySE(SE_SELECT);
-        sStartMenuCursorPos = Menu_MoveCursor(-1);
+        sSubMenuCursorPos = Menu_MoveCursor(-1);
     }
 
     if (JOY_NEW(DPAD_DOWN))
     {
         PlaySE(SE_SELECT);
-        sStartMenuCursorPos = Menu_MoveCursor(1);
+        sSubMenuCursorPos = Menu_MoveCursor(1);
     }
+}
+
+static bool8 HandleStartMenuInput(void)
+{
+    HandleSubMenuInput();
 
     if (JOY_NEW(A_BUTTON))
     {
         PlaySE(SE_SELECT);
-        if (sStartMenuItems[sCurrentStartMenuActions[sStartMenuCursorPos]].func.u8_void == StartMenuPokedexCallback)
+        if (sStartMenuItems[sCurrentSubMenuActions[sSubMenuCursorPos]].func.u8_void == StartMenuPokedexCallback)
         {
             if (GetNationalPokedexCount(FLAG_GET_SEEN) == 0)
                 return FALSE;
         }
 
-        gMenuCallback = sStartMenuItems[sCurrentStartMenuActions[sStartMenuCursorPos]].func.u8_void;
+        gMenuCallback = sStartMenuItems[sCurrentSubMenuActions[sSubMenuCursorPos]].func.u8_void;
 
         if (gMenuCallback != StartMenuSaveCallback
             && gMenuCallback != StartMenuExitCallback
@@ -686,7 +815,33 @@ static bool8 HandleStartMenuInput(void)
     if (JOY_NEW(START_BUTTON | B_BUTTON))
     {
         RemoveExtraStartMenuWindows();
-        HideStartMenu();
+        HideSubMenu(TRUE);
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+static bool8 HandleKeyItemsMenuInput(void)
+{
+    HandleSubMenuInput();
+
+    if (JOY_NEW(A_BUTTON))
+    {
+        PlaySE(SE_SELECT);
+
+        // Try to use the Key Item selected
+        UseRegisteredKeyItemOnField(GetRegisteredItem(sSubMenuCursorPos));
+
+        // If a Key Item was used, we need to keep the player's controls locked until after the item effect is done. Otherwise, just close the menu.
+        HideSubMenu(FALSE);
+
+        return TRUE;
+    }
+
+    if (JOY_NEW(B_BUTTON))
+    {
+        HideSubMenu(TRUE);
         return TRUE;
     }
 
@@ -804,7 +959,7 @@ static bool8 StartMenuOptionCallback(void)
 static bool8 StartMenuExitCallback(void)
 {
     RemoveExtraStartMenuWindows();
-    HideStartMenu(); // Hide start menu
+    HideSubMenu(TRUE); // Hide start menu
 
     return TRUE;
 }
@@ -825,7 +980,7 @@ return TRUE;
 static bool8 StartMenuSafariZoneRetireCallback(void)
 {
     RemoveExtraStartMenuWindows();
-    HideStartMenu();
+    HideSubMenu(TRUE);
     SafariZoneRetirePrompt();
 
     return TRUE;
@@ -834,8 +989,8 @@ static bool8 StartMenuSafariZoneRetireCallback(void)
 static void HideStartMenuDebug(void)
 {
     PlaySE(SE_SELECT);
-    ClearStdWindowAndFrame(GetStartMenuWindowId(), TRUE);
-    RemoveStartMenuWindow();
+    ClearStdWindowAndFrame(GetSubMenuWindowId(), TRUE);
+    RemoveSubMenuWindow();
 }
 
 static bool8 StartMenuLinkModePlayerNameCallback(void)
@@ -864,7 +1019,7 @@ void ShowBattlePyramidStartMenu(void)
 {
     ClearDialogWindowAndFrameToTransparent(0, FALSE);
     ScriptUnfreezeObjectEvents();
-    CreateStartMenuTask(Task_ShowStartMenu);
+    CreateSubMenuTask(StartMenuTask, Task_ShowStartMenu);
     LockPlayerFieldControls();
 }
 
@@ -1054,8 +1209,8 @@ static bool8 SaveErrorTimer(void)
 
 static u8 SaveConfirmSaveCallback(void)
 {
-    ClearStdWindowAndFrame(GetStartMenuWindowId(), FALSE);
-    RemoveStartMenuWindow();
+    ClearStdWindowAndFrame(GetSubMenuWindowId(), FALSE);
+    RemoveSubMenuWindow();
     ShowSaveInfoWindow();
 
     if (InBattlePyramid())
@@ -1235,8 +1390,8 @@ static void InitBattlePyramidRetire(void)
 
 static u8 BattlePyramidConfirmRetireCallback(void)
 {
-    ClearStdWindowAndFrame(GetStartMenuWindowId(), FALSE);
-    RemoveStartMenuWindow();
+    ClearStdWindowAndFrame(GetSubMenuWindowId(), FALSE);
+    RemoveSubMenuWindow();
     ShowSaveMessage(gText_BattlePyramidConfirmRetire, BattlePyramidRetireYesNoCallback);
 
     return SAVE_IN_PROGRESS;
@@ -1488,18 +1643,22 @@ void SaveForBattleTowerLink(void)
 
 #undef tInBattleTower
 
-static void HideStartMenuWindow(void)
+// Hides the sub menu (we don't unlock the player's controls here because some menus (like key items) need to keep them locked)
+static void HideSubMenuWindow(void)
 {
-    ClearStdWindowAndFrame(GetStartMenuWindowId(), TRUE);
-    RemoveStartMenuWindow();
+    ClearStdWindowAndFrame(GetSubMenuWindowId(), TRUE);
+    RemoveSubMenuWindow();
     ScriptUnfreezeObjectEvents();
-    UnlockPlayerFieldControls();
 }
 
-void HideStartMenu(void)
+void HideSubMenu(bool8 unlockControls)
 {
     PlaySE(SE_SELECT);
-    HideStartMenuWindow();
+    HideSubMenuWindow();
+    if (unlockControls)
+    {
+        UnlockPlayerFieldControls();
+    }
 }
 
 void AppendToList(u8 *list, u8 *pos, u8 newEntry)

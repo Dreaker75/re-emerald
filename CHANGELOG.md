@@ -1,6 +1,9 @@
 # Re:Emerald Changelog
 
 ## In-development
+**Update 16**
+- Added the ability to register up to 8 Key Items
+
 **Update 15**
 - Fixed a bug that caused a bad Pokemon to appear when fishing in a place without encounters
 
