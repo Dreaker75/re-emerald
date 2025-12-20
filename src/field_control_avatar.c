@@ -256,17 +256,11 @@ int ProcessPlayerFieldInput(struct FieldInput *input)
             return TRUE;
         }
     }
-    
-    // ADDED: Toggles the running shoes' speed
-    if (input->pressedRButton == TRUE && FlagGet(FLAG_SYS_B_DASH)){
-        FlagToggle(FLAG_SYS_IS_RUNNING_TOGGLED);
-        if(FlagGet(FLAG_SYS_IS_RUNNING_TOGGLED)){
-            PlaySE(SE_PC_LOGIN);
-        }
-        else{
-            PlaySE(SE_PC_OFF);
-        }
-        return FALSE;
+
+    if (input->pressedRButton == TRUE){
+        PlaySE(SE_WIN_OPEN);
+        ShowShortcutsMenu();
+        return TRUE;
     }
 
 #if DEBUG_OVERWORLD_MENU == TRUE && DEBUG_OVERWORLD_IN_MENU == FALSE

@@ -31,8 +31,13 @@ bool8 SetUpFieldMove_SweetScent(void)
 
 static void FieldCallback_SweetScent(void)
 {
+    FieldCallback_SweetScentSetup(GetCursorSelectionMonId());
+}
+
+void FieldCallback_SweetScentSetup(u8 monIndex)
+{
     FieldEffectStart(FLDEFF_SWEET_SCENT);
-    gFieldEffectArguments[0] = GetCursorSelectionMonId();
+    gFieldEffectArguments[0] = monIndex;
 }
 
 bool8 FldEff_SweetScent(void)

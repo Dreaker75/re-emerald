@@ -271,6 +271,11 @@ extern const u8 gText_Peak[];
 extern const u8 gText_GameVersion[];
 extern const u8 gText_SafariBallStock[];
 extern const u8 gText_BattlePyramidFloor[];
+extern const u8 gText_MenuPreventEncounters[];
+extern const u8 gText_MenuSweetScent[];
+extern const u8 gText_MenuAutoRun[];
+extern const u8 gText_MenuExitDungeon[];
+extern const u8 gText_MenuFastTravel[];
 
 extern const u8 gText_MenuOptionPokedex[];
 extern const u8 gText_MenuOptionPokemon[];

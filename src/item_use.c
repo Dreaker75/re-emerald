@@ -1039,18 +1039,7 @@ void Task_UseDigEscapeRopeOnField(u8 taskId)
 
 static void ItemUseOnFieldCB_EscapeRope(u8 taskId)
 {
-    Overworld_ResetStateAfterDigEscRope();
-    if (I_KEY_ESCAPE_ROPE < GEN_8)
-    {
-        RemoveUsedItem();
-    }
-    else
-    {
-        CopyItemName(gSpecialVar_ItemId, gStringVar2);
-        StringExpandPlaceholders(gStringVar4, gText_PlayerUsedVar2);
-    }
-    gTasks[taskId].data[0] = 0;
-    DisplayItemMessageOnField(taskId, gStringVar4, Task_UseDigEscapeRopeOnField);
+    UseEscapeRope(taskId);
 }
 
 bool8 CanUseDigOrEscapeRopeOnCurMap(void)
@@ -1072,6 +1061,14 @@ void ItemUseOutOfBattle_EscapeRope(u8 taskId)
     {
         DisplayDadsAdviceCannotUseItemMessage(taskId, gTasks[taskId].tUsingRegisteredKeyItem);
     }
+}
+
+void ItemUseShortcut_EscapeRope(u8 taskId)
+{
+    // We set gSpecialVar_ItemId because it's used in other parts of the code and we don't want to break anything by mistake
+    gSpecialVar_ItemId = ITEM_ESCAPE_ROPE;
+
+    UseEscapeRope(taskId);
 }
 
 void ItemUseOutOfBattle_EvolutionStone(u8 taskId)
@@ -1505,3 +1502,21 @@ void Task_ItemUse_CloseMessageBoxAndReturnToField_VsSeeker(u8 taskId)
 }
 
 #undef tUsingRegisteredKeyItem
+
+#pragma region HELPER FUNCTIONS
+void UseEscapeRope(u8 taskId)
+{
+    Overworld_ResetStateAfterDigEscRope();
+    if (I_KEY_ESCAPE_ROPE < GEN_8)
+    {
+        RemoveUsedItem();
+    }
+    else
+    {
+        CopyItemName(gSpecialVar_ItemId, gStringVar2);
+        StringExpandPlaceholders(gStringVar4, gText_PlayerUsedVar2);
+    }
+    gTasks[taskId].data[0] = 0;
+    DisplayItemMessageOnField(taskId, gStringVar4, Task_UseDigEscapeRopeOnField);
+}
+#pragma endregion

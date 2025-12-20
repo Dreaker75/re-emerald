@@ -502,6 +502,13 @@ u8 AddKeyItemsMenuWindow(u8 numActions)
     return sSubMenuWindowId;
 }
 
+u8 AddShortcutsMenuWindow(u8 numActions)
+{
+    if (sSubMenuWindowId == WINDOW_NONE)
+        sSubMenuWindowId = AddWindowParameterized(0, 19, 1, 10, (numActions * 2) + 2, 15, 0x139);
+    return sSubMenuWindowId;
+}
+
 u8 GetSubMenuWindowId(void)
 {
     return sSubMenuWindowId;

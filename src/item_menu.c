@@ -18,6 +18,7 @@
 #include "graphics.h"
 #include "gpu_regs.h"
 #include "international_string_util.h"
+#include "item_menu.h"
 #include "item_menu_icons.h"
 #include "item_use.h"
 #include "lilycove_lady.h"
@@ -1816,6 +1817,14 @@ static void ItemMenu_UseOutOfBattle(u8 taskId)
             else
                 ItemUseOutOfBattle_Berry(taskId);
         }
+    }
+}
+
+void UseItemFromShortcutMenu(u16 itemId)
+{
+    if (itemId == ITEM_ESCAPE_ROPE)
+    {
+        CreateTask(ItemUseShortcut_EscapeRope, 8);
     }
 }
 

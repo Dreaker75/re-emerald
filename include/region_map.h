@@ -113,10 +113,13 @@ void PokedexAreaScreen_UpdateRegionMapVariablesAndVideoRegs(s16 x, s16 y);
 void CB2_OpenFlyMap(void);
 void OpenFastTravelMap(void);
 void CB2_OpenTeleportMap(void);
+void OpenFastTravelMapFromShortcut(u8 isFlying, u8 monIndex);
 bool8 IsRegionMapZoomed(void);
 void TrySetPlayerIconBlink(void);
 void BlendRegionMap(u16 color, u32 coeff);
 void SetRegionMapDataForZoom(void);
+bool8 IsWarpingFromShortcuts(void);
+u8 GetMonUsingFieldMoveIndex(void);
 
 extern const struct RegionMapLocation gRegionMapEntries[];
 

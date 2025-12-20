@@ -20,6 +20,7 @@
 #include "palette.h"
 #include "party_menu.h"
 #include "pokemon.h"
+#include "region_map.h"
 #include "script.h"
 #include "sound.h"
 #include "sprite.h"
@@ -1363,9 +1364,11 @@ static void Task_UseFly(u8 taskId)
         if (!IsWeatherNotFadingIn())
             return;
 
-        gFieldEffectArguments[0] = GetCursorSelectionMonId();
-        if ((int)gFieldEffectArguments[0] > PARTY_SIZE - 1)
+        gFieldEffectArguments[0] = IsWarpingFromShortcuts() ? GetMonUsingFieldMoveIndex() : GetCursorSelectionMonId();
+        if ((int)gFieldEffectArguments[0] >= PARTY_SIZE)
+        {
             gFieldEffectArguments[0] = 0;
+        }
 
         FieldEffectStart(FLDEFF_USE_FLY);
         task->data[0]++;

@@ -14,15 +14,18 @@
 #include "field_specials.h"
 #include "field_weather.h"
 #include "field_screen_effect.h"
+#include "fldeff.h"
 #include "frontier_pass.h"
 #include "frontier_util.h"
 #include "gpu_regs.h"
 #include "international_string_util.h"
 #include "item_menu.h"
+#include "item_use.h"
 #include "link.h"
 #include "load_save.h"
 #include "main.h"
 #include "menu.h"
+#include "constants/moves.h"
 #include "new_game.h"
 #include "option_menu.h"
 #include "overworld.h"
@@ -30,6 +33,7 @@
 #include "party_menu.h"
 #include "pokedex.h"
 #include "pokenav.h"
+#include "region_map.h"
 #include "registered_items.h"
 #include "safari_zone.h"
 #include "save.h"
@@ -46,6 +50,7 @@
 #include "window.h"
 #include "union_room.h"
 #include "constants/battle_frontier.h"
+#include "constants/menus.h"
 #include "constants/rgb.h"
 #include "constants/songs.h"
 
@@ -81,6 +86,16 @@ enum
     SAVE_ERROR
 };
 
+// Shortcuts menu actions
+enum
+{
+    MENU_ACTION_PREVENT_ENCOUNTERS,
+    MENU_ACTION_SWEET_SCENT,
+    MENU_ACTION_AUTO_RUN_TOGGLE,
+    MENU_ACTION_EXIT_DUNGEON,
+    MENU_ACTION_FAST_TRAVEL
+};
+
 // IWRAM common
 bool8 (*gMenuCallback)(void);
 
@@ -97,6 +112,7 @@ EWRAM_DATA static u8 (*sSaveDialogCallback)(void) = NULL;
 EWRAM_DATA static u8 sSaveDialogTimer = 0;
 EWRAM_DATA static bool8 sSavingComplete = FALSE;
 EWRAM_DATA static u8 sSaveInfoWindowId = 0;
+u8 sMenuOpened = MENU_NONE;
 
 // Menu action callbacks
 static bool8 StartMenuPokedexCallback(void);
@@ -113,6 +129,13 @@ static bool8 StartMenuBattlePyramidRetireCallback(void);
 static bool8 StartMenuBattlePyramidBagCallback(void);
 static bool8 StartMenuDebugCallback(void);
 
+// Shortcuts menu action callbacks
+static bool8 ShortcutsMenuPreventEncountersCallback(void);
+static bool8 ShortcutsMenuSweetScentCallback(void);
+static bool8 ShortcutsMenuAutoRunToggleCallback(void);
+static bool8 ShortcutsMenuExitDungeonCallback(void);
+static bool8 ShortcutsMenuFastTravelCallback(void);
+
 // Menu callbacks
 static bool8 SaveStartCallback(void);
 static bool8 SaveCallback(void);
@@ -122,6 +145,7 @@ static bool8 BattlePyramidRetireCallback(void);
 void HandleSubMenuInput(void);
 static bool8 HandleStartMenuInput(void);
 static bool8 HandleKeyItemsMenuInput(void);
+static bool8 HandleShortcutsMenuInput(void);
 
 // Save dialog callbacks
 static u8 SaveConfirmSaveCallback(void);
@@ -143,11 +167,12 @@ static u8 BattlePyramidRetireInputCallback(void);
 // Task callbacks
 static void StartMenuTask(u8 taskId);
 static void KeyItemsMenuTask(u8 taskId);
+static void ShortcutsMenuTask(u8 taskId);
 static void SaveGameTask(u8 taskId);
 static void Task_SaveAfterLinkBattle(u8 taskId);
 static void Task_WaitForBattleTowerLinkSave(u8 taskId);
 static bool8 FieldCB_ReturnToFieldStartMenu(void);
-static bool8 FieldCB_ReturnToFieldKeyItemsMenu(void);
+static bool8 FieldCB_ReturnToFieldShortcutsMenu(void);
 
 static const struct WindowTemplate sWindowTemplate_GameVersion = {
     .bg = 0,
@@ -221,6 +246,24 @@ static const struct MenuAction sStartMenuItems[] =
     [MENU_ACTION_DEBUG]           = {sText_MenuDebug,   {.u8_void = StartMenuDebugCallback}},
 };
 
+static const struct MenuAction sShortcutsMenuItems[] =
+{
+    [MENU_ACTION_PREVENT_ENCOUNTERS] = {gText_MenuPreventEncounters, {.u8_void = ShortcutsMenuPreventEncountersCallback}},
+    [MENU_ACTION_SWEET_SCENT]        = {gText_MenuSweetScent,        {.u8_void = ShortcutsMenuSweetScentCallback}},
+    [MENU_ACTION_AUTO_RUN_TOGGLE]    = {gText_MenuAutoRun,           {.u8_void = ShortcutsMenuAutoRunToggleCallback}},
+    [MENU_ACTION_EXIT_DUNGEON]       = {gText_MenuExitDungeon,       {.u8_void = ShortcutsMenuExitDungeonCallback}},
+    [MENU_ACTION_FAST_TRAVEL]        = {gText_MenuFastTravel,        {.u8_void = ShortcutsMenuFastTravelCallback}},
+};
+
+static bool8 bShortcutsMenuItemsUsable[] =
+    {
+        [MENU_ACTION_PREVENT_ENCOUNTERS] = FALSE,
+        [MENU_ACTION_SWEET_SCENT]        = FALSE,
+        [MENU_ACTION_AUTO_RUN_TOGGLE]    = FALSE,
+        [MENU_ACTION_EXIT_DUNGEON]       = FALSE,
+        [MENU_ACTION_FAST_TRAVEL]        = FALSE,
+    };
+
 static const struct BgTemplate sBgTemplates_LinkBattleSave[] =
 {
     {
@@ -276,8 +319,10 @@ static void ShowPyramidFloorWindow(void);
 static void RemoveExtraStartMenuWindows(void);
 static bool32 PrintStartMenuActions(s8 *pIndex, u32 count);
 static bool32 PrintKeyItemsMenuActions(s8 *pIndex, u32 count);
+static bool32 PrintShortcutsMenuActions(s8 *pIndex, u32 count);
 static bool32 InitStartMenuStep(void);
 static bool32 InitKeyItemsMenuStep(void);
+static bool32 InitShortcutsMenuStep(void);
 static void InitStartMenu(void);
 static void CreateSubMenuTask(TaskFunc currFunc, TaskFunc followupFunc);
 static void InitSave(void);
@@ -307,6 +352,7 @@ void SetDexPokemonPokenavFlags(void) // unused
 static void BuildStartMenuActions(void)
 {
     sNumSubMenuActions = 0;
+    sMenuOpened = MENU_START;
 
     if (IsOverworldLinkActive() == TRUE)
     {
@@ -343,7 +389,41 @@ static void BuildStartMenuActions(void)
 
 static void BuildKeyItemsMenuActions(void)
 {
+    sNumSubMenuActions = GetAmountOfItemsRegistered();
+    sMenuOpened = MENU_KEY_ITEMS;
+}
+
+static void BuildShortcutsMenuActions(void)
+{
     sNumSubMenuActions = 0;
+    sMenuOpened = MENU_SHORTCUTS;
+
+    // Set the Prevent Encounters usable flag based on whether the player has any REPEL items
+    bShortcutsMenuItemsUsable[MENU_ACTION_PREVENT_ENCOUNTERS] = CheckBagHasItem(ITEM_REPEL, 1) ||
+                                                                CheckBagHasItem(ITEM_SUPER_REPEL, 1) ||
+                                                                CheckBagHasItem(ITEM_MAX_REPEL, 1);
+
+    // Set the Sweet Scent usable flag based on whether the player has a Pokemon that can use SWEET SCENT
+    // NOTE: Sweet Scent is usable anywhere. Might make it unusable in a location where it doesn't have an effect
+    bShortcutsMenuItemsUsable[MENU_ACTION_SWEET_SCENT] = IsMoveInParty(MOVE_SWEET_SCENT);
+
+    // Set the Auto Run usable flag based on whether the player has the Running Shoes
+    bShortcutsMenuItemsUsable[MENU_ACTION_AUTO_RUN_TOGGLE] = FlagGet(FLAG_SYS_B_DASH);
+
+    // Set the Exit Dungeon usable flag based on whether the player can use DIG or ESCAPE ROPE here, including whether they have a Pokemon with DIG or an Escape Rope
+    bShortcutsMenuItemsUsable[MENU_ACTION_EXIT_DUNGEON] = CanUseDigOrEscapeRopeOnCurMap() && (IsMoveInParty(MOVE_DIG) || CheckBagHasItem(ITEM_ESCAPE_ROPE, 1));
+
+    // Set the Fast Travel usable flag based on whether the player can use FLY or TELEPORT here, including whether they have a Pokemon with the move
+    bShortcutsMenuItemsUsable[MENU_ACTION_FAST_TRAVEL] = (CanUseTeleport() && IsMoveInParty(MOVE_TELEPORT)) || (CanUseFly() && IsMoveInParty(MOVE_FLY));
+
+    // We check whether Auto Run is enabled, and copy the appropriate string into gStringVar1
+    StringCopy(gStringVar1, (FlagGet(FLAG_SYS_B_DASH) && FlagGet(FLAG_SYS_IS_RUNNING_TOGGLED) ? COMPOUND_STRING("ON") : COMPOUND_STRING("OFF")));
+
+    AddSubMenuAction(MENU_ACTION_PREVENT_ENCOUNTERS);
+    AddSubMenuAction(MENU_ACTION_SWEET_SCENT);
+    AddSubMenuAction(MENU_ACTION_AUTO_RUN_TOGGLE);
+    AddSubMenuAction(MENU_ACTION_EXIT_DUNGEON);
+    AddSubMenuAction(MENU_ACTION_FAST_TRAVEL);
 }
 
 static void AddSubMenuAction(u8 action)
@@ -509,7 +589,7 @@ static void RemoveExtraStartMenuWindows(void)
         ClearStdWindowAndFrameToTransparent(sBattlePyramidFloorWindowId, FALSE);
         RemoveWindow(sBattlePyramidFloorWindowId);
     }
-    
+
     ClearStdWindowAndFrameToTransparent(sGameVersionWindowId, FALSE);
     RemoveWindow(sGameVersionWindowId);
 }
@@ -538,8 +618,7 @@ static bool32 PrintStartMenuActions(s8 *pIndex, u32 count)
         }
 
         count--;
-    }
-    while (count != 0);
+    } while (count != 0);
 
     *pIndex = index;
     return FALSE;
@@ -555,21 +634,45 @@ static bool32 PrintKeyItemsMenuActions(s8 *pIndex, u32 count)
         AddTextPrinterParameterized(GetSubMenuWindowId(), FONT_NORMAL, gStringVar4, 8, (index << 4) + 9, TEXT_SKIP_DRAW, NULL);
 
         index++;
-        if (index >= GetAmountOfItemsRegistered())
+        if (index >= sNumSubMenuActions)
         {
             *pIndex = index;
             return TRUE;
         }
 
         count--;
-    }
-    while (count != 0);
+    } while (count != 0);
 
     *pIndex = index;
     return FALSE;
 }
 
-static bool32 InitStartMenuStep(void)
+static bool32 PrintShortcutsMenuActions(s8 *pIndex, u32 count)
+{
+    s8 index = *pIndex;
+
+    do
+    {
+        StringExpandPlaceholders(gStringVar4, sShortcutsMenuItems[sCurrentSubMenuActions[index]].text);
+
+        AddTextPrinterParameterized(GetSubMenuWindowId(), FONT_NORMAL, gStringVar4, 8, (index << 4) + 9, TEXT_SKIP_DRAW, NULL);
+
+        index++;
+        if (index >= sNumSubMenuActions)
+        {
+            *pIndex = index;
+            return TRUE;
+        }
+
+        count--;
+    } while (count != 0);
+
+    *pIndex = index;
+    return FALSE;
+}
+
+// Handles the common submenu initialization steps
+bool32 InitSubMenuStep(void)
 {
     s8 state = sInitSubMenuData[0];
 
@@ -579,27 +682,18 @@ static bool32 InitStartMenuStep(void)
         sInitSubMenuData[0]++;
         break;
     case 1:
-        BuildStartMenuActions();
         sInitSubMenuData[0]++;
         break;
     case 2:
         LoadMessageBoxAndBorderGfx();
-        DrawStdWindowFrame(AddStartMenuWindow(sNumSubMenuActions), FALSE);
         sInitSubMenuData[1] = 0;
         sInitSubMenuData[0]++;
         break;
     case 3:
-        if (GetSafariZoneFlag())
-            ShowSafariBallsWindow();
-        if (InBattlePyramid())
-            ShowPyramidFloorWindow();
-        ShowGameVersionWindow();
         sInitSubMenuData[0]++;
         break;
-    case 4:
-        if (PrintStartMenuActions(&sInitSubMenuData[1], 2))
-            sInitSubMenuData[0]++;
-        break;
+    // case 4:
+    // Only increases after all Menu actions are printed
     case 5:
         sSubMenuCursorPos = InitMenuNormal(GetSubMenuWindowId(), FONT_NORMAL, 0, 9, 16, sNumSubMenuActions, sSubMenuCursorPos);
         CopyWindowToVram(GetSubMenuWindowId(), COPYWIN_MAP);
@@ -609,36 +703,83 @@ static bool32 InitStartMenuStep(void)
     return FALSE;
 }
 
+static bool32 InitStartMenuStep(void)
+{
+    s8 state = sInitSubMenuData[0];
+
+    switch (state)
+    {
+    case 1:
+        BuildStartMenuActions();
+        break;
+    case 2:
+        DrawStdWindowFrame(AddStartMenuWindow(sNumSubMenuActions), FALSE);
+        break;
+    case 3:
+        if (GetSafariZoneFlag())
+            ShowSafariBallsWindow();
+        if (InBattlePyramid())
+            ShowPyramidFloorWindow();
+        ShowGameVersionWindow();
+        break;
+    case 4:
+        if (PrintStartMenuActions(&sInitSubMenuData[1], 2))
+            sInitSubMenuData[0]++;
+        break;
+    // case 5:
+    }
+
+    return InitSubMenuStep();
+}
+
 static bool32 InitKeyItemsMenuStep(void)
 {
     s8 state = sInitSubMenuData[0];
 
     switch (state)
     {
-    case 0:
-        sInitSubMenuData[0]++;
-        break;
+    // case 0:
+    //     break;
     case 1:
         BuildKeyItemsMenuActions();
-        sInitSubMenuData[0]++;
         break;
     case 2:
-        LoadMessageBoxAndBorderGfx();
-        DrawStdWindowFrame(AddKeyItemsMenuWindow(GetAmountOfItemsRegistered()), FALSE);
-        sInitSubMenuData[1] = 0;
-        sInitSubMenuData[0]++;
+        DrawStdWindowFrame(AddKeyItemsMenuWindow(sNumSubMenuActions), FALSE);
         break;
-    case 3:
+    // case 3:
+    // Only the Start Menu has extra functionality here
+    case 4:
         if (PrintKeyItemsMenuActions(&sInitSubMenuData[1], 2))
             sInitSubMenuData[0]++;
         break;
-    case 4:
-        sSubMenuCursorPos = InitMenuNormal(GetSubMenuWindowId(), FONT_NORMAL, 0, 9, 16, GetAmountOfItemsRegistered(), sSubMenuCursorPos);
-        CopyWindowToVram(GetSubMenuWindowId(), COPYWIN_MAP);
-        return TRUE;
+    // case 5:
     }
 
-    return FALSE;
+    return InitSubMenuStep();
+}
+
+static bool32 InitShortcutsMenuStep(void)
+{
+    s8 state = sInitSubMenuData[0];
+
+    switch (state)
+    {
+    case 1:
+        BuildShortcutsMenuActions();
+        break;
+    case 2:
+        DrawStdWindowFrame(AddShortcutsMenuWindow(sNumSubMenuActions), FALSE);
+        break;
+    // case 3:
+    // Only the Start Menu has extra functionality here
+    case 4:
+        if (PrintShortcutsMenuActions(&sInitSubMenuData[1], 2))
+            sInitSubMenuData[0]++;
+        break;
+    // case 5:
+    }
+
+    return InitSubMenuStep();
 }
 
 static void InitStartMenu(void)
@@ -661,6 +802,12 @@ static void KeyItemsMenuTask(u8 taskId)
         SwitchTaskToFollowupFunc(taskId);
 }
 
+static void ShortcutsMenuTask(u8 taskId)
+{
+    if (InitShortcutsMenuStep() == TRUE)
+        SwitchTaskToFollowupFunc(taskId);
+}
+
 static void CreateSubMenuTask(TaskFunc currFunc, TaskFunc followupFunc)
 {
     u8 taskId;
@@ -671,6 +818,19 @@ static void CreateSubMenuTask(TaskFunc currFunc, TaskFunc followupFunc)
     SetTaskFuncWithFollowupFunc(taskId, currFunc, followupFunc);
 }
 
+static bool8 FieldCB_ReturnToFieldSubMenu(void)
+{
+    switch (sMenuOpened)
+    {
+    case MENU_START:
+        return FieldCB_ReturnToFieldStartMenu();
+    case MENU_SHORTCUTS:
+        return FieldCB_ReturnToFieldShortcutsMenu();
+    default:
+        return FALSE;
+    }
+}
+
 static bool8 FieldCB_ReturnToFieldStartMenu(void)
 {
     if (InitStartMenuStep() == FALSE)
@@ -678,84 +838,107 @@ static bool8 FieldCB_ReturnToFieldStartMenu(void)
         return FALSE;
     }
 
-    ReturnToFieldOpenStartMenu();
+    ReturnToFieldOpenSubMenu();
     return TRUE;
 }
 
-static bool8 FieldCB_ReturnToFieldKeyItemsMenu(void)
+static bool8 FieldCB_ReturnToFieldShortcutsMenu(void)
 {
-    if (InitKeyItemsMenuStep() == FALSE)
+    if (InitShortcutsMenuStep() == FALSE)
     {
         return FALSE;
     }
 
-    ReturnToFieldOpenStartMenu();
+    ReturnToFieldOpenSubMenu();
     return TRUE;
+}
+
+void ShowReturnToFieldSubMenu(void)
+{
+    sInitSubMenuData[0] = 0;
+    sInitSubMenuData[1] = 0;
+    gFieldCallback2 = FieldCB_ReturnToFieldSubMenu;
 }
 
 void ShowReturnToFieldStartMenu(void)
 {
-    sInitSubMenuData[0] = 0;
-    sInitSubMenuData[1] = 0;
-    gFieldCallback2 = FieldCB_ReturnToFieldStartMenu;
+    sMenuOpened = MENU_START;
+    ShowReturnToFieldSubMenu();
 }
 
-void ShowReturnToFieldKeyItemsMenu(void)
+void ShowReturnToFieldShortcutsMenu(void)
 {
-    sInitSubMenuData[0] = 0;
-    sInitSubMenuData[1] = 0;
-    gFieldCallback2 = FieldCB_ReturnToFieldKeyItemsMenu;
+    sMenuOpened = MENU_SHORTCUTS;
+    ShowReturnToFieldSubMenu();
 }
 
-void Task_ShowStartMenu(u8 taskId)
+void ShowLastSubMenu()
+{
+    switch (sMenuOpened)
+    {
+    case MENU_START:
+        ShowStartMenu();
+        break;
+    case MENU_KEY_ITEMS:
+        ShowKeyItemsMenu();
+        break;
+    case MENU_SHORTCUTS:
+        ShowShortcutsMenu();
+        break;
+    }
+}
+
+void Task_ShowSubMenu(u8 taskId)
 {
     struct Task *task = &gTasks[taskId];
 
     switch(task->data[0])
     {
     case 0:
-        if (InUnionRoom() == TRUE)
+        if (InUnionRoom() == TRUE && sMenuOpened == MENU_START)
             SetUsingUnionRoomStartMenu();
 
-        gMenuCallback = HandleStartMenuInput;
+        switch (sMenuOpened)
+        {
+        case MENU_KEY_ITEMS:
+            gMenuCallback = HandleKeyItemsMenuInput;
+            break;
+        case MENU_SHORTCUTS:
+            gMenuCallback = HandleShortcutsMenuInput;
+            break;
+        default:
+            gMenuCallback = HandleStartMenuInput;
+            break;
+        }
         task->data[0]++;
         break;
     case 1:
         if (gMenuCallback() == TRUE)
+        {
+            if (sMenuOpened == MENU_SHORTCUTS)
+            {
+                HideSubMenu(TRUE);
+            }
+            
             DestroyTask(taskId);
+        }
         break;
     }
 }
 
 void ShowStartMenu(void)
 {
-    ShowSubMenu(StartMenuTask, Task_ShowStartMenu);
-}
-
-void Task_ShowKeyItemsMenu(u8 taskId)
-{
-    struct Task *task = &gTasks[taskId];
-
-    switch(task->data[0])
-    {
-    case 0:
-        // TODO: Do I need to block this on the Union Room?
-        // if (InUnionRoom() == TRUE)
-        //     SetUsingUnionRoomStartMenu();
-
-        gMenuCallback = HandleKeyItemsMenuInput;
-        task->data[0]++;
-        break;
-    case 1:
-        if (gMenuCallback() == TRUE)
-            DestroyTask(taskId);
-        break;
-    }
+    ShowSubMenu(StartMenuTask, Task_ShowSubMenu);
 }
 
 void ShowKeyItemsMenu(void)
 {
-    ShowSubMenu(KeyItemsMenuTask, Task_ShowKeyItemsMenu);
+    ShowSubMenu(KeyItemsMenuTask, Task_ShowSubMenu);
+}
+
+void ShowShortcutsMenu(void)
+{
+    ShowSubMenu(ShortcutsMenuTask, Task_ShowSubMenu);
 }
 
 void ShowSubMenu(TaskFunc currFunc, TaskFunc followupFunc)
@@ -806,7 +989,7 @@ static bool8 HandleStartMenuInput(void)
             && gMenuCallback != StartMenuSafariZoneRetireCallback
             && gMenuCallback != StartMenuBattlePyramidRetireCallback)
         {
-           FadeScreen(FADE_TO_BLACK, 0);
+            FadeScreen(FADE_TO_BLACK, 0);
         }
 
         return FALSE;
@@ -842,6 +1025,36 @@ static bool8 HandleKeyItemsMenuInput(void)
     if (JOY_NEW(B_BUTTON))
     {
         HideSubMenu(TRUE);
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+static bool8 HandleShortcutsMenuInput(void)
+{
+    HandleSubMenuInput();
+
+    if (JOY_NEW(A_BUTTON))
+    {
+        // If the selected shortcut is usable, call its callback function
+        if (bShortcutsMenuItemsUsable[sCurrentSubMenuActions[sSubMenuCursorPos]])
+        {
+            PlaySE(SE_SELECT);
+
+            gMenuCallback = sShortcutsMenuItems[sCurrentSubMenuActions[sSubMenuCursorPos]].func.u8_void;
+        }
+        else
+        {
+            PlaySE(SE_FAILURE);
+        }
+
+        return FALSE;
+    }
+
+    if (JOY_NEW(B_BUTTON))
+    {
+        // It reaches here properly after coming back from fast travel, so the TRUE is no longer working correctly somehow
         return TRUE;
     }
 
@@ -901,7 +1114,7 @@ static bool8 StartMenuPokeNavCallback(void)
         PlayRainStoppingSoundEffect();
         RemoveExtraStartMenuWindows();
         CleanupOverworldWindowsAndTilemaps();
-        SetMainCallback2(CB2_InitPokeNav);  // Display PokéNav
+        SetMainCallback2(CB2_InitPokeNav); // Display PokéNav
 
         return TRUE;
     }
@@ -974,7 +1187,7 @@ static bool8 StartMenuDebugCallback(void)
     Debug_ShowMainMenu();
 #endif
 
-return TRUE;
+    return TRUE;
 }
 
 static bool8 StartMenuSafariZoneRetireCallback(void)
@@ -1019,7 +1232,7 @@ void ShowBattlePyramidStartMenu(void)
 {
     ClearDialogWindowAndFrameToTransparent(0, FALSE);
     ScriptUnfreezeObjectEvents();
-    CreateSubMenuTask(StartMenuTask, Task_ShowStartMenu);
+    CreateSubMenuTask(StartMenuTask, Task_ShowSubMenu);
     LockPlayerFieldControls();
 }
 
@@ -1058,7 +1271,7 @@ static bool8 SaveCallback(void)
         gMenuCallback = HandleStartMenuInput;
         return FALSE;
     case SAVE_SUCCESS:
-    case SAVE_ERROR:    // Close start menu
+    case SAVE_ERROR: // Close start menu
         ClearDialogWindowAndFrameToTransparent(0, TRUE);
         ScriptUnfreezeObjectEvents();
         UnlockPlayerFieldControls();
@@ -1104,6 +1317,89 @@ static bool8 BattlePyramidRetireCallback(void)
     }
 
     return FALSE;
+}
+
+static bool8 ShortcutsMenuPreventEncountersCallback(void)
+{
+    // SetMainCallback2(DrawSprayMenu);
+
+    return FALSE;
+}
+
+static bool8 ShortcutsMenuSweetScentCallback(void)
+{
+    // We call the Sweet Scent setup passing the first Pokemon in the party that knows the move
+    FieldCallback_SweetScentSetup(GetFirstMonWithMoveInParty(MOVE_SWEET_SCENT));
+    
+    return TRUE;
+}
+
+// Returns TRUE if the menu should close, FALSE if it should stay open
+static bool8 ShortcutsMenuAutoRunToggleCallback(void)
+{
+    // Toggles the running shoes' speed
+    FlagToggle(FLAG_SYS_IS_RUNNING_TOGGLED);
+    if (FlagGet(FLAG_SYS_IS_RUNNING_TOGGLED))
+    {
+        PlaySE(SE_PC_LOGIN);
+        // Added 2 extra spaces at the end to clear up the "OFF" leftover text
+        StringCopy(gStringVar1, COMPOUND_STRING("ON  "));
+    }
+    else
+    {
+        PlaySE(SE_PC_OFF);
+        StringCopy(gStringVar1, COMPOUND_STRING("OFF"));
+    }
+
+    // Redraw the Auto Run menu line
+    StringExpandPlaceholders(gStringVar4, sShortcutsMenuItems[sCurrentSubMenuActions[MENU_ACTION_AUTO_RUN_TOGGLE]].text);
+    AddTextPrinterParameterized(GetSubMenuWindowId(), FONT_NORMAL, gStringVar4, 8, (MENU_ACTION_AUTO_RUN_TOGGLE << 4) + 9, TEXT_SKIP_DRAW, NULL);
+    sSubMenuCursorPos = InitMenuNormal(GetSubMenuWindowId(), FONT_NORMAL, 0, 9, 16, sNumSubMenuActions, sSubMenuCursorPos);
+    CopyWindowToVram(GetSubMenuWindowId(), COPYWIN_MAP);
+
+    gMenuCallback = HandleShortcutsMenuInput;
+
+    return FALSE;
+}
+
+static bool8 ShortcutsMenuExitDungeonCallback(void)
+{
+    // Check to see if the player can use DIG here. If they can, use it.
+    if (IsMoveInParty(MOVE_DIG))
+    {
+        FieldCallback_DigSetup(GetFirstMonWithMoveInParty(MOVE_DIG));
+        return TRUE;
+    }
+    // If they can't, check to see if they can use ESCAPE ROPE here. If they can, use it.
+    else if (CheckBagHasItem(ITEM_ESCAPE_ROPE, 1))
+    {
+        // We hide the submenu now because the window is used when using an item
+        UseItemFromShortcutMenu(ITEM_ESCAPE_ROPE);
+        return TRUE;
+    }
+    
+    // If they can't, then do nothing and return (Though this is checked beforehand)
+    return FALSE;
+}
+
+static bool8 ShortcutsMenuFastTravelCallback(void)
+{
+    // Check to see if the player can use FLY here. If they can, use it.
+    if (CanUseFly() && IsMoveInParty(MOVE_FLY))
+    {
+        // Open the Fly map here
+        OpenFastTravelMapFromShortcut(TRUE, GetFirstMonWithMoveInParty(MOVE_FLY));
+        return TRUE;
+    }
+    // If they can't, check to see if they can use TELEPORT here. If they can, use it.
+    if (CanUseTeleport() && IsMoveInParty(MOVE_TELEPORT))
+    {
+        // Open the Teleport map here
+        OpenFastTravelMapFromShortcut(FALSE, GetFirstMonWithMoveInParty(MOVE_TELEPORT));
+        return TRUE;
+    }
+
+    return TRUE;
 }
 
 static void InitSave(void)
@@ -1489,13 +1785,13 @@ static void Task_SaveAfterLinkBattle(u8 taskId)
         case 0:
             FillWindowPixelBuffer(0, PIXEL_FILL(1));
             AddTextPrinterParameterized2(0,
-                                        FONT_NORMAL,
-                                        gText_SavingDontTurnOffPower,
-                                        TEXT_SKIP_DRAW,
-                                        NULL,
-                                        TEXT_COLOR_DARK_GRAY,
-                                        TEXT_COLOR_WHITE,
-                                        TEXT_COLOR_LIGHT_GRAY);
+                                         FONT_NORMAL,
+                                         gText_SavingDontTurnOffPower,
+                                         TEXT_SKIP_DRAW,
+                                         NULL,
+                                         TEXT_COLOR_DARK_GRAY,
+                                         TEXT_COLOR_WHITE,
+                                         TEXT_COLOR_LIGHT_GRAY);
             DrawTextBorderOuter(0, 8, 14);
             PutWindowTilemap(0);
             CopyWindowToVram(0, COPYWIN_FULL);
@@ -1571,7 +1867,7 @@ static void ShowSaveInfoWindow(void)
     DrawStdWindowFrame(sSaveInfoWindowId, FALSE);
 
     gender = gSaveBlock2Ptr->playerGender;
-    color = TEXT_COLOR_RED;  // Red when female, blue when male.
+    color = TEXT_COLOR_RED; // Red when female, blue when male.
 
     if (gender == MALE)
     {
@@ -1659,6 +1955,7 @@ void HideSubMenu(bool8 unlockControls)
     {
         UnlockPlayerFieldControls();
     }
+    sMenuOpened = MENU_NONE;
 }
 
 void AppendToList(u8 *list, u8 *pos, u8 newEntry)

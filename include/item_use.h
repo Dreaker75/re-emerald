@@ -26,6 +26,7 @@ void ItemUseOutOfBattle_TMHM(u8);
 void ItemUseOutOfBattle_Repel(u8);
 void ItemUseOutOfBattle_Lure(u8);
 void ItemUseOutOfBattle_EscapeRope(u8);
+void ItemUseShortcut_EscapeRope(u8);
 void ItemUseOutOfBattle_BlackWhiteFlute(u8);
 void ItemUseOutOfBattle_EvolutionStone(u8);
 void ItemUseOutOfBattle_Berry(u8);
@@ -47,6 +48,9 @@ u8 CheckIfItemIsTMHMOrEvolutionStone(u16 itemId);
 void FieldUseFunc_VsSeeker(u8 taskId);
 void Task_ItemUse_CloseMessageBoxAndReturnToField_VsSeeker(u8 taskId);
 void DisplayDadsAdviceCannotUseItemMessage(u8 taskId, bool8 isUsingRegisteredKeyItemOnField);
+#pragma region HELPER FUNCTIONS
+void UseEscapeRope(u8 taskId);
+#pragma endregion
 
 enum {
     BALL_THROW_UNABLE_TWO_MONS,

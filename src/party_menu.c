@@ -360,6 +360,7 @@ static bool16 IsMonAllowedInDodrioBerryPicking(struct Pokemon *);
 static void Task_CancelParticipationYesNo(u8);
 static void Task_HandleCancelParticipationYesNoInput(u8);
 static bool8 ShouldUseChooseMonText(void);
+static bool8 CanPokemonKnowMove(struct Pokemon *, u16);
 static void SetPartyMonFieldSelectionActions(struct Pokemon *, u8);
 static void FillMenuFieldMovesList(struct Pokemon *mons, u8 slotId);
 static void FillNonMenuFieldMovesList(struct Pokemon *mons, u8 slotId);
@@ -2826,6 +2827,29 @@ static void SetPartyMonSelectionActions(struct Pokemon *mons, u8 slotId, u8 acti
     }
 }
 
+static bool8 CanPokemonKnowMove(struct Pokemon *mon, u16 move)
+{
+    return MonKnowsMove(mon, move) == TRUE ||
+           CanLearnTeachableMove(GetMonData(mon, MON_DATA_SPECIES_OR_EGG), move) == TRUE ||
+           CanLearnLevelUpMove(GetMonData(mon, MON_DATA_SPECIES_OR_EGG), move) == TRUE;
+}
+
+bool8 IsMoveInParty(u16 move)
+{
+    return GetFirstMonWithMoveInParty(move) != PARTY_SIZE;
+}
+
+u8 GetFirstMonWithMoveInParty(u16 move)
+{
+    for (u8 i = 0; i < PARTY_SIZE; i++)
+    {
+        if (CanPokemonKnowMove(&gPlayerParty[i], move))
+            return i;
+    }
+    
+    return PARTY_SIZE;
+}
+
 static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
 {
     u8 i;
@@ -2839,9 +2863,7 @@ static void SetPartyMonFieldSelectionActions(struct Pokemon *mons, u8 slotId)
     // Checks to see if this Pokemon will need the extra list of moves
     for (i = 0; i < sizeof(sFieldUsableFieldMoves) / sizeof(sFieldUsableFieldMoves[0]); i++)
     {
-        if (MonKnowsMove(&mons[slotId], sFieldMoves[sFieldUsableFieldMoves[i]]) == TRUE ||
-            CanLearnTeachableMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sFieldUsableFieldMoves[i]]) == TRUE ||
-            CanLearnLevelUpMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sFieldUsableFieldMoves[i]]) == TRUE)
+        if (CanPokemonKnowMove(&mons[slotId], sFieldMoves[sFieldUsableFieldMoves[i]]))
         {
             hasOtherMoves = TRUE;
             break;
@@ -2890,9 +2912,7 @@ static void FillMenuFieldMovesList(struct Pokemon *mons, u8 slotId)
     // Add all the field-usable moves the Pokemon can use to the actions list
     for (u8 i = 0; i < sizeof(sMenuExclusiveFieldMoves) / sizeof(sMenuExclusiveFieldMoves[0]); i++)
     {
-        if (MonKnowsMove(&mons[slotId], sFieldMoves[sMenuExclusiveFieldMoves[i]]) == TRUE ||
-            CanLearnTeachableMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sMenuExclusiveFieldMoves[i]]) == TRUE ||
-            CanLearnLevelUpMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sMenuExclusiveFieldMoves[i]]) == TRUE)
+        if(CanPokemonKnowMove(&mons[slotId], sFieldMoves[sMenuExclusiveFieldMoves[i]]))
         {
             AppendToList(sPartyMenuInternal->fieldMoves, &sPartyMenuInternal->numFieldMoves, sMenuExclusiveFieldMoves[i] + MENU_FIELD_MOVES);
         }
@@ -2907,9 +2927,7 @@ static void FillNonMenuFieldMovesList(struct Pokemon *mons, u8 slotId)
     // Add all the field-usable moves the Pokemon can use to the actions list
     for (u8 i = 0; i < sizeof(sFieldUsableFieldMoves) / sizeof(sFieldUsableFieldMoves[0]); i++)
     {
-        if (MonKnowsMove(&mons[slotId], sFieldMoves[sFieldUsableFieldMoves[i]]) == TRUE ||
-            CanLearnTeachableMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sFieldUsableFieldMoves[i]]) == TRUE ||
-            CanLearnLevelUpMove(GetMonData(&mons[slotId], MON_DATA_SPECIES_OR_EGG), sFieldMoves[sFieldUsableFieldMoves[i]]) == TRUE)
+        if (CanPokemonKnowMove(&mons[slotId], sFieldMoves[sFieldUsableFieldMoves[i]]) == TRUE)
         {
             AppendToList(sPartyMenuInternal->fieldMoves, &sPartyMenuInternal->numFieldMoves, sFieldUsableFieldMoves[i] + MENU_FIELD_MOVES);
         }
@@ -4183,12 +4201,17 @@ static void DisplayCantUseSurfMessage(void)
         DisplayPartyMenuStdMessage(PARTY_MSG_CANT_SURF_HERE);
 }
 
-static bool8 SetUpFieldMove_Fly(void)
+bool8 CanUseFly(void)
 {
     if (Overworld_MapTypeAllowsFly(gMapHeader.mapType) == TRUE)
         return TRUE;
     else
         return FALSE;
+}
+
+static bool8 SetUpFieldMove_Fly(void)
+{
+    return CanUseFly();
 }
 
 void CB2_ReturnToPartyMenuFromFlyMap(void)

@@ -2630,7 +2630,7 @@ static void Task_RunUnionRoom(u8 taskId)
         }
         break;
     case UR_STATE_WAIT_FOR_START_MENU:
-        if (!FuncIsActiveTask(Task_ShowStartMenu))
+        if (!FuncIsActiveTask(Task_ShowSubMenu))
         {
             UpdateGameData_SetActivity(ACTIVITY_NONE | IN_UNION_ROOM, 0, FALSE);
             uroom->state = UR_STATE_MAIN;

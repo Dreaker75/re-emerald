@@ -421,25 +421,31 @@ static void Task_ExitNonDoor(u8 taskId)
     }
 }
 
-static void Task_WaitForFadeShowStartMenu(u8 taskId)
+static void Task_WaitForFadeShowSubMenu(u8 taskId)
 {
     if (WaitForWeatherFadeIn() == TRUE)
     {
         DestroyTask(taskId);
-        CreateTask(Task_ShowStartMenu, 80);
+        ShowLastSubMenu();
     }
 }
 
-void ReturnToFieldOpenStartMenu(void)
+void ReturnToFieldOpenSubMenu(void)
 {
     FadeInFromBlack();
-    CreateTask(Task_WaitForFadeShowStartMenu, 0x50);
+    CreateTask(Task_WaitForFadeShowSubMenu, 0x50);
     LockPlayerFieldControls();
 }
 
 bool8 FieldCB_ReturnToFieldOpenStartMenu(void)
 {
     ShowReturnToFieldStartMenu();
+    return FALSE;
+}
+
+bool8 FieldCB_ReturnToFieldOpenShortcutsMenu(void)
+{
+    ShowReturnToFieldShortcutsMenu();
     return FALSE;
 }
 

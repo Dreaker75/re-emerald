@@ -16,23 +16,26 @@ static void StartDigFieldEffect(void);
 // text
 bool8 SetUpFieldMove_Dig(void)
 {
-    if (CanUseDigOrEscapeRopeOnCurMap() == TRUE)
-    {
-        gFieldCallback2 = FieldCallback_PrepareFadeInFromMenu;
-        gPostMenuFieldCallback = FieldCallback_Dig;
-        return TRUE;
-    }
-    else
+    if (CanUseDigOrEscapeRopeOnCurMap() == FALSE)
     {
         return FALSE;
     }
+
+    gFieldCallback2 = FieldCallback_PrepareFadeInFromMenu;
+    gPostMenuFieldCallback = FieldCallback_Dig;
+    return TRUE;
 }
 
 static void FieldCallback_Dig(void)
 {
+    FieldCallback_DigSetup(GetCursorSelectionMonId());
+}
+
+void FieldCallback_DigSetup(u8 monIndex)
+{
     Overworld_ResetStateAfterDigEscRope();
     FieldEffectStart(FLDEFF_USE_DIG);
-    gFieldEffectArguments[0] = GetCursorSelectionMonId();
+    gFieldEffectArguments[0] = monIndex;
 }
 
 bool8 FldEff_UseDig(void)

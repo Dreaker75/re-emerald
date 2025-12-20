@@ -101,5 +101,8 @@ void MoveDeleterForgetMove(void);
 void BufferMoveDeleterNicknameAndMove(void);
 void GetNumMovesSelectedMonHas(void);
 void MoveDeleterChooseMoveToForget(void);
+bool8 CanUseFly(void);
+bool8 IsMoveInParty(u16 move);
+u8 GetFirstMonWithMoveInParty(u16 move);
 
 #endif // GUARD_PARTY_MENU_H

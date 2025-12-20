@@ -20,6 +20,7 @@
 #include "field_specials.h"
 #include "fldeff.h"
 #include "region_map.h"
+#include "sub_menus.h"
 #include "constants/region_map_sections.h"
 #include "heal_location.h"
 #include "constants/field_specials.h"
@@ -82,6 +83,8 @@ static EWRAM_DATA struct {
 
 static bool32 sDrawFlyDestTextWindow;
 static bool8 sIsFlying;
+static bool8 sIsWarpingFromShortcuts;
+static u8 sMonUsingFieldMoveIndex;
 
 static u8 ProcessRegionMapInput_Full(void);
 static u8 MoveRegionMapCursor_Full(void);
@@ -520,6 +523,16 @@ static const struct SpriteTemplate sFlyDestIconSpriteTemplate =
     .affineAnims = gDummySpriteAffineAnimTable,
     .callback = SpriteCallbackDummy
 };
+
+bool8 IsWarpingFromShortcuts(void)
+{
+    return sIsWarpingFromShortcuts;
+}
+
+u8 GetMonUsingFieldMoveIndex(void)
+{
+    return sMonUsingFieldMoveIndex;
+}
 
 void InitRegionMap(struct RegionMap *regionMap, bool8 zoomed)
 {
@@ -1707,16 +1720,35 @@ bool32 IsEventIslandMapSecId(u8 mapSecId)
     return FALSE;
 }
 
+void OpenFastTravelMapFromParty(void)
+{
+    sIsWarpingFromShortcuts = FALSE;
+    sMonUsingFieldMoveIndex = GetCursorSelectionMonId();
+    OpenFastTravelMap();
+}
+
 void CB2_OpenTeleportMap(void)
 {
     sIsFlying = FALSE;
-    OpenFastTravelMap();
+    OpenFastTravelMapFromParty();
 }
 
 void CB2_OpenFlyMap(void)
 {
     sIsFlying = TRUE;
-    OpenFastTravelMap();
+    OpenFastTravelMapFromParty();
+}
+
+void OpenFastTravelMapFromShortcut(u8 isFlying, u8 monIndex)
+{
+    sIsFlying = isFlying;
+    sIsWarpingFromShortcuts = TRUE;
+    if (!sIsFlying)
+    {
+        SetUpFieldMove_Teleport();
+    }
+    sMonUsingFieldMoveIndex = monIndex;
+    SetMainCallback2(OpenFastTravelMap);
 }
 
 void OpenFastTravelMap(void)
@@ -2221,7 +2253,10 @@ static void CB_ExitFlyMap(void)
             }
             else
             {
-                SetMainCallback2(CB2_ReturnToPartyMenuFromFlyMap);
+                if (sIsWarpingFromShortcuts == TRUE)
+                    SetMainCallback2(CB2_ReturnToFieldWithOpenShortcutsMenu);
+                else
+                    SetMainCallback2(CB2_ReturnToPartyMenuFromFlyMap);
             }
             TRY_FREE_AND_SET_NULL(sFlyMap);
             FreeAllWindowBuffers();

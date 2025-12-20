@@ -1,6 +1,13 @@
 # Re:Emerald Changelog
 
 ## In-development
+**Update 17**
+- Added the Shortcuts menu, which can be opened by pressing R. Shortcuts include:
+    - Sweet Scent
+    - Running shoes toggle
+    - Dungeon exit (Dig & Escape Rope)
+    - Fast travel (Fly & Teleport)
+
 **Update 16**
 - Added the ability to register up to 8 Key Items
 
