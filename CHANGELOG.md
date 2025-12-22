@@ -1,7 +1,7 @@
 # Re:Emerald Changelog
 
 ## In-development
-**Update 17**
+**Update 17-18**
 - Added the Shortcuts menu, which can be opened by pressing R. Shortcuts include:
     - Sweet Scent
     - Running shoes toggle

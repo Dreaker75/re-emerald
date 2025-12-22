@@ -280,6 +280,11 @@ void DeactivateAllTextPrinters(void)
 
 u16 AddTextPrinterParameterized(u8 windowId, u8 fontId, const u8 *str, u8 x, u8 y, u8 speed, void (*callback)(struct TextPrinterTemplate *, u16))
 {
+    return AddTextPrinterParameterizedWithColor(windowId, fontId, str, x, y, speed, gFonts[fontId].fgColor, gFonts[fontId].shadowColor, callback);
+}
+
+u16 AddTextPrinterParameterizedWithColor(u8 windowId, u8 fontId, const u8 *str, u8 x, u8 y, u8 speed, u8 textColor, u8 shadowColor, void (*callback)(struct TextPrinterTemplate *, u16))
+{
     struct TextPrinterTemplate printerTemplate;
 
     printerTemplate.currentChar = str;
@@ -292,9 +297,9 @@ u16 AddTextPrinterParameterized(u8 windowId, u8 fontId, const u8 *str, u8 x, u8 
     printerTemplate.letterSpacing = gFonts[fontId].letterSpacing;
     printerTemplate.lineSpacing = gFonts[fontId].lineSpacing;
     printerTemplate.unk = gFonts[fontId].unk;
-    printerTemplate.fgColor = gFonts[fontId].fgColor;
+    printerTemplate.fgColor = textColor;
     printerTemplate.bgColor = gFonts[fontId].bgColor;
-    printerTemplate.shadowColor = gFonts[fontId].shadowColor;
+    printerTemplate.shadowColor = shadowColor;
     return AddTextPrinter(&printerTemplate, speed, callback);
 }
 

@@ -342,6 +342,38 @@ static void RemoveSaveInfoWindow(void);
 static void HideSubMenuWindow(void);
 static void HideStartMenuDebug(void);
 
+void DrawShortcutAction(u8 index)
+{
+    u8 textColor = TEXT_COLOR_DARK_GRAY;
+    u8 shadowColor = TEXT_COLOR_LIGHT_GRAY;
+    // If the action is unusable, draw it disabled
+    if (bShortcutsMenuItemsUsable[sCurrentSubMenuActions[index]] == FALSE)
+    {
+        textColor = TEXT_COLOR_LIGHT_RED;
+        shadowColor = TEXT_COLOR_LIGHT_GRAY;
+    }
+    // If the action is Auto Run Toggle, draw its current status
+    else if (index == MENU_ACTION_AUTO_RUN_TOGGLE)
+    {
+        if (FlagGet(FLAG_SYS_IS_RUNNING_TOGGLED))
+        {
+            // Added 2 extra spaces at the end to clear up the "OFF" leftover text
+            StringCopy(gStringVar1, COMPOUND_STRING("ON  "));
+            textColor = TEXT_COLOR_GREEN;
+            shadowColor = TEXT_COLOR_LIGHT_GREEN;
+        }
+        else
+        {
+            StringCopy(gStringVar1, COMPOUND_STRING("OFF"));
+            textColor = TEXT_COLOR_RED;
+            shadowColor = TEXT_COLOR_LIGHT_RED;
+        }
+    }
+    
+    StringExpandPlaceholders(gStringVar4, sShortcutsMenuItems[sCurrentSubMenuActions[index]].text);
+    AddTextPrinterParameterizedWithColor(GetSubMenuWindowId(), FONT_NORMAL, gStringVar4, 8, (index << 4) + 9, TEXT_SKIP_DRAW, textColor, shadowColor, NULL);
+}
+
 void SetDexPokemonPokenavFlags(void) // unused
 {
     FlagSet(FLAG_SYS_POKEDEX_GET);
@@ -653,9 +685,7 @@ static bool32 PrintShortcutsMenuActions(s8 *pIndex, u32 count)
 
     do
     {
-        StringExpandPlaceholders(gStringVar4, sShortcutsMenuItems[sCurrentSubMenuActions[index]].text);
-
-        AddTextPrinterParameterized(GetSubMenuWindowId(), FONT_NORMAL, gStringVar4, 8, (index << 4) + 9, TEXT_SKIP_DRAW, NULL);
+        DrawShortcutAction(index);
 
         index++;
         if (index >= sNumSubMenuActions)
@@ -1342,18 +1372,14 @@ static bool8 ShortcutsMenuAutoRunToggleCallback(void)
     if (FlagGet(FLAG_SYS_IS_RUNNING_TOGGLED))
     {
         PlaySE(SE_PC_LOGIN);
-        // Added 2 extra spaces at the end to clear up the "OFF" leftover text
-        StringCopy(gStringVar1, COMPOUND_STRING("ON  "));
     }
     else
     {
         PlaySE(SE_PC_OFF);
-        StringCopy(gStringVar1, COMPOUND_STRING("OFF"));
     }
 
     // Redraw the Auto Run menu line
-    StringExpandPlaceholders(gStringVar4, sShortcutsMenuItems[sCurrentSubMenuActions[MENU_ACTION_AUTO_RUN_TOGGLE]].text);
-    AddTextPrinterParameterized(GetSubMenuWindowId(), FONT_NORMAL, gStringVar4, 8, (MENU_ACTION_AUTO_RUN_TOGGLE << 4) + 9, TEXT_SKIP_DRAW, NULL);
+    DrawShortcutAction(MENU_ACTION_AUTO_RUN_TOGGLE);
     sSubMenuCursorPos = InitMenuNormal(GetSubMenuWindowId(), FONT_NORMAL, 0, 9, 16, sNumSubMenuActions, sSubMenuCursorPos);
     CopyWindowToVram(GetSubMenuWindowId(), COPYWIN_MAP);
 

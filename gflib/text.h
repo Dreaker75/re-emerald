@@ -159,6 +159,7 @@ u16 AddTextPrinterFixedCaseParameterized(u8 windowId, u8 fontId, const u8 *str, 
 
 void DeactivateAllTextPrinters(void);
 u16 AddTextPrinterParameterized(u8 windowId, u8 fontId, const u8 *str, u8 x, u8 y, u8 speed, void (*callback)(struct TextPrinterTemplate *, u16));
+u16 AddTextPrinterParameterizedWithColor(u8 windowId, u8 fontId, const u8 *str, u8 x, u8 y, u8 speed, u8 textColor, u8 shadowColor, void (*callback)(struct TextPrinterTemplate *, u16));
 bool32 AddTextPrinter(struct TextPrinterTemplate *template, u8 speed, void (*callback)(struct TextPrinterTemplate *, u16));
 void RunTextPrinters(void);
 bool32 IsTextPrinterActive(u8 id);
