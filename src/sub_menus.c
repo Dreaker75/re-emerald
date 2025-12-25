@@ -112,6 +112,7 @@ EWRAM_DATA static u8 (*sSaveDialogCallback)(void) = NULL;
 EWRAM_DATA static u8 sSaveDialogTimer = 0;
 EWRAM_DATA static bool8 sSavingComplete = FALSE;
 EWRAM_DATA static u8 sSaveInfoWindowId = 0;
+extern const u8 EventScript_ShortcutsRepelUse[];
 u8 sMenuOpened = MENU_NONE;
 
 // Menu action callbacks
@@ -1351,9 +1352,10 @@ static bool8 BattlePyramidRetireCallback(void)
 
 static bool8 ShortcutsMenuPreventEncountersCallback(void)
 {
-    // SetMainCallback2(DrawSprayMenu);
+    // Calls the event to choose a Repel item to use
+    ScriptContext_SetupScript(EventScript_ShortcutsRepelUse);
 
-    return FALSE;
+    return TRUE;
 }
 
 static bool8 ShortcutsMenuSweetScentCallback(void)

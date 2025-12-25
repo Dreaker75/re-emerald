@@ -41,8 +41,7 @@
  - Defeating the Elite Four now resets a few daily events like gifts and the Lilycove lottery
  - Return, Frustration and Hidden Power now show their real power in the Pokemon Summary
  - Hidden Power now shows its real type and category in the Pokemon Summary and the in-battle menu
- - Removed Wally's tutorial battle and the PokeNav's tutorial call to Mr. Stone
- - Petalburg Gym's doors can now be opened just by walking like the rest of the doors
+ - Added a Shortcuts menu (Accesible by pressing R), which has quick access to: Repels, Sweet Scent, Auto Run, Exit Dungeon (Dig/Escape Rope), and Fast Travel (Fly/Teleport)
 
 # Pokemon changes
  - Pokemon that evolve through trading now also evolve by leveling up while knowing a specific move:
@@ -142,8 +141,10 @@
 # Minor changes
  - **Added version number to the main menu to easily know the current version of the game**
  - The prizes for the Pokemon Lottery Corner have been updated and also give a reward for matching 1 number. Full list on [ITEM_CHANGES.md](https://github.com/Dreaker75/re-emerald/blob/main/info_hub/ITEM_CHANGES.md#facility-reward-items)
+ - Removed Wally's tutorial battle and the PokeNav's tutorial call to Mr. Stone
  - The Pokemon Center Nurses now have less dialogue and animations for healing your Pokemon. Getting all 4 Trainer Stars also reduces the dialogue further like in vanilla Emerald
  - The player automatically faces down after healing at a Pokemon Center.
+ - Petalburg Gym's doors can now be opened just by walking like the rest of the doors
  - The NPC at the rest house on Route 111 no longer asks you if you want to keep resting until you say no.
  - Move Pokemon and Move Item options in the PC now appear before Withdraw and Deposit Pokemon like in newer games
  - Pressing B while moving a Pokemon on the PC deposits the Pokemon

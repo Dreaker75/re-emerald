@@ -1,8 +1,9 @@
 # Re:Emerald Changelog
 
 ## In-development
-**Update 17-18**
+**Update 17-19**
 - Added the Shortcuts menu, which can be opened by pressing R. Shortcuts include:
+    - Repels
     - Sweet Scent
     - Running shoes toggle
     - Dungeon exit (Dig & Escape Rope)

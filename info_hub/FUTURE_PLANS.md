@@ -43,6 +43,7 @@ These are listed in no particular order
  - Show the PPs of a move when using a PP-restoring item
  - Show the amount of PP boosts used on a move when using a PP-increasing item
  - Let the Pokedex continue to scroll by holding left or right
+ - Add the ability to access the Pokemon Storage from the Main Menu. This feature would unlock some time after beating the game and would be locked on places like the E4.
  - Add a popup after finishing an encounter using Sweet Scent to trigger it again, similarly to the Repel popup. Also, look into speeding up the Sweet Scent animation?
  - Add a placeholder list of Pokemon found on each area until an Area Dex is implemented?
 
@@ -59,8 +60,10 @@ These are listed in no particular order
  - Professor Birch will now let you get a copy of a Pokemon you already have (except Legendaries) so no Pokemon is completely missable
 
 ## Trainer features
- - Change the rematch functions for both trainers and Gym Leaders to trigger more often
- - Make all trainers in the PokeNav (Gym Leaders included) instantly rematch the player once a day (on top of the regular rematch method)
+ - Change the rematch functions for both trainers and Gym Leaders to trigger more often. The following are potential ideas for new rematch requirements, they might not be implemented into the game as is:
+   - All Gym Leaders are reatchable after defeating any 4 Gym Leaders
+   - All normal trainers (Gym trainers excluded) have a 25% chance to be rematchable every 100 steps (similarly to VS Seeker's functionality) and a 100% chance after defeating a Gym Leader
+   - All all trainers in the PokeNav (Gym Leaders included) will become rematchable on Daily reset.
  - Make all regular trainers' rematches have progressing teams that geat stronger after a certain point in the game, like other games
  - Change all Gym Leaders' rematch teams to be more in line with the levels of the post-game. Gym Leaders' teams will now also scale depending on the game progress, but requiring milestones like: beating the game, beating Steven, etc.
  - Add a second team for the Elite Four rematches
@@ -96,7 +99,7 @@ These are listed in no particular order
  - Make a second encounter table for Route 134, to vary between surfing/fishing from Slateport or Pacifidlog
  - Make the entrance to Cave of Origin no longer close after waking up Rayquaza (to accomodate for the new encounters there)
    - Fix the visual bugs on Cave of Origin's bottom floor
-   - Possibly bring back the scrapped floors from Ruby (Still to be debated)
+   - Possibly bring back the scrapped floors from Ruby?
 
 ## New maps & areas
  - Three new "Secret Bases" that will be home to 3 powerful trainers. These secret bases are special, as they behave like regular maps in their specific locations and can't be deleted by mixing records.
@@ -119,18 +122,16 @@ These are listed in no particular order
  - The Meteorite Key Item now allows to Forme change Deoxys (Professor Kozmo will give it back after researching it a bit)
  - Add Shiny breeding: Breeding a Shiny Pokemon will increase the chances of the offspring to be Shiny
  - Grab an item held by a defeated wild Pokemon automatically, no need to Thief it or the likes
- - Pressing R on the overworld will bring out a list of useful things (toggle auto run, Sweet Scent (If an appropiate mon exists in party), consumables like Repels, etc)
 
 ## Others
  - Make it possible to have both bikes at once (With a small sidequest like ORAS)
-   - After revamping the Registered Items system, the player will instead have a single Bike that will have both functions, swapped by using Select.
  - Allow player to change name or gender/sprite at any point
- - Change the rewards from showing big Pokemon to be more useful?
- - Scott will now have a new reward for getting all Silver and Gold Symbols in the Battle Frontier. This is to make it easier to catch Celebi by having the berries elsewhere, but also serves as a boost to get players started on Shiny Hunting. The rewards now will be:
-    - All Silver Symbols: A Shiny of the starter chosen
+ - Scott will now have a new reward for getting all Silver and Gold Symbols in the Battle Frontier. This is to make it easier to catch Celebi by having the berries elsewhere, but also serves as a boost to get players started on Shiny Hunting. The new rewards will be:
+    - All Silver Symbols: A male Shiny of the starter chosen (So you can breed it with more Pokemon from the getgo)
     - All Gold Symbols: A Shiny Ditto
  - Add a way to earn all missing Ribbons (Gift ribbons will have different text)
    - These Ribbons will be awarded for a big array of new features. Since this is something that would go entirely against the original Emerald's feeling (reusing the Shadow Pokemon and Mt. Battle ribbons), it's still up for debate whether it will be added to Re:Emerald or pushed to the Backlog.
+ - Change the rewards from showing big Pokemon to be more useful?
  
 # Backlog
 Features here are things I'd like to add once everything else above has been implemented. Still debating whether to make these part of the base Re:Emerald or do it under a new name, as these are features that will significantly change the base of Pokemon Emerald.

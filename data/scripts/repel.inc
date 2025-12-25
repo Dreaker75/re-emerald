@@ -32,7 +32,7 @@ EventScript_SprayWoreOff::
 
 EventScript_HandleMultipleSprays::
 .if I_REPEL_LURE_MENU == TRUE
-	goto EventScript_ChooseWhichSpray
+	goto EventScript_SprayWoreOffChooseNew
 .else
 	goto EventScript_UseSingleSpray
 .endif
@@ -103,8 +103,13 @@ EventScript_UseLastUsedSpray_2:
 
 
 .if I_REPEL_LURE_MENU == TRUE
-EventScript_ChooseWhichSpray::
+EventScript_ShortcutsRepelUse::
+	call EventScript_BufferSprayName
+	message Text_AskUseSpray
+	goto EventScript_ChooseWhichSpray
+EventScript_SprayWoreOffChooseNew::
 	message Text_SprayWoreOffAskUseAnother
+EventScript_ChooseWhichSpray:
 	waitmessage
 	callnative DrawSprayMenu
 	waitstate
@@ -135,6 +140,9 @@ EventScript_UseSpray::
 	msgbox Text_SprayWoreOffUseX, MSGBOX_SIGN
 	return
 
+
+Text_AskUseSpray::
+	.string "Choose a REPEL to use.$"
 
 Text_SprayWoreOff::
 	.string "{STR_VAR_1}'s effect wore off…$"
