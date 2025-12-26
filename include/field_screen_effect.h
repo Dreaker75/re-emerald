@@ -19,6 +19,7 @@ void FieldCB_WarpExitFadeFromWhite(void);
 bool8 FieldCB_ReturnToFieldOpenStartMenu(void);
 bool8 FieldCB_ReturnToFieldOpenShortcutsMenu(void);
 void ReturnToFieldOpenSubMenu(void);
+void ReturnToFieldOpenUseSweetScentAgainMenu(void);
 void FieldCB_ReturnToFieldNoScript(void);
 void FieldCB_ReturnToFieldNoScriptCheckMusic(void);
 void DoWarp(void);

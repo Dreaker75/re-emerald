@@ -44,7 +44,7 @@ These are listed in no particular order
  - Show the amount of PP boosts used on a move when using a PP-increasing item
  - Let the Pokedex continue to scroll by holding left or right
  - Add the ability to access the Pokemon Storage from the Main Menu. This feature would unlock some time after beating the game and would be locked on places like the E4.
- - Add a popup after finishing an encounter using Sweet Scent to trigger it again, similarly to the Repel popup. Also, look into speeding up the Sweet Scent animation?
+ - Look into speeding up the Sweet Scent animation?
  - Add a placeholder list of Pokemon found on each area until an Area Dex is implemented?
 
 ## Pokemon additions

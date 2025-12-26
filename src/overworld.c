@@ -1510,6 +1510,11 @@ static void OverworldBasic(void)
     UpdatePaletteFade();
     UpdateTilesetAnimations();
     DoScheduledBgTilemapCopiesToVram();
+    if (FlagGet(FLAG_USING_SWEET_SCENT))
+    {
+        ShowReturnToFieldUseSweetScentAgainMenu();
+        FlagClear(FLAG_USING_SWEET_SCENT);
+    }
 }
 
 // This CB2 is used when starting

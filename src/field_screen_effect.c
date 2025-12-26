@@ -437,6 +437,23 @@ void ReturnToFieldOpenSubMenu(void)
     LockPlayerFieldControls();
 }
 
+static void Task_WaitForFadeShowUseSweeScentAgainMenu(u8 taskId)
+{
+    if (WaitForWeatherFadeIn() == TRUE)
+    {
+        DestroyTask(taskId);
+        ShowUseSweetScentAgainMenu();
+    }
+}
+
+void ReturnToFieldOpenUseSweetScentAgainMenu(void)
+{
+    FadeInFromBlack();
+    Overworld_PlaySpecialMapMusic();
+    CreateTask(Task_WaitForFadeShowUseSweeScentAgainMenu, 0x50);
+    LockPlayerFieldControls();
+}
+
 bool8 FieldCB_ReturnToFieldOpenStartMenu(void)
 {
     ShowReturnToFieldStartMenu();

@@ -1,6 +1,9 @@
 # Re:Emerald Changelog
 
 ## In-development
+**Update 20**
+- After finishing a battle started using Sweet Scent, a message appears asking if you want to use it again.
+
 **Update 17-19**
 - Added the Shortcuts menu, which can be opened by pressing R. Shortcuts include:
     - Repels

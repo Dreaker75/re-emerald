@@ -4,7 +4,7 @@
 #include "constants/opponents.h"
 
 // Temporary Flags
-// These temporary flags are are cleared every time a map is loaded. They are used
+// These temporary flags are cleared every time a map is loaded. They are used
 // for things like shortening an NPCs introduction text if the player already spoke
 // to them once.
 #define TEMP_FLAGS_START 0x0
@@ -12,7 +12,7 @@
 #define FLAG_TEMP_2      (TEMP_FLAGS_START + 0x2)
 #define FLAG_TEMP_3      (TEMP_FLAGS_START + 0x3)
 #define FLAG_TEMP_4      (TEMP_FLAGS_START + 0x4)
-#define FLAG_TEMP_5      (TEMP_FLAGS_START + 0x5)  // Unused Flag
+#define FLAG_TEMP_5      (TEMP_FLAGS_START + 0x5)  // Search for FLAG_TEMP_5 in this file for all its uses
 #define FLAG_TEMP_6      (TEMP_FLAGS_START + 0x6)  // Unused Flag
 #define FLAG_TEMP_7      (TEMP_FLAGS_START + 0x7)  // Unused Flag
 #define FLAG_TEMP_8      (TEMP_FLAGS_START + 0x8)  // Unused Flag
@@ -41,6 +41,8 @@
 #define FLAG_TEMP_1F     (TEMP_FLAGS_START + 0x1F)
 #define TEMP_FLAGS_END   FLAG_TEMP_1F
 #define NUM_TEMP_FLAGS   (TEMP_FLAGS_END - TEMP_FLAGS_START + 1)
+
+#define FLAG_USING_SWEET_SCENT FLAG_TEMP_5 // Used to indicate player is using Sweet Scent in the field
 
 #define FLAG_UNUSED_0x020    0x20 // Unused Flag
 #define FLAG_UNUSED_0x021    0x21 // Unused Flag

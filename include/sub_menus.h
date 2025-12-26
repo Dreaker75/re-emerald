@@ -5,11 +5,13 @@ extern bool8 (*gMenuCallback)(void);
 
 void ShowReturnToFieldStartMenu(void);
 void ShowReturnToFieldShortcutsMenu(void);
+void ShowReturnToFieldUseSweetScentAgainMenu(void);
 void ShowLastSubMenu(void);
 void Task_ShowSubMenu(u8 taskId);
 void ShowStartMenu(void);
 void ShowKeyItemsMenu(void);
 void ShowShortcutsMenu(void);
+void ShowUseSweetScentAgainMenu(void);
 void ShowSubMenu(TaskFunc currFunc, TaskFunc followupFunc);
 void ShowBattlePyramidStartMenu(void);
 void SaveGame(void);

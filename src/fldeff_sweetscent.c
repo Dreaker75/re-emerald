@@ -76,6 +76,7 @@ static void TrySweetScentEncounter(u8 taskId)
             gTasks[taskId].data[0] = 0;
             if (SweetScentWildEncounter() == TRUE)
             {
+                FlagSet(FLAG_USING_SWEET_SCENT);
                 DestroyTask(taskId);
             }
             else
@@ -101,4 +102,9 @@ static void FailSweetScentEncounter(u8 taskId)
         ScriptContext_SetupScript(EventScript_FailSweetScent);
         DestroyTask(taskId);
     }
+}
+
+void UseSweetScentAgain(void)
+{
+    FieldCallback_SweetScentSetup(gFieldEffectArguments[0]);
 }

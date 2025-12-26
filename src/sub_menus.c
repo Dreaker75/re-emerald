@@ -113,6 +113,7 @@ EWRAM_DATA static u8 sSaveDialogTimer = 0;
 EWRAM_DATA static bool8 sSavingComplete = FALSE;
 EWRAM_DATA static u8 sSaveInfoWindowId = 0;
 extern const u8 EventScript_ShortcutsRepelUse[];
+extern const u8 EventScript_UseSweetScentAgain[];
 u8 sMenuOpened = MENU_NONE;
 
 // Menu action callbacks
@@ -172,8 +173,8 @@ static void ShortcutsMenuTask(u8 taskId);
 static void SaveGameTask(u8 taskId);
 static void Task_SaveAfterLinkBattle(u8 taskId);
 static void Task_WaitForBattleTowerLinkSave(u8 taskId);
-static bool8 FieldCB_ReturnToFieldStartMenu(void);
-static bool8 FieldCB_ReturnToFieldShortcutsMenu(void);
+bool8 ReturnToFieldStartMenu(void);
+bool8 ReturnToFieldShortcutsMenu(void);
 
 static const struct WindowTemplate sWindowTemplate_GameVersion = {
     .bg = 0,
@@ -854,15 +855,22 @@ static bool8 FieldCB_ReturnToFieldSubMenu(void)
     switch (sMenuOpened)
     {
     case MENU_START:
-        return FieldCB_ReturnToFieldStartMenu();
+        return ReturnToFieldStartMenu();
     case MENU_SHORTCUTS:
-        return FieldCB_ReturnToFieldShortcutsMenu();
+        return ReturnToFieldShortcutsMenu();
     default:
         return FALSE;
     }
 }
 
-static bool8 FieldCB_ReturnToFieldStartMenu(void)
+static bool8 FieldCB_ReturnToFieldUseSweetScentAgainMenu(void)
+{
+    ReturnToFieldOpenUseSweetScentAgainMenu();
+
+    return TRUE;
+}
+
+bool8 ReturnToFieldStartMenu(void)
 {
     if (InitStartMenuStep() == FALSE)
     {
@@ -873,7 +881,7 @@ static bool8 FieldCB_ReturnToFieldStartMenu(void)
     return TRUE;
 }
 
-static bool8 FieldCB_ReturnToFieldShortcutsMenu(void)
+bool8 ReturnToFieldShortcutsMenu(void)
 {
     if (InitShortcutsMenuStep() == FALSE)
     {
@@ -901,6 +909,16 @@ void ShowReturnToFieldShortcutsMenu(void)
 {
     sMenuOpened = MENU_SHORTCUTS;
     ShowReturnToFieldSubMenu();
+}
+
+void ShowReturnToFieldUseSweetScentAgainMenu(void)
+{
+    gFieldCallback2 = FieldCB_ReturnToFieldUseSweetScentAgainMenu;
+}
+
+void ShowUseSweetScentAgainMenu(void)
+{
+    ScriptContext_SetupScript(EventScript_UseSweetScentAgain);
 }
 
 void ShowLastSubMenu()

@@ -30,7 +30,7 @@
 
 # Gameplay changes
  - Running is allowed indoors, as well as super tall grass and wooden bridges like the ones on Pacifidlog Town
- - You can now toggle the default moving speed (walking or running) by pressing the R button in the overworld after getting the running shoes. Holding B will let you run at the opposite speed as usual. The toggle has no visual cue at the momment, but does have a sound effect attached to it.
+ - You can now toggle the default moving speed (walking or running) from the shortcuts menu (accessed through the R button) in the overworld after getting the running shoes. Holding B will let you run at the opposite speed as usual.
  - Synchronize now also forces the nature of Stationary and Gift Pokemon to be the same one as the Pokemon with Synchronize.
  - Lightning Rod now has the same effect as Static in the overworld
  - Flash Fire now has a 50% chance to force an encounter a Fire-type Pokemon, if one exists in the 
@@ -115,6 +115,7 @@
     - A message is displayed the first time you enter a dark cave in each area asking if you want to use Flash
  - Teleport has been updated and now works like the old Fly HM, with the addition that it can be used indoors too! (Except in certain locations where it could break the game, like the Elite Four or the Battle Facilities). It still does NOT need a badge to be used, so you can now effectively Fly as soon as you get a Pokemon that can learn Teleport (Like Ralts or Abra)!
  - Fly now lets you land on certain routes (those that are far from any towns or cities, or that have useful locations)
+ - After ending a battle started using Sweet Scent, a popup appears asking if you want to use Sweet Scent again.
 
 # Facilities changes:
  - Though the Contests themselves remain entirely untouched, a few of the mechanics surrounding them have been changed:

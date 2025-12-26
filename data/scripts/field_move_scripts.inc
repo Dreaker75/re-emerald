@@ -214,5 +214,21 @@ EventScript_FailSweetScent::
 	msgbox Text_FailSweetScent, MSGBOX_SIGN
 	end
 
+EventScript_UseSweetScentAgain::
+	lockall
+	msgbox Text_UseSweetScentAgain, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, EventScript_EndSweetScentUsage
+	callnative UseSweetScentAgain
+	waitstate
+	releaseall
+	end
+
+EventScript_EndSweetScentUsage::
+	releaseall
+	end
+
 Text_FailSweetScent:
 	.string "Looks like there's nothing here…$"
+
+Text_UseSweetScentAgain:
+	.string "Use SWEET SCENT again?$"
