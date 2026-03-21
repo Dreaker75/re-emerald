@@ -2,6 +2,7 @@ raw `
 .set LOCALID_RIVAL, 16
 .set LOCALID_RIVAL_ON_BIKE, 25
 .set LOCALID_SCOTT, 43
+.set LOCALID_GEMMA, 44
 
 Route119_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, Route119_OnResume
@@ -215,6 +216,14 @@ Route119_EventScript_SetRivalPos2::
 	setobjectxyperm LOCALID_RIVAL_ON_BIKE, 26, 32
 	return
 
+Route119_EventScript_GemmaTrigger::
+	addobject LOCALID_GEMMA
+	applymovement LOCALID_GEMMA, Route119_Movement_GemmaApproachPlayer
+	waitmovement 0
+	turnobject OBJ_EVENT_ID_PLAYER, DIR_EAST
+	goto Route119_EventScript_Gemma
+	end
+
 Route119_Movement_PlayerWatchRivalExit1:
 	delay_16
 	walk_in_place_faster_right
@@ -227,6 +236,28 @@ Route119_Movement_PlayerWatchRivalExit2:
 	walk_in_place_faster_left
 	delay_8
 	walk_in_place_faster_up
+	step_end
+
+Route119_Movement_GemmaApproachPlayer:
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_down
+	walk_left
+	walk_left
+	step_end
+
+Route119_Movement_GemmaWalkDownTwice::
+	walk_down
+	walk_down
+	step_end
+
+Route119_Movement_GemmaJumpLedge::
+	jump_2_down
+	delay_16
+	walk_down
 	step_end
 
 Route119_Movement_RivalEnter1:
@@ -439,6 +470,28 @@ Route119_EventScript_Rachel::
 	msgbox Route119_Text_RachelPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+Route119_EventScript_Gemma::
+	msgbox Route119_Text_GemmaOhLooksLikeICouldntBeatYou, MSGBOX_NPC
+	playbgm MUS_ENCOUNTER_FEMALE, TRUE
+	msgbox Route119_Text_GemmaMyPokemonAndIAreAlwaysTraining, MSGBOX_NPC
+	savebgm MUS_DUMMY
+	fadedefaultbgm
+	trainerbattle_no_intro TRAINER_GEMMA, Route119_Text_GemmaDefeat
+	msgbox Route119_Text_GemmaImNoMatchForYou, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_GEMMA, Route119_Movement_GemmaWalkDownTwice
+	waitmovement 0
+	playse SE_LEDGE
+	applymovement LOCALID_GEMMA, Route119_Movement_GemmaJumpLedge
+	waitmovement 0
+	applymovement LOCALID_GEMMA, Route119_Movement_GemmaWalkDownTwice
+	waitmovement 0
+	addvar VAR_GEMMA_QUEST_STATE, 1
+	setflag FLAG_HIDE_ROUTE_119_GEMMA
+	removeobject LOCALID_GEMMA
+	release
+	end
+
 Route119_EventScript_BridgeAquaGrunt1::
 	lock
 	faceplayer
@@ -613,4 +666,26 @@ Route119_Text_TrainerTipsDecoration:
 	.string "Pick your favorite items and create\n"
 	.string "your very own SECRET BASE exactly the\l"
 	.string "way you want.$"
+
+Route119_Text_GemmaOhLooksLikeICouldntBeatYou::
+	.string "Oh, looks like I couldn't beat\n"
+	.string "you, again. You're good.\p"
+	.string "Alright, you've convinced me. I will\n"
+	.string "give RYDEL'S bikes a try.\p"
+	.string "But before that, I have one last\n"
+	.string "favor to ask of you.\p"
+	.string "We're both POKéMON TRAINERS, so you\n"
+	.string "know what that means, right?$"
+
+Route119_Text_GemmaMyPokemonAndIAreAlwaysTraining::
+	.string "My POKéMON and I are always training.\n"
+	.string "I'll show you the fruits of our effort!$"
+
+Route119_Text_GemmaImNoMatchForYou::
+	.string "I'm no match for you at all.\p"
+	.string "But that's fine, it just means\n"
+	.string "we have to train harder.\p"
+	.string "I'll go check out RYDEL'S shop\n"
+	.string "now. Thank you for your help!$"
+
 `

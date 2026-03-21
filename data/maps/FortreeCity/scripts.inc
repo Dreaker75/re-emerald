@@ -1,3 +1,5 @@
+.set LOCALID_GEMMA, 8
+
 FortreeCity_MapScripts::
 	map_script MAP_SCRIPT_ON_TRANSITION, FortreeCity_OnTransition
 	map_script MAP_SCRIPT_ON_RESUME, FortreeCity_OnResume
@@ -9,6 +11,23 @@ FortreeCity_OnTransition:
 
 FortreeCity_OnResume:
 	setstepcallback STEP_CB_FORTREE_BRIDGE
+	end
+
+FortreeCity_EventScript_Gemma::
+	msgbox FortreeCity_Text_GemmaYouCame, MSGBOX_NPC
+	delay 30
+	msgbox FortreeCity_Text_GemmaOnYourMarks, MSGBOX_NPC
+	goto_if_eq VAR_FACING, DIR_EAST, FortreeCity_EventScript_GemmaLeaveUp
+FortreeCity_EventScript_GemmaLeaveLeft:
+	applymovement LOCALID_GEMMA, FortreeCity_Movement_GemmaLeaveLeft
+	goto FortreeCity_EventScript_GemmaHide
+FortreeCity_EventScript_GemmaLeaveUp:
+	applymovement LOCALID_GEMMA, FortreeCity_Movement_GemmaLeaveUp
+FortreeCity_EventScript_GemmaHide::
+	waitmovement 0
+	removeobject LOCALID_GEMMA
+	setflag FLAG_HIDE_FORTREE_CITY_GEMMA
+	addvar VAR_GEMMA_QUEST_STATE, 1
 	end
 
 FortreeCity_EventScript_Man::
@@ -83,9 +102,49 @@ FortreeCity_EventScript_UseDevonScope::
 	release
 	end
 
+FortreeCity_Movement_GemmaLeaveLeft:
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	step_end
+
+FortreeCity_Movement_GemmaLeaveUp:
+	walk_fast_up
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	walk_fast_left
+	step_end
+
 FortreeCity_Movement_KecleonFlee:
 	walk_right
 	step_end
+
+FortreeCity_Text_GemmaYouCame:
+	.string "Ah, there you are.\p"
+	.string "This time I want to test my\n"
+	.string "movement through tight areas.\p"
+	.string "The target is the second wide bush\n"
+	.string "above the waterfall in Route 119.\p"
+	.string "It's the bush at the end of\n"
+	.string "all the white rails.$"
+
+FortreeCity_Text_GemmaOnYourMarks:
+	.string "Alright, ready?\p"
+	.string "On your marks...\n"
+	.string "Get set...\l"
+	.string "GO!$"
 
 FortreeCity_Text_SawGiganticPokemonInSky:
 	.string "No one believes me, but I saw this\n"

@@ -1,5 +1,59 @@
 raw `
+.set LOCALID_GEMMA, 10
+
 GraniteCave_B2F_MapScripts::
 	.byte 0
 
+GraniteCaveB2F_EventScript_Gemma0::
+	playse SE_EXIT
+	addobject LOCALID_GEMMA
+	applymovement LOCALID_GEMMA, GraniteCave_B2F_Movement_GemmaApproachPlayer
+	waitmovement 0
+	applymovement LOCALID_GEMMA, Common_Movement_WalkInPlaceLeft
+	waitmovement 0
+	turnobject OBJ_EVENT_ID_PLAYER, DIR_EAST
+	goto GraniteCaveB2F_EventScript_Gemma
+	end
+
+GraniteCaveB2F_EventScript_Gemma1::
+	playse SE_EXIT
+	addobject LOCALID_GEMMA
+	applymovement LOCALID_GEMMA, GraniteCave_B2F_Movement_GemmaApproachPlayer
+	waitmovement 0
+	turnobject OBJ_EVENT_ID_PLAYER, DIR_NORTH
+	goto GraniteCaveB2F_EventScript_Gemma
+	end
+
+GraniteCaveB2F_EventScript_Gemma::
+	msgbox GraniteCave_B2F_Text_GemmaOhYouAreHere, MSGBOX_NPC
+	applymovement LOCALID_GEMMA, GraniteCave_B2F_Movement_GemmaLeave
+	waitmovement 0
+	addvar VAR_GEMMA_QUEST_STATE, 1
+	setflag FLAG_HIDE_GRANITE_CAVE_B2F_GEMMA
+	removeobject LOCALID_GEMMA
+	clearflag FLAG_HIDE_FORTREE_CITY_GEMMA
+	playse SE_EXIT
+	end
+
+GraniteCave_B2F_Movement_GemmaApproachPlayer:
+	walk_down
+	walk_down
+	walk_down
+	step_end
+
+GraniteCave_B2F_Movement_GemmaLeave::
+	walk_up
+	walk_up
+	walk_up
+	step_end
+
+GraniteCave_B2F_Text_GemmaOhYouAreHere:
+	.string "Oh! You are already here.\p"
+	.string "I really thought I had it. You're\n"
+	.string "better than I thought.\p"
+	.string "But it's too early to give up now!\p"
+	.string "I'll be waiting on FORTREE CITY for\n"
+	.string "our next race.\p"
+	.string "Make sure to bring your easiest to\n"
+	.string "handle bike.$"
 `

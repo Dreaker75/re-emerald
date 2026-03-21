@@ -3,6 +3,7 @@ raw `
 .set LOCALID_RIVAL, 28
 .set LOCALID_RIVAL_ON_BIKE, 29
 .set LOCALID_BIRCH, 36
+.set LOCAL_ID_MACH_BIKE_NPC, 37
 
 Route110_MapScripts::
 	map_script MAP_SCRIPT_ON_RESUME, Route110_OnResume
@@ -154,6 +155,15 @@ Route110_EventScript_ChallengeGuy::
 	goto_if_eq VAR_CYCLING_CHALLENGE_STATE, 0, Route110_EventScript_PlayerNotRidingBike
 	msgbox Route110_Text_AlwaysAimHigher, MSGBOX_DEFAULT
 	release
+	end
+
+Route110_EventScript_MachBikeNPC::
+	goto_if_set FLAG_MACH_BIKE_PROMOTED, Route110_EventScript_MachBikeNPCBikePromoted
+	msgbox Route110_Text_TryingToBeatMyRecord, MSGBOX_NPC
+	end
+
+Route110_EventScript_MachBikeNPCBikePromoted::
+	msgbox Route110_Text_RydelCyclesBikesSeemGood, MSGBOX_NPC
 	end
 
 Route110_EventScript_PlayerNotRidingBike::
@@ -308,6 +318,10 @@ Route110_EventScript_CyclingChallengeEnd::
 	applymovement LOCALID_CHALLENGE_BIKER, Common_Movement_WalkInPlaceFasterRight
 	waitmovement 0
 	call Route110_EventScript_CyclingChallengeResults
+	@ We need to releaseall and lockall again to remove any lingering message boxes. Alternatively, we could also change the boxes' type from DEFAULT to NPC
+	releaseall
+	lockall
+	goto_if_unset FLAG_MACH_BIKE_PROMOTED, Route110_EventScript_CheckForMachBikeNPC
 	releaseall
 	end
 
@@ -358,6 +372,27 @@ Route110_EventScript_EndChallenge::
 	savebgm MUS_DUMMY
 	fadedefaultbgm
 	return
+
+Route110_EventScript_CheckForMachBikeNPC::
+	goto_if_unset FLAG_SYS_GAME_CLEAR, Route110_EventScript_ReturnFromMachBikeNPCCheck
+	special GetCyclingRoadChallengeTime
+	goto_if_ge VAR_RESULT, 15, Route110_EventScript_ReturnFromMachBikeNPCCheck
+	setflag FLAG_MACH_BIKE_PROMOTED
+	setflag FLAG_HIDE_CYCLE_ROAD_MACH_BIKE_NPC
+	getplayerxy VAR_TEMP_1, VAR_TEMP_2
+	switch VAR_TEMP_1
+	case 28, Route110_EventScript_MachBikeNPCLeft
+	case 29, Route110_EventScript_MachBikeNPCWalkUp
+
+Route110_EventScript_MachBikeNPCLeft::
+	applymovement LOCAL_ID_MACH_BIKE_NPC, Route110_Movement_MachBikeNPCLeft
+	waitmovement 0
+Route110_EventScript_MachBikeNPCWalkUp::
+	applymovement LOCAL_ID_MACH_BIKE_NPC, Common_Movement_WalkUp2
+	waitmovement 0
+	msgbox Route110_Text_LookedLikeYouWereFlying, MSGBOX_NPC
+Route110_EventScript_ReturnFromMachBikeNPCCheck::
+	end
 
 Route110_EventScript_RivalTrigger1::
 	setvar VAR_0x8008, 1
@@ -744,6 +779,10 @@ Route110_Movement_BirchExit4:
 	walk_up
 	step_end
 
+Route110_Movement_MachBikeNPCLeft::
+	walk_left
+	step_end
+
 Route110_Text_WeCantTalkAboutAquaActivities:
 	.string "TEAM AQUA's activities…\n"
 	.string "We can't talk about them yet.$"
@@ -894,6 +933,21 @@ Route110_Text_ChallengeReactionWorst:
 	.string "unfortunate cycling business.\p"
 	.string "You ought to give serious thought to\n"
 	.string "returning that BIKE to RYDEL.$"
+
+Route110_Text_TryingToBeatMyRecord:
+	.string "The cycling challenge here is hard.\p"
+	.string "I've been trying to beat my record\n"
+	.string "of 15 seconds for a while.$"
+
+Route110_Text_LookedLikeYouWereFlying:
+	.string "Wow! That was some show of speed.\n"
+	.string "It looked like you were flying!\p"
+	.string "Is that a RYDEL'S CYCLES bike?\n"
+	.string "I need to get one of those.$"
+
+Route110_Text_RydelCyclesBikesSeemGood:
+	.string "RYDEL'S bikes seem good. I need to\n"
+	.string "get one for myself.$"
 
 Route110_Text_RatedForNumberOfCollisions:
 	.string "This is CYCLING ROAD.\p"

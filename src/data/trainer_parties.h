@@ -11778,6 +11778,31 @@ static const struct TrainerMon sParty_Everett[] = {
     }
 };
 
+static const struct TrainerMon sParty_Gemma[] = {
+    {
+    .iv = TRAINER_PARTY_IVS(22, 22, 22, 22, 22, 22),
+    .lvl = 60,
+    .species = SPECIES_ARCANINE,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_EXTREME_SPEED, MOVE_FLAMETHROWER, MOVE_CRUNCH, MOVE_DOUBLE_TEAM}
+    },
+    {
+    .iv = TRAINER_PARTY_IVS(19, 19, 19, 19, 19, 19),
+    .lvl = 58,
+    .species = SPECIES_AIPOM,
+    .friendship = MAX_FRIENDSHIP,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_SWIFT, MOVE_RETURN, MOVE_SAND_ATTACK, MOVE_SHADOW_BALL}
+    },
+    {
+    .iv = TRAINER_PARTY_IVS(15, 15, 15, 15, 15, 15),
+    .lvl = 57,
+    .species = SPECIES_LAPRAS,
+    .heldItem = ITEM_NONE,
+    .moves = {MOVE_SURF, MOVE_WATERFALL, MOVE_ICE_BEAM, MOVE_CONFUSE_RAY}
+    }
+};
+
 static const struct TrainerMon sParty_Red[] = {
     {
     .lvl = 5,

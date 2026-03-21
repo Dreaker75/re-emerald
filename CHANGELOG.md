@@ -1,6 +1,9 @@
 # Re:Emerald Changelog
 
 ## In-development
+**Update 21**
+- Added the sidequests to obtain the second bike from Rydel.
+
 **Update 20**
 - After finishing a battle started using Sweet Scent, a message appears asking if you want to use it again.
 

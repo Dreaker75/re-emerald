@@ -44,54 +44,55 @@
 
 #define FLAG_USING_SWEET_SCENT FLAG_TEMP_5 // Used to indicate player is using Sweet Scent in the field
 
-#define FLAG_UNUSED_0x020    0x20 // Unused Flag
-#define FLAG_UNUSED_0x021    0x21 // Unused Flag
-#define FLAG_UNUSED_0x022    0x22 // Unused Flag
-#define FLAG_UNUSED_0x023    0x23 // Unused Flag
-#define FLAG_UNUSED_0x024    0x24 // Unused Flag
-#define FLAG_UNUSED_0x025    0x25 // Unused Flag
-#define FLAG_UNUSED_0x026    0x26 // Unused Flag
-#define FLAG_UNUSED_0x027    0x27 // Unused Flag
-#define FLAG_UNUSED_0x028    0x28 // Unused Flag
-#define FLAG_UNUSED_0x029    0x29 // Unused Flag
-#define FLAG_UNUSED_0x02A    0x2A // Unused Flag
-#define FLAG_UNUSED_0x02B    0x2B // Unused Flag
-#define FLAG_UNUSED_0x02C    0x2C // Unused Flag
-#define FLAG_UNUSED_0x02D    0x2D // Unused Flag
-#define FLAG_UNUSED_0x02E    0x2E // Unused Flag
-#define FLAG_UNUSED_0x02F    0x2F // Unused Flag
-#define FLAG_UNUSED_0x030    0x30 // Unused Flag
-#define FLAG_UNUSED_0x031    0x31 // Unused Flag
-#define FLAG_UNUSED_0x032    0x32 // Unused Flag
-#define FLAG_UNUSED_0x033    0x33 // Unused Flag
-#define FLAG_UNUSED_0x034    0x34 // Unused Flag
-#define FLAG_UNUSED_0x035    0x35 // Unused Flag
-#define FLAG_UNUSED_0x036    0x36 // Unused Flag
-#define FLAG_UNUSED_0x037    0x37 // Unused Flag
-#define FLAG_UNUSED_0x038    0x38 // Unused Flag
-#define FLAG_UNUSED_0x039    0x39 // Unused Flag
-#define FLAG_UNUSED_0x03A    0x3A // Unused Flag
-#define FLAG_UNUSED_0x03B    0x3B // Unused Flag
-#define FLAG_UNUSED_0x03C    0x3C // Unused Flag
-#define FLAG_UNUSED_0x03D    0x3D // Unused Flag
-#define FLAG_UNUSED_0x03E    0x3E // Unused Flag
-#define FLAG_UNUSED_0x03F    0x3F // Unused Flag
-#define FLAG_UNUSED_0x040    0x40 // Unused Flag
-#define FLAG_UNUSED_0x041    0x41 // Unused Flag
-#define FLAG_UNUSED_0x042    0x42 // Unused Flag
-#define FLAG_UNUSED_0x043    0x43 // Unused Flag
-#define FLAG_UNUSED_0x044    0x44 // Unused Flag
-#define FLAG_UNUSED_0x045    0x45 // Unused Flag
-#define FLAG_UNUSED_0x046    0x46 // Unused Flag
-#define FLAG_UNUSED_0x047    0x47 // Unused Flag
-#define FLAG_UNUSED_0x048    0x48 // Unused Flag
-#define FLAG_UNUSED_0x049    0x49 // Unused Flag
-#define FLAG_UNUSED_0x04A    0x4A // Unused Flag
-#define FLAG_UNUSED_0x04B    0x4B // Unused Flag
-#define FLAG_UNUSED_0x04C    0x4C // Unused Flag
-#define FLAG_UNUSED_0x04D    0x4D // Unused Flag
-#define FLAG_UNUSED_0x04E    0x4E // Unused Flag
-#define FLAG_UNUSED_0x04F    0x4F // Unused Flag
+// Flags to hide the NPC for the second bike side quest
+#define FLAG_HIDE_SAFARI_ZONE_GEMMA         0x20 // 
+#define FLAG_HIDE_GRANITE_CAVE_1F_GEMMA     0x21 // 
+#define FLAG_HIDE_GRANITE_CAVE_B2F_GEMMA    0x22 // 
+#define FLAG_HIDE_FORTREE_CITY_GEMMA        0x23 // 
+#define FLAG_HIDE_ROUTE_119_GEMMA           0x24 // 
+#define FLAG_UNUSED_0x025                   0x25 // Unused Flag
+#define FLAG_UNUSED_0x026                   0x26 // Unused Flag
+#define FLAG_UNUSED_0x027                   0x27 // Unused Flag
+#define FLAG_UNUSED_0x028                   0x28 // Unused Flag
+#define FLAG_UNUSED_0x029                   0x29 // Unused Flag
+#define FLAG_UNUSED_0x02A                   0x2A // Unused Flag
+#define FLAG_UNUSED_0x02B                   0x2B // Unused Flag
+#define FLAG_UNUSED_0x02C                   0x2C // Unused Flag
+#define FLAG_UNUSED_0x02D                   0x2D // Unused Flag
+#define FLAG_UNUSED_0x02E                   0x2E // Unused Flag
+#define FLAG_UNUSED_0x02F                   0x2F // Unused Flag
+#define FLAG_UNUSED_0x030                   0x30 // Unused Flag
+#define FLAG_UNUSED_0x031                   0x31 // Unused Flag
+#define FLAG_UNUSED_0x032                   0x32 // Unused Flag
+#define FLAG_UNUSED_0x033                   0x33 // Unused Flag
+#define FLAG_UNUSED_0x034                   0x34 // Unused Flag
+#define FLAG_UNUSED_0x035                   0x35 // Unused Flag
+#define FLAG_UNUSED_0x036                   0x36 // Unused Flag
+#define FLAG_UNUSED_0x037                   0x37 // Unused Flag
+#define FLAG_UNUSED_0x038                   0x38 // Unused Flag
+#define FLAG_UNUSED_0x039                   0x39 // Unused Flag
+#define FLAG_UNUSED_0x03A                   0x3A // Unused Flag
+#define FLAG_UNUSED_0x03B                   0x3B // Unused Flag
+#define FLAG_UNUSED_0x03C                   0x3C // Unused Flag
+#define FLAG_UNUSED_0x03D                   0x3D // Unused Flag
+#define FLAG_UNUSED_0x03E                   0x3E // Unused Flag
+#define FLAG_UNUSED_0x03F                   0x3F // Unused Flag
+#define FLAG_UNUSED_0x040                   0x40 // Unused Flag
+#define FLAG_UNUSED_0x041                   0x41 // Unused Flag
+#define FLAG_UNUSED_0x042                   0x42 // Unused Flag
+#define FLAG_UNUSED_0x043                   0x43 // Unused Flag
+#define FLAG_UNUSED_0x044                   0x44 // Unused Flag
+#define FLAG_UNUSED_0x045                   0x45 // Unused Flag
+#define FLAG_UNUSED_0x046                   0x46 // Unused Flag
+#define FLAG_UNUSED_0x047                   0x47 // Unused Flag
+#define FLAG_UNUSED_0x048                   0x48 // Unused Flag
+#define FLAG_UNUSED_0x049                   0x49 // Unused Flag
+#define FLAG_UNUSED_0x04A                   0x4A // Unused Flag
+#define FLAG_UNUSED_0x04B                   0x4B // Unused Flag
+#define FLAG_UNUSED_0x04C                   0x4C // Unused Flag
+#define FLAG_UNUSED_0x04D                   0x4D // Unused Flag
+#define FLAG_UNUSED_0x04E                   0x4E // Unused Flag
+#define FLAG_UNUSED_0x04F                   0x4F // Unused Flag
 
 // Scripts
 #define FLAG_HIDE_SKY_PILLAR_TOP_RAYQUAZA_STILL  0x50
@@ -272,11 +273,11 @@
 #define FLAG_RECEIVED_WAILMER_DOLL           0xF5
 #define FLAG_RECEIVED_CHESTO_BERRY_ROUTE_104 0xF6
 #define FLAG_DEFEATED_SS_TIDAL_TRAINERS      0xF7
-#define FLAG_UNUSED_0xF8                     0xF8 // CHANGED: Old Berry Master wife's flags. She gives the special berries multiple times now, not once each
-#define FLAG_UNUSED_0xF9                     0xF9
-#define FLAG_UNUSED_0xFA                     0xFA
-#define FLAG_UNUSED_0xFB                     0xFB
-#define FLAG_UNUSED_0xFC                     0xFC
+#define FLAG_HIDE_JAGGED_PASS_ACRO_BIKE_NPC  0xF8 // CHANGED: Old Berry Master wife's flags. She gives the special berries multiple times now, not once each
+#define FLAG_HIDE_CYCLE_ROAD_MACH_BIKE_NPC   0xF9
+#define FLAG_ACRO_BIKE_PROMOTED              0xFA
+#define FLAG_MACH_BIKE_PROMOTED              0xFB
+#define FLAG_OBTAINED_SECOND_BIKE            0xFC
 #define FLAG_ENABLE_RIVAL_MATCH_CALL         0xFD
 #define FLAG_RECEIVED_CHARCOAL               0xFE
 #define FLAG_LATIOS_OR_LATIAS_ROAMING        0xFF

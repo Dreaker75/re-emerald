@@ -64,7 +64,7 @@
 #define BAG_ITEMS_COUNT 46  // 138 required to fit 1 of each (Exp Share turned into a Key Item), split into 3 pockets
 #define BAG_BATTLE_ITEMS_COUNT 52  //
 #define BAG_MEDICINE_COUNT 40  // 
-#define BAG_KEYITEMS_COUNT 29
+#define BAG_KEYITEMS_COUNT 30
 #define BAG_POKEBALLS_COUNT 12
 #define BAG_TMHM_COUNT 58
 #define BAG_BERRIES_COUNT 43

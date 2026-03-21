@@ -150,6 +150,22 @@ JaggedPass_EventScript_Autumn::
 	msgbox JaggedPass_Text_AutumnPostBattle, MSGBOX_AUTOCLOSE
 	end
 
+JaggedPass_EventScript_AcroBikeNPC::
+	goto_if_set FLAG_ACRO_BIKE_PROMOTED, JaggedPass_EventScript_AcroBikeNPCPromotedBike
+	msgbox JaggedPass_Text_AcroBikeNPCStartDialogue, MSGBOX_NPC
+	specialvar VAR_RESULT, GetPlayerAvatarBike
+	goto_if_eq VAR_RESULT, 1, JaggedPass_EventScript_AcroBikeNPCRidingAcroBike
+	end
+
+JaggedPass_EventScript_AcroBikeNPCRidingAcroBike::
+	msgbox JaggedPass_Text_AcroBikeNPCThatsIt, MSGBOX_NPC
+	setflag FLAG_ACRO_BIKE_PROMOTED
+	setflag FLAG_HIDE_JAGGED_PASS_ACRO_BIKE_NPC
+	delay 20
+JaggedPass_EventScript_AcroBikeNPCPromotedBike::
+	msgbox JaggedPass_Text_AcroBikeNPCPlayerIllGrabOneNextTime, MSGBOX_NPC
+	end
+
 JaggedPass_Text_EricIntro:
 	.string "MT. CHIMNEY's JAGGED PASS…\p"
 	.string "Now this is what I've always wanted\n"
@@ -266,5 +282,21 @@ JaggedPass_Text_AutumnDefeat:
 JaggedPass_Text_AutumnPostBattle:
 	.string "What is that odd rock protrusion\n"
 	.string "a little up the hill from here?$"
+
+JaggedPass_Text_AcroBikeNPCStartDialogue:
+	.string "Coming to the JAGGED PASS takes\n"
+	.string "too long. I have to ride the\l"
+	.string "CABLE CAR every time.\p"
+	.string "I wish there was a faster way.$"
+
+JaggedPass_Text_AcroBikeNPCThatsIt:
+	.string "Huh? That bike...\p"
+	.string "That's it, that's what I need!\n"
+	.string "Where did you say you got it?$"
+
+JaggedPass_Text_AcroBikeNPCPlayerIllGrabOneNextTime:
+	.string "RYDEL'S CYCLES, got it. I'll\n"
+	.string "grab one next time I'm in\l"
+	.string "MAUVILLE CITY.$"
 
 `

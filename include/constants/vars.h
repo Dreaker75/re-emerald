@@ -114,7 +114,7 @@
 #define VAR_SOOTOPOLIS_CITY_STATE                        0x405E
 #define VAR_EVER_GRANDE_CITY_STATE                       0x405F // Unused Var
 #define VAR_ROUTE101_STATE                               0x4060
-#define VAR_ROUTE102_STATE                               0x4061 // Unused Var
+#define VAR_GEMMA_QUEST_STATE                            0x4061 // ADDED: Variable to track the progress of the Triathlete side quest for the quest to obtain the second bike
 #define VAR_ROUTE103_STATE                               0x4062 // Unused Var
 #define VAR_ROUTE104_STATE                               0x4063
 #define VAR_COOL_CONTEST_HIGHEST_RANK_UNLOCKED           0x4064 // ADDED: Variable to know what rank of the Cool contests the player can enter

@@ -124,7 +124,7 @@ These are listed in no particular order
  - Grab an item held by a defeated wild Pokemon automatically, no need to Thief it or the likes
 
 ## Others
- - Make it possible to have both bikes at once (With a small sidequest like ORAS)
+ - When riding a bike, make it so if you select the opposite bike (through the menu or the key items shortcut), the character instantly swaps them instead of getting down from the bike.
  - Allow player to change name or gender/sprite at any point
  - Scott will now have a new reward for getting all Silver and Gold Symbols in the Battle Frontier. This is to make it easier to catch Celebi by having the berries elsewhere, but also serves as a boost to get players started on Shiny Hunting. The new rewards will be:
     - All Silver Symbols: A male Shiny of the starter chosen (So you can breed it with more Pokemon from the getgo)
@@ -135,6 +135,7 @@ These are listed in no particular order
  
 # Backlog
 Features here are things I'd like to add once everything else above has been implemented. Still debating whether to make these part of the base Re:Emerald or do it under a new name, as these are features that will significantly change the base of Pokemon Emerald.
+ - Add a story/sidequest tracker to keep track of all the player's progress
  - Add a Battle Mode to the Battle Facilities that allows 1 Legendary Pokemon (Of BST 600+) to enter. All opponents in this mode will have at least 1 Legendary Pokemon on their teams, with longer streaks having enemies with 2 or even 3.
  - Add an ItemDex to track all the items obtained
  - Add an AttackDex to track all the attacks seen and used

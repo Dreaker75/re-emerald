@@ -1004,7 +1004,7 @@ struct SaveBlock1
     /*0x690*/ u8 bagPocket_TMHM[BAG_TMHM_COUNT];
     /*0x5D8*/ u16 bagPocket_KeyItems[BAG_KEYITEMS_COUNT];
     /*0x848*/ struct Pokeblock pokeblocks[POKEBLOCKS_COUNT];
-    // NOTE: Might be missing 6 u8 of space in this saveslot? And might have padding problems
+    // NOTE: Might be missing 8 u8 of space in this saveslot? And might have padding problems
 #if FREE_EXTRA_SEEN_FLAGS_SAVEBLOCK1 == FALSE
     /*0x988*/ u8 filler1[0x34]; // Previously Dex Flags, feel free to remove.
 #endif //FREE_EXTRA_SEEN_FLAGS_SAVEBLOCK1

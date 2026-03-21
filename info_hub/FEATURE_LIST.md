@@ -27,6 +27,7 @@
  - Added 2 extra pockets to the bag: Medicine and Battle Items
  - Once a Repel runs out, a pop-up will appear asking which Repel you would like to use, if any
  - Added the ability to register up to 8 Key Items at once
+ - Added the ability to have both bikes at the same time
 
 # Gameplay changes
  - Running is allowed indoors, as well as super tall grass and wooden bridges like the ones on Pacifidlog Town

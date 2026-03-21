@@ -21,6 +21,9 @@ EverGrandeCity_HallOfFame_EventScript_SetGameClearFlags::
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_BRENDANS_HOUSE_RIVAL_BEDROOM
 	setflag FLAG_HIDE_LITTLEROOT_TOWN_MAYS_HOUSE_RIVAL_BEDROOM
 	call_if_eq VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 0, EverGrandeCity_HallOfFame_EventScript_ReadyDexUpgradeEvent
+	call_if_unset FLAG_ACRO_BIKE_PROMOTED, EverGrandeCity_HallOfFame_EventScript_ShowJaggedPassAcroBikeNPC
+	call_if_unset FLAG_MACH_BIKE_PROMOTED, EverGrandeCity_HallOfFame_EventScript_ShowCycleRoadMachBikeNPC
+	call_if_eq VAR_GEMMA_QUEST_STATE, 0, EverGrandeCity_HallOfFame_EventScript_ShowSafariZoneGemma
 	special ClearDailyFlags
 	return
 
@@ -40,4 +43,16 @@ EverGrandeCity_HallOfFame_EventScript_ReadyReceiveSSTicketEvent::
 
 EverGrandeCity_HallOfFame_EventScript_ReadyDexUpgradeEvent::
 	setvar VAR_DEX_UPGRADE_JOHTO_STARTER_STATE, 1
+	return
+
+EverGrandeCity_HallOfFame_EventScript_ShowJaggedPassAcroBikeNPC::
+	clearflag FLAG_HIDE_JAGGED_PASS_ACRO_BIKE_NPC
+	return
+
+EverGrandeCity_HallOfFame_EventScript_ShowCycleRoadMachBikeNPC::
+	clearflag FLAG_HIDE_CYCLE_ROAD_MACH_BIKE_NPC
+	return
+
+EverGrandeCity_HallOfFame_EventScript_ShowSafariZoneGemma::
+	clearflag FLAG_HIDE_SAFARI_ZONE_GEMMA
 	return

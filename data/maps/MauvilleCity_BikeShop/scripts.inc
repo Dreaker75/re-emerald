@@ -4,6 +4,9 @@ MauvilleCity_BikeShop_MapScripts::
 MauvilleCity_BikeShop_EventScript_Rydel::
 	lock
 	faceplayer
+	goto_if_set FLAG_OBTAINED_SECOND_BIKE, MauvilleCity_BikeShop_EventScript_ThankPlayer
+	goto_if_set FLAG_SYS_GAME_CLEAR, MauvilleCity_BikeShop_EventScript_CheckPostGameQuests
+MauvilleCity_BikeShop_EventScript_RydelAfterSecondBikeChecks::
 	goto_if_set FLAG_RECEIVED_BIKE, MauvilleCity_BikeShop_EventScript_AskSwitchBikes
 	goto_if_set FLAG_DECLINED_BIKE, MauvilleCity_BikeShop_EventScript_SkipGreeting
 	msgbox MauvilleCity_BikeShop_Text_RydelGreeting, MSGBOX_DEFAULT
@@ -11,6 +14,75 @@ MauvilleCity_BikeShop_EventScript_Rydel::
 	goto_if_eq VAR_RESULT, YES, MauvilleCity_BikeShop_EventScript_YesFar
 	goto_if_eq VAR_RESULT, NO, MauvilleCity_BikeShop_EventScript_NotFar
 	end
+
+MauvilleCity_BikeShop_EventScript_CheckPostGameQuests::
+	msgbox MauvilleCity_BikeShop_Text_Promoting, MSGBOX_NPC
+	goto_if_unset FLAG_ACRO_BIKE_PROMOTED, MauvilleCity_BikeShop_EventScript_CheckJaggedPass
+	goto_if_unset FLAG_MACH_BIKE_PROMOTED, MauvilleCity_BikeShop_EventScript_CheckCyclingRoad
+	switch VAR_GEMMA_QUEST_STATE
+	@ Gemma's on Safari Zone
+	case 0, MauvilleCity_BikeShop_EventScript_CheckSafariZone
+	@ Gemma's on Granite Cave 1F
+	case 1, MauvilleCity_BikeShop_EventScript_CheckGraniteCave
+	@ Gemma's on Granite Cave B2F
+	case 2, MauvilleCity_BikeShop_EventScript_CheckGraniteCave
+	@ Gemma's on Fortree City (Wouldn't make sense to mention it specifically, but mentioning the waterfall may help. Once some sort of QuestLog is added this will work better).
+	case 3, MauvilleCity_BikeShop_EventScript_CheckRoute119
+	@ Gemma's on Route 119
+	case 4, MauvilleCity_BikeShop_EventScript_CheckRoute119
+	@ Gemma Quest done. If we got here, everything every required event for the second bike was done
+	case 5, MauvilleCity_BikeShop_EventScript_GiveSecondBike
+	end
+
+MauvilleCity_BikeShop_EventScript_ThankPlayer::
+	msgbox MauvilleCity_BikeShop_Text_AhItsYou, MSGBOX_NPC
+	end
+
+MauvilleCity_BikeShop_EventScript_CheckJaggedPass::
+	msgbox MauvilleCity_BikeShop_Text_CheckJaggedPass, MSGBOX_NPC
+	goto MauvilleCity_BikeShop_EventScript_RydelAfterSecondBikeChecks
+	end
+
+MauvilleCity_BikeShop_EventScript_CheckCyclingRoad::
+	msgbox MauvilleCity_BikeShop_Text_CheckCyclingRoad, MSGBOX_NPC
+	goto MauvilleCity_BikeShop_EventScript_RydelAfterSecondBikeChecks
+	end
+
+MauvilleCity_BikeShop_EventScript_CheckSafariZone::
+	msgbox MauvilleCity_BikeShop_Text_CheckSafariZone, MSGBOX_NPC
+	goto MauvilleCity_BikeShop_EventScript_RydelAfterSecondBikeChecks
+	end
+
+MauvilleCity_BikeShop_EventScript_CheckGraniteCave::
+	msgbox MauvilleCity_BikeShop_Text_CheckGraniteCave, MSGBOX_NPC
+	goto MauvilleCity_BikeShop_EventScript_RydelAfterSecondBikeChecks
+	end
+
+MauvilleCity_BikeShop_EventScript_CheckRoute119::
+	msgbox MauvilleCity_BikeShop_Text_CheckRoute119, MSGBOX_NPC
+	goto MauvilleCity_BikeShop_EventScript_RydelAfterSecondBikeChecks
+	end
+
+MauvilleCity_BikeShop_EventScript_GiveSecondBike::
+	msgbox MauvilleCity_BikeShop_Text_BusinessHasBeenThriving, MSGBOX_NPC
+	checkitem ITEM_ACRO_BIKE
+	switch VAR_RESULT
+	case TRUE, MauvilleCity_BikeShop_EventScript_GiftMachBike
+	case FALSE, MauvilleCity_BikeShop_EventScript_GiftAcroBike
+MauvilleCity_BikeShop_EventScript_SecondBikeGiven::
+	msgbox MauvilleCity_BikeShop_Text_ThankYouForYourHelp, MSGBOX_NPC
+	setflag FLAG_OBTAINED_SECOND_BIKE
+	end
+
+MauvilleCity_BikeShop_EventScript_GiftMachBike::
+	giveitem ITEM_MACH_BIKE
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	goto MauvilleCity_BikeShop_EventScript_SecondBikeGiven
+
+MauvilleCity_BikeShop_EventScript_GiftAcroBike::
+	giveitem ITEM_ACRO_BIKE
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	goto MauvilleCity_BikeShop_EventScript_SecondBikeGiven
 
 MauvilleCity_BikeShop_EventScript_SkipGreeting::
 	msgbox MauvilleCity_BikeShop_Text_DidYouComeFromFarAway, MSGBOX_YESNO
@@ -175,6 +247,58 @@ MauvilleCity_BikeShop_EventScript_Jumps::
 MauvilleCity_BikeShop_EventScript_ExitAcroHandbook::
 	release
 	end
+
+MauvilleCity_BikeShop_Text_AhItsYou::
+	.string "RYDEL: Ah, it's you! Are my\n"
+	.string "BIKES being useful?\p"
+	.string "My shop has been doing really\n"
+	.string "well thanks to!$"
+
+MauvilleCity_BikeShop_Text_Promoting::
+	.string "RYDEL: Oh, if it isn't the CHAMPION.\n"
+	.string "Have my BIKES been useful?$"
+
+MauvilleCity_BikeShop_Text_CheckJaggedPass::
+	.string "RYDEL: If you haven't already, you\n"
+	.string "should check out JAGGED PASS.\p"
+	.string "The ACRO BIKE does really well\n"
+	.string "there.$"
+
+MauvilleCity_BikeShop_Text_CheckCyclingRoad::
+	.string "RYDEL: If you haven't already, you\n"
+	.string "should check out CYCLING ROAD.\p"
+	.string "I hear lots of people wanting to\n"
+	.string "improve their time gather there.$"
+
+MauvilleCity_BikeShop_Text_CheckSafariZone::
+	.string "RYDEL: If you haven't already, you\n"
+	.string "should check out the SAFARI ZONE.\p"
+	.string "I heard you need a BIKE to\n"
+	.string "access certain sections.$"
+
+MauvilleCity_BikeShop_Text_CheckGraniteCave::
+	.string "RYDEL: If you haven't already, you\n"
+	.string "should check out GRANITE CAVE.\p"
+	.string "You can access a hidden room\n"
+	.string "there if you bring the MACH BIKE.$"
+
+MauvilleCity_BikeShop_Text_CheckRoute119::
+	.string "RYDEL: If you haven't already, you\n"
+	.string "should check out ROUTE 119.\p"
+	.string "There is a long white rail section\n"
+	.string "above the waterfall there.$"
+
+MauvilleCity_BikeShop_Text_BusinessHasBeenThriving::
+	.string "RYDEL: Business has been thriving\n"
+	.string "lately, thanks to you.\p"
+	.string "I've had many new customers since your\n"
+	.string "accomplishment at the ELITE FOUR.\p"
+	.string "As a token of my appreciation, I'll\n"
+	.string "let you keep the other BIKE as well.$"
+
+MauvilleCity_BikeShop_Text_ThankYouForYourHelp::
+	.string "RYDEL: Thank you for your help.\p"
+	.string "I hope to see you around.$"
 
 MauvilleCity_BikeShop_Text_RydelGreeting:
 	.string "Well, well, what have we here?\n"

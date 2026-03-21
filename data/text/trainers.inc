@@ -2941,6 +2941,10 @@ Route119_Text_RachelPostBattle:
 	.string "Your BAG is filled with more junk than\l"
 	.string "I ever carry around.$"
 
+Route119_Text_GemmaDefeat:
+	.string "So even that wasn't enough...\n"
+	.string "We have a long way to go.$"
+
 Route120_Text_ColinIntro:
 	.string "Do you have any moves that can strike\n"
 	.string "a flying POKéMON?$"

@@ -97,6 +97,7 @@ static EWRAM_DATA u32 sBattleTowerMultiBattleTypeFlags = 0;
 
 struct ListMenuTemplate gScrollableMultichoice_ListMenuTemplate;
 EWRAM_DATA u16 gScrollableMultichoice_ScrollOffset = 0;
+u8 secondsOfLastBikeChallengeTime = 0;
 
 void TryLoseFansFromPlayTime(void);
 void SetPlayerGotFirstFans(void);
@@ -220,18 +221,27 @@ static void DetermineCyclingRoadResults(u32 numFrames, u8 numBikeCollisions)
     else if (numBikeCollisions < 100)
         result = 1;
 
-    if (numFrames / 60 <= 10)
+    secondsOfLastBikeChallengeTime = numFrames / 60;
+
+    if (secondsOfLastBikeChallengeTime <= 10)
         result += 5;
-    else if (numFrames / 60 <= 15)
+    else if (secondsOfLastBikeChallengeTime <= 15)
         result += 4;
-    else if (numFrames / 60 <= 20)
+    else if (secondsOfLastBikeChallengeTime <= 20)
         result += 3;
-    else if (numFrames / 60 <= 40)
+    else if (secondsOfLastBikeChallengeTime <= 40)
         result += 2;
-    else if (numFrames / 60 < 60)
+    else if (secondsOfLastBikeChallengeTime < 60)
         result += 1;
 
     gSpecialVar_Result = result;
+}
+
+void GetCyclingRoadChallengeTime(void)
+{
+    gSpecialVar_Result = secondsOfLastBikeChallengeTime;
+
+    secondsOfLastBikeChallengeTime = 0;
 }
 
 void FinishCyclingRoadChallenge(void)
