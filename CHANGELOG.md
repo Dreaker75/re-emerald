@@ -1,6 +1,9 @@
 # Re:Emerald Changelog
 
 ## In-development
+**Update 23**
+- Fixed a bug that caused routes you can't fly to to not display their information in the PokeNav Map.
+
 **Update 22**
 - Removed the VS Seeker behavior, as it was causing issues with the Match Call rematch system
 - Improved rematch system slightly (Now the steps left to check for a rematch will only reset if a new rematch was triggered. Previously, it would also reset if there was an active rematch on the route you entered)

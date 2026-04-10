@@ -1543,6 +1543,8 @@ extern const u32 gItemIcon_DowsingMachine[];
 extern const u32 gItemIconPalette_DowsingMachine[];
 extern const u32 gItemIcon_TownMap[];
 extern const u32 gItemIconPalette_TownMap[];
+extern const u32 gItemIcon_VsSeeker[];
+extern const u32 gItemIconPalette_VsSeeker[];
 extern const u32 gItemIcon_TMCase[];
 extern const u32 gItemIconPalette_TMCase[];
 extern const u32 gItemIcon_BerryPouch[];

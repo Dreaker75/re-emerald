@@ -1288,7 +1288,7 @@ static u8 GetMapsecType(u16 mapSecId)
     case MAPSEC_ROUTE_133:
         return FlagGet(FLAG_VISITED_ROUTE_133) ? MAPSECTYPE_ROUTE_CANFLY : MAPSECTYPE_ROUTE_CANTFLY;
     default:
-        return MAPSECTYPE_NONE;
+        return MAPSECTYPE_ROUTE_CANTFLY;
     }
 }
 
