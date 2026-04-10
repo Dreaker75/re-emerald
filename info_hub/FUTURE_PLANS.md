@@ -55,7 +55,7 @@ These are listed in no particular order
  - Add the Eon Ticket
  - Add the Mystic Ticket and its related events
  - Add the Aurora Ticket and its related events
- - Make Lugia, Ho-Oh, Groudon and Kyogre only fight the player if they fulfill certain conditions
+ - Make Lugia, Ho-Oh, Groudon and Kyogre only available to be fought if the player fulfills certain conditions
  - Add Articuno, Zapdos, Moltres, Mewtwo, Raikou, Entei, Suicune, Celebi and Jirachi, and their respective events
  - Professor Birch will now let you get a copy of a Pokemon you already have (except Legendaries) so no Pokemon is completely missable
 
@@ -63,7 +63,7 @@ These are listed in no particular order
  - Change the rematch functions for both trainers and Gym Leaders to trigger more often. The following are potential ideas for new rematch requirements, they might not be implemented into the game as is:
    - All Gym Leaders are reatchable after defeating any 4 Gym Leaders
    - All normal trainers (Gym trainers excluded) have a 25% chance to be rematchable every 100 steps (similarly to VS Seeker's functionality) and a 100% chance after defeating a Gym Leader
-   - All all trainers in the PokeNav (Gym Leaders included) will become rematchable on Daily reset.
+   - All trainers in the PokeNav (Gym Leaders included) will become rematchable on Daily reset.
  - Make all regular trainers' rematches have progressing teams that geat stronger after a certain point in the game, like other games
  - Change all Gym Leaders' rematch teams to be more in line with the levels of the post-game. Gym Leaders' teams will now also scale depending on the game progress, but requiring milestones like: beating the game, beating Steven, etc.
  - Add a second team for the Elite Four rematches

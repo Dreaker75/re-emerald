@@ -38,7 +38,6 @@
 #include "mirage_tower.h"
 #include "field_screen_effect.h"
 #include "data.h"
-#include "vs_seeker.h"
 #include "item.h"
 #include "constants/battle_frontier.h"
 #include "constants/battle_setup.h"
@@ -1701,32 +1700,32 @@ bool32 TrainerIsMatchCallRegistered(s32 i)
 }
 
 #if FREE_MATCH_CALL == FALSE
+// If it returns TRUE, the rematch step count will be reset afterwards
 static bool32 UpdateRandomTrainerRematches(const struct RematchTrainer *table, u16 mapGroup, u16 mapNum)
 {
     s32 i;
-
-    if (CheckBagHasItem(ITEM_VS_SEEKER, 1) && I_VS_SEEKER_CHARGING != 0)
-        return FALSE;
+    bool32 ret = FALSE;
 
     for (i = 0; i <= REMATCH_SPECIAL_TRAINER_START; i++)
     {
         if (DoesCurrentMapMatchRematchTrainerMap(i,table,mapGroup,mapNum) && !IsRematchForbidden(i))
-            continue;
-
-        if (gSaveBlock1Ptr->trainerRematches[i] != 0)
         {
-            // Trainer already wants a rematch. Don't bother updating it.
-            return TRUE;
-        }
-        else if (TrainerIsMatchCallRegistered(i) && ((Random() % 100) <= 30))
+            if (gSaveBlock1Ptr->trainerRematches[i] != 0)
+            {
+                // Trainer already wants a rematch. Don't bother updating it.
+                // CHANGED: If a trainer is ready to rematch, it won't count as consuming a chance to trigger a new rematch, so it won't reset the step count
+                // ret = TRUE;
+            }
+            else if (TrainerIsMatchCallRegistered(i) && ((Random() % 100) <= 30))
             // 31% chance of getting a rematch.
-        {
-            SetRematchIdForTrainer(table, i);
-            return TRUE;
+            {
+                SetRematchIdForTrainer(table, i);
+                ret = TRUE;
+            }
         }
     }
 
-    return FALSE;
+    return ret;
 }
 #endif //FREE_MATCH_CALL
 
@@ -1906,9 +1905,7 @@ static bool32 HasAtLeastFiveBadges(void)
 void IncrementRematchStepCounter(void)
 {
 #if FREE_MATCH_CALL == FALSE
-    if (HasAtLeastFiveBadges()
-        && (I_VS_SEEKER_CHARGING != 0)
-        && (!CheckBagHasItem(ITEM_VS_SEEKER, 1)))
+    if (HasAtLeastFiveBadges())
     {
         if (gSaveBlock1Ptr->trainerRematchStepCounter >= STEP_COUNTER_MAX)
             gSaveBlock1Ptr->trainerRematchStepCounter = STEP_COUNTER_MAX;
@@ -1947,10 +1944,7 @@ bool32 IsRematchTrainerIn(u16 mapGroup, u16 mapNum)
 #if FREE_MATCH_CALL == FALSE
 static u16 GetRematchTrainerId(u16 trainerId)
 {
-    if (FlagGet(I_VS_SEEKER_CHARGING) && (I_VS_SEEKER_CHARGING != 0))
-        return GetRematchTrainerIdVSSeeker(trainerId);
-    else
-        return GetRematchTrainerIdFromTable(gRematchTable, trainerId);
+    return GetRematchTrainerIdFromTable(gRematchTable, trainerId);
 }
 #endif //FREE_MATCH_CALL
 
@@ -1974,9 +1968,6 @@ bool8 IsTrainerReadyForRematch(void)
 
 static void HandleRematchVarsOnBattleEnd(void)
 {
-    if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER) && (I_VS_SEEKER_CHARGING != 0))
-        ClearRematchMovementByTrainerId();
-
     ClearTrainerWantRematchState(gRematchTable, gTrainerBattleOpponent_A);
     SetBattledTrainersFlags();
 }

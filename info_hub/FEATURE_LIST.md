@@ -34,7 +34,7 @@
  - You can now toggle the default moving speed (walking or running) from the shortcuts menu (accessed through the R button) in the overworld after getting the running shoes. Holding B will let you run at the opposite speed as usual.
  - Synchronize now also forces the nature of Stationary and Gift Pokemon to be the same one as the Pokemon with Synchronize.
  - Lightning Rod now has the same effect as Static in the overworld
- - Flash Fire now has a 50% chance to force an encounter a Fire-type Pokemon, if one exists in the 
+ - Flash Fire now has a 50% chance to force an encounter a Fire-type Pokemon, if one exists in the area
  - The fishing minigame has been removed for all Rods and using one will now always land a Pokemon
  - Move tutors are no longer a one-time use
  - PokeRus no longer stops being contagius after a few days have passed
@@ -43,6 +43,8 @@
  - Return, Frustration and Hidden Power now show their real power in the Pokemon Summary
  - Hidden Power now shows its real type and category in the Pokemon Summary and the in-battle menu
  - Added a Shortcuts menu (Accesible by pressing R), which has quick access to: Repels, Sweet Scent, Auto Run, Exit Dungeon (Dig/Escape Rope), and Fast Travel (Fly/Teleport)
+## Rematch mechanic:
+- The steps count used to track trainer rematches now only resets if a new rematch is generated.
 
 # Pokemon changes
  - Pokemon that evolve through trading now also evolve by leveling up while knowing a specific move:
