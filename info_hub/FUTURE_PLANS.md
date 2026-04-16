@@ -43,6 +43,9 @@ These are listed in no particular order
  - Show the PPs of a move when using a PP-restoring item
  - Show the amount of PP boosts used on a move when using a PP-increasing item
  - Let the Pokedex continue to scroll by holding left or right
+ - Update the Itemfinder to show the specific tiles on screen with hidden items when used, rather than just turning the character.
+   - There will be an upgrade to the Itemfinder in the postgame that will make it so hidden items are shown at all times without having to use the item. This function will be toggable form the Key Items menu.
+ - For hidden items that don't have an obvious placement (like items in the beaches), I may add a small mark on the ground to indicate there is a one there, similarly to FRLG's berries. THIS IS STILL TO BE DEBATED.
  - Add the ability to access the Pokemon Storage from the Main Menu. This feature would unlock some time after beating the game and would be locked on places like the E4.
  - Look into speeding up the Sweet Scent animation?
  - Add a placeholder list of Pokemon found on each area until an Area Dex is implemented?

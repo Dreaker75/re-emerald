@@ -87,7 +87,7 @@ PacifidlogTown_House3_Text_ReallyWantedToGetSpheal:
 	.string "that another TRAINER caught…$"
 
 PacifidlogTown_House3_Text_ItsMyGiftToYou:
-	.string "Huh? Your Clamperl evolved?\n"
+	.string "Huh? Your CLAMPERL evolved?\n"
 	.string "Yeah, I made it hold a\l"
 	.string "DEEPSEASCALE before the trade.\p"
 	.string "It's my gift to you for helping me out.$"
