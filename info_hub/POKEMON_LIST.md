@@ -1,4 +1,4 @@
-# Pokemon added (325 Pokemon)
+# Pokemon added (325 Pokemon available)
 These are the Pokemon that have been added to, or changed locations in, Re:Emerald (Pokemon that appear in the same location as vanilla Emerald won't be listed)
 
 ## Ruby/Sapphire exclusives
@@ -105,7 +105,7 @@ These Pokemon are available in Re:Emerald, but cannot be obtained in the same fi
     - Latios
 
 # Trade-only Pokemon (9 Pokemon)
-Due to being locked behind filling the Hoenn Dex, these Pokemon can only be obtained by trading the missing starters and Lati@s from another Re:Emerald save file at the moment (v 0.1.0). You also get a choice between each of these, so you would need 3 full hoenn dex save files to get all 3:
+Due to being locked behind filling the Hoenn Dex, these Pokemon can only be obtained by trading the missing starters and Lati@s from another Re:Emerald save file at the moment (v 0.2.0). You also get a choice between each of these, so you would need 3 full hoenn dex save files to get all 3:
 - Chikorita -> Bayleef -> Meganium
 - Cyndaquil -> Quilava -> Typhlosion
 - Totodile -> Croconaw -> Feraligatr

@@ -1,6 +1,9 @@
 # Re:Emerald Changelog
 
 ## In-development
+None yet
+
+## v.0.2.0
 **Update 23**
 - Fixed a bug that caused routes you can't fly to to not display their information in the PokeNav Map.
 
@@ -69,5 +72,5 @@
 **Update 1**
 - Modified the in-game trades to be more useful
 
-## 0.1.0
+## v.0.1.0
 - Initial game release

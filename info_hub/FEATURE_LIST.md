@@ -78,7 +78,7 @@
  - There is a book on Birch's Lab that shows you which Swarms have alread spawned, as well as register any Pokemon you're missing as seen in your Pokedex. (This only adds the base Pokemon to the Pokedex, not any evolutions)
 
 ## Missing Pokemon:
- - Check [POKEMON_LIST.md](https://github.com/Dreaker75/re-emerald/blob/main/info_hub/POKEMON_LIST.md) to see a list of all the Pokemon changes in Re:Emerald as of version 0.1.0 and which ones are left to add. If a Pokemon is not mentioned, then it can be found in the same way as vanilla Emerald.
+ - Check [POKEMON_LIST.md](https://github.com/Dreaker75/re-emerald/blob/main/info_hub/POKEMON_LIST.md) to see a list of all the Pokemon changes in Re:Emerald as of version 0.2.0 and which ones are left to add. If a Pokemon is not mentioned, then it can be found in the same way as vanilla Emerald.
 
 # Breeding changes
  - Breeding Nidoran♂ or Volbeat with a Ditto can now produce Nidoran♀ or Illumise eggs, respectively
